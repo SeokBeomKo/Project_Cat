@@ -1,7 +1,5 @@
-# This .gitignore file should be placed at the root of your Unity project directory
-#
-# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
-#
+# =============================
+# 유니티에서 자동으로 생성되는 폴더들
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -70,3 +68,11 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# 운영체제(OS)가 자동으로 생성하는 일부 시스템 파일들 (Mac과 Windows)
+.DS_Store*         # 맥 OS에서 디렉터리에 대한 메타데이터를 저장하기 위해 만드는 숨김파일  
+._*                # 맥 OS에서 리소스 포크와 같은 추가 정보를 저장하기 위해 만드는 숨김파일  
+Thumbs.db          # 윈도우 OS에서 썸네일 캐시를 저장하기 위해 만드는 시스템파일
+
+# 리소스 폴더
+/Assets/Resource
