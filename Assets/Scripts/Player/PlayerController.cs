@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("애니메이터")]
+    [SerializeField]    public Animator             playerAnimator;
+    
+    [Header("유한 상태 기계")]
+    [SerializeField]    public PlayerStateMachine   stateMachine;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (null != stateMachine.curState)
+        {
+            stateMachine.curState.Execute();
+        }
     }
 }
