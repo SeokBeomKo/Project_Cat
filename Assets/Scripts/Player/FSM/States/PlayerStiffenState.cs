@@ -26,4 +26,9 @@ public class PlayerStiffenState : IPlayerState
     public void OnStateExit()
     {
     }
+
+    public void ChangeState(IPlayerState newState)
+    {
+
+    }
 }

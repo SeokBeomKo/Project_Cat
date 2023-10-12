@@ -26,4 +26,9 @@ public class PlayerJumpState : IPlayerState
     public void OnStateExit()
     {
     }
+
+    public void ChangeState(IPlayerState newState)
+    {
+
+    }
 }
