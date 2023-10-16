@@ -21,6 +21,10 @@ public class PlayerRunState : IPlayerState
         {
             stateMachine.ChangeState(PlayerStateEnums.Idle);
         }
+        if (Input.GetAxisRaw("Jump") == 1)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Jump);
+        }
 
         player.Run();
     }

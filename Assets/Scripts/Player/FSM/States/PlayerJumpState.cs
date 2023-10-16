@@ -14,15 +14,22 @@ public class PlayerJumpState : IPlayerState
     }
     public void Execute()
     {
+        if (player.rigid.velocity.y <= 0)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Fall);
+        }
     }
 
 
     public void OnStateEnter()
     {
+        player.animator.SetBool("isJump", true);
+        player.rigid.AddForce(Vector3.up * player.jumpPower, ForceMode.Impulse);
     }
 
     public void OnStateExit()
     {
+        player.animator.SetBool("isJump", false);
     }
 
     public void ChangeState(IPlayerState newState)

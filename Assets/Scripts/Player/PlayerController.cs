@@ -13,12 +13,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("유한 상태 기계")]
     [SerializeField]    public PlayerStateMachine   stateMachine;
-    [Header("룩 포인트")]
-    [SerializeField]    public Transform            lookAt;
 
 
     [Header("수치 값")]
     [SerializeField]    public float                moveSpeed;
+    [SerializeField]    public float                jumpPower;
 
     private void FixedUpdate()
     {

@@ -15,15 +15,21 @@ public class PlayerFallState : IPlayerState
 
     public void Execute()
     {
+        if (player.rigid.velocity.y >= 0)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Idle);
+        }
     }
 
 
     public void OnStateEnter()
     {
+        player.animator.SetBool("isFall", true);
     }
 
     public void OnStateExit()
     {
+        player.animator.SetBool("isFall", false);
     }
 
     public void ChangeState(IPlayerState newState)
