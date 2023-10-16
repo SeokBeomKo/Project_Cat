@@ -10,21 +10,29 @@ public class PlayerRunState : IPlayerState
     public PlayerRunState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
+        player = stateMachine.playerController;
     }
     public void Execute()
     {
-    }
+        player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+        player.animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
 
-    public void Init(PlayerStateMachine stateMachine)
-    {
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Idle);
+        }
+
+        player.Run();
     }
 
     public void OnStateEnter()
     {
+        player.animator.SetBool("isRun",true);
     }
 
     public void OnStateExit()
     {
+        player.animator.SetBool("isRun",false);
     }
 
     public void ChangeState(IPlayerState newState)

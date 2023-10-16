@@ -10,15 +10,13 @@ public class PlayerFallState : IPlayerState
     public PlayerFallState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
+        player = stateMachine.playerController;
     }
 
     public void Execute()
     {
     }
 
-    public void Init(PlayerStateMachine stateMachine)
-    {
-    }
 
     public void OnStateEnter()
     {

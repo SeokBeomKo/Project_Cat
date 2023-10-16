@@ -10,12 +10,9 @@ public class PlayerRollingState : IPlayerState
     public PlayerRollingState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
+        player = stateMachine.playerController;
     }
     public void Execute()
-    {
-    }
-
-    public void Init(PlayerStateMachine stateMachine)
     {
     }
 

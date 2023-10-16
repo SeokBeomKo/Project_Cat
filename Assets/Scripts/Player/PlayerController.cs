@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("애니메이터")]
-    [SerializeField]    public Animator             playerAnimator;
+    [SerializeField]    public Animator             animator;
 
     [Header("리지드바디")]
     [SerializeField]    public Rigidbody            rigid;
 
     [Header("유한 상태 기계")]
     [SerializeField]    public PlayerStateMachine   stateMachine;
+    [Header("룩 포인트")]
+    [SerializeField]    public Transform            lookAt;
 
 
     [Header("수치 값")]
@@ -25,9 +28,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    public void Run(Vector3 _movedir)
+    Vector3 moveDir;
+    public void Run()
     {
-        rigid.MovePosition(transform.position + _movedir * moveSpeed * Time.fixedDeltaTime);
+        moveDir = new Vector3(animator.GetFloat("Horizontal"),0,animator.GetFloat("Vertical"));
+
+        moveDir = transform.rotation * moveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
+        rigid.MovePosition(rigid.position + moveDir * moveSpeed * Time.fixedDeltaTime);
     }
 }
