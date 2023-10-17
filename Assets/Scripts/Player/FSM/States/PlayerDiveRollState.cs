@@ -26,26 +26,23 @@ public class PlayerDiveRollState : IPlayerState
 
         if (diveDir != Vector3.zero) 
         {
-            Debug.Log("ROTATIONING");
-            player.model.rotation = Quaternion.LookRotation(diveDir); // 새로운 방향으로 회전
+            player.model.localRotation = Quaternion.LookRotation(diveDir); // 새로운 방향으로 회전
         }
+
+        player.DiveRoll(diveDir);
     }
 
     public void OnStateEnter()
     {
-        origDir = player.model.rotation; // 원래 회전값 저장
-        Debug.Log("ORIGINAL : " + origDir);
-        // diveDir = new Vector3(player.animator.GetFloat("Horizontal"),0,player.animator.GetFloat("Vertical"));
+        origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-        Debug.Log("DIVEROLL : " + diveDir);
 
         player.animator.SetBool("isDiveRoll",true);
     }
 
     public void OnStateExit()
     {
-        player.model.rotation = Quaternion.LookRotation(Vector3.forward); // 원래의 회전값으로 복구
-        Debug.Log("REROTATION : " + player.model.rotation);
+        player.model.localRotation = origDir;
 
         player.animator.SetBool("isDiveRoll",false);
     }
