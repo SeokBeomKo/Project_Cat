@@ -17,10 +17,12 @@ public class PlayerIdleState : IPlayerState
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
             stateMachine.ChangeState(PlayerStateEnums.Run);
+            return;
         }
         if (Input.GetAxisRaw("Jump") == 1)
         {
             stateMachine.ChangeState(PlayerStateEnums.Jump);
+            return;
         }
     }
 

@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("유한 상태 기계")]
     [SerializeField]    public PlayerStateMachine   stateMachine;
+    [Header("모델")]
+    [SerializeField]    public Transform            model;
 
 
     [Header("수치 값")]

@@ -20,10 +20,17 @@ public class PlayerRunState : IPlayerState
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
             stateMachine.ChangeState(PlayerStateEnums.Idle);
+            return;
         }
         if (Input.GetAxisRaw("Jump") == 1)
         {
             stateMachine.ChangeState(PlayerStateEnums.Jump);
+            return;
+        }
+        if (Input.GetAxisRaw("DiveRoll") == 1)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.DiveRoll);
+            return;
         }
 
         player.Run();
