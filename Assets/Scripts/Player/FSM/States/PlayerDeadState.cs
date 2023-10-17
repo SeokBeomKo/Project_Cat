@@ -10,13 +10,10 @@ public class PlayerDeadState : IPlayerState
     public PlayerDeadState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
+        player = stateMachine.playerController;
     }
 
     public void Execute()
-    {
-    }
-
-    public void Init(PlayerStateMachine stateMachine)
     {
     }
 
@@ -26,5 +23,10 @@ public class PlayerDeadState : IPlayerState
 
     public void OnStateExit()
     {
+    }
+
+    public void ChangeState(IPlayerState newState)
+    {
+
     }
 }

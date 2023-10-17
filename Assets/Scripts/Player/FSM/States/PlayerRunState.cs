@@ -10,20 +10,44 @@ public class PlayerRunState : IPlayerState
     public PlayerRunState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
+        player = stateMachine.playerController;
     }
     public void Execute()
     {
-    }
+        player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+        player.animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
 
-    public void Init(PlayerStateMachine stateMachine)
-    {
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Idle);
+            return;
+        }
+        if (Input.GetAxisRaw("Jump") == 1)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Jump);
+            return;
+        }
+        if (Input.GetAxisRaw("DiveRoll") == 1)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.DiveRoll);
+            return;
+        }
+
+        player.Run();
     }
 
     public void OnStateEnter()
     {
+        player.animator.SetBool("isRun",true);
     }
 
     public void OnStateExit()
     {
+        player.animator.SetBool("isRun",false);
+    }
+
+    public void ChangeState(IPlayerState newState)
+    {
+
     }
 }

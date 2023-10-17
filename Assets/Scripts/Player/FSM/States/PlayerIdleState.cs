@@ -10,13 +10,20 @@ public class PlayerIdleState : IPlayerState
     public PlayerIdleState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
+        player = stateMachine.playerController;
     }
     public void Execute()
     {
-    }
-
-    public void Init(PlayerStateMachine stateMachine)
-    {
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Run);
+            return;
+        }
+        if (Input.GetAxisRaw("Jump") == 1)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Jump);
+            return;
+        }
     }
 
     public void OnStateEnter()
@@ -25,5 +32,10 @@ public class PlayerIdleState : IPlayerState
 
     public void OnStateExit()
     {
+    }
+
+    public void ChangeState(IPlayerState newState)
+    {
+
     }
 }

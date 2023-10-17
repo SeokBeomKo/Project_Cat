@@ -10,20 +10,30 @@ public class PlayerJumpState : IPlayerState
     public PlayerJumpState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
+        player = stateMachine.playerController;
     }
     public void Execute()
     {
+        if (player.rigid.velocity.y <= 0)
+        {
+            stateMachine.ChangeState(PlayerStateEnums.Fall);
+        }
     }
 
-    public void Init(PlayerStateMachine stateMachine)
-    {
-    }
 
     public void OnStateEnter()
     {
+        player.animator.SetBool("isJump", true);
+        player.rigid.AddForce(Vector3.up * player.jumpPower, ForceMode.Impulse);
     }
 
     public void OnStateExit()
     {
+        player.animator.SetBool("isJump", false);
+    }
+
+    public void ChangeState(IPlayerState newState)
+    {
+
     }
 }
