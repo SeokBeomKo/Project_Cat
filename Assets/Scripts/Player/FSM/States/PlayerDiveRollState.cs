@@ -20,7 +20,7 @@ public class PlayerDiveRollState : IPlayerState
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Running Dive Roll") &&
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
-            stateMachine.ChangeState(PlayerStateEnums.Idle);
+            stateMachine.ChangeState(PlayerStateEnums.IDLE);
             return;
         }
 

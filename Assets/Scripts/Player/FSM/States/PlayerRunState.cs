@@ -19,17 +19,17 @@ public class PlayerRunState : IPlayerState
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeState(PlayerStateEnums.Idle);
+            stateMachine.ChangeState(PlayerStateEnums.IDLE);
             return;
         }
         if (Input.GetAxisRaw("Jump") == 1)
         {
-            stateMachine.ChangeState(PlayerStateEnums.Jump);
+            stateMachine.ChangeState(PlayerStateEnums.JUMP);
             return;
         }
         if (Input.GetAxisRaw("DiveRoll") == 1)
         {
-            stateMachine.ChangeState(PlayerStateEnums.DiveRoll);
+            stateMachine.ChangeState(PlayerStateEnums.DIVEROLL);
             return;
         }
 
