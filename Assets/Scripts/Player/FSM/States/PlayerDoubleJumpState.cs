@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class PlayerDoubleJumpState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.FALL,
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
@@ -17,7 +25,7 @@ public class PlayerDoubleJumpState : IPlayerState
     {
         if (player.rigid.velocity.y <= 0.1f)
         {
-            stateMachine.ChangeState(PlayerStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
             return;
         }
     }
@@ -31,10 +39,5 @@ public class PlayerDoubleJumpState : IPlayerState
     public void OnStateExit()
     {
         player.animator.SetBool("isDoubleJump", false);
-    }
-
-    public void ChangeState(IPlayerState newState)
-    {
-
     }
 }

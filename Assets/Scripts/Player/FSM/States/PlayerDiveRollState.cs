@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class PlayerDiveRollState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.RUN,
+        PlayerStateEnums.IDLE,
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
@@ -18,16 +26,16 @@ public class PlayerDiveRollState : IPlayerState
     public void Execute()
     {
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Running Dive Roll") &&
-            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
-                stateMachine.ChangeState(PlayerStateEnums.RUN);
+                stateMachine.ChangeStateLogic(PlayerStateEnums.RUN);
                 return;
             }
             else
             {
-                stateMachine.ChangeState(PlayerStateEnums.IDLE);
+                stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
                 return;
             }
         }
@@ -53,10 +61,5 @@ public class PlayerDiveRollState : IPlayerState
         player.model.localRotation = origDir;
 
         player.animator.SetBool("isDiveRoll",false);
-    }
-
-    public void ChangeState(IPlayerState newState)
-    {
-
     }
 }

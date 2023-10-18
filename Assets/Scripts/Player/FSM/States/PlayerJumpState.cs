@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerJumpState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.FALL,
+        PlayerStateEnums.DOUBLE,
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.FALL,
+        PlayerStateEnums.DOUBLE,
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
@@ -16,12 +26,12 @@ public class PlayerJumpState : IPlayerState
     {
         if (Input.GetButtonDown("Jump"))
         {
-            stateMachine.ChangeState(PlayerStateEnums.DOUBLE);
+            stateMachine.ChangeStateInput(PlayerStateEnums.DOUBLE);
             return;
         }
         if (player.rigid.velocity.y <= 0.1f)
         {
-            stateMachine.ChangeState(PlayerStateEnums.FALL);
+            stateMachine.ChangeStateInput(PlayerStateEnums.FALL);
             return;
         }
     }
@@ -36,10 +46,5 @@ public class PlayerJumpState : IPlayerState
     public void OnStateExit()
     {
         player.animator.SetBool("isJump", false);
-    }
-
-    public void ChangeState(IPlayerState newState)
-    {
-
     }
 }

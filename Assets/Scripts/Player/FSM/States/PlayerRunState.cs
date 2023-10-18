@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class PlayerRunState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.IDLE,
+        PlayerStateEnums.JUMP,
+        PlayerStateEnums.DIVEROLL
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.IDLE,
+        PlayerStateEnums.JUMP,
+        PlayerStateEnums.DIVEROLL
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
@@ -19,17 +31,17 @@ public class PlayerRunState : IPlayerState
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeState(PlayerStateEnums.IDLE);
+            stateMachine.ChangeStateInput(PlayerStateEnums.IDLE);
             return;
         }
         if (Input.GetAxisRaw("Jump") == 1)
         {
-            stateMachine.ChangeState(PlayerStateEnums.JUMP);
+            stateMachine.ChangeStateInput(PlayerStateEnums.JUMP);
             return;
         }
         if (Input.GetAxisRaw("DiveRoll") == 1)
         {
-            stateMachine.ChangeState(PlayerStateEnums.DIVEROLL);
+            stateMachine.ChangeStateInput(PlayerStateEnums.DIVEROLL);
             return;
         }
 
@@ -44,10 +56,5 @@ public class PlayerRunState : IPlayerState
     public void OnStateExit()
     {
         player.animator.SetBool("isRun",false);
-    }
-
-    public void ChangeState(IPlayerState newState)
-    {
-
     }
 }

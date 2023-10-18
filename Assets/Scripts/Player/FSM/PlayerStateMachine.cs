@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,12 +27,33 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},
         };
 
-        ChangeState(PlayerStateEnums.IDLE);
+        if (stateDictionary.TryGetValue(PlayerStateEnums.IDLE, out IPlayerState newState))
+        {
+            curState = newState;
+            curState.OnStateEnter();
+        }
     }
 
-    public void ChangeState(PlayerStateEnums newStateType)
+    public void ChangeStateInput(PlayerStateEnums newStateType)
     {
-        if (null != curState)   curState.OnStateExit();
+        if (null == curState)   return;
+        if (!curState.allowedInputHash.Contains(newStateType))   return;
+
+        curState.OnStateExit();
+
+        if (stateDictionary.TryGetValue(newStateType, out IPlayerState newState))
+        {
+            curState = newState;
+            curState.OnStateEnter();
+        }
+    }
+
+    public void ChangeStateLogic(PlayerStateEnums newStateType)
+    {
+        if (null == curState)   return;
+        if (!curState.allowedLogicHash.Contains(newStateType))   return;
+
+        curState.OnStateExit();
 
         if (stateDictionary.TryGetValue(newStateType, out IPlayerState newState))
         {
