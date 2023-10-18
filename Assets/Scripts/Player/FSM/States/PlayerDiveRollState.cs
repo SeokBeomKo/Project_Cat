@@ -18,10 +18,18 @@ public class PlayerDiveRollState : IPlayerState
     public void Execute()
     {
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Running Dive Roll") &&
-            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
+            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
         {
-            stateMachine.ChangeState(PlayerStateEnums.IDLE);
-            return;
+            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+            {
+                stateMachine.ChangeState(PlayerStateEnums.RUN);
+                return;
+            }
+            else
+            {
+                stateMachine.ChangeState(PlayerStateEnums.IDLE);
+                return;
+            }
         }
 
         if (diveDir != Vector3.zero) 

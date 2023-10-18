@@ -17,6 +17,7 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerStateEnums.IDLE,         new PlayerIdleState(this)},
             {PlayerStateEnums.RUN,          new PlayerRunState(this)},
             {PlayerStateEnums.JUMP,         new PlayerJumpState(this)},
+            {PlayerStateEnums.DOUBLE,       new PlayerDoubleJumpState(this)},
             {PlayerStateEnums.FALL,         new PlayerFallState(this)},
             {PlayerStateEnums.DIVEROLL,     new PlayerDiveRollState(this)},
             {PlayerStateEnums.STIFFEN,      new PlayerStiffenState(this)},
