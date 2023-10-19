@@ -34,6 +34,13 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+    public bool Contains(IPlayerState state)
+    {
+        if (curState == state)  return true;
+        
+        return false;
+    }
+
     public void ChangeStateInput(PlayerStateEnums newStateType)
     {
         if (null == curState)   return;

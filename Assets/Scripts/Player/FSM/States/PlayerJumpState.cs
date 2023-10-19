@@ -27,7 +27,6 @@ public class PlayerJumpState : IPlayerState
     {
         if (!isJumpStarted) return;
 
-        Debug.Log(player.rigid.velocity);
         if (player.rigid.velocity.y <= 0.1f)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
@@ -52,7 +51,7 @@ public class PlayerJumpState : IPlayerState
     private IEnumerator JumpStart()
     {
         yield return WaitForSecondsPool.WaitForSecondsPool.waitForFixedUpdate;
-        
+
         isJumpStarted = true;
     }
 }

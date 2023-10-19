@@ -6,11 +6,11 @@ public class PlayerDoubleJumpState : IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.FALL,
+        
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
-
+        PlayerStateEnums.FALL
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -23,6 +23,7 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void Execute()
     {
+        Debug.Log("DOUBLE");
         if (player.rigid.velocity.y <= 0.1f)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);

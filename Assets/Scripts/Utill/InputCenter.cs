@@ -23,7 +23,14 @@ public class InputCenter : MonoBehaviour
 
     void ChangeJumpState()
     {
-        playerController.stateMachine.ChangeStateInput(PlayerStateEnums.JUMP);
+        if (playerController.stateMachine.curState is PlayerJumpState jumpstate)
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.DOUBLE);
+        }
+        else
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.JUMP);
+        }
     }
 
     void ChangeDiveRollState()
