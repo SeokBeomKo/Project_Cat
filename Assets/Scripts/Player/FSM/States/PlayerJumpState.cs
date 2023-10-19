@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WaitForSecondsPool;
 
 public class PlayerJumpState : IPlayerState
 {
@@ -39,12 +40,19 @@ public class PlayerJumpState : IPlayerState
     {
         player.animator.SetBool("isJump", true);
         player.rigid.AddForce(Vector3.up * player.jumpPower, ForceMode.Impulse);
-        isJumpStarted = true;
+        player.StartCoroutine(JumpStart());
     }
 
     public void OnStateExit()
     {
         player.animator.SetBool("isJump", false);
         isJumpStarted = false;
+    }
+
+    private IEnumerator JumpStart()
+    {
+        yield return WaitForSecondsPool.WaitForSecondsPool.waitForFixedUpdate;
+        
+        isJumpStarted = true;
     }
 }
