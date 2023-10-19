@@ -6,12 +6,11 @@ public class PlayerFallState : IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.IDLE,
         PlayerStateEnums.DOUBLE,
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
-
+        PlayerStateEnums.IDLE,
     };
     
     public PlayerController player {get; set;}
@@ -28,11 +27,6 @@ public class PlayerFallState : IPlayerState
         if (player.rigid.velocity.y >= 0)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
-            return;
-        }
-        if (Input.GetButtonDown("Jump"))
-        {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.DOUBLE);
             return;
         }
     }

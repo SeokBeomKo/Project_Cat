@@ -6,11 +6,12 @@ public class PlayerDiveRollState : IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.RUN,
-        PlayerStateEnums.IDLE,
+        
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
+        PlayerStateEnums.RUN,
+        PlayerStateEnums.IDLE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -52,6 +53,7 @@ public class PlayerDiveRollState : IPlayerState
     {
         origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        if (diveDir == Vector3.zero)   diveDir = Vector3.forward;
 
         player.animator.SetBool("isDiveRoll",true);
     }

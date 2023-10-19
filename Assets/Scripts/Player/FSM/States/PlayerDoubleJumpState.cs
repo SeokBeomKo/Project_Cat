@@ -33,7 +33,7 @@ public class PlayerDoubleJumpState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetBool("isDoubleJump", true);
-        player.rigid.AddForce(Vector3.up * player.jumpPower * 0.5f, ForceMode.Impulse);
+        player.Jump();
     }
 
     public void OnStateExit()

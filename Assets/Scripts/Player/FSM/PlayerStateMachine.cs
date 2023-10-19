@@ -43,8 +43,8 @@ public class PlayerStateMachine : MonoBehaviour
 
         if (stateDictionary.TryGetValue(newStateType, out IPlayerState newState))
         {
+            newState.OnStateEnter();
             curState = newState;
-            curState.OnStateEnter();
         }
     }
 

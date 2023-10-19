@@ -38,11 +38,14 @@ public class PlayerController : MonoBehaviour
         rigid.MovePosition(rigid.position + moveDir * moveSpeed * Time.fixedDeltaTime);
     }
 
-    
-
     public void DiveRoll(Vector3 _diveDir)
     {
         _diveDir = transform.rotation * _diveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
         rigid.MovePosition(rigid.position + _diveDir * diveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void Jump()
+    {
+        rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
     }
 }

@@ -6,15 +6,12 @@ public class PlayerRunState : IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.IDLE,
         PlayerStateEnums.JUMP,
         PlayerStateEnums.DIVEROLL
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.IDLE,
-        PlayerStateEnums.JUMP,
-        PlayerStateEnums.DIVEROLL
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -31,17 +28,7 @@ public class PlayerRunState : IPlayerState
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeStateInput(PlayerStateEnums.IDLE);
-            return;
-        }
-        if (Input.GetAxisRaw("Jump") == 1)
-        {
-            stateMachine.ChangeStateInput(PlayerStateEnums.JUMP);
-            return;
-        }
-        if (Input.GetAxisRaw("DiveRoll") == 1)
-        {
-            stateMachine.ChangeStateInput(PlayerStateEnums.DIVEROLL);
+            stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
             return;
         }
 

@@ -24,16 +24,6 @@ public class PlayerIdleState : IPlayerState
     }
     public void Execute()
     {
-        // if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        // {
-        //     stateMachine.ChangeState(PlayerStateEnums.RUN);
-        //     return;
-        // }
-        // if (Input.GetButtonDown("Jump"))
-        // {
-        //     stateMachine.ChangeState(PlayerStateEnums.JUMP);
-        //     return;
-        // }
     }
 
     public void OnStateEnter()

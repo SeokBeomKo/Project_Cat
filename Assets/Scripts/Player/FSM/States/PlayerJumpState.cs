@@ -6,13 +6,11 @@ public class PlayerJumpState : IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.FALL,
         PlayerStateEnums.DOUBLE,
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.FALL,
-        PlayerStateEnums.DOUBLE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -24,14 +22,10 @@ public class PlayerJumpState : IPlayerState
     }
     public void Execute()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            stateMachine.ChangeStateInput(PlayerStateEnums.DOUBLE);
-            return;
-        }
+        Debug.Log(player.rigid.velocity);
         if (player.rigid.velocity.y <= 0.1f)
         {
-            stateMachine.ChangeStateInput(PlayerStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
             return;
         }
     }
@@ -39,6 +33,7 @@ public class PlayerJumpState : IPlayerState
 
     public void OnStateEnter()
     {
+        Debug.Log("OnJumpEnter");
         player.animator.SetBool("isJump", true);
         player.rigid.AddForce(Vector3.up * player.jumpPower, ForceMode.Impulse);
     }

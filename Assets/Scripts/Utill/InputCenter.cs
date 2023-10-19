@@ -13,6 +13,7 @@ public class InputCenter : MonoBehaviour
     {
         inputHandle.OnPlayerRunInput += ChangeRunState;
         inputHandle.OnPlayerJumpInput += ChangeJumpState;
+        inputHandle.OnPlayerDiveRollInput += ChangeDiveRollState;
     }
 
     void ChangeRunState()
@@ -23,6 +24,11 @@ public class InputCenter : MonoBehaviour
     void ChangeJumpState()
     {
         playerController.stateMachine.ChangeStateInput(PlayerStateEnums.JUMP);
+    }
+
+    void ChangeDiveRollState()
+    {
+        playerController.stateMachine.ChangeStateInput(PlayerStateEnums.DIVEROLL);
     }
 
     
