@@ -28,6 +28,7 @@ public class PlayerIdleState : IPlayerState
 
     public void OnStateEnter()
     {
+        player.curDoubleCount = player.maxDoubleCount;
     }
 
     public void OnStateExit()

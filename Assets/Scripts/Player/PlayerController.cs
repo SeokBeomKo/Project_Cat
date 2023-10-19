@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public float                moveSpeed;
     [SerializeField]    public float                jumpPower;
     [SerializeField]    public float                diveSpeed;
-    [SerializeField]    private int                 maxDoubleCount;
+    [SerializeField]    public int                 maxDoubleCount;
     [HideInInspector]   public int                  curDoubleCount;
 
     private void Awake() 

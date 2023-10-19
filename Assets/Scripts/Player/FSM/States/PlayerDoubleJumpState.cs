@@ -35,6 +35,7 @@ public class PlayerDoubleJumpState : IPlayerState
     {
         player.animator.SetBool("isDoubleJump", true);
         player.Jump();
+        player.curDoubleCount--;
     }
 
     public void OnStateExit()

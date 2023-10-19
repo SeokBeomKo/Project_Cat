@@ -23,8 +23,8 @@ public class PlayerRunState : IPlayerState
     }
     public void Execute()
     {
-        player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
-        player.animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
+        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
+        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
@@ -38,6 +38,7 @@ public class PlayerRunState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetBool("isRun",true);
+        player.curDoubleCount = player.maxDoubleCount;
     }
 
     public void OnStateExit()
