@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerRunState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.JUMP,
+        PlayerStateEnums.DIVEROLL
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.IDLE,
+        PlayerStateEnums.FALL,
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
@@ -14,22 +24,19 @@ public class PlayerRunState : IPlayerState
     }
     public void Execute()
     {
-        player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
-        player.animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
+        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
+        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+
+        // if (player.rigid.velocity.y != 0)
+        // {
+            // Debug.Log("FALL");
+            // stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            // return;
+        // }
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeState(PlayerStateEnums.Idle);
-            return;
-        }
-        if (Input.GetAxisRaw("Jump") == 1)
-        {
-            stateMachine.ChangeState(PlayerStateEnums.Jump);
-            return;
-        }
-        if (Input.GetAxisRaw("DiveRoll") == 1)
-        {
-            stateMachine.ChangeState(PlayerStateEnums.DiveRoll);
+            stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
             return;
         }
 
@@ -39,15 +46,13 @@ public class PlayerRunState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetBool("isRun",true);
+        player.curDoubleCount = player.maxDoubleCount;
     }
 
     public void OnStateExit()
     {
+        player.animator.SetFloat("Horizontal", 0);
+        player.animator.SetFloat("Vertical", 0);
         player.animator.SetBool("isRun",false);
-    }
-
-    public void ChangeState(IPlayerState newState)
-    {
-
     }
 }

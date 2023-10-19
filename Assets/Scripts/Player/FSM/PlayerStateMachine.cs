@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,23 +15,52 @@ public class PlayerStateMachine : MonoBehaviour
     {
         stateDictionary = new Dictionary<PlayerStateEnums, IPlayerState>
         {
-            {PlayerStateEnums.Idle,         new PlayerIdleState(this)},
-            {PlayerStateEnums.Run,          new PlayerRunState(this)},
-            {PlayerStateEnums.Jump,         new PlayerJumpState(this)},
-            {PlayerStateEnums.Fall,         new PlayerFallState(this)},
-            {PlayerStateEnums.DiveRoll,     new PlayerDiveRollState(this)},
-            {PlayerStateEnums.Stiffen,      new PlayerStiffenState(this)},
-            {PlayerStateEnums.Transform,    new PlayerTransformState(this)},
+            {PlayerStateEnums.IDLE,         new PlayerIdleState(this)},
+            {PlayerStateEnums.RUN,          new PlayerRunState(this)},
+            {PlayerStateEnums.JUMP,         new PlayerJumpState(this)},
+            {PlayerStateEnums.DOUBLE,       new PlayerDoubleJumpState(this)},
+            {PlayerStateEnums.FALL,         new PlayerFallState(this)},
+            {PlayerStateEnums.DIVEROLL,     new PlayerDiveRollState(this)},
+            {PlayerStateEnums.STIFFEN,      new PlayerStiffenState(this)},
+            {PlayerStateEnums.TRANSFORM,    new PlayerTransformState(this)},
 
-            {PlayerStateEnums.Dead,         new PlayerDeadState(this)},
+            {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},
         };
 
-        ChangeState(PlayerStateEnums.Idle);
+        if (stateDictionary.TryGetValue(PlayerStateEnums.IDLE, out IPlayerState newState))
+        {
+            curState = newState;
+            curState.OnStateEnter();
+        }
     }
 
-    public void ChangeState(PlayerStateEnums newStateType)
+    public bool Contains(IPlayerState state)
     {
-        if (null != curState)   curState.OnStateExit();
+        if (curState == state)  return true;
+        
+        return false;
+    }
+
+    public void ChangeStateInput(PlayerStateEnums newStateType)
+    {
+        if (null == curState)   return;
+        if (!curState.allowedInputHash.Contains(newStateType))   return;
+
+        curState.OnStateExit();
+
+        if (stateDictionary.TryGetValue(newStateType, out IPlayerState newState))
+        {
+            newState.OnStateEnter();
+            curState = newState;
+        }
+    }
+
+    public void ChangeStateLogic(PlayerStateEnums newStateType)
+    {
+        if (null == curState)   return;
+        if (!curState.allowedLogicHash.Contains(newStateType))   return;
+
+        curState.OnStateExit();
 
         if (stateDictionary.TryGetValue(newStateType, out IPlayerState newState))
         {

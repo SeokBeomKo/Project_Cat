@@ -1,11 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WaitForSecondsPool;
 
 public class PlayerJumpState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.DOUBLE,
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.FALL,
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
+
+    public bool isJumpStarted = false;
 
     public PlayerJumpState(PlayerStateMachine _stateMachine)
     {
@@ -14,9 +25,13 @@ public class PlayerJumpState : IPlayerState
     }
     public void Execute()
     {
-        if (player.rigid.velocity.y <= 0)
+        player.JumpMove();
+        if (!isJumpStarted) return;
+
+        if (player.rigid.velocity.y <= 0.1f)
         {
-            stateMachine.ChangeState(PlayerStateEnums.Fall);
+            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            return;
         }
     }
 
@@ -24,16 +39,21 @@ public class PlayerJumpState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetBool("isJump", true);
-        player.rigid.AddForce(Vector3.up * player.jumpPower, ForceMode.Impulse);
+        player.SetJumpDir();
+        player.Jump();
+        player.StartCoroutine(JumpStart());
     }
 
     public void OnStateExit()
     {
         player.animator.SetBool("isJump", false);
+        isJumpStarted = false;
     }
 
-    public void ChangeState(IPlayerState newState)
+    private IEnumerator JumpStart()
     {
+        yield return WaitForSecondsPool.WaitForSecondsPool.waitForFixedUpdate;
 
+        isJumpStarted = true;
     }
 }

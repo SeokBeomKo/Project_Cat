@@ -21,6 +21,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public float                moveSpeed;
     [SerializeField]    public float                jumpPower;
     [SerializeField]    public float                diveSpeed;
+    [SerializeField]    public int                  maxDoubleCount;
+    [SerializeField]    public int                  curDoubleCount;
+
+    private void Awake() 
+    {
+        curDoubleCount = maxDoubleCount;
+    }
+
     private void FixedUpdate()
     {
         if (null != stateMachine.curState)
@@ -30,6 +38,7 @@ public class PlayerController : MonoBehaviour
     }
 
     Vector3 moveDir;
+    Vector3 jumpDir;
     public void Run()
     {
         moveDir = new Vector3(animator.GetFloat("Horizontal"),0,animator.GetFloat("Vertical"));
@@ -38,11 +47,25 @@ public class PlayerController : MonoBehaviour
         rigid.MovePosition(rigid.position + moveDir * moveSpeed * Time.fixedDeltaTime);
     }
 
-    
-
     public void DiveRoll(Vector3 _diveDir)
     {
         _diveDir = transform.rotation * _diveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
         rigid.MovePosition(rigid.position + _diveDir * diveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void Jump()
+    {
+        rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+    }
+
+    public void JumpMove()
+    {
+        rigid.MovePosition(rigid.position + jumpDir * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void SetJumpDir()
+    {
+        jumpDir = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
+        jumpDir = transform.rotation * jumpDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 }

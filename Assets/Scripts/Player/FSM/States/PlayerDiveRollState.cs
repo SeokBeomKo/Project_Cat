@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class PlayerDiveRollState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.RUN,
+        PlayerStateEnums.IDLE,
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
@@ -18,10 +27,18 @@ public class PlayerDiveRollState : IPlayerState
     public void Execute()
     {
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Running Dive Roll") &&
-            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
+            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
-            stateMachine.ChangeState(PlayerStateEnums.Idle);
-            return;
+            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+            {
+                stateMachine.ChangeStateLogic(PlayerStateEnums.RUN);
+                return;
+            }
+            else
+            {
+                stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+                return;
+            }
         }
 
         if (diveDir != Vector3.zero) 
@@ -36,6 +53,7 @@ public class PlayerDiveRollState : IPlayerState
     {
         origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        if (diveDir == Vector3.zero)   diveDir = Vector3.forward;
 
         player.animator.SetBool("isDiveRoll",true);
     }
@@ -45,10 +63,5 @@ public class PlayerDiveRollState : IPlayerState
         player.model.localRotation = origDir;
 
         player.animator.SetBool("isDiveRoll",false);
-    }
-
-    public void ChangeState(IPlayerState newState)
-    {
-
     }
 }

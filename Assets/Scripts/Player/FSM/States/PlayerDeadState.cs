@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerDeadState : IPlayerState
 {
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+    };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
@@ -23,10 +29,5 @@ public class PlayerDeadState : IPlayerState
 
     public void OnStateExit()
     {
-    }
-
-    public void ChangeState(IPlayerState newState)
-    {
-
     }
 }
