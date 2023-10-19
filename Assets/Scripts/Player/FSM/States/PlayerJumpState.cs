@@ -15,6 +15,8 @@ public class PlayerJumpState : IPlayerState
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
+    public bool isJumpStarted = false;
+
     public PlayerJumpState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
@@ -22,6 +24,8 @@ public class PlayerJumpState : IPlayerState
     }
     public void Execute()
     {
+        if (!isJumpStarted) return;
+
         Debug.Log(player.rigid.velocity);
         if (player.rigid.velocity.y <= 0.1f)
         {
@@ -33,13 +37,14 @@ public class PlayerJumpState : IPlayerState
 
     public void OnStateEnter()
     {
-        Debug.Log("OnJumpEnter");
         player.animator.SetBool("isJump", true);
         player.rigid.AddForce(Vector3.up * player.jumpPower, ForceMode.Impulse);
+        isJumpStarted = true;
     }
 
     public void OnStateExit()
     {
         player.animator.SetBool("isJump", false);
+        isJumpStarted = false;
     }
 }

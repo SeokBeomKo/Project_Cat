@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public float                moveSpeed;
     [SerializeField]    public float                jumpPower;
     [SerializeField]    public float                diveSpeed;
+
     private void FixedUpdate()
     {
         if (null != stateMachine.curState)
