@@ -24,6 +24,8 @@ public class PlayerFallState : IPlayerState
 
     public void Execute()
     {
+        player.JumpMove();
+
         if (player.rigid.velocity.y >= 0)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);

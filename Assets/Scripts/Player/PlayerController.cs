@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public float                moveSpeed;
     [SerializeField]    public float                jumpPower;
     [SerializeField]    public float                diveSpeed;
-    [SerializeField]    public int                 maxDoubleCount;
-    [HideInInspector]   public int                  curDoubleCount;
+    [SerializeField]    public int                  maxDoubleCount;
+    [SerializeField]    public int                  curDoubleCount;
 
     private void Awake() 
     {
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     }
 
     Vector3 moveDir;
+    Vector3 jumpDir;
     public void Run()
     {
         moveDir = new Vector3(animator.GetFloat("Horizontal"),0,animator.GetFloat("Vertical"));
@@ -55,5 +56,16 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+    }
+
+    public void JumpMove()
+    {
+        rigid.MovePosition(rigid.position + jumpDir * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void SetJumpDir()
+    {
+        jumpDir = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
+        jumpDir = transform.rotation * jumpDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 }

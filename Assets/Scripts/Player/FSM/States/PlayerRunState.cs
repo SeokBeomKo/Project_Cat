@@ -12,6 +12,7 @@ public class PlayerRunState : IPlayerState
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.IDLE,
+        PlayerStateEnums.FALL,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -25,6 +26,13 @@ public class PlayerRunState : IPlayerState
     {
         player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+
+        // if (player.rigid.velocity.y != 0)
+        // {
+            // Debug.Log("FALL");
+            // stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            // return;
+        // }
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
@@ -43,6 +51,8 @@ public class PlayerRunState : IPlayerState
 
     public void OnStateExit()
     {
+        player.animator.SetFloat("Horizontal", 0);
+        player.animator.SetFloat("Vertical", 0);
         player.animator.SetBool("isRun",false);
     }
 }
