@@ -14,6 +14,12 @@ public class InputCenter : MonoBehaviour
         inputHandle.OnPlayerRunInput += ChangeRunState;
         inputHandle.OnPlayerJumpInput += ChangeJumpState;
         inputHandle.OnPlayerDiveRollInput += ChangeDiveRollState;
+        inputHandle.OnPlayerAimSwitchInput += ChangeAimState;
+    }
+
+    void ChangeAimState()
+    {
+        playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM);
     }
 
     void ChangeRunState()

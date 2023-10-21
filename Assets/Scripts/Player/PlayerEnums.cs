@@ -8,6 +8,10 @@ public enum PlayerStateEnums
     STIFFEN,        // 경직 상태
     DIVEROLL,       // 구르기 상태
     TRANSFORM,      // 변장 상태
+
+    AIM,            // 조준 상태
+    AIM_MOVE,       // 조준 이동 상태
+    SHOOT,          // 사격 상태
     
     DEAD,           // 사망 상태
 }

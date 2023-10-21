@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("카메라 컨트롤러")]
+    [SerializeField]    public ShooterCameraController  cameraController;
     [Header("애니메이터")]
     [SerializeField]    public Animator             animator;
 
@@ -39,6 +41,12 @@ public class PlayerController : MonoBehaviour
 
     Vector3 moveDir;
     Vector3 jumpDir;
+
+    public void AimSwitch()
+    {
+        cameraController.SwitchCamera();
+    }
+
     public void Run()
     {
         moveDir = new Vector3(animator.GetFloat("Horizontal"),0,animator.GetFloat("Vertical"));

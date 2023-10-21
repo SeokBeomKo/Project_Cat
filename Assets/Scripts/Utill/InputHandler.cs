@@ -8,6 +8,7 @@ public class InputHandler : MonoBehaviour
     public event PlayerInputHandle OnPlayerRunInput;
     public event PlayerInputHandle OnPlayerJumpInput;
     public event PlayerInputHandle OnPlayerDiveRollInput;
+    public event PlayerInputHandle OnPlayerAimSwitchInput;
 
     private void Update() 
     {
@@ -22,6 +23,10 @@ public class InputHandler : MonoBehaviour
         if (Input.GetButtonDown("DiveRoll"))
         {
             OnPlayerDiveRollInput?.Invoke();
+        }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            OnPlayerAimSwitchInput?.Invoke();
         }
     }
 }
