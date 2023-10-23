@@ -15,6 +15,12 @@ public class PlayerAimRunState : IPlayerState
     {
     };
 
+    public PlayerAimRunState(PlayerStateMachine _stateMachine)
+    {
+        stateMachine = _stateMachine;
+        player = stateMachine.playerController;
+    }
+
     public void Execute()
     {
     }

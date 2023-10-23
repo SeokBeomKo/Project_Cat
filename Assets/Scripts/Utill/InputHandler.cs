@@ -24,7 +24,7 @@ public class InputHandler : MonoBehaviour
         {
             OnPlayerDiveRollInput?.Invoke();
         }
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire2"))
         {
             OnPlayerAimSwitchInput?.Invoke();
         }

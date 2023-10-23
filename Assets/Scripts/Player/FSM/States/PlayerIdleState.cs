@@ -8,7 +8,9 @@ public class PlayerIdleState : IPlayerState
     {
         PlayerStateEnums.RUN,
         PlayerStateEnums.JUMP,
-        PlayerStateEnums.DIVEROLL
+        PlayerStateEnums.DIVEROLL,
+
+        PlayerStateEnums.AIM,
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {

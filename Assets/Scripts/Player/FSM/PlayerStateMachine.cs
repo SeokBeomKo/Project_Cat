@@ -24,6 +24,9 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerStateEnums.STIFFEN,      new PlayerStiffenState(this)},
             {PlayerStateEnums.TRANSFORM,    new PlayerTransformState(this)},
 
+            {PlayerStateEnums.AIM,          new PlayerAimState(this)},
+            {PlayerStateEnums.AIM_RUN,      new PlayerAimRunState(this)},
+
             {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},
         };
 
