@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         curDoubleCount = maxDoubleCount;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (null != stateMachine.curState)
         {
@@ -49,16 +49,16 @@ public class PlayerController : MonoBehaviour
 
     public void Run()
     {
-        moveDir = new Vector3(animator.GetFloat("Horizontal"),0,animator.GetFloat("Vertical"));
+        moveDir = new Vector3(animator.GetFloat("Horizontal"), 0, animator.GetFloat("Vertical"));
 
         moveDir = transform.rotation * moveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
-        rigid.MovePosition(rigid.position + moveDir * moveSpeed * Time.fixedDeltaTime);
+        rigid.velocity = moveDir * moveSpeed;
     }
 
     public void DiveRoll(Vector3 _diveDir)
     {
         _diveDir = transform.rotation * _diveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
-        rigid.MovePosition(rigid.position + _diveDir * diveSpeed * Time.fixedDeltaTime);
+        rigid.velocity = _diveDir * diveSpeed;
     }
 
     public void Jump()
@@ -68,7 +68,8 @@ public class PlayerController : MonoBehaviour
 
     public void JumpMove()
     {
-        rigid.MovePosition(rigid.position + jumpDir * moveSpeed * Time.fixedDeltaTime);
+        // rigid.MovePosition(rigid.position + jumpDir * moveSpeed * Time.fixedDeltaTime);
+        rigid.velocity = jumpDir * moveSpeed;
     }
 
     public void SetJumpDir()

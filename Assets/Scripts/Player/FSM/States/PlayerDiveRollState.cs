@@ -46,7 +46,11 @@ public class PlayerDiveRollState : IPlayerState
             player.model.localRotation = Quaternion.LookRotation(diveDir); // 새로운 방향으로 회전
         }
 
-        player.DiveRoll(diveDir);
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Running Dive Roll") &&
+            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.7f)
+        {
+            player.DiveRoll(diveDir);
+        }
     }
 
     public void OnStateEnter()
@@ -63,5 +67,7 @@ public class PlayerDiveRollState : IPlayerState
         player.model.localRotation = origDir;
 
         player.animator.SetBool("isDiveRoll",false);
+
+        player.rigid.velocity = Vector3.zero;
     }
 }

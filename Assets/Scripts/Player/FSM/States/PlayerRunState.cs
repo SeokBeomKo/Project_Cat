@@ -29,12 +29,7 @@ public class PlayerRunState : IPlayerState
         player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
 
-        // if (player.rigid.velocity.y != 0)
-        // {
-            // Debug.Log("FALL");
-            // stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
-            // return;
-        // }
+        
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
@@ -56,5 +51,7 @@ public class PlayerRunState : IPlayerState
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
         player.animator.SetBool("isRun",false);
+
+        player.rigid.velocity = Vector3.zero;
     }
 }

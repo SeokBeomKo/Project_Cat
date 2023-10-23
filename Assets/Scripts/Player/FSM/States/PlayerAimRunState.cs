@@ -58,6 +58,6 @@ public class PlayerAimRunState : IPlayerState
         player.animator.SetFloat("Vertical", 0);
         player.animator.SetBool("isRun",false);
 
-        Debug.Log("a");
+        player.rigid.velocity = Vector3.zero;
     }
 }

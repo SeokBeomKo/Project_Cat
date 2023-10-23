@@ -14,6 +14,7 @@ public class PlayerIdleState : IPlayerState
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
+        PlayerStateEnums.FALL,
     };
 
     public PlayerController player {get; set;}
@@ -26,6 +27,7 @@ public class PlayerIdleState : IPlayerState
     }
     public void Execute()
     {
+        
     }
 
     public void OnStateEnter()
