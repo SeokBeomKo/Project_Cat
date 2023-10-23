@@ -19,12 +19,26 @@ public class InputCenter : MonoBehaviour
 
     void ChangeAimState()
     {
-        playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM);
+        if (playerController.stateMachine.curState is PlayerRunState runState)
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_RUN);
+        }
+        else
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM);
+        }
     }
 
     void ChangeRunState()
     {
-        playerController.stateMachine.ChangeStateInput(PlayerStateEnums.RUN);
+        if (playerController.stateMachine.curState is PlayerAimState aimState)
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_RUN);
+        }
+        else
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.RUN);
+        }
     }
 
     void ChangeJumpState()

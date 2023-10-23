@@ -14,6 +14,7 @@ public class PlayerAimState : IPlayerState
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.IDLE,
+        PlayerStateEnums.AIM_RUN,
     };
 
     public PlayerAimState(PlayerStateMachine _stateMachine)
@@ -24,8 +25,14 @@ public class PlayerAimState : IPlayerState
 
     public void Execute()
     {
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM_RUN);
+        }
+
         if (!Input.GetButton("Fire2"))
         {
+            player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
             player.cameraController.SetAimCamera(false);
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
         }
@@ -33,6 +40,7 @@ public class PlayerAimState : IPlayerState
 
     public void OnStateEnter()
     {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
         player.cameraController.SetAimCamera(true);
     }
 
