@@ -20,6 +20,8 @@ namespace BehaviorTree
         Transform detectedPlayer = null;
         Animator animator = null;
 
+        //float timePlayerWithinMeleeRange = 0f;
+
         const string attackStateName = "Attack";
         const string attackTriggerName = "attack";
 
@@ -51,12 +53,13 @@ namespace BehaviorTree
                     new ActionNode(MoveToDetectPlayer),
                 });
 
-            //var moveToOrigin = new ActionNode(MoveToOriginPosition);
+            var moveToOrigin = new ActionNode(MoveToOriginPosition);
 
             return new Selector(new List<Node>()
-            {
+            { 
                 meleeAttack,
-                detectPlayer,
+                moveToOrigin,
+                detectPlayer
                 //moveToOrigin
             });
         }
@@ -75,6 +78,7 @@ namespace BehaviorTree
             return false;
         }
 
+        // 근접 기본 공격
         Node.NodeState CheckMeleeAttack()
         {
             if (IsAnimationRunning(attackStateName)) return Node.NodeState.RUNNING;
@@ -85,7 +89,17 @@ namespace BehaviorTree
         {
             if (detectedPlayer != null)
             {
-                if (Vector3.SqrMagnitude(detectedPlayer.position - transform.position) < meleeAttackRange.sqrMagnitude) return Node.NodeState.SUCCESS;
+                if (Vector3.SqrMagnitude(detectedPlayer.position - transform.position) < meleeAttackRange.sqrMagnitude)
+                {
+                    /*timePlayerWithinMeleeRange += Time.deltaTime;
+
+                    if (timePlayerWithinMeleeRange > 1.5f)
+                    {
+                        timePlayerWithinMeleeRange = 0f;*/
+                        return Node.NodeState.SUCCESS;
+                    //}
+
+                }
             }
             return Node.NodeState.FAILURE;  
         }
@@ -99,12 +113,28 @@ namespace BehaviorTree
             }
             return Node.NodeState.FAILURE;
         }
+        
+        // IDLE
+        Node.NodeState MoveToOriginPosition()
+        {
+            if (detectedPlayer != null)
+            {
+                if (Vector3.SqrMagnitude(detectedPlayer.position - transform.position) < meleeAttackRange.sqrMagnitude)
+                {
+                    animator.SetTrigger("idle");
+                    return Node.NodeState.SUCCESS;
+                }
+                
+            }
+            return Node.NodeState.FAILURE;
+        }
 
+        // RUN
         Node.NodeState CheckDetectPlayer()
         {
             var overlapColliders = Physics.OverlapSphere(transform.position, detectRange, LayerMask.GetMask("Player"));
-            
-            if(overlapColliders != null && overlapColliders.Length >0)
+
+            if (overlapColliders != null && overlapColliders.Length > 0)
             {
                 detectedPlayer = overlapColliders[0].transform;
 
@@ -118,10 +148,11 @@ namespace BehaviorTree
 
         Node.NodeState MoveToDetectPlayer()
         {
-            if(detectedPlayer != null)
+            if (detectedPlayer != null)
             {
-                if(Vector3.SqrMagnitude(detectedPlayer.position - transform.position) < meleeAttackRange.sqrMagnitude)
+                if (Vector3.SqrMagnitude(detectedPlayer.position - transform.position) < meleeAttackRange.sqrMagnitude)
                 {
+
                     return Node.NodeState.SUCCESS;
                 }
             }
