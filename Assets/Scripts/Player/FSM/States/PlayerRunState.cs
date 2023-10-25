@@ -28,7 +28,6 @@ public class PlayerRunState : IPlayerState
     {
         player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
-
         
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)

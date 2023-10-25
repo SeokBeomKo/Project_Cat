@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         moveDir = new Vector3(animator.GetFloat("Horizontal"), 0, animator.GetFloat("Vertical"));
 
         moveDir = transform.rotation * moveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
-        rigid.velocity = moveDir * moveSpeed;
+        rigid.velocity = new Vector3(moveDir.x * moveSpeed, rigid.velocity.y, moveDir.z * moveSpeed);
     }
 
     public void DiveRoll(Vector3 _diveDir)
@@ -68,12 +68,12 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        rigid.velocity = new Vector3(rigid.velocity.x, jumpPower, rigid.velocity.z);
+        //rigid.AddForce(Vector3.up * jumpPower * 10, ForceMode.Impulse);
     }
 
     public void JumpMove()
     {
-        // rigid.MovePosition(rigid.position + jumpDir * moveSpeed * Time.fixedDeltaTime);
         rigid.velocity = jumpDir * moveSpeed;
     }
 
