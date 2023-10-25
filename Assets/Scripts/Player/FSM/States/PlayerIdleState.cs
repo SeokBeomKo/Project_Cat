@@ -28,7 +28,11 @@ public class PlayerIdleState : IPlayerState
     }
     public void Execute()
     {
-        
+        if (!player.CheckGrounded())
+        {
+            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            return;
+        }
     }
 
     public void OnStateEnter()

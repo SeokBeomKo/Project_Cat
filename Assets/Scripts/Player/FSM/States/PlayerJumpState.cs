@@ -25,10 +25,9 @@ public class PlayerJumpState : IPlayerState
     }
     public void Execute()
     {
-        //player.JumpMove();
+        player.JumpMove();
         if (!isJumpStarted) return;
 
-        Debug.Log(player.rigid.velocity.y);
         if (player.rigid.velocity.y <= 0.1f)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);

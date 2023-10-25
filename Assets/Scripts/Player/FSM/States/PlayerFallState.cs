@@ -24,12 +24,10 @@ public class PlayerFallState : IPlayerState
 
     public void Execute()
     {
-        // player.JumpMove();
+        player.JumpMove();
         
-        
-        if (player.rigid.velocity.y < 0)
+        if (player.CheckGrounded())
         {
-            Debug.Log("Exit Fall");
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
             return;
         }

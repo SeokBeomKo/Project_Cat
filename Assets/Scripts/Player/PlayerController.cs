@@ -69,17 +69,38 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         rigid.velocity = new Vector3(rigid.velocity.x, jumpPower, rigid.velocity.z);
-        //rigid.AddForce(Vector3.up * jumpPower * 10, ForceMode.Impulse);
     }
 
     public void JumpMove()
     {
-        rigid.velocity = jumpDir * moveSpeed;
+        rigid.velocity = new Vector3(jumpDir.x * moveSpeed, rigid.velocity.y, jumpDir.z * moveSpeed);
     }
 
     public void SetJumpDir()
     {
         jumpDir = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
         jumpDir = transform.rotation * jumpDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
+    }
+
+    public bool CheckGrounded()
+    {
+        float raycastDistance = 0.1f; // 레이 캐스트 거리
+        RaycastHit hit;
+
+        // 발 아래로 레이 캐스트를 발사하여 땅에 닿았는지 체크
+        if (Physics.Raycast(transform.position + new Vector3(0,0.05f,0), Vector3.down, out hit, raycastDistance))
+        {
+            // 레이캐스트 렌더링 (빨간색)
+            Debug.DrawLine(transform.position + new Vector3(0,0.05f,0), transform.position + new Vector3(0,0.05f,0) + Vector3.down * raycastDistance, Color.red);
+
+            // 땅에 닿았으면 true 반환
+            return true;
+        }
+
+        // 레이캐스트 렌더링 (파란색)
+        Debug.DrawLine(transform.position + new Vector3(0,0.05f,0), transform.position + new Vector3(0,0.05f,0) + Vector3.down * raycastDistance, Color.blue);
+
+        // 땅에 닿지 않았으면 false 반환
+        return false;
     }
 }
