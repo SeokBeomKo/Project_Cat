@@ -12,26 +12,21 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        /*StartCoroutine(TimerCouroutine());*/
+        StartCoroutine(TimerCouroutine());
     }
 
-    private void Update()
+    IEnumerator TimerCouroutine()
     {
-        limitTime -= Time.deltaTime * 60;
+        limitTime -= 1;
 
-        timerText.text = Mathf.Floor(limitTime / 3600).ToString("00") + ":" + Mathf.Floor((limitTime / 60) % 60).ToString("00");
+        timerText.text = Mathf.Floor(limitTime / 3600).ToString("00") + ":" + Mathf.Floor(limitTime % 60).ToString("00");
+
+        yield return new WaitForSeconds(1);
 
         if (limitTime == 0)
             Debug.Log("게임 종료");
 
-        //yield return null;
-        //StartCoroutine(TimerCouroutine());
+        StartCoroutine(TimerCouroutine());
     }
 }
 
-/*
-if (gameTime == 0)
-    Debug.Log("게임 종료");
-
-ToString(D2) : 2일 때 02로 표시
-*/
