@@ -37,10 +37,12 @@ public class PlayerIdleState : IPlayerState
 
     public void OnStateEnter()
     {
+        player.rigid.useGravity = false;
         player.curDoubleCount = player.maxDoubleCount;
     }
 
     public void OnStateExit()
     {
+        player.rigid.useGravity = true;
     }
 }

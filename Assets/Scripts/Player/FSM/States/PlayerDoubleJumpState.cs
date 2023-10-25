@@ -23,7 +23,7 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void Execute()
     {
-        Debug.Log("DOUBLE");
+        player.JumpMove();
         if (player.rigid.velocity.y <= 0.1f)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);

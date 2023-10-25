@@ -40,9 +40,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public bool Contains(IPlayerState state)
     {
-        if (curState == state)  return true;
-        
-        return false;
+        return curState == state;
     }
 
     public void ChangeStateInput(PlayerStateEnums newStateType)
