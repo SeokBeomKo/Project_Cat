@@ -26,7 +26,7 @@ public class PlayerDiveRollState : IPlayerState
     Quaternion origDir; // 원래 회전값을 저장할 Quaternion 타입의 변수
     public void Execute()
     {
-        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Dive Roll") &&
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Dive Roll")&&
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -51,13 +51,18 @@ public class PlayerDiveRollState : IPlayerState
         {
             player.DiveRoll(diveDir);
         }
+        else
+        {
+            player.rigid.velocity = Vector3.zero;
+        }
     }
 
     public void OnStateEnter()
     {
         origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-        if (diveDir == Vector3.zero)   diveDir = Vector3.forward;
+        
+        if (diveDir == Vector3.zero)   diveDir = Vector3.back;
 
         player.animator.SetBool("isDiveRoll",true);
     }

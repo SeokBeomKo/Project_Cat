@@ -9,6 +9,7 @@ public class PlayerIdleState : IPlayerState
         PlayerStateEnums.RUN,
         PlayerStateEnums.JUMP,
         PlayerStateEnums.DIVEROLL,
+        PlayerStateEnums.BACKROLL,
 
         PlayerStateEnums.AIM,
     };

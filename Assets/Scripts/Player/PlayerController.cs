@@ -61,6 +61,11 @@ public class PlayerController : MonoBehaviour
         rigid.velocity = _diveDir * diveSpeed;
     }
 
+    public void BackRoll(Vector3 _diveDir)
+    {
+        rigid.velocity = transform.rotation * Vector3.back * diveSpeed;
+    }
+
     public void Jump()
     {
         rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
