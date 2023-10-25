@@ -2,55 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRunState : IPlayerState
+public class PlayerBackRollState :  IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.JUMP,
-        PlayerStateEnums.DIVEROLL,
-
-        PlayerStateEnums.AIM_RUN
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.IDLE,
-        PlayerStateEnums.FALL,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public PlayerRunState(PlayerStateMachine _stateMachine)
+    public PlayerBackRollState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
         player = stateMachine.playerController;
     }
+
     public void Execute()
     {
-        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
-        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
-
-        
-
-        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll")&&
+            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
             return;
         }
-
-        player.Run();
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll") && 
+            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.5f)
+        {
+            player.BackRoll(Vector3.back);
+        }
     }
 
     public void OnStateEnter()
     {
-        player.animator.SetBool("isRun",true);
-        player.curDoubleCount = player.maxDoubleCount;
+        player.animator.SetBool("isDiveRoll",true);
     }
 
     public void OnStateExit()
     {
-        player.animator.SetFloat("Horizontal", 0);
-        player.animator.SetFloat("Vertical", 0);
-        player.animator.SetBool("isRun",false);
+        player.animator.SetBool("isDiveRoll",false);
 
         player.rigid.velocity = Vector3.zero;
     }

@@ -13,12 +13,32 @@ public class InputCenter : MonoBehaviour
     {
         inputHandle.OnPlayerRunInput += ChangeRunState;
         inputHandle.OnPlayerJumpInput += ChangeJumpState;
-        inputHandle.OnPlayerDiveRollInput += ChangeDiveRollState;
+        inputHandle.OnPlayerDiveRollInput += ChangeRollState;
+        inputHandle.OnPlayerAimSwitchInput += ChangeAimState;
+    }
+
+    void ChangeAimState()
+    {
+        if (playerController.stateMachine.curState is PlayerRunState runState)
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_RUN);
+        }
+        else
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM);
+        }
     }
 
     void ChangeRunState()
     {
-        playerController.stateMachine.ChangeStateInput(PlayerStateEnums.RUN);
+        if (playerController.stateMachine.curState is PlayerAimState aimState)
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_RUN);
+        }
+        else
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.RUN);
+        }
     }
 
     void ChangeJumpState()
@@ -35,9 +55,16 @@ public class InputCenter : MonoBehaviour
         }
     }
 
-    void ChangeDiveRollState()
+    void ChangeRollState()
     {
-        playerController.stateMachine.ChangeStateInput(PlayerStateEnums.DIVEROLL);
+        if (playerController.stateMachine.curState is PlayerIdleState idleState)
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.BACKROLL);
+        }
+        else
+        {
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.DIVEROLL);
+        }
     }
 
     

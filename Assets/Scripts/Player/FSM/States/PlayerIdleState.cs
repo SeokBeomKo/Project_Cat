@@ -8,10 +8,14 @@ public class PlayerIdleState : IPlayerState
     {
         PlayerStateEnums.RUN,
         PlayerStateEnums.JUMP,
-        PlayerStateEnums.DIVEROLL
+        PlayerStateEnums.DIVEROLL,
+        PlayerStateEnums.BACKROLL,
+
+        PlayerStateEnums.AIM,
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
+        PlayerStateEnums.FALL,
     };
 
     public PlayerController player {get; set;}
@@ -24,6 +28,7 @@ public class PlayerIdleState : IPlayerState
     }
     public void Execute()
     {
+        
     }
 
     public void OnStateEnter()

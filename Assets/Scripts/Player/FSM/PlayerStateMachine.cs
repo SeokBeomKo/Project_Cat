@@ -20,9 +20,13 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerStateEnums.JUMP,         new PlayerJumpState(this)},
             {PlayerStateEnums.DOUBLE,       new PlayerDoubleJumpState(this)},
             {PlayerStateEnums.FALL,         new PlayerFallState(this)},
+            {PlayerStateEnums.BACKROLL,     new PlayerBackRollState(this)},
             {PlayerStateEnums.DIVEROLL,     new PlayerDiveRollState(this)},
             {PlayerStateEnums.STIFFEN,      new PlayerStiffenState(this)},
             {PlayerStateEnums.TRANSFORM,    new PlayerTransformState(this)},
+
+            {PlayerStateEnums.AIM,          new PlayerAimState(this)},
+            {PlayerStateEnums.AIM_RUN,      new PlayerAimRunState(this)},
 
             {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},
         };

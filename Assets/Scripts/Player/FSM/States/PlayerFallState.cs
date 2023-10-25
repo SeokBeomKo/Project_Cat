@@ -25,8 +25,8 @@ public class PlayerFallState : IPlayerState
     public void Execute()
     {
         player.JumpMove();
-
-        if (player.rigid.velocity.y >= 0)
+        
+        if (player.rigid.velocity.y == 0)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
             return;
@@ -42,5 +42,7 @@ public class PlayerFallState : IPlayerState
     public void OnStateExit()
     {
         player.animator.SetBool("isFall", false);
+
+        player.rigid.velocity = Vector3.zero;
     }
 }
