@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HPSubject : Subject
 {
+    [Header("옵저버 리스트")]
     [SerializeField]
     private List<Observer> observerList = new List<Observer>();
    
