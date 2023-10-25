@@ -26,7 +26,7 @@ public class PlayerFallState : IPlayerState
     {
         player.JumpMove();
         
-        if (player.rigid.velocity.y == 0)
+        if (player.CheckGrounded())
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
             return;

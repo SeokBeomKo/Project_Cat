@@ -31,6 +31,7 @@ public class PlayerBackRollState :  IPlayerState
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll") && 
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.5f)
         {
+            Debug.Log("BackRoll");
             player.BackRoll(Vector3.back);
         }
     }

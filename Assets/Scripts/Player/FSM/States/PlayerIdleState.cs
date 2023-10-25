@@ -28,15 +28,21 @@ public class PlayerIdleState : IPlayerState
     }
     public void Execute()
     {
-        
+        if (!player.CheckGrounded())
+        {
+            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            return;
+        }
     }
 
     public void OnStateEnter()
     {
+        player.rigid.useGravity = false;
         player.curDoubleCount = player.maxDoubleCount;
     }
 
     public void OnStateExit()
     {
+        player.rigid.useGravity = true;
     }
 }
