@@ -8,7 +8,7 @@ public class WaveAttack : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("HitBox") && check == false)
+        if (other.CompareTag("HitBox") && check == false)
         { 
             Debug.Log("충돌!!");
         }
@@ -16,7 +16,7 @@ public class WaveAttack : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("SafeBox"))
+        if (other.CompareTag("SafeBox"))
         {
             check = false;
         }
@@ -24,7 +24,7 @@ public class WaveAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("SafeBox"))
+        if (other.CompareTag("SafeBox"))
         {
             check = true;
             Debug.Log("충돌X");
