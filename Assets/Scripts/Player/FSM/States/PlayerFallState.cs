@@ -10,7 +10,7 @@ public class PlayerFallState : IPlayerState
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.IDLE,
+        PlayerStateEnums.LAND,
     };
     
     public PlayerController player {get; set;}
@@ -28,7 +28,7 @@ public class PlayerFallState : IPlayerState
         
         if (player.CheckGrounded())
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+            stateMachine.ChangeStateLogic(PlayerStateEnums.LAND);
             return;
         }
     }

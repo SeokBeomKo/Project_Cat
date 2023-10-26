@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+        
         rigid.velocity = new Vector3(rigid.velocity.x, jumpPower, rigid.velocity.z);
     }
 
@@ -88,17 +90,17 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
 
         // 발 아래로 레이 캐스트를 발사하여 땅에 닿았는지 체크
-        if (Physics.Raycast(transform.position + new Vector3(0,0.05f,0), Vector3.down, out hit, raycastDistance))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.05f, 0), Vector3.down, out hit, raycastDistance))
         {
             // 레이캐스트 렌더링 (빨간색)
-            Debug.DrawLine(transform.position + new Vector3(0,0.05f,0), transform.position + new Vector3(0,0.05f,0) + Vector3.down * raycastDistance, Color.red);
+            Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), hit.point, Color.red);
 
             // 땅에 닿았으면 true 반환
             return true;
         }
 
         // 레이캐스트 렌더링 (파란색)
-        Debug.DrawLine(transform.position + new Vector3(0,0.05f,0), transform.position + new Vector3(0,0.05f,0) + Vector3.down * raycastDistance, Color.blue);
+        Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), transform.position + new Vector3(0, 0.05f, 0) + Vector3.down * raycastDistance, Color.blue);
 
         // 땅에 닿지 않았으면 false 반환
         return false;

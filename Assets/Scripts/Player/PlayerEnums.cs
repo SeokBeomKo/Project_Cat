@@ -5,6 +5,7 @@ public enum PlayerStateEnums
     JUMP,           // 점프 상태
     DOUBLE,         // 이중 점프 상태
     FALL,           // 낙하 상태
+    LAND,           // 착지 상태
     
     BACKROLL,       // 대기 회피  상태
     DIVEROLL,       // 이동 회피 상태

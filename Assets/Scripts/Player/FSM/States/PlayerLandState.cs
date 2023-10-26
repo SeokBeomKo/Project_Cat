@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerLandState : IPlayerState
+{
+    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    {
+    };
+    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    {
+        PlayerStateEnums.IDLE,
+    };
+    public PlayerController player {get; set;}
+    public PlayerStateMachine stateMachine {get; set;}
+
+    public PlayerLandState(PlayerStateMachine _stateMachine)
+    {
+        stateMachine = _stateMachine;
+        player = stateMachine.playerController;
+    }
+
+    public void Execute()
+    {
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("jump down") &&
+            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        {
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            {
+                stateMachine.ChangeStateLogic(PlayerStateEnums.RUN);
+                return;
+            }
+            else
+            {
+                stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+                return;
+            }
+        }
+    }
+
+    public void OnStateEnter()
+    {
+        player.animator.SetBool("isLand",true);
+    }
+
+    public void OnStateExit()
+    {
+        player.animator.SetBool("isLand",false);
+    }
+}

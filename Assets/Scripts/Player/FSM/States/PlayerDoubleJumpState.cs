@@ -10,7 +10,7 @@ public class PlayerDoubleJumpState : IPlayerState
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.FALL
+        PlayerStateEnums.FALL,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}

@@ -17,11 +17,15 @@ public class PlayerStateMachine : MonoBehaviour
         {
             {PlayerStateEnums.IDLE,         new PlayerIdleState(this)},
             {PlayerStateEnums.RUN,          new PlayerRunState(this)},
+
             {PlayerStateEnums.JUMP,         new PlayerJumpState(this)},
             {PlayerStateEnums.DOUBLE,       new PlayerDoubleJumpState(this)},
             {PlayerStateEnums.FALL,         new PlayerFallState(this)},
+            {PlayerStateEnums.LAND,         new PlayerLandState(this)},
+
             {PlayerStateEnums.BACKROLL,     new PlayerBackRollState(this)},
             {PlayerStateEnums.DIVEROLL,     new PlayerDiveRollState(this)},
+
             {PlayerStateEnums.STIFFEN,      new PlayerStiffenState(this)},
             {PlayerStateEnums.TRANSFORM,    new PlayerTransformState(this)},
 
