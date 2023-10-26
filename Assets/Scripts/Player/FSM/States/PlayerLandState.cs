@@ -27,7 +27,7 @@ public class PlayerLandState : IPlayerState
         {
             if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.RUN);
+                stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
                 return;
             }
             else

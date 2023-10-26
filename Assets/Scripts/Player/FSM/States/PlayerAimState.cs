@@ -14,7 +14,7 @@ public class PlayerAimState : IPlayerState
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.IDLE,
-        PlayerStateEnums.AIM_RUN,
+        PlayerStateEnums.AIM_MOVE,
     };
 
     public PlayerAimState(PlayerStateMachine _stateMachine)
@@ -27,7 +27,7 @@ public class PlayerAimState : IPlayerState
     {
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM_RUN);
+            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM_MOVE);
         }
 
         if (!Input.GetButton("Fire2"))

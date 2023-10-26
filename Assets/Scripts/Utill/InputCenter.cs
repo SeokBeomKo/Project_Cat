@@ -19,9 +19,9 @@ public class InputCenter : MonoBehaviour
 
     void ChangeAimState()
     {
-        if (playerController.stateMachine.curState is PlayerRunState runState)
+        if (playerController.stateMachine.curState is PlayerMoveState moveState)
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_RUN);
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_MOVE);
         }
         else
         {
@@ -33,11 +33,11 @@ public class InputCenter : MonoBehaviour
     {
         if (playerController.stateMachine.curState is PlayerAimState aimState)
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_RUN);
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_MOVE);
         }
         else
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.RUN);
+            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.MOVE);
         }
     }
 

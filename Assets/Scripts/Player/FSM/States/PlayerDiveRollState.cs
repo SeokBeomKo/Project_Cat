@@ -10,7 +10,7 @@ public class PlayerDiveRollState : IPlayerState
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.RUN,
+        PlayerStateEnums.MOVE,
         PlayerStateEnums.IDLE,
     };
     public PlayerController player {get; set;}
@@ -31,7 +31,7 @@ public class PlayerDiveRollState : IPlayerState
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.RUN);
+                stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
                 return;
             }
             else

@@ -6,7 +6,7 @@ public class PlayerIdleState : IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
-        PlayerStateEnums.RUN,
+        PlayerStateEnums.MOVE,
         PlayerStateEnums.JUMP,
         PlayerStateEnums.DIVEROLL,
         PlayerStateEnums.BACKROLL,

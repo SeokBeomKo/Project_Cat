@@ -16,7 +16,7 @@ public class PlayerStateMachine : MonoBehaviour
         stateDictionary = new Dictionary<PlayerStateEnums, IPlayerState>
         {
             {PlayerStateEnums.IDLE,         new PlayerIdleState(this)},
-            {PlayerStateEnums.RUN,          new PlayerRunState(this)},
+            {PlayerStateEnums.MOVE,          new PlayerMoveState(this)},
 
             {PlayerStateEnums.JUMP,         new PlayerJumpState(this)},
             {PlayerStateEnums.DOUBLE,       new PlayerDoubleJumpState(this)},
@@ -30,7 +30,7 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerStateEnums.TRANSFORM,    new PlayerTransformState(this)},
 
             {PlayerStateEnums.AIM,          new PlayerAimState(this)},
-            {PlayerStateEnums.AIM_RUN,      new PlayerAimRunState(this)},
+            {PlayerStateEnums.AIM_MOVE,      new PlayerAimMoveState(this)},
 
             {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},
         };

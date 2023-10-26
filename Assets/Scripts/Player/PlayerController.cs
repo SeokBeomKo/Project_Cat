@@ -39,20 +39,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    Vector3 moveDir;
-    Vector3 jumpDir;
+    private void FixedUpdate() 
+    {
+        MoveRogic();
+    }
+
+    public Vector3 moveDirection;
+    public Vector3 jumpDirection;
 
     public void AimSwitch()
     {
         cameraController.SwitchCamera();
     }
 
-    public void Run()
+    public void MoveRogic()
     {
-        moveDir = new Vector3(animator.GetFloat("Horizontal"), 0, animator.GetFloat("Vertical"));
+        if (rigid.velocity.magnitude < moveSpeed)
+        {
+            rigid.AddForce(moveDirection.normalized * moveSpeed * 5f, ForceMode.Force);
+        }
+    }
 
-        moveDir = transform.rotation * moveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
-        rigid.velocity = new Vector3(moveDir.x * moveSpeed, rigid.velocity.y, moveDir.z * moveSpeed);
+    public void MoveInput()
+    {
+        moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
+        moveDirection = transform.rotation * moveDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
     public void DiveRoll(Vector3 _diveDir)
@@ -70,18 +82,19 @@ public class PlayerController : MonoBehaviour
     {
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
-        rigid.velocity = new Vector3(rigid.velocity.x, jumpPower, rigid.velocity.z);
+        rigid.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+        // rigid.velocity = new Vector3(rigid.velocity.x, jumpPower, rigid.velocity.z);
     }
 
     public void JumpMove()
     {
-        rigid.velocity = new Vector3(jumpDir.x * moveSpeed, rigid.velocity.y, jumpDir.z * moveSpeed);
+        rigid.velocity = new Vector3(jumpDirection.x * moveSpeed, rigid.velocity.y, jumpDirection.z * moveSpeed);
     }
 
     public void SetJumpDir()
     {
-        jumpDir = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
-        jumpDir = transform.rotation * jumpDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
+        jumpDirection = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
+        jumpDirection = transform.rotation * jumpDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
     public bool CheckGrounded()

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRunState : IPlayerState
+public class PlayerMoveState : IPlayerState
 {
     public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.JUMP,
         PlayerStateEnums.DIVEROLL,
 
-        PlayerStateEnums.AIM_RUN
+        PlayerStateEnums.AIM_MOVE
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
@@ -19,7 +19,7 @@ public class PlayerRunState : IPlayerState
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public PlayerRunState(PlayerStateMachine _stateMachine)
+    public PlayerMoveState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
         player = stateMachine.playerController;
@@ -41,7 +41,7 @@ public class PlayerRunState : IPlayerState
             return;
         }
 
-        player.Run();
+        player.MoveInput();
     }
 
     public void OnStateEnter()
@@ -56,6 +56,7 @@ public class PlayerRunState : IPlayerState
         player.animator.SetFloat("Vertical", 0);
         player.animator.SetBool("isRun",false);
 
+        player.moveDirection = Vector3.zero;
         player.rigid.velocity = Vector3.zero;
     }
 }
