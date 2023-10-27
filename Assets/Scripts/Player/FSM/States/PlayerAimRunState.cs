@@ -44,12 +44,16 @@ public class PlayerAimMoveState : IPlayerState
         player.MoveInput();
     }
 
+    float originSpeed;
     public void OnStateEnter()
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
         player.cameraController.SetAimCamera(true);
         player.animator.SetBool("isRun",true);
         player.curDoubleCount = player.maxDoubleCount;
+
+        originSpeed = player.moveSpeed;
+        player.moveSpeed *= 0.5f; 
     }
 
     public void OnStateExit()
@@ -60,5 +64,7 @@ public class PlayerAimMoveState : IPlayerState
 
         player.moveDirection = Vector3.zero;
         player.rigid.velocity = Vector3.zero;
+
+        player.moveSpeed = originSpeed;
     }
 }

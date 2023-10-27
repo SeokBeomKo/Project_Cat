@@ -49,10 +49,11 @@ public class PlayerDiveRollState : IPlayerState
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Dive Roll") &&
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.7f)
         {
-            player.DiveRoll(diveDir);
+            player.isRolled = true;
         }
         else
         {
+            player.isRolled = false;
             player.rigid.velocity = Vector3.zero;
         }
     }
@@ -64,11 +65,14 @@ public class PlayerDiveRollState : IPlayerState
         
         if (diveDir == Vector3.zero)   diveDir = Vector3.back;
 
+        player.RollInput();
+
         player.animator.SetBool("isDiveRoll",true);
     }
 
     public void OnStateExit()
     {
+        player.isRolled = false;
         player.model.localRotation = origDir;
 
         player.animator.SetBool("isDiveRoll",false);

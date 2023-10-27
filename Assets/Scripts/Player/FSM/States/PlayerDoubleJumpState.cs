@@ -23,8 +23,6 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void Execute()
     {
-        Debug.Log(player.rigid.velocity.y);
-        player.JumpMove();
         if (player.rigid.velocity.y <= 0.1f)
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
@@ -34,13 +32,13 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void OnStateEnter()
     {
-        player.animator.SetBool("isDoubleJump", true);
-        player.Jump();
         player.curDoubleCount--;
+
+        player.animator.SetTrigger("isDoubleJump");
+        player.Jump();
     }
 
     public void OnStateExit()
     {
-        player.animator.SetBool("isDoubleJump", false);
     }
 }

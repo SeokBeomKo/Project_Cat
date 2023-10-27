@@ -22,9 +22,12 @@ public class PlayerController : MonoBehaviour
     [Header("수치 값")]
     [SerializeField]    public float                moveSpeed;
     [SerializeField]    public float                jumpPower;
-    [SerializeField]    public float                diveSpeed;
+    [SerializeField]    public float                rollSpeed;
     [SerializeField]    public int                  maxDoubleCount;
     [SerializeField]    public int                  curDoubleCount;
+
+    [HideInInspector]   public bool                 isGrounded;
+    [HideInInspector]   public bool                 isRolled;
 
     private void Awake() 
     {
@@ -41,11 +44,26 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        isGrounded = CheckGrounded();
+        SpeedControl();
         MoveRogic();
+    }
+
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
+
+        // limit velocity if needed
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rigid.velocity = new Vector3(limitedVel.x, rigid.velocity.y, limitedVel.z);
+        }
     }
 
     public Vector3 moveDirection;
     public Vector3 jumpDirection;
+    public Vector3 rollDirection;
 
     public void AimSwitch()
     {
@@ -54,9 +72,20 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRogic()
     {
-        if (rigid.velocity.magnitude < moveSpeed)
+        if (isGrounded)
         {
             rigid.AddForce(moveDirection.normalized * moveSpeed * 5f, ForceMode.Force);
+        }
+        if (!isGrounded)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, jumpDirection.normalized, out hit, 0.1f)) return;
+            rigid.AddForce(jumpDirection.normalized * moveSpeed * 5f, ForceMode.Force);
+        }
+
+        if (isRolled)
+        {
+            rigid.AddForce(rollDirection.normalized * rollSpeed * 10f, ForceMode.Force);
         }
     }
 
@@ -67,15 +96,18 @@ public class PlayerController : MonoBehaviour
         moveDirection = transform.rotation * moveDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
-    public void DiveRoll(Vector3 _diveDir)
+    public void JumpInput()
     {
-        _diveDir = transform.rotation * _diveDir; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
-        rigid.velocity = _diveDir * diveSpeed;
+        jumpDirection = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
+
+        jumpDirection = transform.rotation * jumpDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
-    public void BackRoll(Vector3 _diveDir)
+    public void RollInput()
     {
-        rigid.velocity = transform.rotation * Vector3.back * diveSpeed;
+        rollDirection = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
+        if (rollDirection == Vector3.zero)   rollDirection = Vector3.back;
+        rollDirection = transform.rotation * rollDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
     public void Jump()
@@ -83,39 +115,57 @@ public class PlayerController : MonoBehaviour
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
         rigid.AddForce(transform.up * jumpPower, ForceMode.Impulse);
-        // rigid.velocity = new Vector3(rigid.velocity.x, jumpPower, rigid.velocity.z);
     }
 
-    public void JumpMove()
+    public void DoubleJump()
     {
-        rigid.velocity = new Vector3(jumpDirection.x * moveSpeed, rigid.velocity.y, jumpDirection.z * moveSpeed);
+        rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+        
+        rigid.AddForce(transform.up * jumpPower * 1.5f, ForceMode.Impulse);
     }
 
-    public void SetJumpDir()
-    {
-        jumpDirection = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
-        jumpDirection = transform.rotation * jumpDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
-    }
-
+    float raycastDistance = 0.1f; // Raycast distance
+    float colliderRadius = 0.25f; // Capsule collider radius
     public bool CheckGrounded()
     {
-        float raycastDistance = 0.1f; // 레이 캐스트 거리
-        RaycastHit hit;
+        Vector3[] origins = new Vector3[4];
+        origins[0] = transform.position + new Vector3(-colliderRadius / 2f, 0.05f, 0); // Left
+        origins[1] = transform.position + new Vector3(colliderRadius / 2f, 0.05f, 0); // Right
+        origins[2] = transform.position + new Vector3(0 , .05f , -colliderRadius /2 ); // Front
+        origins[3] = transform.position + new Vector3(0 , .05f , colliderRadius /2 ); // Back
 
-        // 발 아래로 레이 캐스트를 발사하여 땅에 닿았는지 체크
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.05f, 0), Vector3.down, out hit, raycastDistance))
+        foreach (Vector3 origin in origins)
         {
-            // 레이캐스트 렌더링 (빨간색)
-            Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), hit.point, Color.red);
-
-            // 땅에 닿았으면 true 반환
-            return true;
+            RaycastHit hit;
+            if (Physics.Raycast(origin , Vector3.down , out hit , raycastDistance))
+            {
+                Debug.DrawLine(origin , hit.point , Color.red);
+                return true;
+            }
+            else 
+            {
+                Debug.DrawLine(origin , origin + Vector3.down * raycastDistance , Color.blue);
+            }
         }
 
-        // 레이캐스트 렌더링 (파란색)
-        Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), transform.position + new Vector3(0, 0.05f, 0) + Vector3.down * raycastDistance, Color.blue);
-
-        // 땅에 닿지 않았으면 false 반환
         return false;
+        // float raycastDistance = 0.1f; // 레이 캐스트 거리
+        // RaycastHit hit;
+
+        // // 발 아래로 레이 캐스트를 발사하여 땅에 닿았는지 체크
+        // if (Physics.Raycast(transform.position + new Vector3(0, 0.05f, 0), Vector3.down, out hit, raycastDistance))
+        // {
+        //     // 레이캐스트 렌더링 (빨간색)
+        //     Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), hit.point, Color.red);
+
+        //     // 땅에 닿았으면 true 반환
+        //     return true;
+        // }
+
+        // // 레이캐스트 렌더링 (파란색)
+        // Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), transform.position + new Vector3(0, 0.05f, 0) + Vector3.down * raycastDistance, Color.blue);
+
+        // // 땅에 닿지 않았으면 false 반환
+        // return false;
     }
 }

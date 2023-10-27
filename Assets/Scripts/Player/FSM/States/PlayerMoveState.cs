@@ -46,7 +46,7 @@ public class PlayerMoveState : IPlayerState
 
     public void OnStateEnter()
     {
-        player.animator.SetBool("isRun",true);
+        player.animator.SetBool("isMove",true);
         player.curDoubleCount = player.maxDoubleCount;
     }
 
@@ -54,7 +54,7 @@ public class PlayerMoveState : IPlayerState
     {
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
-        player.animator.SetBool("isRun",false);
+        player.animator.SetBool("isMove",false);
 
         player.moveDirection = Vector3.zero;
         player.rigid.velocity = Vector3.zero;

@@ -25,7 +25,6 @@ public class PlayerJumpState : IPlayerState
     }
     public void Execute()
     {
-        player.JumpMove();
         if (!isJumpStarted) return;
 
         if (player.rigid.velocity.y <= 0.1f)
@@ -39,7 +38,8 @@ public class PlayerJumpState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetBool("isJump", true);
-        player.SetJumpDir();
+        player.JumpInput();
+
         player.Jump();
         player.StartCoroutine(JumpStart());
     }

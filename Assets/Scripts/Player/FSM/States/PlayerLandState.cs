@@ -42,6 +42,8 @@ public class PlayerLandState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetBool("isLand",true);
+
+        player.jumpDirection = Vector3.zero;
     }
 
     public void OnStateExit()

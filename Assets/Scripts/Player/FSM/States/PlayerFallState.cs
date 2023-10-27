@@ -24,8 +24,6 @@ public class PlayerFallState : IPlayerState
 
     public void Execute()
     {
-        player.JumpMove();
-        
         if (player.CheckGrounded())
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.LAND);
@@ -42,7 +40,5 @@ public class PlayerFallState : IPlayerState
     public void OnStateExit()
     {
         player.animator.SetBool("isFall", false);
-
-        player.rigid.velocity = Vector3.zero;
     }
 }
