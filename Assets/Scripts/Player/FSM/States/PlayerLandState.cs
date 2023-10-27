@@ -10,6 +10,7 @@ public class PlayerLandState : IPlayerState
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.IDLE,
+        PlayerStateEnums.MOVE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -27,12 +28,12 @@ public class PlayerLandState : IPlayerState
         {
             if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
+                stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
                 return;
             }
             else
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+                stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
                 return;
             }
         }

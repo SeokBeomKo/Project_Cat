@@ -23,6 +23,7 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void Execute()
     {
+        Debug.Log(player.rigid.velocity.y);
         player.JumpMove();
         if (player.rigid.velocity.y <= 0.1f)
         {
