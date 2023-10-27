@@ -1,36 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WeaponSelection : MonoBehaviour
 {
     private Transform weaponContainer; // 무기 컨테이너
 
+    /*public GameObject softRifle; 
+    public GameObject bubbleGun; 
+    public GameObject splashBuster; */
+
+    private int softRifleBulletCount = 10;
+    private int bubbleGunBulletCount = 400;
+    private int splashBusterBulletCount = 40; // 8발씩
+
+    public TextMeshProUGUI softRifleText;
+    public TextMeshProUGUI bubbleGunText;
+    public TextMeshProUGUI splashBusterText;
+
+    private bool isSoftRifleSelected = false;
+    private bool isBubbleGunSelected = false;
+    private bool isSplashBusterSelected = false;
+
+    //private bool isReloading = false;
+
     void Start()
     {
         // 게임 시작 시 초기 무기 선택
         weaponContainer = gameObject.transform;
-        SelectWeapon(2);
+        SelectWeapon(0);
+        
+        isSoftRifleSelected = true;
+        isBubbleGunSelected = false;
+        isSplashBusterSelected = false;
     }
 
     void Update()
     {
         // 키(예: 숫자 1, 2, 3)를 눌러 무기 변경
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // SoftRifle
         {
             Debug.Log("1");
             SelectWeapon(0);
+
+            isSoftRifleSelected = true;
+            isBubbleGunSelected = false;
+            isSplashBusterSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // BubbleGun
         {
             Debug.Log("2");
             SelectWeapon(1);
+
+            isSoftRifleSelected = false;
+            isBubbleGunSelected = true;
+            isSplashBusterSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) // SplashBuster
         {
             Debug.Log("3");
             SelectWeapon(2);
+
+            isSoftRifleSelected = false;
+            isBubbleGunSelected = false;
+            isSplashBusterSelected = true;
         }
+
+
+        if (isSoftRifleSelected)
+            SelectSoftRifle();
+        else if (isBubbleGunSelected)
+            SelectBubbleGun();
+        else if (isSplashBusterSelected)
+            SelectSplashBuster();
     }
 
     void SelectWeapon(int weaponNum)
@@ -52,6 +95,75 @@ public class WeaponSelection : MonoBehaviour
         }
     }
 
+    void SelectSoftRifle() // 재장전 : 8초
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(softRifleBulletCount > 0)
+            {
+                softRifleBulletCount--;
+                Debug.Log(softRifleBulletCount);
+                softRifleText.text = softRifleBulletCount + " / 10";
+            }
+
+            if(softRifleBulletCount == 0)
+            {
+                StartCoroutine(Delaytime(8));
+                softRifleBulletCount = 10;
+                Debug.Log(softRifleBulletCount);
+                softRifleText.text = softRifleBulletCount + " / 10";
+            }
+        }
+    }
+
+
+    void SelectBubbleGun() // 재장전 : 8초
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (bubbleGunBulletCount > 0)
+            {
+                bubbleGunBulletCount--;
+                Debug.Log(bubbleGunBulletCount);
+                bubbleGunText.text = bubbleGunBulletCount + " / 400";
+            }
+
+            if (bubbleGunBulletCount == 0)
+            {
+                StartCoroutine(Delaytime(8));
+                bubbleGunBulletCount = 400;
+                Debug.Log(bubbleGunBulletCount);
+                splashBusterText.text = bubbleGunBulletCount + " / 400";
+            }
+        }
+    }
+
+    void SelectSplashBuster() // 재장전 : 6초
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (splashBusterBulletCount > 0)
+            {
+                splashBusterBulletCount -= 8;
+                Debug.Log(splashBusterBulletCount);
+                splashBusterText.text = splashBusterBulletCount + " / 40";
+            }
+
+            if (splashBusterBulletCount == 0)
+            {
+                StartCoroutine(Delaytime(6));
+                splashBusterBulletCount = 40;
+                Debug.Log(splashBusterBulletCount);
+                splashBusterText.text = splashBusterBulletCount + " / 40";
+            }
+        }
+    }
+
+    
+    private IEnumerator Delaytime(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+    }
 
 }
 
