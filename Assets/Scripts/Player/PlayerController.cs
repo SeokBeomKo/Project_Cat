@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public float                rollSpeed;
     [SerializeField]    public int                  maxDoubleCount;
     [SerializeField]    public int                  curDoubleCount;
+    [SerializeField]    public int                  maxRollCount;
+    [SerializeField]    public int                  curRollCount;
+    [SerializeField]    public int                  delayRollCount;
 
     [HideInInspector]   public bool                 isGrounded;
     [HideInInspector]   public bool                 isRolled;
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private void Awake() 
     {
         curDoubleCount = maxDoubleCount;
+        curRollCount = maxRollCount;
     }
 
     private void Update()
@@ -50,6 +54,22 @@ public class PlayerController : MonoBehaviour
         isGrounded = CheckGrounded();
         SpeedControl();
         MoveRogic();
+        RecoveryRollCount();
+    }
+
+    float rollTime;
+    private void RecoveryRollCount()
+    {
+        Debug.Log(curRollCount);
+        if (curRollCount < maxRollCount)
+        {
+            rollTime += Time.fixedDeltaTime;
+            if (rollTime >= delayRollCount)
+            {
+                curRollCount++;
+                rollTime = 0;
+            }
+        }
     }
 
     private void SpeedControl()
