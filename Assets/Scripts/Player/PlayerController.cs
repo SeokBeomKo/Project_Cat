@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]   public bool                 isGrounded;
     [HideInInspector]   public bool                 isRolled;
 
+    private RaycastHit slopeHit;
+    public float maxSlopeAngle = 50;
+
     private void Awake() 
     {
         curDoubleCount = maxDoubleCount;
@@ -51,6 +54,14 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedControl()
     {
+
+        if (OnSlope())
+        {
+            if (rigid.velocity.magnitude > moveSpeed)
+                rigid.velocity = rigid.velocity.normalized * moveSpeed;
+            return;
+        }
+
         Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
 
         // limit velocity if needed
@@ -72,11 +83,19 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRogic()
     {
-        if (isGrounded)
+        if (OnSlope())
+        {
+            rigid.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+
+            if (rigid.velocity.y > 0)
+                rigid.AddForce(Vector3.down * 80f, ForceMode.Force);
+        }
+
+        else if (isGrounded)
         {
             rigid.AddForce(moveDirection.normalized * moveSpeed * 5f, ForceMode.Force);
         }
-        if (!isGrounded)
+        else if (!isGrounded)
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, jumpDirection.normalized, out hit, 0.1f)) return;
@@ -87,6 +106,8 @@ public class PlayerController : MonoBehaviour
         {
             rigid.AddForce(rollDirection.normalized * rollSpeed * 10f, ForceMode.Force);
         }
+
+        rigid.useGravity = !OnSlope();
     }
 
     public void MoveInput()
@@ -124,6 +145,22 @@ public class PlayerController : MonoBehaviour
         rigid.AddForce(transform.up * jumpPower * 1.5f, ForceMode.Impulse);
     }
 
+    private bool OnSlope()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
+
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
     float raycastDistance = 0.1f; // Raycast distance
     float colliderRadius = 0.25f; // Capsule collider radius
     public bool CheckGrounded()
@@ -131,8 +168,8 @@ public class PlayerController : MonoBehaviour
         Vector3[] origins = new Vector3[4];
         origins[0] = transform.position + new Vector3(-colliderRadius / 2f, 0.05f, 0); // Left
         origins[1] = transform.position + new Vector3(colliderRadius / 2f, 0.05f, 0); // Right
-        origins[2] = transform.position + new Vector3(0 , .05f , -colliderRadius /2 ); // Front
-        origins[3] = transform.position + new Vector3(0 , .05f , colliderRadius /2 ); // Back
+        origins[2] = transform.position + new Vector3(0 , 0.05f , -colliderRadius /2 ); // Front
+        origins[3] = transform.position + new Vector3(0 , 0.05f , colliderRadius /2 ); // Back
 
         foreach (Vector3 origin in origins)
         {
