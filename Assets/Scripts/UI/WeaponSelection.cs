@@ -102,17 +102,13 @@ public class WeaponSelection : MonoBehaviour
             if(softRifleBulletCount > 0)
             {
                 softRifleBulletCount--;
-                Debug.Log(softRifleBulletCount);
                 softRifleText.text = softRifleBulletCount + " / 10";
             }
 
-            if(softRifleBulletCount == 0)
+            /*if(softRifleBulletCount == 0)
             {
-                StartCoroutine(Delaytime(8));
-                softRifleBulletCount = 10;
-                Debug.Log(softRifleBulletCount);
-                softRifleText.text = softRifleBulletCount + " / 10";
-            }
+                StartCoroutine(Delaytime(8, 0));
+            }*/
         }
     }
 
@@ -124,17 +120,13 @@ public class WeaponSelection : MonoBehaviour
             if (bubbleGunBulletCount > 0)
             {
                 bubbleGunBulletCount--;
-                Debug.Log(bubbleGunBulletCount);
                 bubbleGunText.text = bubbleGunBulletCount + " / 400";
             }
 
-            if (bubbleGunBulletCount == 0)
+            /*if (bubbleGunBulletCount == 0)
             {
-                StartCoroutine(Delaytime(8));
-                bubbleGunBulletCount = 400;
-                Debug.Log(bubbleGunBulletCount);
-                splashBusterText.text = bubbleGunBulletCount + " / 400";
-            }
+                StartCoroutine(Delaytime(8, 1));
+            }*/
         }
     }
 
@@ -145,30 +137,46 @@ public class WeaponSelection : MonoBehaviour
             if (splashBusterBulletCount > 0)
             {
                 splashBusterBulletCount -= 8;
-                Debug.Log(splashBusterBulletCount);
                 splashBusterText.text = splashBusterBulletCount + " / 40";
             }
 
-            if (splashBusterBulletCount == 0)
+            /*if (splashBusterBulletCount == 0)
             {
-                StartCoroutine(Delaytime(6));
-                splashBusterBulletCount = 40;
-                Debug.Log(splashBusterBulletCount);
-                splashBusterText.text = splashBusterBulletCount + " / 40";
-            }
+                StartCoroutine(Delaytime(6, 2));
+            }*/
         }
     }
 
     
-    private IEnumerator Delaytime(float delayTime)
+    private IEnumerator Delaytime(float delayTime, int weaponNum)
     {
         yield return new WaitForSeconds(delayTime);
+
+        switch(weaponNum)
+        {
+            case 0:
+                softRifleBulletCount = 10;
+                Debug.Log(softRifleBulletCount);
+                softRifleText.text = softRifleBulletCount + " / 10";
+                break;
+            case 1:
+                bubbleGunBulletCount = 400;
+                Debug.Log(bubbleGunBulletCount);
+                softRifleText.text = bubbleGunBulletCount + " / 400";
+                break;
+            case 2:
+                splashBusterBulletCount = 40;
+                Debug.Log(splashBusterBulletCount);
+                splashBusterText.text = splashBusterBulletCount + " / 40";
+                break;
+
+        }
     }
 
 }
 
 
-            /*Transform child = weaponContainer.GetChild(i);
-            Vector3 newPosition = Vector3.up;
-            newPosition.y = Vector3.up.y * i * 100 - 300; // 무기를 위아래로 등간격으로 배치
-            child.localPosition = newPosition;*/
+/*Transform child = weaponContainer.GetChild(i);
+Vector3 newPosition = Vector3.up;
+newPosition.y = Vector3.up.y * i * 100 - 300; // 무기를 위아래로 등간격으로 배치
+child.localPosition = newPosition;*/

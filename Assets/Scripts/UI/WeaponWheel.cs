@@ -29,21 +29,20 @@ public class WeaponWheel : MonoBehaviour
                 weaponMenu.SetActive(true);
             else
                 weaponMenu.SetActive(false);
+        }
 
-            if(isActive)
+        if (isActive)
+        {
+            // 각도 계산 
+            Vector2 delta = center.position - Input.mousePosition; // 중앙에서부터 마우스 위치의 차이
+            float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg; // 각도 구하는 공식 
+            angle += 180; // 각도가 -180에서 180이므로 180 더해줌 (각도 쉽게 처리하기 위해서)
+
+            for (int i = 0; i < 360; i += 60)
             {
-                // 각도 계산 
-                Vector2 delta = center.position - Input.mousePosition; // 중앙에서부터 마우스 위치의 차이
-                float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg; // 각도 구하는 공식 
-                angle += 180; // 각도가 -180에서 180이므로 180 더해줌 (각도 쉽게 처리하기 위해서)
-
-                for(int i = 0; i < 360; i += 90) 
+                if (angle >= i && angle < i + 60)
                 {
-                    if(angle >= i && angle < i + 45)
-                    {
-                        selectObject.eulerAngles = new Vector3(0, 0, i); // Z축 주위로 회전
-
-                    }
+                    selectObject.eulerAngles = new Vector3(0, 0, i); // Z축 주위로 회전
                 }
             }
         }
