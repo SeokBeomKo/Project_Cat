@@ -24,7 +24,7 @@ namespace BehaviorTree
         //float timePlayerWithinMeleeRange = 0f;
 
         private int randomAction;
-        private Image canvasImage;
+        public Image canvasImage;
         private float fadeDuration = 2.0f;
 
         private void Awake()
@@ -32,7 +32,7 @@ namespace BehaviorTree
             animator = transform.parent.GetComponent<Animator>();
             tree = new Tree(SetTree());
 
-            canvasImage = GetComponentInChildren<Image>();
+            //canvasImage = GetComponentInChildren<Image>();
         }
 
         private void Update()
@@ -114,11 +114,11 @@ namespace BehaviorTree
             if(detectedPlayer != null)
             {
                 animator.SetTrigger("attack");
-
+                StartCoroutine(FadeOut());
                 //if (randomAction == 2) // 암전
-                //{
-                    StartCoroutine(FadeOut());
-                //}
+                {
+                    
+                }
 
                 return Node.NodeState.SUCCESS;
             }
@@ -142,13 +142,17 @@ namespace BehaviorTree
             Color imageColor = canvasImage.color;
 
             // 어두운 색상 (0.5의 값은 임의로 설정할 수 있습니다)
-            Color darkColor = new Color(imageColor.r * 0.5f, imageColor.g * 0.5f, imageColor.b * 0.5f, imageColor.a);
-
+            //Color darkColor = new Color(imageColor.r * 0.5f, imageColor.g * 0.5f, imageColor.b * 0.5f, imageColor.a);
+            Color darkColor = new Color(0, 0, 0, 240);
+            
             while (timer < fadeDuration)
             {
                 timer += Time.deltaTime;
                 float progress = timer / fadeDuration;
-                canvasImage.color = Color.Lerp(imageColor, darkColor, progress);
+                
+                imageColor.a = Mathf.Lerp(0, 0.8f, progress);
+
+                canvasImage.color = imageColor;
                 yield return null;
             }
         }
@@ -191,13 +195,26 @@ namespace BehaviorTree
             {
                 if (Vector3.SqrMagnitude(detectedPlayer.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
                 {
-
                     return Node.NodeState.SUCCESS;
                 }
             }
 
-            animator.SetTrigger("walk");
-            transform.parent.position = Vector3.MoveTowards(transform.parent.position, detectedPlayer.position, Time.deltaTime * movementSpeed); ;
+            animator.SetTrigger("run");
+
+            Vector3 playerDirection = detectedPlayer.position - transform.parent.position;
+
+            // 몬스터의 정면 방향 벡터
+            Vector3 forwardDirection = transform.parent.forward;
+
+            // 몬스터가 플레이어의 방향을 바라보도록 회전
+            Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+            transform.parent.rotation = targetRotation;
+
+            transform.parent.position = Vector3.MoveTowards(transform.parent.position, detectedPlayer.position, Time.deltaTime * movementSpeed);
+
+            //animator.SetFloat("Blend", transform.parent.position.z - detectedPlayer.position.z);
+            animator.SetFloat("Blend", 0.5f);
+
             return Node.NodeState.RUNNING;
         }
 
