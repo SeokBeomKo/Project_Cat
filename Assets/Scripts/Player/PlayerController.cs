@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
     float rollTime;
     private void RecoveryRollCount()
     {
-        Debug.Log(curRollCount);
         if (curRollCount < maxRollCount)
         {
             rollTime += Time.fixedDeltaTime;

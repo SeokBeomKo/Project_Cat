@@ -9,12 +9,12 @@ public class ItemWheel : MonoBehaviour
     public Transform selectObject; // 선택된 거 회전
 
     public GameObject itemMenu; // 아이템 휠 메뉴
-    bool isActive; // 메뉴의 활성 상태
+    bool isMenuActive; // 메뉴의 활성 상태
 
     public TextMeshProUGUI itemName; // 아이템 이름
     public TextMeshProUGUI itemExplanation; // 아이템 설명
 
-    public string[] itemNameArray;
+    public string[] itemNameArray; 
     public string[] itemExplanationArray;
 
     public Transform[] itemSlotArray; // 아이템 이미지 확대
@@ -24,31 +24,41 @@ public class ItemWheel : MonoBehaviour
     public Transform energyMin, energyMax; // 운동에너지 원 경계
 
     public GameObject kineticEnergyMenu; // 운동 에너지 선택시 메뉴창
-    bool isMenuActive;
+    bool isEnergyMenuActive;
 
-    // Start is called before the first frame update
+    public TextMeshProUGUI moveSpeed;
+    public TextMeshProUGUI attackSpeed;
+
+    bool hasRightMouseClicked = false;
+
+
     void Start()
     {
-        isActive = false;
+        isMenuActive = false;
         itemMenu.SetActive(false);
 
-        isMenuActive = false;
+        isEnergyMenuActive = false;
         kineticEnergyMenu.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
+        if (Input.GetMouseButtonUp(0))
         {
-            isActive = !isActive;
-            if (isActive && !isMenuActive)
-                itemMenu.SetActive(true);
-            if(!isActive)
-                itemMenu.SetActive(false);
+            hasRightMouseClicked = false;
         }
 
-        if (isActive)
+        if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
+        {
+            isMenuActive = !isMenuActive;
+;           Debug.Log(isMenuActive);
+            if (isMenuActive && !isEnergyMenuActive)
+                itemMenu.SetActive(isMenuActive);
+            if(!isMenuActive)
+                itemMenu.SetActive(!isMenuActive);
+        }
+
+        if (isMenuActive)
         {
             // 중앙으로부터의 마우스 거리가 경계값 안에 있는지 확인
             if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(itemMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(itemMin.position, center.position))
@@ -76,17 +86,19 @@ public class ItemWheel : MonoBehaviour
                         }
                         itemSlotArray[currentItem].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 
-                        if (Input.GetMouseButtonDown(0))
-                        { 
+                        if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
+                        {
+                            hasRightMouseClicked = true;
+
                             Debug.Log(angle);
                             Debug.Log(itemNameArray[currentItem] + "선택");
-                            isActive = false;
+                            isMenuActive = false;
                             itemMenu.SetActive(false);
 
                             // 운동에너지 선택시 새로운 팝업창 생성
                             if(angle >= 300 && angle < 360)
                             {
-                                isMenuActive = true;
+                                isEnergyMenuActive = true;
                                 kineticEnergyMenu.SetActive(true);
                             }
                         }
@@ -109,7 +121,7 @@ public class ItemWheel : MonoBehaviour
                     itemName.text = "MENU";
                     itemExplanation.text = " ";
 
-                    isActive = false;
+                    isMenuActive = false;
                     itemMenu.SetActive(false);
                 }*/
             }
@@ -117,27 +129,30 @@ public class ItemWheel : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 Debug.Log("선택 취소");
-                isActive = false;
+                isMenuActive = false;
                 itemMenu.SetActive(false);
             }
         }
 
-        if (isMenuActive)
+        if (isEnergyMenuActive)
         {
             if (Input.GetMouseButtonDown(1))
             {
                 Debug.Log("운동 에너지 선택 취소");
-                isMenuActive = false;
+                isEnergyMenuActive = false;
                 kineticEnergyMenu.SetActive(false);
 
-                isActive = true;
+                isMenuActive = true;
                 itemMenu.SetActive(true);
             }
             else if (Input.GetMouseButtonDown(2))
             {
                 Debug.Log("선택 취소");
-                isMenuActive = false;
+                isEnergyMenuActive = false;
                 kineticEnergyMenu.SetActive(false);
+
+                isMenuActive = false;
+                itemMenu.SetActive(false);
             }
 
             if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(energyMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(energyMin.position, center.position))
@@ -151,31 +166,76 @@ public class ItemWheel : MonoBehaviour
                 {
                     energySlotArray[0].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
                     energySlotArray[1].transform.localScale = new Vector3(1, 1, 1);
+
+                    moveSpeed.text = "캐릭터의 이동속도를 증가시킨다.";
+                    attackSpeed.text = " ";
+
+                    if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
+                    {
+                        hasRightMouseClicked = true;
+
+                        Debug.Log(energySlotArray[0] + "[0] 선택");
+                        isEnergyMenuActive = false;
+                        kineticEnergyMenu.SetActive(false);
+                    }
                 }
                 else
                 {
                     energySlotArray[0].transform.localScale = new Vector3(1, 1, 1);
                     energySlotArray[1].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+
+                    attackSpeed.text = "플레이어의 공격 속도를 상승시킨다.";
+                    moveSpeed.text = " ";
+
+                    if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
+                    {
+                        hasRightMouseClicked = true;
+
+                        Debug.Log(energySlotArray[1] + "[1] 선택");
+                        isEnergyMenuActive = false;
+                        kineticEnergyMenu.SetActive(false);
+                    }
                 }
-                        /*if (Input.GetMouseButtonDown(0))
-                        {
-                            Debug.Log(energySlotArray[currentItem2] + "선택");
-                            isMenuActive = false;
-                            kineticEnergyMenu.SetActive(false);
-                        }*/
-                
             }
             else
             {
-                foreach (Transform e in energySlotArray)
+                moveSpeed.text = "";
+                attackSpeed.text = "";
+
+                foreach (Transform t in energySlotArray)
                 {
-                    e.transform.localScale = new Vector3(1, 1, 1);
+                    t.transform.localScale = new Vector3(1, 1, 1);
                 }
             }
-
         }
-
     }
+
+    void ActivateMenu()
+    {
+        isMenuActive = true;
+        itemMenu.SetActive(isMenuActive);
+    }
+
+    void DeactivateMenu()
+    {
+        //Debug.Log("선택 취소");
+        isMenuActive = false;
+        itemMenu.SetActive(false);
+    }
+
+    void ActivateKineticEnergyMenu()
+    {
+        isEnergyMenuActive = true;
+        kineticEnergyMenu.SetActive(true);
+    }
+
+    void DeactivateEnergyMenu()
+    {
+        //Debug.Log("운동 에너지 선택 취소");
+        isEnergyMenuActive = false;
+        kineticEnergyMenu.SetActive(false);
+    }
+
 }
 
 // Atan2의 반환값은 라디안 이기 때문에 도수법을 사용하기 위해서 Mathf.Rad2Deg 를 이용
