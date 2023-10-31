@@ -32,7 +32,7 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void OnStateEnter()
     {
-        player.curDoubleCount--;
+        player.stats.UseDouble();
 
         player.animator.SetTrigger("isDoubleJump");
         player.Jump();

@@ -33,6 +33,25 @@ public class PlayerStats : MonoBehaviour
         currentDouble   = maxDouble;
     }
 
+    private void FixedUpdate()
+    {
+        RecoveryRollCount();
+    }
+
+    float rollTime;
+    private void RecoveryRollCount()
+    {
+        if (currentRoll < maxRoll)
+        {
+            rollTime += Time.fixedDeltaTime;
+            if (rollTime >= rollDelay)
+            {
+                currentRoll++;
+                rollTime = 0;
+            }
+        }
+    }
+
     public int GetRollCount()
     {
         return currentRoll;
@@ -72,9 +91,9 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void RecoveryHealth(int recovery)
+    public void FillHealth(int fill = 1)
     {
-        currentHealth += recovery;
+        currentHealth += fill;
         if (currentHealth > maxHealth)  currentHealth = maxHealth;
     }
 
