@@ -2007,6 +2007,7 @@ GameObject:
   - component: {fileID: 1408200816}
   - component: {fileID: 1408200815}
   - component: {fileID: 1408200814}
+  - component: {fileID: 1408200817}
   m_Layer: 7
   m_Name: Scripts
   m_TagString: Player
@@ -2059,6 +2060,7 @@ MonoBehaviour:
   rigid: {fileID: 1193558090}
   stateMachine: {fileID: 1408200814}
   model: {fileID: 905129794}
+  stats: {fileID: 0}
   moveSpeed: 1.5
   jumpPower: 1.5
   rollSpeed: 5
@@ -2069,7 +2071,7 @@ MonoBehaviour:
   delayRollCount: 5
   isGrounded: 0
   isRolled: 0
-  maxSlopeAngle: 35
+  maxSlopeAngle: 50
   moveDirection: {x: 0, y: 0, z: 0}
   jumpDirection: {x: 0, y: 0, z: 0}
   rollDirection: {x: 0, y: 0, z: 0}
@@ -2087,6 +2089,25 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &1408200817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408200812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f765c5f3cde2b48ed89171947b3eaa63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  maxRoll: 3
+  rollDelay: 5
+  maxDouble: 1
+  moveSpeed: 2
+  rollSpeed: 5
+  jumpForce: 2
 --- !u!1001 &1440748117
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("카메라 컨트롤러")]
     [SerializeField]    public ShooterCameraController  cameraController;
+
     [Header("애니메이터")]
     [SerializeField]    public Animator             animator;
 
@@ -15,9 +16,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("유한 상태 기계")]
     [SerializeField]    public PlayerStateMachine   stateMachine;
+
     [Header("모델")]
     [SerializeField]    public Transform            model;
 
+    [Header("스탯")]
+    [SerializeField]    public PlayerStats          stats;
 
     [Header("수치 값")]
     [SerializeField]    public float                moveSpeed;
@@ -32,8 +36,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]   public bool                 isGrounded;
     [HideInInspector]   public bool                 isRolled;
 
+    [Header("경사 각도")]
     private RaycastHit slopeHit;
-    public float maxSlopeAngle = 50;
+    public float maxSlopeAngle;
 
     private void Awake() 
     {
@@ -60,8 +65,7 @@ public class PlayerController : MonoBehaviour
     float rollTime;
     private void RecoveryRollCount()
     {
-        Debug.Log(curRollCount);
-        if (curRollCount < maxRollCount)
+        if (stats.GetRollCount() < maxRollCount)
         {
             rollTime += Time.fixedDeltaTime;
             if (rollTime >= delayRollCount)
@@ -92,9 +96,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Vector3 moveDirection;
-    public Vector3 jumpDirection;
-    public Vector3 rollDirection;
+    Vector3 moveDirection;
+    Vector3 jumpDirection;
+    Vector3 rollDirection;
 
     public void AimSwitch()
     {
@@ -196,33 +200,9 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(origin , Vector3.down , out hit , raycastDistance))
             {
-                Debug.DrawLine(origin , hit.point , Color.red);
                 return true;
             }
-            else 
-            {
-                Debug.DrawLine(origin , origin + Vector3.down * raycastDistance , Color.blue);
-            }
         }
-
         return false;
-        // float raycastDistance = 0.1f; // 레이 캐스트 거리
-        // RaycastHit hit;
-
-        // // 발 아래로 레이 캐스트를 발사하여 땅에 닿았는지 체크
-        // if (Physics.Raycast(transform.position + new Vector3(0, 0.05f, 0), Vector3.down, out hit, raycastDistance))
-        // {
-        //     // 레이캐스트 렌더링 (빨간색)
-        //     Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), hit.point, Color.red);
-
-        //     // 땅에 닿았으면 true 반환
-        //     return true;
-        // }
-
-        // // 레이캐스트 렌더링 (파란색)
-        // Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), transform.position + new Vector3(0, 0.05f, 0) + Vector3.down * raycastDistance, Color.blue);
-
-        // // 땅에 닿지 않았으면 false 반환
-        // return false;
     }
 }
