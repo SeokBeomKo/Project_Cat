@@ -11,14 +11,13 @@ namespace BehaviorTree
         [SerializeField]
         float detectRange = 10f;
 
-        Vector3 meleeAttackRange = new Vector3(1f, 2f, 1f);
+        Vector3 meleeAttackRange = new Vector3(0.4f, 0.8f, 0.4f);
 
         [Header("Movement")]
         [SerializeField]
         float movementSpeed = 10f;
 
         Tree tree = null;
-        Transform detectedPlayer = null;
         Animator animator = null;
 
         //float timePlayerWithinMeleeRange = 0f;
@@ -27,12 +26,23 @@ namespace BehaviorTree
         public Image canvasImage;
         private float fadeDuration = 2.0f;
 
+        BoxCollider attackRangeCollider;
+        Transform player;
+
         private void Awake()
         {
+            attackRangeCollider = transform.parent.GetChild(0).GetComponent<BoxCollider>();
             animator = transform.parent.GetComponent<Animator>();
             tree = new Tree(SetTree());
 
-            //canvasImage = GetComponentInChildren<Image>();
+            attackRangeCollider.gameObject.AddComponent<TriggerEvents>();
+
+
+            GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Player");
+            if (taggedObjects.Length > 0)
+            {
+                player = taggedObjects[0].transform;
+            }
         }
 
         private void Update()
@@ -51,21 +61,15 @@ namespace BehaviorTree
                     new ActionNode(DoMeleeAttack),
                 });
 
-            var detectPlayer = new Sequence(
-                new List<Node>()
-                {
-                    new ActionNode(CheckDetectPlayer),
-                    new ActionNode(MoveToDetectPlayer),
-                });
+            var moveToPlayer = new ActionNode(MoveToPlayer);
 
             var moveToOrigin = new ActionNode(MoveToOriginPosition);
 
             return new Selector(new List<Node>()
             { 
                 meleeAttack,
-                moveToOrigin,
-                detectPlayer
-                //moveToOrigin
+                moveToPlayer,
+                moveToOrigin
             });
         }
 
@@ -92,26 +96,29 @@ namespace BehaviorTree
 
         Node.NodeState CheckPlayerWithinMeleeAttackRange()
         {
-            if (detectedPlayer != null)
+            if (player != null)
             {
-                if (Vector3.SqrMagnitude(detectedPlayer.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
+                if (Vector3.SqrMagnitude(player.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
                 {
                     /*timePlayerWithinMeleeRange += Time.deltaTime;
 
                     if (timePlayerWithinMeleeRange > 1.5f)
                     {
                         timePlayerWithinMeleeRange = 0f;*/
+
+                        attackRangeCollider.enabled = true;
                         return Node.NodeState.SUCCESS;
                     //}
 
                 }
             }
+            attackRangeCollider.enabled = false;
             return Node.NodeState.FAILURE;  
         }
 
         Node.NodeState DoMeleeAttack()
         {
-            if(detectedPlayer != null)
+            if(player != null)
             {
                 animator.SetTrigger("attack");
                 StartCoroutine(FadeOut());
@@ -157,12 +164,32 @@ namespace BehaviorTree
             }
         }
 
+        // RUN
+        Node.NodeState MoveToPlayer()
+        {
+            if (player != null)
+            {
+                // 몬스터가 플레이어를 향해 회전
+                Vector3 playerDirection = player.position - transform.parent.position;
+                Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+                transform.parent.rotation = targetRotation;
+
+                // 몬스터가 플레이어를 향해 이동
+                transform.parent.position = Vector3.MoveTowards(transform.parent.position, player.position, Time.deltaTime * movementSpeed);
+                animator.SetTrigger("run");
+
+                return Node.NodeState.RUNNING;
+            }
+
+            return Node.NodeState.FAILURE;
+        }
+
         // IDLE
         Node.NodeState MoveToOriginPosition()
         {
-            if (detectedPlayer != null)
+            if (player != null)
             {
-                if (Vector3.SqrMagnitude(detectedPlayer.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
+                if (Vector3.SqrMagnitude(player.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
                 {
                     animator.SetTrigger("idle");
                     return Node.NodeState.SUCCESS;
@@ -172,61 +199,30 @@ namespace BehaviorTree
             return Node.NodeState.FAILURE;
         }
 
-        // RUN
-        Node.NodeState CheckDetectPlayer()
-        {
-            var overlapColliders = Physics.OverlapSphere(transform.parent.position, detectRange, LayerMask.GetMask("Player"));
-
-            if (overlapColliders != null && overlapColliders.Length > 0)
-            {
-                detectedPlayer = overlapColliders[0].transform;
-
-                return Node.NodeState.SUCCESS;
-            }
-
-            detectedPlayer = null;
-
-            return Node.NodeState.FAILURE;
-        }
-
-        Node.NodeState MoveToDetectPlayer()
-        {
-            if (detectedPlayer != null)
-            {
-                if (Vector3.SqrMagnitude(detectedPlayer.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
-                {
-                    return Node.NodeState.SUCCESS;
-                }
-            }
-
-            animator.SetTrigger("run");
-
-            Vector3 playerDirection = detectedPlayer.position - transform.parent.position;
-
-            // 몬스터의 정면 방향 벡터
-            Vector3 forwardDirection = transform.parent.forward;
-
-            // 몬스터가 플레이어의 방향을 바라보도록 회전
-            Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
-            transform.parent.rotation = targetRotation;
-
-            transform.parent.position = Vector3.MoveTowards(transform.parent.position, detectedPlayer.position, Time.deltaTime * movementSpeed);
-
-            //animator.SetFloat("Blend", transform.parent.position.z - detectedPlayer.position.z);
-            animator.SetFloat("Blend", 0.5f);
-
-            return Node.NodeState.RUNNING;
-        }
-
         private void OnDrawGizmos()
         {
             // 탐지 거리
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(this.transform.parent.position, detectRange);
+        }
+    }
 
-            // 근접 공격 사거리
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireCube(this.transform.parent.position + new Vector3(2f, 1f, 0f), meleeAttackRange);
+    public class TriggerEvents : MonoBehaviour
+    {
+        private void OnTriggerEnter(Collider other)
+        {
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                Debug.Log("Player Attack!!");
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
         }
     }
 }
