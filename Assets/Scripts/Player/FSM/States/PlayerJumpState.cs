@@ -48,6 +48,7 @@ public class PlayerJumpState : IPlayerState
     {
         player.animator.SetBool("isJump", false);
         isJumpStarted = false;
+        player.exitingSlope = false;
     }
 
     private IEnumerator JumpStart()

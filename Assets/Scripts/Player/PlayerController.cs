@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [Header("경사 각도")]
     private RaycastHit slopeHit;
     public float maxSlopeAngle;
+    public bool exitingSlope = false;
 
     private void Update()
     {
@@ -48,21 +49,21 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedControl()
     {
-
-        if (OnSlope())
+        if (OnSlope()&& !exitingSlope)
         {
             if (rigid.velocity.magnitude > stats.moveSpeed)
                 rigid.velocity = rigid.velocity.normalized * stats.moveSpeed;
-            return;
         }
 
-        Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
-
-        // limit velocity if needed
-        if (flatVel.magnitude > stats.moveSpeed)
+        else
         {
-            Vector3 limitedVel = flatVel.normalized * stats.moveSpeed;
-            rigid.velocity = new Vector3(limitedVel.x, rigid.velocity.y, limitedVel.z);
+            Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
+
+            if (flatVel.magnitude > stats.moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * stats.moveSpeed;
+                rigid.velocity = new Vector3(limitedVel.x, rigid.velocity.y, limitedVel.z);
+            }
         }
     }
 
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRogic()
     {
-        if (OnSlope())
+        if (OnSlope() && !exitingSlope)
         {
             rigid.AddForce(GetSlopeMoveDirection() * stats.moveSpeed * 20f, ForceMode.Force);
 
@@ -127,6 +128,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        exitingSlope = true;
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
         rigid.AddForce(transform.up * stats.jumpForce, ForceMode.Impulse);
