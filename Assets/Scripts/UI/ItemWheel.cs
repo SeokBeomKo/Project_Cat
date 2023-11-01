@@ -24,191 +24,49 @@ public class ItemWheel : MonoBehaviour
     public Transform energyMin, energyMax; // 운동에너지 원 경계
 
     public GameObject kineticEnergyMenu; // 운동 에너지 선택시 메뉴창
-    bool isEnergyMenuActive;
+    bool isEnergyMenuActive; // 운동에너지 메뉴 활성 상태
 
-    public TextMeshProUGUI moveSpeed;
-    public TextMeshProUGUI attackSpeed;
+    public TextMeshProUGUI moveSpeed; // 이동속도 설명
+    public TextMeshProUGUI attackSpeed; // 공격속도 설명
 
     bool hasRightMouseClicked = false;
 
 
     void Start()
     {
-        isMenuActive = false;
-        itemMenu.SetActive(false);
-
-        isEnergyMenuActive = false;
-        kineticEnergyMenu.SetActive(false);
+        DeactivateMenu();
+        DeactivateEnergyMenu();
     }
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
+        {
+            isMenuActive = !isMenuActive;
+            
+            if (isMenuActive && !isEnergyMenuActive)
+                itemMenu.SetActive(true);
+            if(!isMenuActive)
+                itemMenu.SetActive(false);
+        }
+
         if (Input.GetMouseButtonUp(0))
         {
             hasRightMouseClicked = false;
         }
 
-        if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
-        {
-            isMenuActive = !isMenuActive;
-;           Debug.Log(isMenuActive);
-            if (isMenuActive && !isEnergyMenuActive)
-                itemMenu.SetActive(isMenuActive);
-            if(!isMenuActive)
-                itemMenu.SetActive(!isMenuActive);
-        }
-
         if (isMenuActive)
         {
-            // 중앙으로부터의 마우스 거리가 경계값 안에 있는지 확인
-            if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(itemMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(itemMin.position, center.position))
-            {
-                // 각도 계산 
-                Vector2 delta = center.position - Input.mousePosition; // 중앙에서부터 마우스 위치의 차이
-                float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg; // 각도 구하는 공식 
-                angle += 180; // 각도가 -180에서 180이므로 180 더해줌 (각도 쉽게 처리하기 위해서)
-
-                int currentItem = 0; // 아이템 번호 확인
-
-                for (int i = 0; i < 360; i += 60)
-                {
-                    if (angle >= i && angle < i + 60)
-                    {
-                        selectObject.eulerAngles = new Vector3(0, 0, i); // Z축 주위로 회전
-
-
-                        itemName.text = itemNameArray[currentItem];
-                        itemExplanation.text = itemExplanationArray[currentItem];
-
-                        foreach (Transform t in itemSlotArray)
-                        {
-                            t.transform.localScale = new Vector3(1, 1, 1); // 모든 이미지 크기 (1, 1, 1)로 설정
-                        }
-                        itemSlotArray[currentItem].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
-
-                        if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
-                        {
-                            hasRightMouseClicked = true;
-
-                            Debug.Log(angle);
-                            Debug.Log(itemNameArray[currentItem] + "선택");
-                            isMenuActive = false;
-                            itemMenu.SetActive(false);
-
-                            // 운동에너지 선택시 새로운 팝업창 생성
-                            if(angle >= 300 && angle < 360)
-                            {
-                                isEnergyMenuActive = true;
-                                kineticEnergyMenu.SetActive(true);
-                            }
-                        }
-                    }
-                    currentItem++;
-                }
-            }
-            else
-            {
-                itemName.text = "MENU";
-                itemExplanation.text = " ";
-
-                foreach (Transform t in itemSlotArray)
-                {
-                    t.transform.localScale = new Vector3(1, 1, 1); // 모든 이미지 크기 (1, 1, 1)로 설정
-                }
-
-                /*if (Input.GetMouseButtonDown(0))
-                {
-                    itemName.text = "MENU";
-                    itemExplanation.text = " ";
-
-                    isMenuActive = false;
-                    itemMenu.SetActive(false);
-                }*/
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                Debug.Log("선택 취소");
-                isMenuActive = false;
-                itemMenu.SetActive(false);
-            }
+            UpdateMenu();
         }
 
         if (isEnergyMenuActive)
         {
-            if (Input.GetMouseButtonDown(1))
-            {
-                Debug.Log("운동 에너지 선택 취소");
-                isEnergyMenuActive = false;
-                kineticEnergyMenu.SetActive(false);
-
-                isMenuActive = true;
-                itemMenu.SetActive(true);
-            }
-            else if (Input.GetMouseButtonDown(2))
-            {
-                Debug.Log("선택 취소");
-                isEnergyMenuActive = false;
-                kineticEnergyMenu.SetActive(false);
-
-                isMenuActive = false;
-                itemMenu.SetActive(false);
-            }
-
-            if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(energyMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(energyMin.position, center.position))
-            {
-                // 각도 계산 
-                Vector2 delta2 = center.position - Input.mousePosition; // 중앙에서부터 마우스 위치의 차이
-                float angle2 = Mathf.Atan2(delta2.y, delta2.x) * Mathf.Rad2Deg; // 각도 구하는 공식 
-                angle2 += 180;
-
-                if (angle2 > 90 && angle2 < 270)
-                {
-                    energySlotArray[0].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
-                    energySlotArray[1].transform.localScale = new Vector3(1, 1, 1);
-
-                    moveSpeed.text = "캐릭터의 이동속도를 증가시킨다.";
-                    attackSpeed.text = " ";
-
-                    if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
-                    {
-                        hasRightMouseClicked = true;
-
-                        Debug.Log(energySlotArray[0] + "[0] 선택");
-                        isEnergyMenuActive = false;
-                        kineticEnergyMenu.SetActive(false);
-                    }
-                }
-                else
-                {
-                    energySlotArray[0].transform.localScale = new Vector3(1, 1, 1);
-                    energySlotArray[1].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
-
-                    attackSpeed.text = "플레이어의 공격 속도를 상승시킨다.";
-                    moveSpeed.text = " ";
-
-                    if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
-                    {
-                        hasRightMouseClicked = true;
-
-                        Debug.Log(energySlotArray[1] + "[1] 선택");
-                        isEnergyMenuActive = false;
-                        kineticEnergyMenu.SetActive(false);
-                    }
-                }
-            }
-            else
-            {
-                moveSpeed.text = "";
-                attackSpeed.text = "";
-
-                foreach (Transform t in energySlotArray)
-                {
-                    t.transform.localScale = new Vector3(1, 1, 1);
-                }
-            }
+            UpdateEnergyMenu();
         }
     }
+
+
 
     void ActivateMenu()
     {
@@ -218,12 +76,11 @@ public class ItemWheel : MonoBehaviour
 
     void DeactivateMenu()
     {
-        //Debug.Log("선택 취소");
         isMenuActive = false;
         itemMenu.SetActive(false);
     }
 
-    void ActivateKineticEnergyMenu()
+    void ActivateEnergyMenu()
     {
         isEnergyMenuActive = true;
         kineticEnergyMenu.SetActive(true);
@@ -231,11 +88,124 @@ public class ItemWheel : MonoBehaviour
 
     void DeactivateEnergyMenu()
     {
-        //Debug.Log("운동 에너지 선택 취소");
         isEnergyMenuActive = false;
         kineticEnergyMenu.SetActive(false);
     }
 
+    float CalculateAngle(Vector3 centerPosition, Vector3 targetPosition)
+    {
+        Vector2 delta = centerPosition - targetPosition; // 중앙에서부터 마우스 위치의 차이
+        float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg; // 각도 구하는 공식 
+        angle += 180; // 각도가 -180에서 180이므로 180 더해줌 (각도 쉽게 처리하기 위해서)
+
+        return angle;
+    }
+
+    void UpdateMenu()
+    {
+        // 중앙으로부터의 마우스 거리가 경계값 안에 있는지 확인
+        if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(itemMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(itemMin.position, center.position))
+        {
+            float angle = CalculateAngle(center.position, Input.mousePosition);         
+
+            int currentItem = 0; // 아이템 번호 확인
+
+            for (int i = 0; i < 360; i += 60)
+            {
+                if (angle >= i && angle < i + 60)
+                {
+                    selectObject.eulerAngles = new Vector3(0, 0, i); // Z축 주위로 회전
+
+                    itemName.text = itemNameArray[currentItem];
+                    itemExplanation.text = itemExplanationArray[currentItem];
+
+                    foreach (Transform t in itemSlotArray)
+                    {
+                        t.transform.localScale = new Vector3(1, 1, 1); // 모든 이미지 크기 (1, 1, 1)로 설정
+                    }
+                    itemSlotArray[currentItem].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+
+                    if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
+                    {
+                        hasRightMouseClicked = true;
+
+                        Debug.Log(itemNameArray[currentItem] + "선택");
+                        DeactivateMenu();
+
+                        // 운동에너지 선택시 새로운 팝업창 생성
+                        if (angle >= 300 && angle < 360)
+                        {
+                            ActivateEnergyMenu();
+                        }
+                    }
+                }
+                currentItem++;
+            }
+        }
+        else
+        {
+            itemName.text = "MENU";
+            itemExplanation.text = " ";
+
+            foreach (Transform t in itemSlotArray)
+            {
+                t.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("선택 취소");
+            DeactivateMenu();
+        }
+    }
+
+    void UpdateEnergyMenu()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("운동 에너지 선택 취소");
+            DeactivateEnergyMenu();
+            ActivateMenu();
+        }
+        else if (Input.GetMouseButtonDown(2))
+        {
+            Debug.Log("선택 취소");
+            DeactivateEnergyMenu();
+            DeactivateMenu();
+        }
+
+
+        if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(energyMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(energyMin.position, center.position))
+        {
+            float energyAngle = CalculateAngle(center.position, Input.mousePosition);
+
+            int selectedEnergySlot = (energyAngle > 90 && energyAngle < 270) ? 0 : 1;
+
+            energySlotArray[0].transform.localScale = selectedEnergySlot == 0 ? new Vector3(1.3f, 1.3f, 1.3f) : Vector3.one; //Vector3.one = 모든 축에 대해 크기를 1로
+            energySlotArray[1].transform.localScale = selectedEnergySlot == 1 ? new Vector3(1.3f, 1.3f, 1.3f) : Vector3.one;
+
+            moveSpeed.text = selectedEnergySlot == 0 ? "캐릭터의 이동속도를 증가시킨다." : " ";
+            attackSpeed.text = selectedEnergySlot == 1 ? "플레이어의 공격 속도를 상승시킨다." : " ";
+
+            if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
+            {
+                hasRightMouseClicked = true;
+                Debug.Log(energySlotArray[selectedEnergySlot] + "선택");
+                DeactivateEnergyMenu();
+            }
+        }
+        else
+        {
+            moveSpeed.text = " ";
+            attackSpeed.text = " ";
+
+            foreach (Transform t in energySlotArray)
+            {
+                t.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+    }
 }
 
 // Atan2의 반환값은 라디안 이기 때문에 도수법을 사용하기 위해서 Mathf.Rad2Deg 를 이용
