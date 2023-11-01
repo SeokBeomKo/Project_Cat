@@ -162,7 +162,7 @@ public class WeaponSelection : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
 
-        switch(weaponNum)
+        switch (weaponNum)
         {
             case 0:
                 softRifleBulletCount = 10;
