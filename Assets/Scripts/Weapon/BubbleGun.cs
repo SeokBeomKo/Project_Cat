@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BubbleGun : MonoBehaviour, Iweapon
+public class BubbleGun : IWeapon
 {
-    public void shoot(GameObject obj)
+    public void Shoot()
     {
         Debug.Log("Shoot BubbleGun");
     }

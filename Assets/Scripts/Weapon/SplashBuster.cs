@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplashBuster : MonoBehaviour, Iweapon
+public class SplashBuster : IWeapon
 {
-    public void shoot(GameObject obj)
+    public void Shoot()
     {
         Debug.Log("Shoot SplashBuster");
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Weapon
 {
     private IWeapon weapon;
 
@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
         this.weapon = weapon;
     }
 
-    public Shoot()
+    public void Shoot()
     {
         weapon.Shoot();
     }

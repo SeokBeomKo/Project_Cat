@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoapRifle : MonoBehaviour, Iweapon
+public class SoapRifle : IWeapon
 {
-    public void shoot(GameObject obj)
+    public void Shoot()
     {
         Debug.Log("Shoot SoapRifle");
     }
