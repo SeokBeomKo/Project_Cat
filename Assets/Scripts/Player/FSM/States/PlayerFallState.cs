@@ -29,6 +29,9 @@ public class PlayerFallState : IPlayerState
             stateMachine.ChangeStateLogic(PlayerStateEnums.LAND);
             return;
         }
+
+        player.rigid.MovePosition(player.rigid.position + Vector3.down * 0.001f);
+        player.JumpInput();
     }
 
 

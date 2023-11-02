@@ -49,22 +49,20 @@ public class PlayerAimMoveState : IPlayerState
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
         player.cameraController.SetAimCamera(true);
-        player.animator.SetBool("isRun",true);
-        player.curDoubleCount = player.maxDoubleCount;
+        player.stats.FillDoubleCount();
 
-        originSpeed = player.moveSpeed;
-        player.moveSpeed *= 0.5f; 
+        originSpeed = player.stats.moveSpeed;
+        player.stats.moveSpeed *= 0.5f; 
     }
 
     public void OnStateExit()
     {
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
-        player.animator.SetBool("isRun",false);
 
         player.moveDirection = Vector3.zero;
         player.rigid.velocity = Vector3.zero;
 
-        player.moveSpeed = originSpeed;
+        player.stats.moveSpeed = originSpeed;
     }
 }
