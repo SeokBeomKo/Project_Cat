@@ -32,6 +32,8 @@ public class PlayerJumpState : IPlayerState
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
             return;
         }
+
+        player.JumpInput();
     }
 
 

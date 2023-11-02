@@ -31,6 +31,7 @@ public class PlayerFallState : IPlayerState
         }
 
         player.rigid.MovePosition(player.rigid.position + Vector3.down * 0.001f);
+        player.JumpInput();
     }
 
 
