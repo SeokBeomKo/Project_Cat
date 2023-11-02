@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class WeaponSelection : MonoBehaviour
@@ -11,9 +12,9 @@ public class WeaponSelection : MonoBehaviour
     public GameObject bubbleGun; 
     public GameObject splashBuster; */
 
-    private int softRifleBulletCount = 10;
-    private int bubbleGunBulletCount = 400;
-    private int splashBusterBulletCount = 40; // 8발씩
+    private float softRifleBulletCount = 10;
+    private float bubbleGunBulletCount = 400;
+    private float splashBusterBulletCount = 40; // 8발씩
 
     public TextMeshProUGUI softRifleText;
     public TextMeshProUGUI bubbleGunText;
@@ -22,6 +23,10 @@ public class WeaponSelection : MonoBehaviour
     private bool isSoftRifleSelected = false;
     private bool isBubbleGunSelected = false;
     private bool isSplashBusterSelected = false;
+
+    public Image softRifleImage;
+    public Image bubbleGunImage;
+    public Image splashBusterImage;
 
     //private bool isReloading = false;
 
@@ -102,8 +107,11 @@ public class WeaponSelection : MonoBehaviour
             if(softRifleBulletCount > 0)
             {
                 softRifleBulletCount--;
+                softRifleImage.fillAmount = softRifleBulletCount / 10;
                 softRifleText.text = softRifleBulletCount + " / 10";
             }
+
+
 
             /*if(softRifleBulletCount == 0)
             {
@@ -120,6 +128,7 @@ public class WeaponSelection : MonoBehaviour
             if (bubbleGunBulletCount > 0)
             {
                 bubbleGunBulletCount--;
+                bubbleGunImage.fillAmount = bubbleGunBulletCount / 400;
                 bubbleGunText.text = bubbleGunBulletCount + " / 400";
             }
 
@@ -137,6 +146,7 @@ public class WeaponSelection : MonoBehaviour
             if (splashBusterBulletCount > 0)
             {
                 splashBusterBulletCount -= 8;
+                splashBusterImage.fillAmount = splashBusterBulletCount / 40;
                 splashBusterText.text = splashBusterBulletCount + " / 40";
             }
 
@@ -152,7 +162,7 @@ public class WeaponSelection : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
 
-        switch(weaponNum)
+        switch (weaponNum)
         {
             case 0:
                 softRifleBulletCount = 10;

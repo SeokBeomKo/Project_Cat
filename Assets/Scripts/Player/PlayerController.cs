@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
         MoveRogic();
     }    
 
+
     private void SpeedControl()
     {
         if (OnSlope()&& !exitingSlope)
