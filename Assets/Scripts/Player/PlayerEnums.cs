@@ -13,6 +13,8 @@ public enum PlayerStateEnums
 
     AIM,            // 조준 상태
     AIM_MOVE,       // 조준 이동 상태
+
+    AIMSHOOT,       // 조준 사격 상태
     SHOOT,          // 사격 상태
     
     STIFFEN,        // 경직 상태
