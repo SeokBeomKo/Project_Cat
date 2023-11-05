@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class LoadingScene : MonoBehaviour
 {
     public Image progressBar;
-    //public string sceneName;
+    // private string sceneName;
 
     private float loadingTime = 5.0f;
     private float time;
@@ -22,7 +22,7 @@ public class LoadingScene : MonoBehaviour
     {
         yield return null;
         // 비동기 로드 : Scene을 불러올 때 멈추지 않고 다른 작업 가능
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Test"); // 비동기적으로 로드 시작
+        AsyncOperation operation = SceneManager.LoadSceneAsync("InGameTest_Cat"); // 비동기적으로 로드 시작
         operation.allowSceneActivation = false; // 씬 로드 후 자동으로 장면 전환이 되지 않도록
 
         while (!operation.isDone) // 로딩 완료 유무 
