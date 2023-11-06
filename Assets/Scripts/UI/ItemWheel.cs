@@ -5,29 +5,29 @@ using UnityEngine;
 
 public class ItemWheel : MonoBehaviour
 {
-    public Transform center; // Áß¾ÓÀ» ±âÁØÀ¸·Î ¸¶¿ì½º °¢µµ °è»ê
-    public Transform selectObject; // ¼±ÅÃµÈ °Å È¸Àü
+    public Transform center; // ì¤‘ì•™ì„ ê¸°ì¤€ìœ¼ë¡œ ë§ˆìš°ìŠ¤ ê°ë„ ê³„ì‚°
+    public Transform selectObject; // ì„ íƒëœ ê±° íšŒì „
 
-    public GameObject itemMenu; // ¾ÆÀÌÅÛ ÈÙ ¸Ş´º
-    bool isMenuActive; // ¸Ş´ºÀÇ È°¼º »óÅÂ
+    public GameObject itemMenu; // ì•„ì´í…œ íœ  ë©”ë‰´
+    bool isMenuActive; // ë©”ë‰´ì˜ í™œì„± ìƒíƒœ
 
-    public TextMeshProUGUI itemName; // ¾ÆÀÌÅÛ ÀÌ¸§
-    public TextMeshProUGUI itemExplanation; // ¾ÆÀÌÅÛ ¼³¸í
+    public TextMeshProUGUI itemName; // ì•„ì´í…œ ì´ë¦„
+    public TextMeshProUGUI itemExplanation; // ì•„ì´í…œ ì„¤ëª…
 
-    public string[] itemNameArray; 
+    public string[] itemNameArray;
     public string[] itemExplanationArray;
 
-    public Transform[] itemSlotArray; // ¾ÆÀÌÅÛ ÀÌ¹ÌÁö È®´ë
-    public Transform[] energySlotArray; // ¿îµ¿¿¡³ÊÁö ÀÌ¹ÌÁö È®´ë
+    public Transform[] itemSlotArray; // ì•„ì´í…œ ì´ë¯¸ì§€ í™•ëŒ€
+    public Transform[] energySlotArray; // ìš´ë™ì—ë„ˆì§€ ì´ë¯¸ì§€ í™•ëŒ€
 
-    public Transform itemMin, itemMax; // ¾ÆÀÌÅÛ ÈÙ ¿ø °æ°è
-    public Transform energyMin, energyMax; // ¿îµ¿¿¡³ÊÁö ¿ø °æ°è
+    public Transform itemMin, itemMax; // ì•„ì´í…œ íœ  ì› ê²½ê³„
+    public Transform energyMin, energyMax; // ìš´ë™ì—ë„ˆì§€ ì› ê²½ê³„
 
-    public GameObject kineticEnergyMenu; // ¿îµ¿ ¿¡³ÊÁö ¼±ÅÃ½Ã ¸Ş´ºÃ¢
-    bool isEnergyMenuActive; // ¿îµ¿¿¡³ÊÁö ¸Ş´º È°¼º »óÅÂ
+    public GameObject kineticEnergyMenu; // ìš´ë™ ì—ë„ˆì§€ ì„ íƒì‹œ ë©”ë‰´ì°½
+    bool isEnergyMenuActive; // ìš´ë™ì—ë„ˆì§€ ë©”ë‰´ í™œì„± ìƒíƒœ
 
-    public TextMeshProUGUI moveSpeed; // ÀÌµ¿¼Óµµ ¼³¸í
-    public TextMeshProUGUI attackSpeed; // °ø°İ¼Óµµ ¼³¸í
+    public TextMeshProUGUI moveSpeed; // ì´ë™ì†ë„ ì„¤ëª…
+    public TextMeshProUGUI attackSpeed; // ê³µê²©ì†ë„ ì„¤ëª…
 
     bool hasRightMouseClicked = false;
 
@@ -40,13 +40,13 @@ public class ItemWheel : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(2)) // ¸¶¿ì½º ÈÙ ¹öÆ° ¹«±âÃ¢ È°¼ºÈ­
+        if (Input.GetMouseButtonDown(2)) // ë§ˆìš°ìŠ¤ íœ  ë²„íŠ¼ ë¬´ê¸°ì°½ í™œì„±í™”
         {
             isMenuActive = !isMenuActive;
-            
+
             if (isMenuActive && !isEnergyMenuActive)
                 itemMenu.SetActive(true);
-            if(!isMenuActive)
+            if (!isMenuActive)
                 itemMenu.SetActive(false);
         }
 
@@ -94,34 +94,34 @@ public class ItemWheel : MonoBehaviour
 
     float CalculateAngle(Vector3 centerPosition, Vector3 targetPosition)
     {
-        Vector2 delta = centerPosition - targetPosition; // Áß¾Ó¿¡¼­ºÎÅÍ ¸¶¿ì½º À§Ä¡ÀÇ Â÷ÀÌ
-        float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg; // °¢µµ ±¸ÇÏ´Â °ø½Ä 
-        angle += 180; // °¢µµ°¡ -180¿¡¼­ 180ÀÌ¹Ç·Î 180 ´õÇØÁÜ (°¢µµ ½±°Ô Ã³¸®ÇÏ±â À§ÇØ¼­)
+        Vector2 delta = centerPosition - targetPosition; // ì¤‘ì•™ì—ì„œë¶€í„° ë§ˆìš°ìŠ¤ ìœ„ì¹˜ì˜ ì°¨ì´
+        float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg; // ê°ë„ êµ¬í•˜ëŠ” ê³µì‹ 
+        angle += 180; // ê°ë„ê°€ -180ì—ì„œ 180ì´ë¯€ë¡œ 180 ë”í•´ì¤Œ (ê°ë„ ì‰½ê²Œ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ì„œ)
 
         return angle;
     }
 
     void UpdateMenu()
     {
-        // Áß¾ÓÀ¸·ÎºÎÅÍÀÇ ¸¶¿ì½º °Å¸®°¡ °æ°è°ª ¾È¿¡ ÀÖ´ÂÁö È®ÀÎ
+        // ì¤‘ì•™ìœ¼ë¡œë¶€í„°ì˜ ë§ˆìš°ìŠ¤ ê±°ë¦¬ê°€ ê²½ê³„ê°’ ì•ˆì— ìˆëŠ”ì§€ í™•ì¸
         if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(itemMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(itemMin.position, center.position))
         {
-            float angle = CalculateAngle(center.position, Input.mousePosition);         
+            float angle = CalculateAngle(center.position, Input.mousePosition);
 
-            int currentItem = 0; // ¾ÆÀÌÅÛ ¹øÈ£ È®ÀÎ
+            int currentItem = 0; // ì•„ì´í…œ ë²ˆí˜¸ í™•ì¸
 
             for (int i = 0; i < 360; i += 60)
             {
                 if (angle >= i && angle < i + 60)
                 {
-                    selectObject.eulerAngles = new Vector3(0, 0, i); // ZÃà ÁÖÀ§·Î È¸Àü
+                    selectObject.eulerAngles = new Vector3(0, 0, i); // Zì¶• ì£¼ìœ„ë¡œ íšŒì „
 
                     itemName.text = itemNameArray[currentItem];
                     itemExplanation.text = itemExplanationArray[currentItem];
 
                     foreach (Transform t in itemSlotArray)
                     {
-                        t.transform.localScale = new Vector3(1, 1, 1); // ¸ğµç ÀÌ¹ÌÁö Å©±â (1, 1, 1)·Î ¼³Á¤
+                        t.transform.localScale = new Vector3(1, 1, 1); // ëª¨ë“  ì´ë¯¸ì§€ í¬ê¸° (1, 1, 1)ë¡œ ì„¤ì •
                     }
                     itemSlotArray[currentItem].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 
@@ -129,10 +129,10 @@ public class ItemWheel : MonoBehaviour
                     {
                         hasRightMouseClicked = true;
 
-                        Debug.Log(itemNameArray[currentItem] + "¼±ÅÃ");
+                        Debug.Log(itemNameArray[currentItem] + "ì„ íƒ");
                         DeactivateMenu();
 
-                        // ¿îµ¿¿¡³ÊÁö ¼±ÅÃ½Ã »õ·Î¿î ÆË¾÷Ã¢ »ı¼º
+                        // ìš´ë™ì—ë„ˆì§€ ì„ íƒì‹œ ìƒˆë¡œìš´ íŒì—…ì°½ ìƒì„±
                         if (angle >= 300 && angle < 360)
                         {
                             ActivateEnergyMenu();
@@ -155,7 +155,7 @@ public class ItemWheel : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("¼±ÅÃ Ãë¼Ò");
+            Debug.Log("ì„ íƒ ì·¨ì†Œ");
             DeactivateMenu();
         }
     }
@@ -164,13 +164,13 @@ public class ItemWheel : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("¿îµ¿ ¿¡³ÊÁö ¼±ÅÃ Ãë¼Ò");
+            Debug.Log("ìš´ë™ ì—ë„ˆì§€ ì„ íƒ ì·¨ì†Œ");
             DeactivateEnergyMenu();
             ActivateMenu();
         }
         else if (Input.GetMouseButtonDown(2))
         {
-            Debug.Log("¼±ÅÃ Ãë¼Ò");
+            Debug.Log("ì„ íƒ ì·¨ì†Œ");
             DeactivateEnergyMenu();
             DeactivateMenu();
         }
@@ -182,16 +182,16 @@ public class ItemWheel : MonoBehaviour
 
             int selectedEnergySlot = (energyAngle > 90 && energyAngle < 270) ? 0 : 1;
 
-            energySlotArray[0].transform.localScale = selectedEnergySlot == 0 ? new Vector3(1.3f, 1.3f, 1.3f) : Vector3.one; //Vector3.one = ¸ğµç Ãà¿¡ ´ëÇØ Å©±â¸¦ 1·Î
+            energySlotArray[0].transform.localScale = selectedEnergySlot == 0 ? new Vector3(1.3f, 1.3f, 1.3f) : Vector3.one; //Vector3.one = ëª¨ë“  ì¶•ì— ëŒ€í•´ í¬ê¸°ë¥¼ 1ë¡œ
             energySlotArray[1].transform.localScale = selectedEnergySlot == 1 ? new Vector3(1.3f, 1.3f, 1.3f) : Vector3.one;
 
-            moveSpeed.text = selectedEnergySlot == 0 ? "Ä³¸¯ÅÍÀÇ ÀÌµ¿¼Óµµ¸¦ Áõ°¡½ÃÅ²´Ù." : " ";
-            attackSpeed.text = selectedEnergySlot == 1 ? "ÇÃ·¹ÀÌ¾îÀÇ °ø°İ ¼Óµµ¸¦ »ó½Â½ÃÅ²´Ù." : " ";
+            moveSpeed.text = selectedEnergySlot == 0 ? "ìºë¦­í„°ì˜ ì´ë™ì†ë„ë¥¼ ì¦ê°€ì‹œí‚¨ë‹¤." : " ";
+            attackSpeed.text = selectedEnergySlot == 1 ? "í”Œë ˆì´ì–´ì˜ ê³µê²© ì†ë„ë¥¼ ìƒìŠ¹ì‹œí‚¨ë‹¤." : " ";
 
             if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
             {
                 hasRightMouseClicked = true;
-                Debug.Log(energySlotArray[selectedEnergySlot] + "¼±ÅÃ");
+                Debug.Log(energySlotArray[selectedEnergySlot] + "ì„ íƒ");
                 DeactivateEnergyMenu();
             }
         }
@@ -208,5 +208,5 @@ public class ItemWheel : MonoBehaviour
     }
 }
 
-// Atan2ÀÇ ¹İÈ¯°ªÀº ¶óµğ¾È ÀÌ±â ¶§¹®¿¡ µµ¼ö¹ıÀ» »ç¿ëÇÏ±â À§ÇØ¼­ Mathf.Rad2Deg ¸¦ ÀÌ¿ë
-// Mathf.Rad2Deg´Â ¶óµğ¾ÈÀ» °¢µµ·Î º¯È¯ÇØÁÖ´Â »ó¼ö¸¦ ³ªÅ¸³»°í, ±×°ªÀº 360 / ( PI * 2 )¿Í °°´Ù.
+// Atan2ì˜ ë°˜í™˜ê°’ì€ ë¼ë””ì•ˆ ì´ê¸° ë•Œë¬¸ì— ë„ìˆ˜ë²•ì„ ì‚¬ìš©í•˜ê¸° ìœ„í•´ì„œ Mathf.Rad2Deg ë¥¼ ì´ìš©
+// Mathf.Rad2DegëŠ” ë¼ë””ì•ˆì„ ê°ë„ë¡œ ë³€í™˜í•´ì£¼ëŠ” ìƒìˆ˜ë¥¼ ë‚˜íƒ€ë‚´ê³ , ê·¸ê°’ì€ 360 / ( PI * 2 )ì™€ ê°™ë‹¤.
