@@ -8,16 +8,16 @@ public class HPObserver : Observer
     [SerializeField]
     private HPSubject hpSubject;
 
-    public Image[] hpImage;
+    public Image[] hpImageArray;
 
     public override void Notify(ISubject subject)
     {
-        for (int i = 0; i < hpImage.Length; i++)
+        for (int i = 0; i < hpImageArray.Length; i++)
         {
             if (i < hpSubject.hp)
-                hpImage[i].enabled = true;
+                hpImageArray[i].enabled = true;
             else
-                hpImage[i].enabled = false;
+                hpImageArray[i].enabled = false;
         }
     }
 }

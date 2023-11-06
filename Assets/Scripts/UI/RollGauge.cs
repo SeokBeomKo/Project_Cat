@@ -5,22 +5,30 @@ using UnityEngine.UI;
 
 public class RollGauge : MonoBehaviour
 {
-    public int maxGauge = 3;
-    private int currentGauge;
-    public Image[] gaugeImageList;
+    public Image[] gaugeImageArray;
+    //public Image progressBar;
 
+    private int maxGauge = 3;
+    private int currentGauge;
+    private float charginTime = 3.0f;
+    private float lastDecreaseTime;
 
     void Start()
     {
         currentGauge = maxGauge;
+        lastDecreaseTime = Time.time;
     }
+
     void Update()
     {
-        IncreaseGauge();
-
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             DecreaseGauge();
+        }
+
+        if (Time.time - lastDecreaseTime >= charginTime && currentGauge < maxGauge)
+        {
+            IncreaseGauge();
         }
     }
 
@@ -29,39 +37,29 @@ public class RollGauge : MonoBehaviour
         if (currentGauge > 0)
         {
             currentGauge--;
+            lastDecreaseTime = Time.time;
             UpdateImage();
         }
     }
 
     private void IncreaseGauge()
     {
-
-            StartCoroutine(Delaytime());
-    }
-
-    private IEnumerator Delaytime()
-    {
-        yield return new WaitForSeconds(3);
-
         if (currentGauge < maxGauge)
         {
             currentGauge++;
+            lastDecreaseTime = Time.time;
             UpdateImage();
         }
     }
 
     private void UpdateImage()
     {
-        // 모든 게이지 이미지를 비활성화
-        for (int i = 0; i < gaugeImageList.Length; i++)
+        for (int i = 0; i < gaugeImageArray.Length; i++)
         {
-            gaugeImageList[i].enabled = false;
-        }
-
-        // 현재 게이지 값에 따라 해당 게이지 이미지 활성화
-        for (int i = 0; i < currentGauge; i++)
-        {
-            gaugeImageList[i].enabled = true;
+            if (i < currentGauge)
+                gaugeImageArray[i].enabled = true; 
+            else
+                gaugeImageArray[i].enabled = false; 
         }
     }
 }
