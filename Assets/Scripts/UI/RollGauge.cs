@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RollGauge : MonoBehaviour
 {
     public Image[] gaugeImageArray;
     //public Image progressBar;
+    //public TextMeshProUGUI gaugeNumber;
 
     private int maxGauge = 3;
     private int currentGauge;
+
     private float charginTime = 3.0f;
     private float lastDecreaseTime;
 
