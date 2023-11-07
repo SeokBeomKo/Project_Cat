@@ -8,13 +8,13 @@ public class HPSubject : Subject
     [SerializeField]
     private List<Observer> observerList = new List<Observer>();
    
-    public int hp = 10;
+    public int hp = 100;
 
     public void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            hp--;
+            hp -= 5;
             NotifyObservers();
         }
     }
