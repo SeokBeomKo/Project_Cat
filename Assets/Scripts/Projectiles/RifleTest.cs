@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RifleTest : MonoBehaviour
 {
+    public Transform shootPosition;
     public GameObject bulletPrefab; // '가짜' 총알 프리팹
     public float bulletSpeed = 20f;
 
@@ -26,6 +27,7 @@ public class RifleTest : MonoBehaviour
 
             // '가짜' 총알을 발사합니다.
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            bullet.transform.position = shootPosition.position;
             bullet.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
 
             // '가짜' 총알을 목표물에 맞는 위치까지 이동시킵니다.
