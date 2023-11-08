@@ -13,6 +13,8 @@ public class HPObserver : Observer
 
     public override void Notify(ISubject subject)
     {
+
+        Debug.Log(hpSubject.hp);
         for (int i = 0; i < hpImageArray.Length; i++)
         {
             if (i < hpSubject.hp / 5)
@@ -21,6 +23,6 @@ public class HPObserver : Observer
                 hpImageArray[i].enabled = false;
         }
 
-        hpText.text = hpSubject.hp + " / 100";
+        hpText.text = hpSubject.hp.ToString();
     }
 }

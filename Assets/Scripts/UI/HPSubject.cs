@@ -14,8 +14,14 @@ public class HPSubject : Subject
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            hp -= 5;
-            NotifyObservers();
+            if (hp > 0)
+            {
+                hp -= 5;
+                NotifyObservers();
+            }
+
+            if (hp == 0)
+                Debug.Log("²ôÀÄ");
         }
     }
 
