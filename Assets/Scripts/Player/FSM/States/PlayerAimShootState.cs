@@ -22,7 +22,7 @@ public class PlayerAimShootState : IPlayerState
 
     public void Execute()
     {
-        Debug.Log("Fire");
+        
         stateMachine.ChangeStateLogic(PlayerStateEnums.AIM);
     }
 
