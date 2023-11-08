@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &200881806 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2245475622352609386, guid: ffdfb90fbc9b04d69a33c5334898902e, type: 3}
+  m_PrefabInstance: {fileID: 1688425438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &308907877
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +256,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &704991728 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3101021733550633122, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
+  m_PrefabInstance: {fileID: 1454101599}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1015365940 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3101021733550633122, guid: 7d65f3a676cfa4acaa96bbcffe8c65b8, type: 3}
+  m_PrefabInstance: {fileID: 1941622963}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1231082159
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +507,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 127247470602651968, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
+      propertyPath: shootPosition
+      value: 
+      objectReference: {fileID: 704991728}
+    - target: {fileID: 127247470602651968, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
       propertyPath: projectileSpeed
       value: 1
       objectReference: {fileID: 0}
@@ -505,7 +524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376252859883388664, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8376252859883388664, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
       propertyPath: m_LocalPosition.y
@@ -650,6 +669,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2746575753370258176, guid: ffdfb90fbc9b04d69a33c5334898902e, type: 3}
+      propertyPath: spreadAngle
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746575753370258176, guid: ffdfb90fbc9b04d69a33c5334898902e, type: 3}
+      propertyPath: shootPosition
+      value: 
+      objectReference: {fileID: 200881806}
     - target: {fileID: 2943943969504565586, guid: ffdfb90fbc9b04d69a33c5334898902e, type: 3}
       propertyPath: m_Name
       value: ShotGun
@@ -660,7 +687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376252859883388664, guid: ffdfb90fbc9b04d69a33c5334898902e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.837
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8376252859883388664, guid: ffdfb90fbc9b04d69a33c5334898902e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -742,6 +769,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RifleGun
       objectReference: {fileID: 0}
+    - target: {fileID: 4172789363586272929, guid: 7d65f3a676cfa4acaa96bbcffe8c65b8, type: 3}
+      propertyPath: shootPosition
+      value: 
+      objectReference: {fileID: 1015365940}
     - target: {fileID: 8376252859883388664, guid: 7d65f3a676cfa4acaa96bbcffe8c65b8, type: 3}
       propertyPath: m_RootOrder
       value: 7

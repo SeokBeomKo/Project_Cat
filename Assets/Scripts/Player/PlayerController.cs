@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     [Header("스탯")]
     [SerializeField]    public PlayerStats          stats;
 
+    [Header("무기")]
+    [SerializeField]    public WeaponCenter         weaponCenter;
+
     [Header("체크")]
     [HideInInspector]   public bool                 isGrounded;
     [HideInInspector]   public bool                 isRolled;

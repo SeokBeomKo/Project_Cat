@@ -32,7 +32,7 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerStateEnums.AIM,          new PlayerAimState(this)},
             {PlayerStateEnums.AIM_MOVE,     new PlayerAimMoveState(this)},
 
-            {PlayerStateEnums.AIMSHOOT,     new PlayerAimShootState(this)},
+            {PlayerStateEnums.AIM_SHOOT,     new PlayerAimShootState(this)},
             {PlayerStateEnums.SHOOT,        new PlayerShootState(this)},
 
             {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},

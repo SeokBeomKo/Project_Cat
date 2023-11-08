@@ -15,6 +15,13 @@ public class InputCenter : MonoBehaviour
         inputHandle.OnPlayerJumpInput += ChangeJumpState;
         inputHandle.OnPlayerDiveRollInput += ChangeRollState;
         inputHandle.OnPlayerAimSwitchInput += ChangeAimState;
+
+        inputHandle.OnWeaponSwapInput += SwapWeapon;
+    }
+
+    void SwapWeapon(int number)
+    {
+        playerController.weaponCenter.SwapWeapon(number);
     }
 
     void ChangeAimState()
