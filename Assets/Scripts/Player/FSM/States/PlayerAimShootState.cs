@@ -9,6 +9,7 @@ public class PlayerAimShootState : IPlayerState
     };
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
+        PlayerStateEnums.AIM
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -21,10 +22,13 @@ public class PlayerAimShootState : IPlayerState
 
     public void Execute()
     {
+        Debug.Log("Fire");
+        stateMachine.ChangeStateLogic(PlayerStateEnums.AIM);
     }
 
     public void OnStateEnter()
     {
+        player.weaponCenter.FireWeapon();
     }
 
     public void OnStateExit()
