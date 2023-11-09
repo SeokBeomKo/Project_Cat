@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
-public class RollGauge : MonoBehaviour
+public class RollSubject : Subject
 {
-    public Image[] gaugeImageArray;
+    public List<Observer> observerList = new List<Observer>();
 
-    private int maxGauge = 3;
-    private int currentGauge;
+    public int maxGauge = 3;
+    public int currentGauge;
 
-    private float charginTime = 3.0f;
-    private float lastDecreaseTime;
+    public float charginTime = 3.0f;
+    public float lastDecreaseTime;
 
     void Start()
     {
@@ -20,7 +18,7 @@ public class RollGauge : MonoBehaviour
         lastDecreaseTime = Time.time;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -39,7 +37,7 @@ public class RollGauge : MonoBehaviour
         {
             currentGauge--;
             lastDecreaseTime = Time.time;
-            UpdateImage();
+            NotifyObservers();
         }
     }
 
@@ -49,18 +47,21 @@ public class RollGauge : MonoBehaviour
         {
             currentGauge++;
             lastDecreaseTime = Time.time;
-            UpdateImage();
+            NotifyObservers();
         }
     }
 
-    private void UpdateImage()
+    public override void AddObserver(Observer observer) // 등록
     {
-        for (int i = 0; i < gaugeImageArray.Length; i++)
-        {
-            if (i < currentGauge)
-                gaugeImageArray[i].enabled = true; 
-            else
-                gaugeImageArray[i].enabled = false; 
-        }
+        observerList.Add(observer);
+    }
+    public override void RemoveObserver(Observer observer) // 삭제
+    {
+        observerList.Remove(observer);
+    }
+    public override void NotifyObservers() // 알려줘
+    {
+        foreach (var observer in observerList)
+            observer.Notify(this);
     }
 }
