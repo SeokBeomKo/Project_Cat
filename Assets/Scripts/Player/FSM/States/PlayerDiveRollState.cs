@@ -60,7 +60,6 @@ public class PlayerDiveRollState : IPlayerState
 
     public void OnStateEnter()
     {
-        player.stats.UseRoll();
         origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         

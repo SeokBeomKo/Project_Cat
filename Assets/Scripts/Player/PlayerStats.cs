@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, ISubject
 {
+    public List<IObserver> hpObserverList = new List<IObserver>();
+    public List<IObserver> rollObserverList = new List<IObserver>();
+
+
     [Header("체력")]
     [SerializeField]    
-    private int maxHealth;
-    private int currentHealth;
+    private int maxHealth = 100;
+    public int currentHealth;
 
     [Header("회피")]
     [SerializeField]    
     private int maxRoll;
-    private int currentRoll;
+    public int currentRoll;
     [SerializeField]    
     private float rollDelay;
 
     [Header("더블 점프")]
     [SerializeField]    
     private int maxDouble;
-    private int currentDouble;
+    public int currentDouble;
 
     [Header("수치 값")]
     public float moveSpeed;
@@ -47,6 +51,7 @@ public class PlayerStats : MonoBehaviour
             if (rollTime >= rollDelay)
             {
                 currentRoll++;
+                NotifyObservers(rollObserverList);
                 rollTime = 0;
             }
         }
@@ -75,6 +80,7 @@ public class PlayerStats : MonoBehaviour
     public void UseRoll()
     {
         currentRoll--;
+        NotifyObservers(rollObserverList);
     }
 
     public void UseDouble()
@@ -107,5 +113,23 @@ public class PlayerStats : MonoBehaviour
     {
         currentDouble += fill;
         if (currentDouble > maxDouble)  currentDouble = maxDouble;
+    }
+
+    public void AddObserver<T>(List<T> observerList, T observer) where T : IObserver
+    {
+        observerList.Add(observer);
+    }
+
+    public void RemoveObserver<T>(List<T> observerList, T observer) where T : IObserver
+    {
+        observerList.Remove(observer);
+    }
+
+    public void NotifyObservers<T>(List<T> observerList) where T : IObserver
+    {
+        foreach (T observer in observerList)
+        {
+            observer.Notify(this);
+        }
     }
 }

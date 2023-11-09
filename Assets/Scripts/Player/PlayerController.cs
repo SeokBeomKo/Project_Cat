@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public Transform            model;
 
     [Header("스탯")]
-    [SerializeField]    public PlayerStats          stats;
+    [SerializeField]    public PlayerStats          playerStats;
 
     [Header("무기")]
     [SerializeField]    public WeaponCenter         weaponCenter;
@@ -55,17 +55,17 @@ public class PlayerController : MonoBehaviour
     {
         if (OnSlope()&& !exitingSlope)
         {
-            if (rigid.velocity.magnitude > stats.moveSpeed)
-                rigid.velocity = rigid.velocity.normalized * stats.moveSpeed;
+            if (rigid.velocity.magnitude > playerStats.moveSpeed)
+                rigid.velocity = rigid.velocity.normalized * playerStats.moveSpeed;
         }
 
         else
         {
             Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
 
-            if (flatVel.magnitude > stats.moveSpeed)
+            if (flatVel.magnitude > playerStats.moveSpeed)
             {
-                Vector3 limitedVel = flatVel.normalized * stats.moveSpeed;
+                Vector3 limitedVel = flatVel.normalized * playerStats.moveSpeed;
                 rigid.velocity = new Vector3(limitedVel.x, rigid.velocity.y, limitedVel.z);
             }
         }
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         if (OnSlope() && !exitingSlope)
         {
-            rigid.AddForce(GetSlopeMoveDirection() * stats.moveSpeed * 20f, ForceMode.Force);
+            rigid.AddForce(GetSlopeMoveDirection() * playerStats.moveSpeed * 20f, ForceMode.Force);
 
             if (rigid.velocity.y > 0)
                 rigid.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -92,18 +92,18 @@ public class PlayerController : MonoBehaviour
 
         else if (isGrounded)
         {
-            rigid.AddForce(moveDirection.normalized * stats.moveSpeed * 5f, ForceMode.Force);
+            rigid.AddForce(moveDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
         }
         else if (!isGrounded)
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, jumpDirection.normalized, out hit, 0.1f)) return;
-            rigid.AddForce(jumpDirection.normalized * stats.moveSpeed * 5f, ForceMode.Force);
+            rigid.AddForce(jumpDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
         }
 
         if (isRolled)
         {
-            rigid.AddForce(rollDirection.normalized * stats.rollSpeed * 10f, ForceMode.Force);
+            rigid.AddForce(rollDirection.normalized * playerStats.rollSpeed * 10f, ForceMode.Force);
         }
 
         rigid.useGravity = !OnSlope();
@@ -135,14 +135,14 @@ public class PlayerController : MonoBehaviour
         exitingSlope = true;
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
-        rigid.AddForce(transform.up * stats.jumpForce, ForceMode.Impulse);
+        rigid.AddForce(transform.up * playerStats.jumpForce, ForceMode.Impulse);
     }
 
     public void DoubleJump()
     {
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
-        rigid.AddForce(transform.up * stats.jumpForce * 1.5f, ForceMode.Impulse);
+        rigid.AddForce(transform.up * playerStats.jumpForce * 1.5f, ForceMode.Impulse);
     }
 
     private bool OnSlope()

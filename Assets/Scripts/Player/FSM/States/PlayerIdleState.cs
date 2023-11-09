@@ -37,7 +37,7 @@ public class PlayerIdleState : IPlayerState
 
     public void OnStateEnter()
     {
-        player.stats.FillDoubleCount();
+        player.playerStats.FillDoubleCount();
     }
 
     public void OnStateExit()
