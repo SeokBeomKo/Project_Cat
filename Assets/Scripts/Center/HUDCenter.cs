@@ -15,9 +15,4 @@ public class HUDCenter : MonoBehaviour
         playerStats.AddObserver<IObserver>(playerStats.hpObserverList,hpObserver);
         playerStats.AddObserver<IObserver>(playerStats.rollObserverList,rollObserver);
     }
-
-    public void HitHp()
-    {
-
-    }
 }

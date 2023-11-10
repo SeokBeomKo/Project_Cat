@@ -1,7 +1,7 @@
 public enum PlayerStateEnums
 {
     IDLE,           // 대기 상태
-    MOVE,            // 이동 상태
+    MOVE,           // 이동 상태
     JUMP,           // 점프 상태
     DOUBLE,         // 이중 점프 상태
     FALL,           // 낙하 상태

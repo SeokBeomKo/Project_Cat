@@ -11,12 +11,31 @@ public class PlayerStats : MonoBehaviour, ISubject
     [Header("체력")]
     [SerializeField]    
     private int maxHealth = 100;
-    public int currentHealth;
+    private int _currentHealth;
+
+    public int currentHealth 
+    {
+        get { return _currentHealth; }
+        set 
+        {
+            _currentHealth = value;
+            NotifyObservers(hpObserverList);
+        }
+    }
 
     [Header("회피")]
     [SerializeField]    
     private int maxRoll;
-    public int currentRoll;
+    private int _currentRoll;
+    public int currentRoll
+    {
+        get { return _currentRoll; }
+        set 
+        {
+            _currentRoll = value;
+            NotifyObservers(rollObserverList);
+        }
+    }
     [SerializeField]    
     private float rollDelay;
 
@@ -51,7 +70,6 @@ public class PlayerStats : MonoBehaviour, ISubject
             if (rollTime >= rollDelay)
             {
                 currentRoll++;
-                NotifyObservers(rollObserverList);
                 rollTime = 0;
             }
         }
@@ -80,7 +98,6 @@ public class PlayerStats : MonoBehaviour, ISubject
     public void UseRoll()
     {
         currentRoll--;
-        NotifyObservers(rollObserverList);
     }
 
     public void UseDouble()
@@ -88,16 +105,16 @@ public class PlayerStats : MonoBehaviour, ISubject
         currentDouble--;
     }
 
-    public void GetDamage()
+    public void GetDamage(int damage = 5)
     {
-        currentHealth--;
+        currentHealth -= damage;
         if (currentHealth <= 0)
         {
             // >> : 플레이어 사망 처리
         }
     }
 
-    public void FillHealth(int fill = 1)
+    public void FillHealth(int fill = 5)
     {
         currentHealth += fill;
         if (currentHealth > maxHealth)  currentHealth = maxHealth;

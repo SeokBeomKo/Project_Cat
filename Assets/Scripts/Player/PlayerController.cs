@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
     public float maxSlopeAngle;
     public bool exitingSlope = false;
 
+    public void Hit()
+    {
+        // TODO : 플레이어 경직 상태 및 hp 감소
+    }
+
     private void Update()
     {
         if (null != stateMachine.curState)
