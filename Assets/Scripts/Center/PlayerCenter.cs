@@ -20,9 +20,8 @@ public class PlayerCenter : MonoBehaviour
 
     public void HitPlayer(int damage = 5)
     {
-        
-            Debug.Log("충돌");
         playerController.Hit();
+        playerController.stateMachine.ChangeStateAny(PlayerStateEnums.STIFFEN);
         playerStats.GetDamage(damage);
     }
 }
