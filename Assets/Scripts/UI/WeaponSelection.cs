@@ -114,9 +114,9 @@ public class WeaponSelection : MonoBehaviour
     void SelectWeapon(int weaponNum)
     {
         // 선택한 무기를 부모 컨테이너의 가장 아래로 이동
-        weaponContainer.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-60, -260, 0);
+        weaponContainer.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
         // 선택한 무기 크기 커지게
-        weaponContainer.GetChild(weaponNum).localScale = new Vector3(1.32f, 1.32f, 1.32f);
+        weaponContainer.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
 
         int j = 1;
 
@@ -125,7 +125,7 @@ public class WeaponSelection : MonoBehaviour
         {
             if (i == weaponNum) continue;
 
-            weaponContainer.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -240 + j * 85, 0);
+            weaponContainer.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -270 + j * 60, 0);
             weaponContainer.GetChild(i).localScale = Vector3.one;
 
             j++;

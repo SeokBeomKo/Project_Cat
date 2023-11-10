@@ -144,7 +144,7 @@ public class ItemWheel : MonoBehaviour
         }
         else
         {
-            itemName.text = "MENU";
+            itemName.text = " ";
             itemExplanation.text = " ";
 
             foreach (Transform t in itemSlotArray)
