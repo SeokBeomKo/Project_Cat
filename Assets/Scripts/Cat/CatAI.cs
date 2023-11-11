@@ -14,22 +14,24 @@ namespace BehaviorTree
         [SerializeField]
         private float movementSpeed = 10.0f;
 
-        private float randomNumber = 0.0f;
-        private float fadeDuration = 2.0f;
+        private bool playerInMeleeRange = false;
+        private bool chargeAttackTime = false;
+        private bool isAttackComplete = true;
+        private bool isAttacking = false;
+
+        private float randomNumber = 0f;
+        private float attackEndTimer = 0f;
 
         private Tree tree = null;
         private Animator animator = null;
-        private BoxCollider attackRangeCollider = null;
         private Transform playerTransform = null;
 
-        private Vector3 meleeAttackRange = new Vector3(0.4f, 0.8f, 0.4f);
+        private Vector3 chargeAttackrPosition;
 
         private void Awake()
         {
             tree = new Tree(SetTree());
             animator = transform.parent.GetComponent<Animator>();
-            attackRangeCollider = transform.parent.GetChild(0).GetComponent<BoxCollider>();
-            attackRangeCollider.gameObject.AddComponent<TriggerEvents>();
 
             GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("Player");
             if (taggedObjects.Length > 0)
@@ -40,6 +42,17 @@ namespace BehaviorTree
 
         private void Update()
         {
+            if (isAttacking)
+            {
+                attackEndTimer += Time.deltaTime;
+                if (attackEndTimer >= 5f)
+                {
+                    isAttackComplete = true;
+                    isAttacking = false;
+                    attackEndTimer = 0f;
+                }
+            }
+
             tree.Operate();
         }
 
@@ -47,108 +60,153 @@ namespace BehaviorTree
         {
             if (animator != null)
             {
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
-                {
-                    var normalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-
-                    return normalizedTime != 0 && normalizedTime < 1f;
-                }
+                return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
             }
             return false;
         }
 
         Node SetTree()
         {
-            var meleeAttack = new Sequence(
+            var chargeAttack = new Sequence(
                 new List<Node>()
                 {
-                    new ActionNode(CheckMeleeAttack),
-                    new ActionNode(CheckPlayerWithinMeleeAttackRange),
-                    new ActionNode(DoMeleeAttack),
+                    new ActionNode(CheckChargeTime),
+                    new ActionNode(DoChargeAttack)
                 });
 
-            var moveToPlayer = new ActionNode(MoveToPlayer);
+            var meleeAttack = new Selector(
+                new List<Node>()
+                {
+                    new ActionNode(DoMeleeAttack),
+                    new ActionNode(DoDarkAttack)
+                });
+
+            var attack = new Sequence(
+                new List<Node>()
+                {
+                    new ActionNode(CheckAnimation),
+                    new ActionNode(CheckPlayerWithinMeleeAttackRange),
+
+                    new Selector(new List<Node>()
+                    {
+                        chargeAttack,
+                        meleeAttack
+                    })
+                });
+
+            var moveToPlayer = new Sequence(
+                new List<Node>()
+                {
+                    new ActionNode(CheckAttackEndTime),
+                    new ActionNode(MoveToPlayer)
+                });
+
             var moveToOrigin = new ActionNode(MoveToOriginPosition);
 
             return new Selector(new List<Node>()
             {
-                meleeAttack,
+                attack,
                 moveToPlayer,
                 moveToOrigin
             });
         }
 
-        // 근접 기본 공격
-        Node.NodeState CheckMeleeAttack()
+        Node.NodeState CheckAnimation()
         {
-            if (IsAnimationRunning("Attack")) return Node.NodeState.RUNNING;
-            return Node.NodeState.SUCCESS;
+            if (IsAnimationRunning("Run")) return Node.NodeState.SUCCESS;
+            else if ((IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack"))) return Node.NodeState.RUNNING;
+
+            return Node.NodeState.FAILURE;
         }
 
         Node.NodeState CheckPlayerWithinMeleeAttackRange()
         {
             if (playerTransform != null)
             {
-                if (Vector3.SqrMagnitude(playerTransform.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
-                {
-                    attackRangeCollider.enabled = true;
+                if (playerInMeleeRange && isAttackComplete)
+                 {
                     return Node.NodeState.SUCCESS;
                 }
             }
-            attackRangeCollider.enabled = false;
+
+            return Node.NodeState.FAILURE;
+        }
+
+        Node.NodeState CheckChargeTime()
+        {
+            if (playerTransform != null)
+            {
+                if (chargeAttackTime)
+                {
+                    chargeAttackrPosition = playerTransform.position;
+
+                    chargeAttackTime = false;
+                    return Node.NodeState.SUCCESS;
+                }
+            }
+
+            return Node.NodeState.FAILURE;
+        }
+
+        Node.NodeState DoChargeAttack()
+        {
+            if (playerTransform != null)
+            {
+                animator.SetTrigger("chargeAttack");
+                isAttacking = true;
+                isAttackComplete = false;
+                transform.parent.position = chargeAttackrPosition;
+
+                return Node.NodeState.SUCCESS;
+            }
+
             return Node.NodeState.FAILURE;
         }
 
         Node.NodeState DoMeleeAttack()
         {
+            randomNumber = Random.Range(0f, 1.0f);
+            if (playerTransform != null && randomNumber > 0.3f)
+            {
+                animator.SetTrigger("attack");
+                isAttacking = true;
+                isAttackComplete = false;
+                chargeAttackTime = true;
+                return Node.NodeState.SUCCESS;
+            }
+            return Node.NodeState.FAILURE;
+        }
+
+        Node.NodeState DoDarkAttack()
+        {
             if (playerTransform != null)
             {
                 animator.SetTrigger("attack");
-
-                randomNumber = Random.Range(0f, 1.0f);
-                if (randomNumber < 0.3f) // 암전
-                {
-                    StartCoroutine(FadeOut());
-                }
+                isAttacking = true;
+                isAttackComplete = false;
+                chargeAttackTime = true;
                 canvasImage.enabled = true;
-                StartCoroutine(FadeOut());
+                StartCoroutine(FadeOutOverTime(10f));
 
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
         }
 
-        IEnumerator FadeOut()
+        IEnumerator FadeOutOverTime(float duration)
         {
-            /*float timer = 0f;
+            float timer = 0f;
             Color imageColor = canvasImage.color;
-            Color darkColor = new Color(0, 0, 0, 240);
-            
-            while (timer < fadeDuration)
+            Color transparentColor = new Color(imageColor.r, imageColor.g, imageColor.b, 0f);
+
+            while (timer < duration)
             {
                 timer += Time.deltaTime;
-                float progress = timer / fadeDuration;
-                
-                imageColor.a = Mathf.Lerp(0, 0.8f, progress);
+                float progress = timer / duration;
+
+                imageColor = Color.Lerp(imageColor, transparentColor, progress);
 
                 canvasImage.color = imageColor;
-                yield return null;
-            }*/
-
-
-
-            float timer = 0f;
-            Color imageColor = canvasImage.color; // 이미지의 초기 색을 가져옴
-            Color transparentColor = new Color(imageColor.r, imageColor.g, imageColor.b, 0f); // 완전 투명한 색
-
-            while (timer < fadeDuration)
-            {
-                timer += Time.deltaTime;
-                float progress = timer / fadeDuration;
-
-                imageColor = Color.Lerp(imageColor, transparentColor, progress); // 이미지를 서서히 투명하게 변경
-
-                canvasImage.color = imageColor; // 이미지에 변경된 색을 적용
                 yield return null;
             }
 
@@ -156,20 +214,31 @@ namespace BehaviorTree
         }
 
         // RUN
+        Node.NodeState CheckAttackEndTime()
+        {
+            if(playerTransform != null && isAttackComplete)
+            {
+                return Node.NodeState.SUCCESS;
+            }
+            return Node.NodeState.FAILURE;
+        }
+
         Node.NodeState MoveToPlayer()
         {
             if (playerTransform != null)
             {
-                // 몬스터가 플레이어를 향해 회전
                 Vector3 playerDirection = playerTransform.position - transform.parent.position;
-                Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
-                transform.parent.rotation = targetRotation;
 
-                // 몬스터가 플레이어를 향해 이동
-                transform.parent.position = Vector3.MoveTowards(transform.parent.position, playerTransform.position, Time.deltaTime * movementSpeed);
-                animator.SetTrigger("run");
+                if (!playerInMeleeRange && playerDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+                    transform.parent.rotation = targetRotation;
 
-                return Node.NodeState.RUNNING;
+                    transform.parent.position = Vector3.MoveTowards(transform.parent.position, playerTransform.position, Time.deltaTime * movementSpeed);
+                    animator.SetTrigger("run");
+
+                    return Node.NodeState.SUCCESS;
+                }
             }
 
             return Node.NodeState.FAILURE;
@@ -180,33 +249,26 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                if (Vector3.SqrMagnitude(playerTransform.position - transform.parent.position) < meleeAttackRange.sqrMagnitude)
-                {
-                    animator.SetTrigger("idle");
-                    return Node.NodeState.SUCCESS;
-                }
-
+                animator.SetTrigger("idle");
+                return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
         }
-    }
 
-    public class TriggerEvents : MonoBehaviour
-    {
         private void OnTriggerEnter(Collider other)
-        {
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
+        { 
             if (other.CompareTag("Player"))
             {
-                Debug.Log("Player Attack!!");
+                playerInMeleeRange = true;
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
+            if (other.CompareTag("Player"))
+            {
+                playerInMeleeRange = false;
+            }
         }
     }
 }
