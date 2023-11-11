@@ -4,56 +4,34 @@ using UnityEngine;
 
 public class WeaponCenter : MonoBehaviour
 {
-    Weapon myWeapon;
+    public List<Weapon> weaponList;
+    private Weapon curWeapon;
 
     private void Start()
     {
-        myWeapon = new Weapon();
-        myWeapon.SetWeapon(new BubbleGun());
+        InitWeapon();
+        SwapWeapon(0);
     }
 
-    private void Update()
+    public void InitWeapon()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        foreach(Weapon obj in weaponList)
         {
-            Debug.Log("BubbleGun");
-            ChangeBubbleGun();
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Debug.Log("SoapRifle");
-            ChangeSoapRifle();
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Debug.Log("SplashBuster");
-            ChangeSplashBuster();
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            FireWeapon();
+            obj.transform.parent.gameObject.SetActive(false);
         }
     }
 
-
-    public void ChangeBubbleGun()
+    public void SwapWeapon(int number)
     {
-        myWeapon.SetWeapon(new BubbleGun());
-    }
+        if (null != curWeapon)
+            curWeapon.transform.parent.gameObject.SetActive(false);
 
-    public void ChangeSoapRifle()
-    {
-        myWeapon.SetWeapon(new SoapRifle());
-    }
-
-    public void ChangeSplashBuster()
-    {
-        myWeapon.SetWeapon(new SplashBuster());
+        curWeapon = weaponList[number];
+        curWeapon.transform.parent.gameObject.SetActive(true);
     }
 
     public void FireWeapon()
     {
-        myWeapon.Shoot();
+        curWeapon.Fire();
     }
 }

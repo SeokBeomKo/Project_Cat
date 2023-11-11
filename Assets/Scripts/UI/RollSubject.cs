@@ -1,67 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
 
-public class RollSubject : Subject
-{
-    public List<Observer> observerList = new List<Observer>();
+// public class RollSubject : Subject
+// {
+//     public List<Observer> observerList = new List<Observer>();
 
-    public int maxGauge = 3;
-    public int currentGauge;
+//     public int maxGauge = 3;
+//     public int currentGauge;
 
-    public float charginTime = 3.0f;
-    public float lastDecreaseTime;
+//     public float charginTime = 3.0f;
+//     public float lastDecreaseTime;
 
-    void Start()
-    {
-        currentGauge = maxGauge;
-        lastDecreaseTime = Time.time;
-    }
+//     void Start()
+//     {
+//         currentGauge = maxGauge;
+//         lastDecreaseTime = Time.time;
+//     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            DecreaseGauge();
-        }
+//     private void Update()
+//     {
+//         if (Input.GetKeyDown(KeyCode.LeftShift))
+//         {
+//             DecreaseGauge();
+//         }
 
-        if (Time.time - lastDecreaseTime >= charginTime && currentGauge < maxGauge)
-        {
-            IncreaseGauge();
-        }
-    }
+//         if (Time.time - lastDecreaseTime >= charginTime && currentGauge < maxGauge)
+//         {
+//             IncreaseGauge();
+//         }
+//     }
 
-    private void DecreaseGauge()
-    {
-        if (currentGauge > 0)
-        {
-            currentGauge--;
-            lastDecreaseTime = Time.time;
-            NotifyObservers();
-        }
-    }
+//     private void DecreaseGauge()
+//     {
+//         if (currentGauge > 0)
+//         {
+//             currentGauge--;
+//             lastDecreaseTime = Time.time;
+//             NotifyObservers();
+//         }
+//     }
 
-    private void IncreaseGauge()
-    {
-        if (currentGauge < maxGauge)
-        {
-            currentGauge++;
-            lastDecreaseTime = Time.time;
-            NotifyObservers();
-        }
-    }
+//     private void IncreaseGauge()
+//     {
+//         if (currentGauge < maxGauge)
+//         {
+//             currentGauge++;
+//             lastDecreaseTime = Time.time;
+//             NotifyObservers();
+//         }
+//     }
 
-    public override void AddObserver(Observer observer) // µî·Ï
-    {
-        observerList.Add(observer);
-    }
-    public override void RemoveObserver(Observer observer) // »èÁ¦
-    {
-        observerList.Remove(observer);
-    }
-    public override void NotifyObservers() // ¾Ë·ÁÁà
-    {
-        foreach (var observer in observerList)
-            observer.Notify(this);
-    }
-}
+//     public override void AddObserver(Observer observer) // ï¿½ï¿½ï¿½
+//     {
+//         observerList.Add(observer);
+//     }
+//     public override void RemoveObserver(Observer observer) // ï¿½ï¿½ï¿½ï¿½
+//     {
+//         observerList.Remove(observer);
+//     }
+//     public override void NotifyObservers() // ï¿½Ë·ï¿½ï¿½ï¿½
+//     {
+//         foreach (var observer in observerList)
+//             observer.Notify(this);
+//     }
+// }

@@ -15,6 +15,13 @@ public class InputCenter : MonoBehaviour
         inputHandle.OnPlayerJumpInput += ChangeJumpState;
         inputHandle.OnPlayerDiveRollInput += ChangeRollState;
         inputHandle.OnPlayerAimSwitchInput += ChangeAimState;
+
+        inputHandle.OnWeaponSwapInput += SwapWeapon;
+    }
+
+    void SwapWeapon(int number)
+    {
+        playerController.weaponCenter.SwapWeapon(number);
     }
 
     void ChangeAimState()
@@ -45,7 +52,7 @@ public class InputCenter : MonoBehaviour
     {
         if ((playerController.stateMachine.curState is PlayerJumpState jumpstate ||
             playerController.stateMachine.curState is PlayerFallState fallState) &&
-            playerController.stats.GetDoubleCount() > 0)
+            playerController.playerStats.GetDoubleCount() > 0)
         {
             playerController.stateMachine.ChangeStateInput(PlayerStateEnums.DOUBLE);
         }
@@ -57,6 +64,10 @@ public class InputCenter : MonoBehaviour
 
     void ChangeRollState()
     {
+        if (0 == playerController.playerStats.GetRollCount()) return;
+
+        playerController.playerStats.UseRoll();
+
         if (playerController.stateMachine.curState is PlayerIdleState idleState)
         {
             playerController.stateMachine.ChangeStateInput(PlayerStateEnums.BACKROLL);

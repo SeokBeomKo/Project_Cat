@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShotTest : MonoBehaviour
 {
+    public Transform shootPosition;
     public GameObject bulletPrefab; // 총알 프리팹
     public int bulletCount = 8; // 한 번에 발사할 총알의 수
     public float bulletSpeed = 10f; // 총알의 속도
@@ -27,6 +28,7 @@ public class ShotTest : MonoBehaviour
 
             // 총알을 발사합니다.
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(direction));
+            bullet.transform.position = shootPosition.position;
             bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
         }
     }

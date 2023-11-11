@@ -2,24 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, ISubject
 {
+    public List<IObserver> hpObserverList = new List<IObserver>();
+    public List<IObserver> rollObserverList = new List<IObserver>();
+
+
     [Header("체력")]
     [SerializeField]    
-    private int maxHealth;
-    private int currentHealth;
+    private int maxHealth = 100;
+    private int _currentHealth;
+
+    public int currentHealth 
+    {
+        get { return _currentHealth; }
+        set 
+        {
+            _currentHealth = value;
+            NotifyObservers(hpObserverList);
+        }
+    }
 
     [Header("회피")]
     [SerializeField]    
     private int maxRoll;
-    private int currentRoll;
+    private int _currentRoll;
+    public int currentRoll
+    {
+        get { return _currentRoll; }
+        set 
+        {
+            _currentRoll = value;
+            NotifyObservers(rollObserverList);
+        }
+    }
     [SerializeField]    
     private float rollDelay;
 
     [Header("더블 점프")]
     [SerializeField]    
     private int maxDouble;
-    private int currentDouble;
+    public int currentDouble;
 
     [Header("수치 값")]
     public float moveSpeed;
@@ -82,16 +105,16 @@ public class PlayerStats : MonoBehaviour
         currentDouble--;
     }
 
-    public void GetDamage()
+    public void GetDamage(int damage = 5)
     {
-        currentHealth--;
+        currentHealth -= damage;
         if (currentHealth <= 0)
         {
             // >> : 플레이어 사망 처리
         }
     }
 
-    public void FillHealth(int fill = 1)
+    public void FillHealth(int fill = 5)
     {
         currentHealth += fill;
         if (currentHealth > maxHealth)  currentHealth = maxHealth;
@@ -107,5 +130,23 @@ public class PlayerStats : MonoBehaviour
     {
         currentDouble += fill;
         if (currentDouble > maxDouble)  currentDouble = maxDouble;
+    }
+
+    public void AddObserver<T>(List<T> observerList, T observer) where T : IObserver
+    {
+        observerList.Add(observer);
+    }
+
+    public void RemoveObserver<T>(List<T> observerList, T observer) where T : IObserver
+    {
+        observerList.Remove(observer);
+    }
+
+    public void NotifyObservers<T>(List<T> observerList) where T : IObserver
+    {
+        foreach (T observer in observerList)
+        {
+            observer.Notify(this);
+        }
     }
 }

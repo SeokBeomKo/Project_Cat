@@ -47,7 +47,7 @@ public class PlayerMoveState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetBool("isMove",true);
-        player.stats.FillDoubleCount();
+        player.playerStats.FillDoubleCount();
     }
 
     public void OnStateExit()

@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class HPObserver : Observer
+public class HPObserver : MonoBehaviour, IObserver
 {
-    [SerializeField]
-    private HPSubject hpSubject;
-
     public Image[] hpImageArray;
     public TextMeshProUGUI hpText;
 
-    public override void Notify(ISubject subject)
+    public void Notify(ISubject subject)
     {
-
-        Debug.Log(hpSubject.hp);
+        var playerStats = subject as PlayerStats;
         for (int i = 0; i < hpImageArray.Length; i++)
         {
-            if (i < hpSubject.hp / 5)
+            if (i < playerStats.currentHealth / 5)
                 hpImageArray[i].enabled = true;
             else
                 hpImageArray[i].enabled = false;
         }
 
-        hpText.text = hpSubject.hp.ToString();
+        hpText.text = playerStats.currentHealth.ToString();
     }
 }
