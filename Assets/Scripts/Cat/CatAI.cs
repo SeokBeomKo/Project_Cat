@@ -26,7 +26,6 @@ namespace BehaviorTree
         private Animator animator = null;
         private Transform playerTransform = null;
 
-        private Vector3 meleeAttackRange = new Vector3(0.4f, 0.8f, 0.4f);
         private Vector3 chargeAttackrPosition;
 
         private void Awake()
@@ -46,7 +45,7 @@ namespace BehaviorTree
             if (isAttacking)
             {
                 attackEndTimer += Time.deltaTime;
-                if (attackEndTimer >= 0.3f)
+                if (attackEndTimer >= 5f)
                 {
                     isAttackComplete = true;
                     isAttacking = false;
@@ -61,37 +60,13 @@ namespace BehaviorTree
         {
             if (animator != null)
             {
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
-                {
-                    var normalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                    return normalizedTime != 0 && normalizedTime < 1f;
-                }
+                return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
             }
             return false;
         }
 
         Node SetTree()
         {
-            /*var chargeAttack = new Sequence(
-                new List<Node>()
-                {
-                    new ActionNode(CheckChargeTime),
-                    new ActionNode(DoChargeAttack)
-                });
-
-            var meleeAttack = new Sequence(
-                new List<Node>()
-                {
-                    new ActionNode(CheckMeleeAttack),
-                    new ActionNode(CheckPlayerWithinMeleeAttackRange),
-
-                    new Selector(new List<Node>()
-                    {
-                        chargeAttack,
-                        new ActionNode(DoMeleeAttack)
-                    })
-                });*/
-
             var chargeAttack = new Sequence(
                 new List<Node>()
                 {
@@ -136,17 +111,10 @@ namespace BehaviorTree
             });
         }
 
-        // 근접 공격(+파동)
-        /*Node.NodeState CheckMeleeAttack()
-        {
-            if (IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack")) return Node.NodeState.RUNNING;
-            return Node.NodeState.SUCCESS;
-        }*/
-
         Node.NodeState CheckAnimation()
         {
             if (IsAnimationRunning("Run")) return Node.NodeState.SUCCESS;
-            else if (IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack")) return Node.NodeState.RUNNING;
+            else if ((IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack"))) return Node.NodeState.RUNNING;
 
             return Node.NodeState.FAILURE;
         }
@@ -155,8 +123,8 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                if (playerInMeleeRange)
-                {
+                if (playerInMeleeRange && isAttackComplete)
+                 {
                     return Node.NodeState.SUCCESS;
                 }
             }
@@ -187,7 +155,7 @@ namespace BehaviorTree
                 animator.SetTrigger("chargeAttack");
                 isAttacking = true;
                 isAttackComplete = false;
-                transform.position = chargeAttackrPosition;
+                transform.parent.position = chargeAttackrPosition;
 
                 return Node.NodeState.SUCCESS;
             }
@@ -218,7 +186,7 @@ namespace BehaviorTree
                 isAttackComplete = false;
                 chargeAttackTime = true;
                 canvasImage.enabled = true;
-                StartCoroutine(FadeOutOverTime(2f));
+                StartCoroutine(FadeOutOverTime(10f));
 
                 return Node.NodeState.SUCCESS;
             }
@@ -283,7 +251,6 @@ namespace BehaviorTree
             {
                 animator.SetTrigger("idle");
                 return Node.NodeState.SUCCESS;
-
             }
             return Node.NodeState.FAILURE;
         }
