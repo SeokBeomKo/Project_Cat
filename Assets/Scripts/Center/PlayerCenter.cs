@@ -21,7 +21,15 @@ public class PlayerCenter : MonoBehaviour
     public void HitPlayer(int damage = 5)
     {
         playerController.Hit();
-        playerController.stateMachine.ChangeStateAny(PlayerStateEnums.STIFFEN);
         playerStats.GetDamage(damage);
+
+        if (0 >= playerStats.currentHealth)
+        {
+            playerController.stateMachine.ChangeStateAny(PlayerStateEnums.DEAD);
+        }
+        else
+        {
+            playerController.stateMachine.ChangeStateAny(PlayerStateEnums.STIFFEN);
+        }
     }
 }

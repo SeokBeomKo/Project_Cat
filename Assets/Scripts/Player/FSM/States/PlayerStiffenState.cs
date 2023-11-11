@@ -40,18 +40,13 @@ public class PlayerStiffenState : IPlayerState
 
     public void OnStateEnter()
     {
-        // 플레이어의 움직임을 제한합니다.
         player.rigid.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
-        // 피격 애니메이션을 재생합니다.
         player.animator.SetTrigger("onHit");
-
-        Debug.Log("경직");
     }
 
     public void OnStateExit()
     {
-        // 플레이어의 움직임 제한을 해제합니다.
         player.rigid.constraints = RigidbodyConstraints.FreezeRotation;
     }
 }
