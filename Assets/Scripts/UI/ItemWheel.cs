@@ -27,6 +27,9 @@ public class ItemWheel : MonoBehaviour
     public GameObject kineticEnergyMenu; // 운동 에너지 선택시 메뉴창
     bool isEnergyMenuActive; // 운동에너지 메뉴 활성 상태
 
+    public GameObject selectEnergyLeft;
+    public GameObject selectEnergyRight;
+
     public TextMeshProUGUI moveSpeed; // 이동속도 설명
     public TextMeshProUGUI attackSpeed; // 공격속도 설명
 
@@ -38,6 +41,8 @@ public class ItemWheel : MonoBehaviour
         DeactivateMenu();
         DeactivateEnergyMenu();
         selectObject.gameObject.SetActive(false);
+        selectEnergyLeft.SetActive(false);
+        selectEnergyRight.SetActive(false);
         //temp.SetActive(false);
     }
 
@@ -137,7 +142,7 @@ public class ItemWheel : MonoBehaviour
                         DeactivateMenu();
 
                         // 운동에너지 선택시 새로운 팝업창 생성
-                        if (angle >= 300 && angle < 360)
+                        if (angle >= 120 && angle < 180)
                         {
                             ActivateEnergyMenu();
                         }
@@ -179,7 +184,9 @@ public class ItemWheel : MonoBehaviour
             DeactivateEnergyMenu();
             DeactivateMenu();
         }
-
+        
+        selectEnergyLeft.SetActive(false);
+        selectEnergyRight.SetActive(false);
 
         if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(energyMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(energyMin.position, center.position))
         {
@@ -192,6 +199,17 @@ public class ItemWheel : MonoBehaviour
 
             moveSpeed.text = selectedEnergySlot == 0 ? "캐릭터의 이동속도를 증가시킨다." : " ";
             attackSpeed.text = selectedEnergySlot == 1 ? "플레이어의 공격 속도를 상승시킨다." : " ";
+
+            if(selectedEnergySlot == 0)
+            {
+                selectEnergyLeft.SetActive(true);
+                selectEnergyRight.SetActive(false);
+            } 
+            else if(selectedEnergySlot == 1) 
+            {
+                selectEnergyLeft.SetActive(false);
+                selectEnergyRight.SetActive(true);
+            }
 
             if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
             {
