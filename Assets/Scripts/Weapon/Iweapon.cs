@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    void Fire();
+    void Fire(Vector3 direction);
 }

@@ -8,7 +8,7 @@ public class SoapRifle : Weapon
     public GameObject projectilePrefab; // '가짜' 총알 프리팹
     public float bulletSpeed = 20f;
 
-    public override void Fire()
+    public override void Fire(Vector3 direction)
     {
         // 레이캐스팅을 사용하여 총알이 맞는 위치를 찾습니다.
         RaycastHit hit;

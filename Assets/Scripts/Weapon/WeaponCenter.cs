@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class WeaponCenter : MonoBehaviour
 {
@@ -32,6 +33,20 @@ public class WeaponCenter : MonoBehaviour
 
     public void FireWeapon()
     {
-        curWeapon.Fire();
+        // 화면 중앙(크로스헤어 위치)를 월드 좌표로 변환합니다.
+        Camera activeCamera = Camera.main; // 메인 카메라를 참조합니다.
+        Ray ray = activeCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        // Camera activeCamera = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<Camera>();
+        // Ray ray = activeCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        RaycastHit hit;
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit))
+            targetPoint = hit.point; // 레이가 부딪힌 위치를 타겟 포인트로 설정합니다.
+        else
+            targetPoint = ray.GetPoint(400); // 레이가 부딪히지 않았다면, 일정 거리를 타겟 포인트로 설정합니다.
+
+        Debug.Log("발사");
+
+        curWeapon.Fire(targetPoint);
     }
 }
