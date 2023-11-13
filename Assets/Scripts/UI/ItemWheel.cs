@@ -7,6 +7,7 @@ public class ItemWheel : MonoBehaviour
 {
     public Transform center; // 중앙을 기준으로 마우스 각도 계산
     public Transform selectObject; // 선택된 거 회전
+    //public GameObject temp;
 
     public GameObject itemMenu; // 아이템 휠 메뉴
     bool isMenuActive; // 메뉴의 활성 상태
@@ -36,6 +37,8 @@ public class ItemWheel : MonoBehaviour
     {
         DeactivateMenu();
         DeactivateEnergyMenu();
+        selectObject.gameObject.SetActive(false);
+        //temp.SetActive(false);
     }
 
     void Update()
@@ -71,7 +74,7 @@ public class ItemWheel : MonoBehaviour
     void ActivateMenu()
     {
         isMenuActive = true;
-        itemMenu.SetActive(isMenuActive);
+        itemMenu.SetActive(true);
     }
 
     void DeactivateMenu()
@@ -106,6 +109,7 @@ public class ItemWheel : MonoBehaviour
         // 중앙으로부터의 마우스 거리가 경계값 안에 있는지 확인
         if (Vector3.Distance(Input.mousePosition, center.position) < Vector3.Distance(itemMax.position, center.position) && Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(itemMin.position, center.position))
         {
+            selectObject.gameObject.SetActive(true);
             float angle = CalculateAngle(center.position, Input.mousePosition);
 
             int currentItem = 0; // 아이템 번호 확인
@@ -144,6 +148,7 @@ public class ItemWheel : MonoBehaviour
         }
         else
         {
+            selectObject.gameObject.SetActive(false);
             itemName.text = " ";
             itemExplanation.text = " ";
 
