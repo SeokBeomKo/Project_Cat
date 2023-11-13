@@ -6,27 +6,31 @@ using TMPro;
 
 public class WeaponSelection : MonoBehaviour
 {
+    //1¹ø ÃÑ : SoftRifle 
+    //2¹ø ÃÑ : SplashBuster
+    //3¹ø ÃÑ : BubbleGun
+
     private Transform weaponContainer; // ¹«±â ÄÁÅ×ÀÌ³Ê
 
     private float softRifleBulletCount = 10;
-    private float bubbleGunBulletCount = 400;
     private float splashBusterBulletCount = 40; // 8¹ß¾¿
+    private float bubbleGunBulletCount = 400;
 
     public TextMeshProUGUI softRifleText;
-    public TextMeshProUGUI bubbleGunText;
     public TextMeshProUGUI splashBusterText;
+    public TextMeshProUGUI bubbleGunText;
 
     private bool isSoftRifleSelected = false;
-    private bool isBubbleGunSelected = false;
     private bool isSplashBusterSelected = false;
+    private bool isBubbleGunSelected = false;
 
     public Image softRifleProgress;
-    public Image bubbleGunProgress;
     public Image splashBusterProgress;
+    public Image bubbleGunProgress;
 
     public Image softRifleBorder;
-    public Image bubbleGunBorder;
     public Image splashBusterBorder;
+    public Image bubbleGunBorder;
 
     void Start()
     {
@@ -35,15 +39,16 @@ public class WeaponSelection : MonoBehaviour
         SelectWeapon(0);
 
         isSoftRifleSelected = true;
-        isBubbleGunSelected = false;
         isSplashBusterSelected = false;
+        isBubbleGunSelected = false;
 
         softRifleProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
         softRifleBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
-        bubbleGunProgress.color = Color.white;
-        bubbleGunBorder.color = Color.white;
+        
         splashBusterProgress.color = Color.white;
         splashBusterBorder.color = Color.white;
+        bubbleGunProgress.color = Color.white;
+        bubbleGunBorder.color = Color.white;
     }
 
     void Update()
@@ -55,8 +60,8 @@ public class WeaponSelection : MonoBehaviour
             SelectWeapon(0);
 
             isSoftRifleSelected = true;
-            isBubbleGunSelected = false;
             isSplashBusterSelected = false;
+            isBubbleGunSelected = false;
 
             softRifleProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
             softRifleBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
@@ -67,31 +72,14 @@ public class WeaponSelection : MonoBehaviour
             splashBusterBorder.color = Color.white;
 
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // BubbleGun
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
         {
             Debug.Log("2");
             SelectWeapon(1);
 
             isSoftRifleSelected = false;
-            isBubbleGunSelected = true;
-            isSplashBusterSelected = false;
-
-            bubbleGunProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
-            bubbleGunBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
-
-            softRifleProgress.color = Color.white;
-            softRifleBorder.color = Color.white;
-            splashBusterProgress.color = Color.white;
-            splashBusterBorder.color = Color.white;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) // SplashBuster
-        {
-            Debug.Log("3");
-            SelectWeapon(2);
-
-            isSoftRifleSelected = false;
-            isBubbleGunSelected = false;
             isSplashBusterSelected = true;
+            isBubbleGunSelected = false;
 
             splashBusterProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
             splashBusterBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
@@ -100,15 +88,34 @@ public class WeaponSelection : MonoBehaviour
             softRifleBorder.color = Color.white;
             bubbleGunProgress.color = Color.white;
             bubbleGunBorder.color = Color.white;
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
+        {
+            Debug.Log("3");
+            SelectWeapon(2);
+
+            isSoftRifleSelected = false;
+            isSplashBusterSelected = false;
+            isBubbleGunSelected = true;
+
+            bubbleGunProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
+            bubbleGunBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
+
+            softRifleProgress.color = Color.white;
+            softRifleBorder.color = Color.white;
+            splashBusterProgress.color = Color.white;
+            splashBusterBorder.color = Color.white;
+
         }
 
 
         if (isSoftRifleSelected)
             SelectSoftRifle();
-        else if (isBubbleGunSelected)
-            SelectBubbleGun();
         else if (isSplashBusterSelected)
             SelectSplashBuster();
+        else if (isBubbleGunSelected)
+            SelectBubbleGun();
     }
 
     void SelectWeapon(int weaponNum)
@@ -145,6 +152,19 @@ public class WeaponSelection : MonoBehaviour
         }
     }
 
+    void SelectSplashBuster() 
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (splashBusterBulletCount > 0)
+            {
+                splashBusterBulletCount -= 8;
+                splashBusterProgress.fillAmount = splashBusterBulletCount / 40;
+                splashBusterText.text = splashBusterBulletCount.ToString();
+            }
+
+        }
+    }
 
     void SelectBubbleGun() 
     {
@@ -159,17 +179,4 @@ public class WeaponSelection : MonoBehaviour
         }
     }
 
-    void SelectSplashBuster() 
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (splashBusterBulletCount > 0)
-            {
-                splashBusterBulletCount -= 8;
-                splashBusterProgress.fillAmount = splashBusterBulletCount / 40;
-                splashBusterText.text = splashBusterBulletCount.ToString();
-            }
-
-        }
-    }
 }

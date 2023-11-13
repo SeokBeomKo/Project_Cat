@@ -6,27 +6,27 @@ using TMPro;
 
 public class WeaponTest : MonoBehaviour
 {
+    //1¹ø ÃÑ : SoftRifle 
+    //2¹ø ÃÑ : SplashBuster
+    //3¹ø ÃÑ : BubbleGun
+
     private Transform weaponContainer; // ¹«±â ÄÁÅ×ÀÌ³Ê
 
-    /*public GameObject softRifle; 
-    public GameObject bubbleGun; 
-    public GameObject splashBuster; */
-
     private float softRifleBulletCount = 10;
-    private float bubbleGunBulletCount = 400;
     private float splashBusterBulletCount = 40; // 8¹ß¾¿
+    private float bubbleGunBulletCount = 400;
 
     public TextMeshProUGUI softRifleText;
-    public TextMeshProUGUI bubbleGunText;
     public TextMeshProUGUI splashBusterText;
+    public TextMeshProUGUI bubbleGunText;
 
     private bool isSoftRifleSelected = false;
-    private bool isBubbleGunSelected = false;
     private bool isSplashBusterSelected = false;
+    private bool isBubbleGunSelected = false;
 
     public Image softRifleImage;
-    public Image bubbleGunImage;
     public Image splashBusterImage;
+    public Image bubbleGunImage;
 
     void Start()
     {
@@ -35,8 +35,8 @@ public class WeaponTest : MonoBehaviour
         SelectWeapon(0);
         
         isSoftRifleSelected = true;
-        isBubbleGunSelected = false;
         isSplashBusterSelected = false;
+        isBubbleGunSelected = false;
     }
 
     void Update()
@@ -48,35 +48,35 @@ public class WeaponTest : MonoBehaviour
             SelectWeapon(0);
 
             isSoftRifleSelected = true;
-            isBubbleGunSelected = false;
             isSplashBusterSelected = false;
+            isBubbleGunSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // BubbleGun
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
         {
             Debug.Log("2");
             SelectWeapon(1);
 
             isSoftRifleSelected = false;
-            isBubbleGunSelected = true;
-            isSplashBusterSelected = false;
+            isSplashBusterSelected = true;
+            isBubbleGunSelected = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) // SplashBuster
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
         {
             Debug.Log("3");
             SelectWeapon(2);
 
             isSoftRifleSelected = false;
-            isBubbleGunSelected = false;
-            isSplashBusterSelected = true;
+            isSplashBusterSelected = false; ;
+            isBubbleGunSelected = true;
         }
 
 
         if (isSoftRifleSelected)
             SelectSoftRifle();
-        else if (isBubbleGunSelected)
-            SelectBubbleGun();
         else if (isSplashBusterSelected)
             SelectSplashBuster();
+        else if (isBubbleGunSelected)
+            SelectBubbleGun();
     }
 
     void SelectWeapon(int weaponNum)
@@ -107,8 +107,6 @@ public class WeaponTest : MonoBehaviour
                 softRifleImage.fillAmount = softRifleBulletCount / 10;
                 softRifleText.text = softRifleBulletCount + " / 10";
             }
-
-
 
             /*if(softRifleBulletCount == 0)
             {

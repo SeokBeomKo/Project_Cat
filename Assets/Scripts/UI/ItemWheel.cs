@@ -7,7 +7,6 @@ public class ItemWheel : MonoBehaviour
 {
     public Transform center; // 중앙을 기준으로 마우스 각도 계산
     public Transform selectObject; // 선택된 거 회전
-    //public GameObject temp;
 
     public GameObject itemMenu; // 아이템 휠 메뉴
     bool isMenuActive; // 메뉴의 활성 상태
@@ -43,7 +42,6 @@ public class ItemWheel : MonoBehaviour
         selectObject.gameObject.SetActive(false);
         selectEnergyLeft.SetActive(false);
         selectEnergyRight.SetActive(false);
-        //temp.SetActive(false);
     }
 
     void Update()
