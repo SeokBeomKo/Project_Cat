@@ -7,16 +7,20 @@ public class CrossHair : MonoBehaviour
 {
     private RectTransform crossHair;
 
-    public float restingSize = 315; // ¿òÁ÷ÀÌÁö ¾ÊÀ» ¶§ÀÇ Å©±â
-    public float aimSize = 240;  // Á¶ÁØ ½Ã Å©±â
+    public float restingSize; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+    public float aimSize;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å©ï¿½ï¿½
     public float speed;
     private float currentSize;
 
     private void Start()
     {
         crossHair = GetComponent<RectTransform>();
+    }
 
-        crossHair.sizeDelta = new Vector2(restingSize, restingSize);
+    private void OnDisable() 
+    {
+        crossHair.sizeDelta = new Vector2(aimSize, aimSize);
+        currentSize = 0;
     }
 
     private void Update()
@@ -29,6 +33,7 @@ public class CrossHair : MonoBehaviour
         {
             currentSize = Mathf.Lerp(currentSize, restingSize, Time.deltaTime * speed);
         }
+
         crossHair.sizeDelta = new Vector2(currentSize, currentSize);
     }
 }
