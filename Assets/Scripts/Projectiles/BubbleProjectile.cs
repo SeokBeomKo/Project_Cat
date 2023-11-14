@@ -14,14 +14,12 @@ public class BubbleProjectile : MonoBehaviour
 
     private void Start() 
     {
-        // 수직 방향으로 힘을 가함
-        
     }
 
     public void SetDirection(Vector3 direction)
     {
         directionPosition = direction;
-        rigidBody.AddForce(Vector3.up * 200 + directionPosition * 100, ForceMode.Force);
+        rigidBody.AddForce(Vector3.up * 200 + directionPosition * 200, ForceMode.Force);
     }
 
     public void UseGravity()

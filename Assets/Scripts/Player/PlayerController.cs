@@ -103,7 +103,15 @@ public class PlayerController : MonoBehaviour
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, jumpDirection.normalized, out hit, 0.1f)) return;
-            rigid.AddForce(jumpDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
+
+            if (jumpDirection == Vector3.zero)
+            {
+                rigid.velocity = new Vector3(0,rigid.velocity.y,0);
+            }
+            else
+            {
+                rigid.AddForce(jumpDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
+            }
         }
 
         if (isRolled)
@@ -126,6 +134,11 @@ public class PlayerController : MonoBehaviour
         jumpDirection = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
 
         jumpDirection = transform.rotation * jumpDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
+    }
+
+    public void ResetJumpInput()
+    {
+        jumpDirection = Vector3.zero;
     }
 
     public void RollInput()
