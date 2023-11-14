@@ -10,7 +10,7 @@ public class PlayerMovementProgressBar : MonoBehaviour
     public Transform endPoint;
 
     public Slider progressBar;
-    public Image playerIcon;
+    //public Image playerIcon;
 
     void Update()
     {

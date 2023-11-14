@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class Likeability : MonoBehaviour
 {
-    public Image likeabilityProgressBar;
+    public Slider likeabilityProgressBar;
+    public TextMeshProUGUI likeabilityText;
 
     private float likeability = 300;
 
@@ -16,7 +19,9 @@ public class Likeability : MonoBehaviour
             if (likeability > 0)
             {
                 likeability -= 30;
-                likeabilityProgressBar.fillAmount = likeability / 300;
+                likeabilityProgressBar.value = Mathf.Clamp01(likeability / 300);
+
+                likeabilityText.text = likeabilityProgressBar.value * 100 + " %";
             }
         }
     }

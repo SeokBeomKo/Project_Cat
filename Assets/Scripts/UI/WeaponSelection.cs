@@ -42,9 +42,9 @@ public class WeaponSelection : MonoBehaviour
         isSplashBusterSelected = false;
         isBubbleGunSelected = false;
 
-        softRifleProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
-        softRifleBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
-        
+        softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+        softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+
         splashBusterProgress.color = Color.white;
         splashBusterBorder.color = Color.white;
         bubbleGunProgress.color = Color.white;
@@ -63,8 +63,8 @@ public class WeaponSelection : MonoBehaviour
             isSplashBusterSelected = false;
             isBubbleGunSelected = false;
 
-            softRifleProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
-            softRifleBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
+            softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+            softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
 
             bubbleGunProgress.color = Color.white;
             bubbleGunBorder.color = Color.white;
@@ -81,8 +81,8 @@ public class WeaponSelection : MonoBehaviour
             isSplashBusterSelected = true;
             isBubbleGunSelected = false;
 
-            splashBusterProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
-            splashBusterBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
+            splashBusterProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+            splashBusterBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
 
             softRifleProgress.color = Color.white;
             softRifleBorder.color = Color.white;
@@ -99,8 +99,8 @@ public class WeaponSelection : MonoBehaviour
             isSplashBusterSelected = false;
             isBubbleGunSelected = true;
 
-            bubbleGunProgress.color = new Color(165 / 255f, 227 / 255f, 255 / 255f);
-            bubbleGunBorder.color = new Color(8 / 255f, 156 / 255f, 210 / 255f);
+            bubbleGunProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+            bubbleGunBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
 
             softRifleProgress.color = Color.white;
             softRifleBorder.color = Color.white;
