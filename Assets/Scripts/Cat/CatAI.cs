@@ -7,10 +7,16 @@ namespace BehaviorTree
 {
     public class CatAI : MonoBehaviour
     {
-        [Header("DarkImage")]
+        [Header("암전공격이미지")]
         public Image canvasImage;
 
-        [Header("Movement")]
+        [Header("근접데미지박스")]
+        public GameObject meleeDamageBox;
+
+        [Header("돌진데미지박스")]
+        public GameObject chargeDamageBox;
+
+        [Header("속도")]
         [SerializeField]
         private float movementSpeed = 10.0f;
 
@@ -27,6 +33,12 @@ namespace BehaviorTree
         private Transform playerTransform = null;
 
         private Vector3 chargeAttackrPosition;
+
+        // 돌진 중인 동안의 높이 조절을 위한 변수
+        private float currentChargeHeight = 0f;
+
+        // 돌진 중의 높이 조절 속도
+        public float chargeHeightSpeed = 5f;
 
         private void Awake()
         {
@@ -45,7 +57,7 @@ namespace BehaviorTree
             if (isAttacking)
             {
                 attackEndTimer += Time.deltaTime;
-                if (attackEndTimer >= 5f)
+                if (attackEndTimer >= 2f)
                 {
                     isAttackComplete = true;
                     isAttacking = false;
@@ -113,9 +125,27 @@ namespace BehaviorTree
 
         Node.NodeState CheckAnimation()
         {
-            if (IsAnimationRunning("Run")) return Node.NodeState.SUCCESS;
-            else if ((IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack"))) return Node.NodeState.RUNNING;
+            if (IsAnimationRunning("Run"))
+            {
+                meleeDamageBox.SetActive(false);
+                chargeDamageBox.SetActive(false);
+                return Node.NodeState.SUCCESS;
+            }
+            else if (IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack"))
+            {
+                if (IsAnimationRunning("Attack"))
+                {
+                    meleeDamageBox.SetActive(true);
+                }
+                else
+                {
+                    chargeDamageBox.SetActive(true);
+                }
+                return Node.NodeState.RUNNING;
+            }
 
+            meleeDamageBox.SetActive(false);
+            chargeDamageBox.SetActive(false);
             return Node.NodeState.FAILURE;
         }
 
@@ -139,6 +169,7 @@ namespace BehaviorTree
                 if (chargeAttackTime)
                 {
                     chargeAttackrPosition = playerTransform.position;
+                    chargeDamageBox.SetActive(true);
 
                     chargeAttackTime = false;
                     return Node.NodeState.SUCCESS;
@@ -155,6 +186,8 @@ namespace BehaviorTree
                 animator.SetTrigger("chargeAttack");
                 isAttacking = true;
                 isAttackComplete = false;
+                //StartCoroutine(MoveToPlayerWithHeight());
+
                 transform.parent.position = chargeAttackrPosition;
 
                 return Node.NodeState.SUCCESS;
@@ -162,6 +195,50 @@ namespace BehaviorTree
 
             return Node.NodeState.FAILURE;
         }
+
+        /*IEnumerator MoveToPlayerWithHeight()
+        {
+            // 플레이어 몸을 기준으로 앞에서 얼마나 멈출지의 거리
+            float stoppingDistance = 10f;
+
+            // 플레이어 방향 벡터 계산
+            Vector3 playerDirection = (playerTransform.position - transform.parent.position).normalized;
+
+            // 플레이어 몸을 기준으로 앞에서 멈출 위치 계산
+            Vector3 targetPosition = playerTransform.position - playerDirection * stoppingDistance;
+            targetPosition.y = transform.parent.position.y; // 현재 높이를 유지하기 위해 y값 설정
+
+            while (Vector3.Distance(transform.parent.position, targetPosition) > 0.1f)
+            {
+                // 서서히 높이 조절
+                currentChargeHeight = Mathf.MoveTowards(currentChargeHeight, 5f, chargeHeightSpeed * Time.deltaTime);
+
+                // 플레이어 방향으로 이동
+                transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, movementSpeed * Time.deltaTime);
+
+                // Y축 높이 조절
+                transform.parent.position += Vector3.up * currentChargeHeight;
+
+                // 플레이어와의 충돌 감지
+                RaycastHit hit;
+                if (Physics.Raycast(transform.parent.position, playerDirection, out hit, stoppingDistance))
+                {
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        // 플레이어가 몬스터 콜라이더에 들어오면 멈춤
+                        break;
+                    }
+                }
+
+                // 레이캐스트를 디버그 목적으로 그리기
+                Debug.DrawRay(transform.parent.position, playerDirection * stoppingDistance, Color.red);
+
+                yield return null;
+            }
+
+            // 코루틴이 끝나면 높이를 초기화
+            currentChargeHeight = 0f;
+        }*/
 
         Node.NodeState DoMeleeAttack()
         {
@@ -228,14 +305,15 @@ namespace BehaviorTree
             if (playerTransform != null)
             {
                 Vector3 playerDirection = playerTransform.position - transform.parent.position;
+                playerDirection.y = 0f;
 
-                if (!playerInMeleeRange && playerDirection != Vector3.zero)
+                if (playerDirection != Vector3.zero)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
                     transform.parent.rotation = targetRotation;
 
                     transform.parent.position = Vector3.MoveTowards(transform.parent.position, playerTransform.position, Time.deltaTime * movementSpeed);
-                    animator.SetTrigger("run");
+                    animator.SetBool("run", true);
 
                     return Node.NodeState.SUCCESS;
                 }
@@ -249,7 +327,7 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                animator.SetTrigger("idle");
+                animator.SetBool("run", false);
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
