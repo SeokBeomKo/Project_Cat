@@ -7,20 +7,29 @@ public class CapsuleNavigateOperation : MonoBehaviour
     [Header("아이템 리스트")]
     public List<ItemWithProbability> itemsToSpawn;
 
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
+            float randomValue = Random.value;
+            float cumulativeProbability = 0.0f;
+
             foreach (var item in itemsToSpawn)
             {
-                if (Random.value < item.probability)
+                cumulativeProbability += item.probability;
+
+                if (randomValue < cumulativeProbability)
                 {
                     // 아이템을 생성할 위치
                     Vector3 spawnPosition = transform.position;
 
                     // 아이템 생성
                     Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity);
-                    Debug.Log(item.itemPrefab.tag);
+                    Debug.Log(item.itemPrefab.name);
+
+                    // 생성된 아이템이 있으므로 루프 종료
+                    break;
                 }
             }
 
