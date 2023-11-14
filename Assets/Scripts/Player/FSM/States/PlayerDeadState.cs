@@ -21,13 +21,17 @@ public class PlayerDeadState : IPlayerState
 
     public void Execute()
     {
+
     }
 
     public void OnStateEnter()
     {
+        player.rigid.constraints = RigidbodyConstraints.FreezeAll;
+        player.animator.SetTrigger("onDead");
     }
 
     public void OnStateExit()
     {
+        
     }
 }

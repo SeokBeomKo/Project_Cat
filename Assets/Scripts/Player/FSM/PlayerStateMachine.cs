@@ -50,6 +50,19 @@ public class PlayerStateMachine : MonoBehaviour
         return curState == state;
     }
 
+    public void ChangeStateAny(PlayerStateEnums newStateType)
+    {
+        if (null == curState)   return;
+
+        curState.OnStateExit();
+
+        if (stateDictionary.TryGetValue(newStateType, out IPlayerState newState))
+        {
+            newState.OnStateEnter();
+            curState = newState;
+        }
+    }
+
     public void ChangeStateInput(PlayerStateEnums newStateType)
     {
         if (null == curState)   return;
