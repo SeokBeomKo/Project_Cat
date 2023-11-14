@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class Likeability : MonoBehaviour
+public class LikeabilityProgressBar : MonoBehaviour
 {
     public Slider likeabilityProgressBar;
     public TextMeshProUGUI likeabilityText;
