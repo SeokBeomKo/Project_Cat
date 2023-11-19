@@ -40,7 +40,7 @@ public class PlayerStiffenState : IPlayerState
 
     public void OnStateEnter()
     {
-        player.rigid.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        player.rigid.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 
         player.animator.SetTrigger("onHit");
     }

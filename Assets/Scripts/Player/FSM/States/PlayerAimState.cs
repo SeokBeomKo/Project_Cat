@@ -34,8 +34,6 @@ public class PlayerAimState : IPlayerState
 
         if (!Input.GetButton("Fire2"))
         {
-            player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
-            player.cameraController.SetAimCamera(false);
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
         }
 
@@ -53,5 +51,7 @@ public class PlayerAimState : IPlayerState
 
     public void OnStateExit()
     {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

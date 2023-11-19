@@ -9,22 +9,22 @@ public class LobbyScene : MonoBehaviour
 {
     public void OnClickStart()
     {
-        Debug.Log("°ÔÀÓ ½ÃÀÛ");
-        SceneManager.LoadScene("HanKyeol_Loading");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+        SceneManager.LoadScene("InGame_TehChaseStage");
 
     }
 
     public void OnClickSetting()
     {
-        Debug.Log("¿É¼Ç");
+        Debug.Log("ï¿½É¼ï¿½");
     }
 
     public void OnClickExit()
     {
-#if UNITY_EDITOR // ÀüÃ³¸® Áö½Ã¹®
+#if UNITY_EDITOR // ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¹ï¿½
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit(); // ¿¡µðÅÍ¿¡¼­ ÀÛµ¿ ¾È ÇÔ
+        Application.Quit(); // ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ ï¿½ï¿½ ï¿½ï¿½
 #endif
     }
 }

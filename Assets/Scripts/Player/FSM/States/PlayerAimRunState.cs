@@ -36,7 +36,6 @@ public class PlayerAimMoveState : IPlayerState
 
         if (!Input.GetButton("Fire2"))
         {
-            player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
             player.cameraController.SetAimCamera(false);
             stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
         }
@@ -57,6 +56,8 @@ public class PlayerAimMoveState : IPlayerState
 
     public void OnStateExit()
     {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
 
