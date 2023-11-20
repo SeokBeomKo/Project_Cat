@@ -7,7 +7,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    
+
     [SerializeField]
     private float limitTime = 36000; // 제한 시간 10분
 

@@ -4,15 +4,46 @@ using UnityEngine;
 
 public class FadeInOut : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public CanvasGroup canvasGroup;
+    public bool fadeIn = false;
+    public bool fadeOut = false;
 
-    // Update is called once per frame
+    public float timeToFade;
+
     void Update()
     {
-        
+        if(fadeIn == true)
+        {
+            if(canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha += timeToFade * Time.deltaTime; // 이미지 점점 어두워짐
+                if(canvasGroup.alpha >= 1)
+                {
+                    fadeIn = false;
+                }
+            }
+        }
+
+        if (fadeOut == true)
+        {
+            if (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha -= timeToFade * Time.deltaTime;  // 이미지 점점 사라짐 
+                if (canvasGroup.alpha == 0)
+                {
+                    fadeOut = false;
+                }
+            }
+        }
+    }
+
+    public void FadeIn()
+    {
+        fadeIn = true;
+    }
+
+    public void FadeOut()
+    {
+        fadeOut = true;
     }
 }

@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class CrossHair : MonoBehaviour
 {
-    private RectTransform crossHair;
+    public RectTransform crossHair;
 
-    public float restingSize; // �������� ���� ���� ũ��
-    public float aimSize;  // ���� �� ũ��
+    public float restingSize; // 기본 사이즈
+    public float aimSize;  // 에임 시 사이즈
     public float speed;
     private float currentSize;
 
@@ -16,7 +16,6 @@ public class CrossHair : MonoBehaviour
     {
         crossHair = GetComponent<RectTransform>();
     }
-
     private void OnDisable() 
     {
         crossHair.sizeDelta = new Vector2(aimSize, aimSize);
