@@ -16,6 +16,7 @@ public enum PlayerStateEnums
 
     SHOOT,          // 사격 상태
     AIM_SHOOT,      // 조준 사격 상태
+    AIM_MOVE_SHOOT, // 조준 이동 사격 상태
     
     STIFFEN,        // 경직 상태
     DEAD,           // 사망 상태

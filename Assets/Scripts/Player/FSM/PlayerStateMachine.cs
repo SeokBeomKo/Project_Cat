@@ -15,27 +15,28 @@ public class PlayerStateMachine : MonoBehaviour
     {
         stateDictionary = new Dictionary<PlayerStateEnums, IPlayerState>
         {
-            {PlayerStateEnums.IDLE,         new PlayerIdleState(this)},
-            {PlayerStateEnums.MOVE,         new PlayerMoveState(this)},
+            {PlayerStateEnums.IDLE,             new PlayerIdleState(this)},
+            {PlayerStateEnums.MOVE,             new PlayerMoveState(this)},
 
-            {PlayerStateEnums.JUMP,         new PlayerJumpState(this)},
-            {PlayerStateEnums.DOUBLE,       new PlayerDoubleJumpState(this)},
-            {PlayerStateEnums.FALL,         new PlayerFallState(this)},
-            {PlayerStateEnums.LAND,         new PlayerLandState(this)},
+            {PlayerStateEnums.JUMP,             new PlayerJumpState(this)},
+            {PlayerStateEnums.DOUBLE,           new PlayerDoubleJumpState(this)},
+            {PlayerStateEnums.FALL,             new PlayerFallState(this)},
+            {PlayerStateEnums.LAND,             new PlayerLandState(this)},
 
-            {PlayerStateEnums.BACKROLL,     new PlayerBackRollState(this)},
-            {PlayerStateEnums.DIVEROLL,     new PlayerDiveRollState(this)},
+            {PlayerStateEnums.BACKROLL,         new PlayerBackRollState(this)},
+            {PlayerStateEnums.DIVEROLL,         new PlayerDiveRollState(this)},
 
-            {PlayerStateEnums.STIFFEN,      new PlayerStiffenState(this)},
-            {PlayerStateEnums.TRANSFORM,    new PlayerTransformState(this)},
+            {PlayerStateEnums.STIFFEN,          new PlayerStiffenState(this)},
+            {PlayerStateEnums.TRANSFORM,        new PlayerTransformState(this)},
 
-            {PlayerStateEnums.AIM,          new PlayerAimState(this)},
-            {PlayerStateEnums.AIM_MOVE,     new PlayerAimMoveState(this)},
+            {PlayerStateEnums.AIM,              new PlayerAimState(this)},
+            {PlayerStateEnums.AIM_MOVE,         new PlayerAimMoveState(this)},
 
-            {PlayerStateEnums.AIM_SHOOT,     new PlayerAimShootState(this)},
-            {PlayerStateEnums.SHOOT,        new PlayerShootState(this)},
+            {PlayerStateEnums.AIM_SHOOT,        new PlayerAimShootState(this)},
+            {PlayerStateEnums.SHOOT,            new PlayerShootState(this)},
+            {PlayerStateEnums.AIM_MOVE_SHOOT,   new PlayerAimMoveShootState(this)},
 
-            {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},
+            {PlayerStateEnums.DEAD,             new PlayerDeadState(this)},
         };
 
         if (stateDictionary.TryGetValue(PlayerStateEnums.IDLE, out IPlayerState newState))

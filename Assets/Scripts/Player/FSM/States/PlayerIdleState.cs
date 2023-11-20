@@ -16,6 +16,7 @@ public class PlayerIdleState : IPlayerState
     public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
     {
         PlayerStateEnums.FALL,
+        PlayerStateEnums.SHOOT,
     };
 
     public PlayerController player {get; set;}
@@ -31,6 +32,12 @@ public class PlayerIdleState : IPlayerState
         if (!player.CheckGrounded())
         {
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            return;
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            stateMachine.ChangeStateLogic(PlayerStateEnums.SHOOT);
             return;
         }
     }
