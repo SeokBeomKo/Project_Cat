@@ -32,6 +32,8 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.playerStats.UseDouble();
 
         player.animator.SetTrigger("isDoubleJump");
@@ -40,5 +42,11 @@ public class PlayerDoubleJumpState : IPlayerState
 
     public void OnStateExit()
     {
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

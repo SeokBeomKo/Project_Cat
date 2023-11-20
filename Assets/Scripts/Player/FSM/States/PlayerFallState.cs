@@ -37,11 +37,19 @@ public class PlayerFallState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.animator.SetBool("isFall", true);
     }
 
     public void OnStateExit()
     {
         player.animator.SetBool("isFall", false);
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

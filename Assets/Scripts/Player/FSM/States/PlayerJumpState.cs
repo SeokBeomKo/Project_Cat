@@ -39,6 +39,8 @@ public class PlayerJumpState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.animator.SetBool("isJump", true);
         player.JumpInput();
 
@@ -58,5 +60,11 @@ public class PlayerJumpState : IPlayerState
         yield return WaitForSecondsPool.WaitForSecondsPool.waitForFixedUpdate;
 
         isJumpStarted = true;
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

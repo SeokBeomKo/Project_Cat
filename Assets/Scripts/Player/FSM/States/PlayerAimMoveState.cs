@@ -63,8 +63,6 @@ public class PlayerAimMoveState : IPlayerState
 
     public void OnStateExit()
     {
-        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
-        player.cameraController.SetAimCamera(false);
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
 

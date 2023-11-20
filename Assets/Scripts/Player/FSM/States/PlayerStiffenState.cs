@@ -40,6 +40,8 @@ public class PlayerStiffenState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.rigid.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 
         player.animator.SetTrigger("onHit");
@@ -48,5 +50,11 @@ public class PlayerStiffenState : IPlayerState
     public void OnStateExit()
     {
         player.rigid.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

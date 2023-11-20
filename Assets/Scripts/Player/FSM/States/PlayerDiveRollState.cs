@@ -60,6 +60,8 @@ public class PlayerDiveRollState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         
@@ -78,5 +80,11 @@ public class PlayerDiveRollState : IPlayerState
         player.animator.SetBool("isDiveRoll",false);
 
         player.rigid.velocity = Vector3.zero;
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

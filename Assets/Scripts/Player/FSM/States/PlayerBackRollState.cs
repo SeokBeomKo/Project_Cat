@@ -42,6 +42,8 @@ public class PlayerBackRollState :  IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+
         player.animator.SetBool("isDiveRoll",true);
         player.RollInput();
     }
@@ -51,5 +53,11 @@ public class PlayerBackRollState :  IPlayerState
         player.animator.SetBool("isDiveRoll",false);
 
         player.rigid.velocity = Vector3.zero;
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

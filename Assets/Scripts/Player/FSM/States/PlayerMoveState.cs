@@ -46,6 +46,8 @@ public class PlayerMoveState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.animator.SetBool("isMove",true);
         player.playerStats.FillDoubleCount();
     }
@@ -58,5 +60,11 @@ public class PlayerMoveState : IPlayerState
 
         player.moveDirection = Vector3.zero;
         player.rigid.velocity = Vector3.zero;
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }
