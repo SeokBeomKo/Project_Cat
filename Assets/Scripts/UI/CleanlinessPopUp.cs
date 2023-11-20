@@ -5,7 +5,7 @@ using TMPro;
 
 public class CleanlinessPopUp : MonoBehaviour
 {
-
+    // ÆË¾÷ Ã¢
     public GameObject popUp;
 
     // ÆË¾÷ Ã¢ ÅØ½ºÆ®
@@ -32,8 +32,6 @@ public class CleanlinessPopUp : MonoBehaviour
         }
 
     }
-
-    public float a = 1f;
 
     public void CleanCat(CleanEnums parts,  float cleanliness)
     {

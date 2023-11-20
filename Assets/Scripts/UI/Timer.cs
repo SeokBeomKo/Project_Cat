@@ -6,7 +6,6 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    //public Text timerText;
     public TextMeshProUGUI timerText;
     
     [SerializeField]
