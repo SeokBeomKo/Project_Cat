@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5722487949193631682}
   - component: {fileID: 5348492760917508902}
   - component: {fileID: 636974759720172743}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BubbleProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5722487951068870495}
   - component: {fileID: 5722487951068870432}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,12 +121,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 5722487949193631682}
     m_Modifications:
     - target: {fileID: 1860990065350375669, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860990065350375669, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1950740352161362909, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842956058606967709, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3842956058606967709, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
       propertyPath: m_IsActive
@@ -155,6 +163,10 @@ PrefabInstance:
     - target: {fileID: 8253188581071315173, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
       propertyPath: m_Name
       value: BubbleMissile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8253188581071315173, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8258753920948787223, guid: 2ec1b50affc3e3d498e4acff50b468e0, type: 3}
       propertyPath: m_RootOrder
@@ -218,6 +230,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2989641575584511791, guid: adf0e3ed14a9867439ed04993f1ede03, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3150497863582008071, guid: adf0e3ed14a9867439ed04993f1ede03, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -275,8 +291,16 @@ PrefabInstance:
       value: SoapBubbleMissile
       objectReference: {fileID: 0}
     - target: {fileID: 4808452311544236702, guid: adf0e3ed14a9867439ed04993f1ede03, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808452311544236702, guid: adf0e3ed14a9867439ed04993f1ede03, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596558233981005445, guid: adf0e3ed14a9867439ed04993f1ede03, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adf0e3ed14a9867439ed04993f1ede03, type: 3}

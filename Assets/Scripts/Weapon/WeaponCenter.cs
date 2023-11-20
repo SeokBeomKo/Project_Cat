@@ -43,9 +43,7 @@ public class WeaponCenter : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
             targetPoint = hit.point; // 레이가 부딪힌 위치를 타겟 포인트로 설정합니다.
         else
-            targetPoint = ray.GetPoint(400); // 레이가 부딪히지 않았다면, 일정 거리를 타겟 포인트로 설정합니다.
-
-        Debug.Log("발사");
+            targetPoint = ray.GetPoint(50); // 레이가 부딪히지 않았다면, 일정 거리를 타겟 포인트로 설정합니다.
 
         curWeapon.Fire(targetPoint);
     }

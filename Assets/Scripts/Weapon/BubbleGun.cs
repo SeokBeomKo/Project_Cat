@@ -17,6 +17,6 @@ public class BubbleGun : Weapon
     {
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
-        bullet.GetComponent<BubbleProjectile>().SetDirection((direction - shootPosition.position).normalized);
+        bullet.GetComponent<BubbleProjectile>().SetDirection(direction);
     }
 }
