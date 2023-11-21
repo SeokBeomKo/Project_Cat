@@ -104,7 +104,7 @@ public class Poooooooool : Singleton<Poooooooool>
             newObj.SetActive(true);
             newObj.name = pool.tag;
             return newObj;
-        }
+        } 
 
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
         objectToSpawn.transform.position = position;
@@ -117,7 +117,7 @@ public class Poooooooool : Singleton<Poooooooool>
     // 오브젝트를 다시 풀로 리턴하는 함수
     public void ReturnToPool(string tag, GameObject obj)
     {
-        if (!poolDictionary.ContainsKey(tag))
+        if (!poolDictionary.ContainsKey(tag)) // Dictionary에 키를 추가하는 경우 키가 중복하는지 확인
         {
             Debug.LogWarning("No pool with the tag: " + tag);
             return;
