@@ -53,37 +53,41 @@ public class WaveAttack : MonoBehaviour
     private float attackSize = 1f;
     private float timer = 0f;
 
-    private void Start()
-    {
-        SetInitialSize();
-    }
-
     private void OnEnable()
     {
         SetInitialSize();
-    }
-
-    private void SetInitialSize()
-    {
-        transform.GetChild(0).localScale = new Vector3(minSafeSize, transform.GetChild(0).localScale.y, minSafeSize);
-        transform.GetChild(1).localScale = new Vector3(minAttackSize, transform.GetChild(1).localScale.y, minAttackSize);
-
-        safeSize = minSafeSize;
-        attackSize = minAttackSize;
-        timer = 0f;
     }
 
     void Update()
     {
         timer += Time.deltaTime;
 
+        IncreaseSize();
+    }
+
+    private void SetInitialSize()
+    {
+        transform.Find("SafeBox").localScale = new Vector3(minSafeSize, transform.Find("SafeBox").localScale.y, minSafeSize);
+        transform.Find("HitBox").localScale = new Vector3(minAttackSize, transform.Find("HitBox").localScale.y, minAttackSize);
+
+        safeSize = minSafeSize;
+        attackSize = minAttackSize;
+        timer = 0f;
+    }
+
+    private void IncreaseSize()
+    {
         if (timer <= maxTimer)
         {
             safeSize = Mathf.Lerp(safeSize, maxSafeSize, Time.deltaTime * growthSpeed);
-            transform.GetChild(0).localScale = new Vector3(safeSize, transform.GetChild(0).localScale.y, safeSize);
+            transform.Find("SafeBox").localScale = new Vector3(safeSize, transform.Find("SafeBox").localScale.y, safeSize);
 
             attackSize = Mathf.Lerp(attackSize, maxAttackSize, Time.deltaTime * growthSpeed);
-            transform.GetChild(1).localScale = new Vector3(attackSize, transform.GetChild(1).localScale.y, attackSize);
+            transform.Find("HitBox").localScale = new Vector3(attackSize, transform.Find("HitBox").localScale.y, attackSize);
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 }

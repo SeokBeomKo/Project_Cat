@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1379274894}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -158,7 +158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1616245281
 Transform:
   m_ObjectHideFlags: 0
@@ -188,12 +188,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc32446bf2eced24dbd608d0e7526e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAttackSize: 1.5
-  maxAttackSize: 3.5
-  minSafeSize: 1
-  maxSafeSize: 3
-  maxTimer: 3
-  growthSpeed: 1
+  minAttackSize: 1
+  maxAttackSize: 2.5
+  minSafeSize: 0.5
+  maxSafeSize: 2
+  maxTimer: 5
+  growthSpeed: 0.5
 --- !u!1 &1631778882
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ Transform:
   m_GameObject: {fileID: 1631778882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.05, z: 1.5}
+  m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2000235162}
@@ -267,7 +267,7 @@ Transform:
   m_GameObject: {fileID: 1791729391}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.06, z: 1}
+  m_LocalScale: {x: 1, y: 0.015, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1379274895}
@@ -349,7 +349,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e28174a58967b4e489152db29704a30e, type: 2}
+  - {fileID: 2100000, guid: b08e84b771f45a8489afbd9a08c972a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -465,6 +465,9 @@ MonoBehaviour:
   canvasImage: {fileID: 0}
   meleeDamageBox: {fileID: 4813305960789180549}
   chargeDamageBox: {fileID: 1555426198}
+  waveCollider: {fileID: 1616245280}
+  attackResumptionTime: 2
+  waveAttackTime: 15
   movementSpeed: 2
 --- !u!65 &1702409614
 BoxCollider:

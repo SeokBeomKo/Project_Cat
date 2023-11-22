@@ -16,6 +16,15 @@ namespace BehaviorTree
         [Header("돌진데미지박스")]
         public GameObject chargeDamageBox;
 
+        [Header("파동콜라이더")]
+        public GameObject waveCollider;
+
+        [Header("공격 재개 시간")]
+        public float attackResumptionTime = 2f;
+
+        [Header("파동 공격 출력 시간")]
+        public float waveAttackTime = 15f;
+
         [Header("속도")]
         [SerializeField]
         private float movementSpeed = 10.0f;
@@ -27,6 +36,7 @@ namespace BehaviorTree
 
         private float randomNumber = 0f;
         private float attackEndTimer = 0f;
+        private float timer = 0f;
 
         private Tree tree = null;
         private Animator animator = null;
@@ -51,7 +61,7 @@ namespace BehaviorTree
             if (isAttacking)
             {
                 attackEndTimer += Time.deltaTime;
-                if (attackEndTimer >= 2f)
+                if (attackEndTimer >= attackResumptionTime)
                 {
                     isAttackComplete = true;
                     isAttacking = false;
@@ -59,6 +69,7 @@ namespace BehaviorTree
                 }
             }
 
+            timer += Time.deltaTime;
             tree.Operate();
         }
 
@@ -87,7 +98,14 @@ namespace BehaviorTree
                     new ActionNode(DoDarkAttack)
                 });
 
-            var attack = new Sequence(
+            var waveAttack = new Sequence(
+                new List<Node>()
+                {
+                    new ActionNode(CheckWaveAttackTime),
+                    new ActionNode(DoWaveAttack)
+                });
+
+            /*var attack = new Sequence(
                 new List<Node>()
                 {
                     new ActionNode(CheckAnimation),
@@ -97,6 +115,30 @@ namespace BehaviorTree
                     {
                         chargeAttack,
                         meleeAttack
+                    })
+                });*/
+
+            var triggerAttack = new Sequence(
+                new List<Node>()
+                {
+                    new ActionNode(CheckPlayerWithinMeleeAttackRange),
+
+                    new Selector(new List<Node>()
+                    {
+                        chargeAttack,
+                        meleeAttack
+                    })
+                });
+
+            var attack = new Sequence(
+                new List<Node>()
+                {
+                    new ActionNode(CheckAnimation),
+
+                    new Selector(new List<Node>()
+                    {
+                        triggerAttack,
+                        waveAttack
                     })
                 });
 
@@ -125,7 +167,7 @@ namespace BehaviorTree
                 chargeDamageBox.SetActive(false);
                 return Node.NodeState.SUCCESS;
             }
-            else if (IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack"))
+            else if (IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack") || waveCollider.activeSelf)
             {
                 if (IsAnimationRunning("Attack"))
                 {
@@ -240,6 +282,34 @@ namespace BehaviorTree
             canvasImage.enabled = false;
         }
 
+        Node.NodeState CheckWaveAttackTime()
+        {
+            if (playerTransform != null)
+            {
+                if (timer >= waveAttackTime)
+                {
+                    chargeAttackTime = false;
+
+                    return Node.NodeState.SUCCESS;
+                }
+            }
+
+            return Node.NodeState.FAILURE;
+        }
+
+        Node.NodeState DoWaveAttack()
+        {
+            if (playerTransform != null)
+            {
+                waveCollider.SetActive(true);
+                timer = 0f;
+
+                return Node.NodeState.SUCCESS;
+            }
+
+            return Node.NodeState.FAILURE;
+        }
+
         // RUN
         Node.NodeState CheckAttackEndTime()
         {
@@ -256,7 +326,7 @@ namespace BehaviorTree
             {
                 Vector3 playerDirection = playerTransform.position - transform.parent.position;
                 playerDirection.y = 0f;
-                playerDirection = Vector3.Normalize(playerDirection); // 방향 벡터를 정규화하여 길이가 항상 1이 되도록 함
+                playerDirection = Vector3.Normalize(playerDirection);
 
                 if (playerDirection != Vector3.zero)
                 {
