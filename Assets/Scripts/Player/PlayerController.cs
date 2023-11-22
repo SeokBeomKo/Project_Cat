@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("카메라 컨트롤러")]
     [SerializeField]    public ShooterCameraController  cameraController;
+
     [Header("애니메이터")]
     [SerializeField]    public Animator             animator;
 
@@ -15,30 +16,28 @@ public class PlayerController : MonoBehaviour
 
     [Header("유한 상태 기계")]
     [SerializeField]    public PlayerStateMachine   stateMachine;
+
     [Header("모델")]
     [SerializeField]    public Transform            model;
 
+    [Header("스탯")]
+    [SerializeField]    public PlayerStats          playerStats;
 
-    [Header("수치 값")]
-    [SerializeField]    public float                moveSpeed;
-    [SerializeField]    public float                jumpPower;
-    [SerializeField]    public float                rollSpeed;
-    [SerializeField]    public int                  maxDoubleCount;
-    [SerializeField]    public int                  curDoubleCount;
-    [SerializeField]    public int                  maxRollCount;
-    [SerializeField]    public int                  curRollCount;
-    [SerializeField]    public int                  delayRollCount;
+    [Header("무기")]
+    [SerializeField]    public WeaponCenter         weaponCenter;
 
+    [Header("체크")]
     [HideInInspector]   public bool                 isGrounded;
     [HideInInspector]   public bool                 isRolled;
 
+    [Header("경사 각도")]
     private RaycastHit slopeHit;
-    public float maxSlopeAngle = 50;
+    public float maxSlopeAngle;
+    public bool exitingSlope = false;
 
-    private void Awake() 
+    public void Hit()
     {
-        curDoubleCount = maxDoubleCount;
-        curRollCount = maxRollCount;
+        // TODO : 플레이어 경직 상태 및 hp 감소
     }
 
     private void Update()
@@ -54,41 +53,26 @@ public class PlayerController : MonoBehaviour
         isGrounded = CheckGrounded();
         SpeedControl();
         MoveRogic();
-        RecoveryRollCount();
-    }
+    }    
 
-    float rollTime;
-    private void RecoveryRollCount()
-    {
-        Debug.Log(curRollCount);
-        if (curRollCount < maxRollCount)
-        {
-            rollTime += Time.fixedDeltaTime;
-            if (rollTime >= delayRollCount)
-            {
-                curRollCount++;
-                rollTime = 0;
-            }
-        }
-    }
 
     private void SpeedControl()
     {
-
-        if (OnSlope())
+        if (OnSlope()&& !exitingSlope)
         {
-            if (rigid.velocity.magnitude > moveSpeed)
-                rigid.velocity = rigid.velocity.normalized * moveSpeed;
-            return;
+            if (rigid.velocity.magnitude > playerStats.moveSpeed)
+                rigid.velocity = rigid.velocity.normalized * playerStats.moveSpeed;
         }
 
-        Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
-
-        // limit velocity if needed
-        if (flatVel.magnitude > moveSpeed)
+        else
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rigid.velocity = new Vector3(limitedVel.x, rigid.velocity.y, limitedVel.z);
+            Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
+
+            if (flatVel.magnitude > playerStats.moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * playerStats.moveSpeed;
+                rigid.velocity = new Vector3(limitedVel.x, rigid.velocity.y, limitedVel.z);
+            }
         }
     }
 
@@ -103,9 +87,9 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRogic()
     {
-        if (OnSlope())
+        if (OnSlope() && !exitingSlope)
         {
-            rigid.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+            rigid.AddForce(GetSlopeMoveDirection() * playerStats.moveSpeed * 20f, ForceMode.Force);
 
             if (rigid.velocity.y > 0)
                 rigid.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -113,18 +97,26 @@ public class PlayerController : MonoBehaviour
 
         else if (isGrounded)
         {
-            rigid.AddForce(moveDirection.normalized * moveSpeed * 5f, ForceMode.Force);
+            rigid.AddForce(moveDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
         }
         else if (!isGrounded)
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, jumpDirection.normalized, out hit, 0.1f)) return;
-            rigid.AddForce(jumpDirection.normalized * moveSpeed * 5f, ForceMode.Force);
+
+            if (jumpDirection == Vector3.zero)
+            {
+                rigid.velocity = new Vector3(0,rigid.velocity.y,0);
+            }
+            else
+            {
+                rigid.AddForce(jumpDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
+            }
         }
 
         if (isRolled)
         {
-            rigid.AddForce(rollDirection.normalized * rollSpeed * 10f, ForceMode.Force);
+            rigid.AddForce(rollDirection.normalized * playerStats.rollSpeed * 10f, ForceMode.Force);
         }
 
         rigid.useGravity = !OnSlope();
@@ -144,6 +136,11 @@ public class PlayerController : MonoBehaviour
         jumpDirection = transform.rotation * jumpDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
+    public void ResetJumpInput()
+    {
+        jumpDirection = Vector3.zero;
+    }
+
     public void RollInput()
     {
         rollDirection = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
@@ -153,16 +150,17 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        exitingSlope = true;
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
-        rigid.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+        rigid.AddForce(transform.up * playerStats.jumpForce, ForceMode.Impulse);
     }
 
     public void DoubleJump()
     {
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
-        rigid.AddForce(transform.up * jumpPower * 1.5f, ForceMode.Impulse);
+        rigid.AddForce(transform.up * playerStats.jumpForce * 1.5f, ForceMode.Impulse);
     }
 
     private bool OnSlope()
@@ -196,33 +194,9 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(origin , Vector3.down , out hit , raycastDistance))
             {
-                Debug.DrawLine(origin , hit.point , Color.red);
                 return true;
             }
-            else 
-            {
-                Debug.DrawLine(origin , origin + Vector3.down * raycastDistance , Color.blue);
-            }
         }
-
         return false;
-        // float raycastDistance = 0.1f; // 레이 캐스트 거리
-        // RaycastHit hit;
-
-        // // 발 아래로 레이 캐스트를 발사하여 땅에 닿았는지 체크
-        // if (Physics.Raycast(transform.position + new Vector3(0, 0.05f, 0), Vector3.down, out hit, raycastDistance))
-        // {
-        //     // 레이캐스트 렌더링 (빨간색)
-        //     Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), hit.point, Color.red);
-
-        //     // 땅에 닿았으면 true 반환
-        //     return true;
-        // }
-
-        // // 레이캐스트 렌더링 (파란색)
-        // Debug.DrawLine(transform.position + new Vector3(0, 0.05f, 0), transform.position + new Vector3(0, 0.05f, 0) + Vector3.down * raycastDistance, Color.blue);
-
-        // // 땅에 닿지 않았으면 false 반환
-        // return false;
     }
 }

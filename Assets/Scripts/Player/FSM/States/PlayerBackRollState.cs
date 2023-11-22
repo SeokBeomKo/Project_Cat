@@ -42,8 +42,6 @@ public class PlayerBackRollState :  IPlayerState
 
     public void OnStateEnter()
     {
-        player.curRollCount--;
-        
         player.animator.SetBool("isDiveRoll",true);
         player.RollInput();
     }

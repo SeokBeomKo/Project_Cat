@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class LoadingScene : MonoBehaviour
 {
     public Image progressBar;
-    //public string sceneName;
+    // private string sceneName;
 
     private float loadingTime = 5.0f;
     private float time;
@@ -21,11 +21,11 @@ public class LoadingScene : MonoBehaviour
     IEnumerator LoadScene()
     {
         yield return null;
-        // ºñµ¿±â ·Îµå : SceneÀ» ºÒ·¯¿Ã ¶§ ¸ØÃßÁö ¾Ê°í ´Ù¸¥ ÀÛ¾÷ °¡´É
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Test"); // ºñµ¿±âÀûÀ¸·Î ·Îµå ½ÃÀÛ
-        operation.allowSceneActivation = false; // ¾À ·Îµå ÈÄ ÀÚµ¿À¸·Î Àå¸é ÀüÈ¯ÀÌ µÇÁö ¾Êµµ·Ï
+        // ï¿½ñµ¿±ï¿½ ï¿½Îµï¿½ : Sceneï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½Ù¸ï¿½ ï¿½Û¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+        AsyncOperation operation = SceneManager.LoadSceneAsync("HanKyeol_HUD"); // ï¿½ñµ¿±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½
+        operation.allowSceneActivation = false; // ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½
 
-        while (!operation.isDone) // ·Îµù ¿Ï·á À¯¹« 
+        while (!operation.isDone) // ï¿½Îµï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         {
             yield return null;
 
@@ -40,5 +40,5 @@ public class LoadingScene : MonoBehaviour
 
 }
 
-// operation.progress : ÁøÇàÁ¤µµ¸¦ floatÇü 0,1À» ¹ÝÈ¯ (0 : ÁøÇà Áß , 1 : ÁøÇà¿Ï·á)
+// operation.progress : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ floatï¿½ï¿½ 0,1ï¿½ï¿½ ï¿½ï¿½È¯ (0 : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ , 1 : ï¿½ï¿½ï¿½ï¿½Ï·ï¿½)
 // Mathf.MoveTowards(currentPos, targetPos, speed * Time.deltaTime);

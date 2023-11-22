@@ -16,7 +16,7 @@ public class PlayerStateMachine : MonoBehaviour
         stateDictionary = new Dictionary<PlayerStateEnums, IPlayerState>
         {
             {PlayerStateEnums.IDLE,         new PlayerIdleState(this)},
-            {PlayerStateEnums.MOVE,          new PlayerMoveState(this)},
+            {PlayerStateEnums.MOVE,         new PlayerMoveState(this)},
 
             {PlayerStateEnums.JUMP,         new PlayerJumpState(this)},
             {PlayerStateEnums.DOUBLE,       new PlayerDoubleJumpState(this)},
@@ -30,7 +30,10 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerStateEnums.TRANSFORM,    new PlayerTransformState(this)},
 
             {PlayerStateEnums.AIM,          new PlayerAimState(this)},
-            {PlayerStateEnums.AIM_MOVE,      new PlayerAimMoveState(this)},
+            {PlayerStateEnums.AIM_MOVE,     new PlayerAimMoveState(this)},
+
+            {PlayerStateEnums.AIM_SHOOT,     new PlayerAimShootState(this)},
+            {PlayerStateEnums.SHOOT,        new PlayerShootState(this)},
 
             {PlayerStateEnums.DEAD,         new PlayerDeadState(this)},
         };
@@ -45,6 +48,19 @@ public class PlayerStateMachine : MonoBehaviour
     public bool Contains(IPlayerState state)
     {
         return curState == state;
+    }
+
+    public void ChangeStateAny(PlayerStateEnums newStateType)
+    {
+        if (null == curState)   return;
+
+        curState.OnStateExit();
+
+        if (stateDictionary.TryGetValue(newStateType, out IPlayerState newState))
+        {
+            newState.OnStateEnter();
+            curState = newState;
+        }
     }
 
     public void ChangeStateInput(PlayerStateEnums newStateType)

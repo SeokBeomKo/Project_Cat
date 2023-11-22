@@ -1,39 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class WeaponSelection : MonoBehaviour
 {
+    //1번 총 : SoftRifle 
+    //2번 총 : SplashBuster
+    //3번 총 : BubbleGun
+
     private Transform weaponContainer; // 무기 컨테이너
 
-    /*public GameObject softRifle; 
-    public GameObject bubbleGun; 
-    public GameObject splashBuster; */
-
-    private int softRifleBulletCount = 10;
-    private int bubbleGunBulletCount = 400;
-    private int splashBusterBulletCount = 40; // 8발씩
+    private float softRifleBulletCount = 10;
+    private float splashBusterBulletCount = 40; // 8발씩
+    private float bubbleGunBulletCount = 400;
 
     public TextMeshProUGUI softRifleText;
-    public TextMeshProUGUI bubbleGunText;
     public TextMeshProUGUI splashBusterText;
+    public TextMeshProUGUI bubbleGunText;
 
     private bool isSoftRifleSelected = false;
-    private bool isBubbleGunSelected = false;
     private bool isSplashBusterSelected = false;
+    private bool isBubbleGunSelected = false;
 
-    //private bool isReloading = false;
+    public Image softRifleProgress;
+    public Image splashBusterProgress;
+    public Image bubbleGunProgress;
+
+    public Image softRifleBorder;
+    public Image splashBusterBorder;
+    public Image bubbleGunBorder;
 
     void Start()
     {
         // 게임 시작 시 초기 무기 선택
         weaponContainer = gameObject.transform;
         SelectWeapon(0);
-        
+
         isSoftRifleSelected = true;
-        isBubbleGunSelected = false;
         isSplashBusterSelected = false;
+        isBubbleGunSelected = false;
+
+        softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+        softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+
+        splashBusterProgress.color = Color.white;
+        splashBusterBorder.color = Color.white;
+        bubbleGunProgress.color = Color.white;
+        bubbleGunBorder.color = Color.white;
     }
 
     void Update()
@@ -45,42 +60,70 @@ public class WeaponSelection : MonoBehaviour
             SelectWeapon(0);
 
             isSoftRifleSelected = true;
-            isBubbleGunSelected = false;
             isSplashBusterSelected = false;
+            isBubbleGunSelected = false;
+
+            softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+            softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+
+            bubbleGunProgress.color = Color.white;
+            bubbleGunBorder.color = Color.white;
+            splashBusterProgress.color = Color.white;
+            splashBusterBorder.color = Color.white;
+
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // BubbleGun
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
         {
             Debug.Log("2");
             SelectWeapon(1);
 
             isSoftRifleSelected = false;
-            isBubbleGunSelected = true;
-            isSplashBusterSelected = false;
+            isSplashBusterSelected = true;
+            isBubbleGunSelected = false;
+
+            splashBusterProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+            splashBusterBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+
+            softRifleProgress.color = Color.white;
+            softRifleBorder.color = Color.white;
+            bubbleGunProgress.color = Color.white;
+            bubbleGunBorder.color = Color.white;
+
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) // SplashBuster
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
         {
             Debug.Log("3");
             SelectWeapon(2);
 
             isSoftRifleSelected = false;
-            isBubbleGunSelected = false;
-            isSplashBusterSelected = true;
+            isSplashBusterSelected = false;
+            isBubbleGunSelected = true;
+
+            bubbleGunProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+            bubbleGunBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+
+            softRifleProgress.color = Color.white;
+            softRifleBorder.color = Color.white;
+            splashBusterProgress.color = Color.white;
+            splashBusterBorder.color = Color.white;
+
         }
 
 
         if (isSoftRifleSelected)
             SelectSoftRifle();
-        else if (isBubbleGunSelected)
-            SelectBubbleGun();
         else if (isSplashBusterSelected)
             SelectSplashBuster();
+        else if (isBubbleGunSelected)
+            SelectBubbleGun();
     }
 
     void SelectWeapon(int weaponNum)
     {
         // 선택한 무기를 부모 컨테이너의 가장 아래로 이동
-        weaponContainer.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(50, -250, 0);
-
+        weaponContainer.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
+        // 선택한 무기 크기 커지게
+        weaponContainer.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
 
         int j = 1;
 
@@ -89,94 +132,51 @@ public class WeaponSelection : MonoBehaviour
         {
             if (i == weaponNum) continue;
 
-            weaponContainer.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(50, -250 + j * 100, 0);
+            weaponContainer.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -270 + j * 60, 0);
+            weaponContainer.GetChild(i).localScale = Vector3.one;
 
             j++;
         }
     }
 
-    void SelectSoftRifle() // 재장전 : 8초
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            if(softRifleBulletCount > 0)
-            {
-                softRifleBulletCount--;
-                softRifleText.text = softRifleBulletCount + " / 10";
-            }
-
-            /*if(softRifleBulletCount == 0)
-            {
-                StartCoroutine(Delaytime(8, 0));
-            }*/
-        }
-    }
-
-
-    void SelectBubbleGun() // 재장전 : 8초
+    void SelectSoftRifle() 
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (bubbleGunBulletCount > 0)
+            if (softRifleBulletCount > 0)
             {
-                bubbleGunBulletCount--;
-                bubbleGunText.text = bubbleGunBulletCount + " / 400";
+                softRifleBulletCount--;
+                softRifleProgress.fillAmount = softRifleBulletCount / 10;
+                softRifleText.text = softRifleBulletCount.ToString();
             }
-
-            /*if (bubbleGunBulletCount == 0)
-            {
-                StartCoroutine(Delaytime(8, 1));
-            }*/
         }
     }
 
-    void SelectSplashBuster() // 재장전 : 6초
+    void SelectSplashBuster() 
     {
         if (Input.GetMouseButtonDown(0))
         {
             if (splashBusterBulletCount > 0)
             {
                 splashBusterBulletCount -= 8;
-                splashBusterText.text = splashBusterBulletCount + " / 40";
+                splashBusterProgress.fillAmount = splashBusterBulletCount / 40;
+                splashBusterText.text = splashBusterBulletCount.ToString();
             }
 
-            /*if (splashBusterBulletCount == 0)
-            {
-                StartCoroutine(Delaytime(6, 2));
-            }*/
         }
     }
 
-    
-    private IEnumerator Delaytime(float delayTime, int weaponNum)
+    void SelectBubbleGun() 
     {
-        yield return new WaitForSeconds(delayTime);
-
-        switch(weaponNum)
+        if (Input.GetMouseButtonDown(0))
         {
-            case 0:
-                softRifleBulletCount = 10;
-                Debug.Log(softRifleBulletCount);
-                softRifleText.text = softRifleBulletCount + " / 10";
-                break;
-            case 1:
-                bubbleGunBulletCount = 400;
-                Debug.Log(bubbleGunBulletCount);
-                softRifleText.text = bubbleGunBulletCount + " / 400";
-                break;
-            case 2:
-                splashBusterBulletCount = 40;
-                Debug.Log(splashBusterBulletCount);
-                splashBusterText.text = splashBusterBulletCount + " / 40";
-                break;
-
+            if (bubbleGunBulletCount > 0)
+            {
+                bubbleGunBulletCount--;
+                bubbleGunProgress.fillAmount = bubbleGunBulletCount / 400;
+                bubbleGunText.text = bubbleGunBulletCount.ToString();
+            }
         }
     }
 
 }
-
-
-/*Transform child = weaponContainer.GetChild(i);
-Vector3 newPosition = Vector3.up;
-newPosition.y = Vector3.up.y * i * 100 - 300; // 무기를 위아래로 등간격으로 배치
-child.localPosition = newPosition;*/

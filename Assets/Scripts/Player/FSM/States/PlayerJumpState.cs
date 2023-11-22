@@ -32,6 +32,8 @@ public class PlayerJumpState : IPlayerState
             stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
             return;
         }
+
+        player.JumpInput();
     }
 
 
@@ -48,6 +50,7 @@ public class PlayerJumpState : IPlayerState
     {
         player.animator.SetBool("isJump", false);
         isJumpStarted = false;
+        player.exitingSlope = false;
     }
 
     private IEnumerator JumpStart()

@@ -15,6 +15,8 @@ public class PlayerAimState : IPlayerState
     {
         PlayerStateEnums.IDLE,
         PlayerStateEnums.AIM_MOVE,
+
+        PlayerStateEnums.AIM_SHOOT,
     };
 
     public PlayerAimState(PlayerStateMachine _stateMachine)
@@ -32,9 +34,12 @@ public class PlayerAimState : IPlayerState
 
         if (!Input.GetButton("Fire2"))
         {
-            player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
-            player.cameraController.SetAimCamera(false);
             stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM_SHOOT);
         }
     }
 
@@ -46,5 +51,7 @@ public class PlayerAimState : IPlayerState
 
     public void OnStateExit()
     {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
     }
 }

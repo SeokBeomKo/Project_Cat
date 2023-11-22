@@ -36,7 +36,6 @@ public class PlayerAimMoveState : IPlayerState
 
         if (!Input.GetButton("Fire2"))
         {
-            player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
             player.cameraController.SetAimCamera(false);
             stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
         }
@@ -49,22 +48,22 @@ public class PlayerAimMoveState : IPlayerState
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
         player.cameraController.SetAimCamera(true);
-        player.animator.SetBool("isRun",true);
-        player.curDoubleCount = player.maxDoubleCount;
+        player.playerStats.FillDoubleCount();
 
-        originSpeed = player.moveSpeed;
-        player.moveSpeed *= 0.5f; 
+        originSpeed = player.playerStats.moveSpeed;
+        player.playerStats.moveSpeed *= 0.5f; 
     }
 
     public void OnStateExit()
     {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetAimCamera(false);
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
-        player.animator.SetBool("isRun",false);
 
         player.moveDirection = Vector3.zero;
         player.rigid.velocity = Vector3.zero;
 
-        player.moveSpeed = originSpeed;
+        player.playerStats.moveSpeed = originSpeed;
     }
 }

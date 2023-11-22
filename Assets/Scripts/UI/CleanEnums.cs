@@ -1,0 +1,10 @@
+public enum CleanEnums
+{
+    UPPERBODY,
+    LOWERBODY,
+    REARPAWRIGHT,
+    REARPAWLEFT,
+    FOREPAWRIGHT,
+    FOREPAWLEFT,
+    BACK,
+}

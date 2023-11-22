@@ -2,34 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HPSubject : Subject
+public class HPSubject
 {
-    [Header("¿ÉÀú¹ö ¸®½ºÆ®")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®")]
     [SerializeField]
     private List<Observer> observerList = new List<Observer>();
    
-    public int hp = 10;
+    public int hp = 100;
 
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            hp--;
-            NotifyObservers();
-        }
-    }
+    // public void Update()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         if (hp > 0)
+    //         {
+    //             hp -= 5;
+    //             NotifyObservers();
+    //         }
 
-    public override void AddObserver(Observer observer)
-    {
-        observerList.Add(observer);
-    }
-    public override void RemoveObserver(Observer observer)
-    {
-        observerList.Remove(observer);
-    }
-    public override void NotifyObservers()
-    {
-        foreach (var observer in observerList)
-            observer.Notify(this);             
-    }
+    //         if (hp == 0)
+    //             Debug.Log("ï¿½ï¿½ï¿½ï¿½");
+    //     }
+    // }
+
+    // public override void AddObserver(Observer observer)
+    // {
+    //     observerList.Add(observer);
+    // }
+    // public override void RemoveObserver(Observer observer)
+    // {
+    //     observerList.Remove(observer);
+    // }
+    // public override void NotifyObservers()
+    // {
+    //     foreach (var observer in observerList)
+    //         observer.Notify(this);             
+    // }
 }
