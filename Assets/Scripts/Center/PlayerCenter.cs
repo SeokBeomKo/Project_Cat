@@ -25,11 +25,11 @@ public class PlayerCenter : MonoBehaviour
 
         if (0 >= playerStats.currentHealth)
         {
-            playerController.stateMachine.ChangeStateAny(PlayerStateEnums.DEAD);
+            playerController.stateMachine.ChangeStateAny(PlayerMovementStateEnums.DEAD);
         }
         else
         {
-            playerController.stateMachine.ChangeStateAny(PlayerStateEnums.STIFFEN);
+            playerController.stateMachine.ChangeStateAny(PlayerMovementStateEnums.STIFFEN);
         }
     }
 }

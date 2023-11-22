@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShootState : IPlayerState
+public class PlayerAimShootState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.IDLE,
+        PlayerMovementStateEnums.AIM
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public PlayerShootState(PlayerStateMachine _stateMachine)
+    public PlayerAimShootState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
         player = stateMachine.playerController;
@@ -22,7 +22,7 @@ public class PlayerShootState : IPlayerState
 
     public void Execute()
     {
-        stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+        stateMachine.ChangeStateLogic(PlayerMovementStateEnums.AIM);
     }
 
     public void OnStateEnter()

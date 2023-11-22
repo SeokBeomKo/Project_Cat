@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class PlayerIdleState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.MOVE,
-        PlayerStateEnums.JUMP,
-        PlayerStateEnums.DIVEROLL,
-        PlayerStateEnums.BACKROLL,
+        PlayerMovementStateEnums.MOVE,
+        PlayerMovementStateEnums.JUMP,
+        PlayerMovementStateEnums.DIVEROLL,
+        PlayerMovementStateEnums.BACKROLL,
 
-        PlayerStateEnums.AIM,
+        PlayerMovementStateEnums.AIM,
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.FALL,
-        PlayerStateEnums.SHOOT,
+        PlayerMovementStateEnums.FALL,
+        PlayerMovementStateEnums.SHOOT,
     };
 
     public PlayerController player {get; set;}
@@ -31,13 +31,13 @@ public class PlayerIdleState : IPlayerState
     {
         if (!player.CheckGrounded())
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.FALL);
             return;
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.SHOOT);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.SHOOT);
             return;
         }
     }

@@ -9,37 +9,37 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] public PlayerController playerController;
     [HideInInspector] public IPlayerState curState;
 
-    public Dictionary<PlayerStateEnums, IPlayerState> stateDictionary;
+    public Dictionary<PlayerMovementStateEnums, IPlayerState> stateDictionary;
 
     private void Awake() 
     {
-        stateDictionary = new Dictionary<PlayerStateEnums, IPlayerState>
+        stateDictionary = new Dictionary<PlayerMovementStateEnums, IPlayerState>
         {
-            {PlayerStateEnums.IDLE,             new PlayerIdleState(this)},
-            {PlayerStateEnums.MOVE,             new PlayerMoveState(this)},
+            {PlayerMovementStateEnums.IDLE,             new PlayerIdleState(this)},
+            {PlayerMovementStateEnums.MOVE,             new PlayerMoveState(this)},
 
-            {PlayerStateEnums.JUMP,             new PlayerJumpState(this)},
-            {PlayerStateEnums.DOUBLE,           new PlayerDoubleJumpState(this)},
-            {PlayerStateEnums.FALL,             new PlayerFallState(this)},
-            {PlayerStateEnums.LAND,             new PlayerLandState(this)},
+            {PlayerMovementStateEnums.JUMP,             new PlayerJumpState(this)},
+            {PlayerMovementStateEnums.DOUBLE,           new PlayerDoubleJumpState(this)},
+            {PlayerMovementStateEnums.FALL,             new PlayerFallState(this)},
+            {PlayerMovementStateEnums.LAND,             new PlayerLandState(this)},
 
-            {PlayerStateEnums.BACKROLL,         new PlayerBackRollState(this)},
-            {PlayerStateEnums.DIVEROLL,         new PlayerDiveRollState(this)},
+            {PlayerMovementStateEnums.BACKROLL,         new PlayerBackRollState(this)},
+            {PlayerMovementStateEnums.DIVEROLL,         new PlayerDiveRollState(this)},
 
-            {PlayerStateEnums.STIFFEN,          new PlayerStiffenState(this)},
-            {PlayerStateEnums.TRANSFORM,        new PlayerTransformState(this)},
+            {PlayerMovementStateEnums.STIFFEN,          new PlayerStiffenState(this)},
+            {PlayerMovementStateEnums.TRANSFORM,        new PlayerTransformState(this)},
 
-            {PlayerStateEnums.AIM,              new PlayerAimState(this)},
-            {PlayerStateEnums.AIM_MOVE,         new PlayerAimMoveState(this)},
+            {PlayerMovementStateEnums.AIM,              new PlayerAimState(this)},
+            {PlayerMovementStateEnums.AIM_MOVE,         new PlayerAimMoveState(this)},
 
-            {PlayerStateEnums.AIM_SHOOT,        new PlayerAimShootState(this)},
-            {PlayerStateEnums.SHOOT,            new PlayerShootState(this)},
-            {PlayerStateEnums.AIM_MOVE_SHOOT,   new PlayerAimMoveShootState(this)},
+            {PlayerMovementStateEnums.AIM_SHOOT,        new PlayerAimShootState(this)},
+            {PlayerMovementStateEnums.SHOOT,            new PlayerShootState(this)},
+            {PlayerMovementStateEnums.AIM_MOVE_SHOOT,   new PlayerAimMoveShootState(this)},
 
-            {PlayerStateEnums.DEAD,             new PlayerDeadState(this)},
+            {PlayerMovementStateEnums.DEAD,             new PlayerDeadState(this)},
         };
 
-        if (stateDictionary.TryGetValue(PlayerStateEnums.IDLE, out IPlayerState newState))
+        if (stateDictionary.TryGetValue(PlayerMovementStateEnums.IDLE, out IPlayerState newState))
         {
             curState = newState;
             curState.OnStateEnter();
@@ -51,7 +51,7 @@ public class PlayerStateMachine : MonoBehaviour
         return curState == state;
     }
 
-    public void ChangeStateAny(PlayerStateEnums newStateType)
+    public void ChangeStateAny(PlayerMovementStateEnums newStateType)
     {
         if (null == curState)   return;
 
@@ -64,7 +64,7 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    public void ChangeStateInput(PlayerStateEnums newStateType)
+    public void ChangeStateInput(PlayerMovementStateEnums newStateType)
     {
         if (null == curState)   return;
         if (!curState.allowedInputHash.Contains(newStateType))   return;
@@ -78,7 +78,7 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    public void ChangeStateLogic(PlayerStateEnums newStateType)
+    public void ChangeStateLogic(PlayerMovementStateEnums newStateType)
     {
         if (null == curState)   return;
         if (!curState.allowedLogicHash.Contains(newStateType))   return;

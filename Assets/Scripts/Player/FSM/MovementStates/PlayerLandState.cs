@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerLandState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.IDLE,
-        PlayerStateEnums.MOVE,
+        PlayerMovementStateEnums.IDLE,
+        PlayerMovementStateEnums.MOVE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -28,12 +28,12 @@ public class PlayerLandState : IPlayerState
         {
             if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+                stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
                 return;
             }
             else
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
+                stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
                 return;
             }
         }

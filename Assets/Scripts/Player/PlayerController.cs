@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public Rigidbody            rigid;
 
     [Header("유한 상태 기계")]
-    [SerializeField]    public PlayerStateMachine   stateMachine;
+    [SerializeField]    public PlayerStateMachine       stateMachine;
+    [SerializeField]    public PlayerShotStateMachine   shotstateMachine;
 
     [Header("모델")]
     [SerializeField]    public Transform            model;
@@ -34,11 +35,6 @@ public class PlayerController : MonoBehaviour
     private RaycastHit slopeHit;
     public float maxSlopeAngle;
     public bool exitingSlope = false;
-
-    public void Hit()
-    {
-        // TODO : 플레이어 경직 상태 및 hp 감소
-    }
 
     private void Update()
     {

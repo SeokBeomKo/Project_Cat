@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PlayerMoveState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.JUMP,
-        PlayerStateEnums.DIVEROLL,
+        PlayerMovementStateEnums.JUMP,
+        PlayerMovementStateEnums.DIVEROLL,
 
-        PlayerStateEnums.AIM_MOVE
+        PlayerMovementStateEnums.AIM_MOVE
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.IDLE,
-        PlayerStateEnums.FALL,
+        PlayerMovementStateEnums.IDLE,
+        PlayerMovementStateEnums.FALL,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -28,7 +28,7 @@ public class PlayerMoveState : IPlayerState
     {
         if (!player.CheckGrounded())
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.FALL);
             return;
         }
 
@@ -37,7 +37,7 @@ public class PlayerMoveState : IPlayerState
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
             return;
         }
 

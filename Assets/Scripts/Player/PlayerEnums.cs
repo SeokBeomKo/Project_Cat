@@ -1,4 +1,4 @@
-public enum PlayerStateEnums
+public enum PlayerMovementStateEnums
 {
     IDLE,           // 대기 상태
     MOVE,           // 이동 상태
@@ -20,4 +20,13 @@ public enum PlayerStateEnums
     
     STIFFEN,        // 경직 상태
     DEAD,           // 사망 상태
+}
+
+public enum PlayerShotStateEnums
+{
+    NOTHING,        // 사격 대기 상태
+
+    ENTER,          // 사격 시작 상태
+    EXCUTE,         // 사격 중 상태
+    EXIT,           // 사격 종료 상태
 }

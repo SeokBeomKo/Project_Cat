@@ -5,13 +5,13 @@ using WaitForSecondsPool;
 
 public class PlayerJumpState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.DOUBLE,
+        PlayerMovementStateEnums.DOUBLE,
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.FALL,
+        PlayerMovementStateEnums.FALL,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -29,7 +29,7 @@ public class PlayerJumpState : IPlayerState
 
         if (player.rigid.velocity.y <= 0.1f)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.FALL);
             return;
         }
 

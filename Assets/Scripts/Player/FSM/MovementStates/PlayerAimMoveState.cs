@@ -7,16 +7,16 @@ public class PlayerAimMoveState : IPlayerState
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
         
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.MOVE,
-        PlayerStateEnums.AIM,
+        PlayerMovementStateEnums.MOVE,
+        PlayerMovementStateEnums.AIM,
 
-        PlayerStateEnums.AIM_MOVE_SHOOT,
+        PlayerMovementStateEnums.AIM_MOVE_SHOOT,
     };
 
     public PlayerAimMoveState(PlayerStateMachine _stateMachine)
@@ -32,19 +32,19 @@ public class PlayerAimMoveState : IPlayerState
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.AIM);
             return;
         }
 
         if (!Input.GetButton("Fire2"))
         {
             player.cameraController.SetAimCamera(false);
-            stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM_MOVE_SHOOT);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.AIM_MOVE_SHOOT);
         }
 
         player.MoveInput();

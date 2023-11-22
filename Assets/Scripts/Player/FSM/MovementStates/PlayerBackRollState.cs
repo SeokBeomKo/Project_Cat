@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerBackRollState :  IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.IDLE,
+        PlayerMovementStateEnums.IDLE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -25,7 +25,7 @@ public class PlayerBackRollState :  IPlayerState
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll")&&
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
             return;
         }
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll") && 
