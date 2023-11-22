@@ -42,6 +42,10 @@ public class PlayerController : MonoBehaviour
         {
             stateMachine.curState.Execute();
         }
+        if (null != shotstateMachine.curState)
+        {
+            shotstateMachine.curState.Execute();
+        }
     }
 
     private void FixedUpdate() 

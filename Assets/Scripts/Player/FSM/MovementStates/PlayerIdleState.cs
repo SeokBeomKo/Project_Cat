@@ -37,7 +37,7 @@ public class PlayerIdleState : IPlayerState
 
         if (Input.GetButtonDown("Fire1"))
         {
-            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.SHOOT);
+            player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
             return;
         }
     }

@@ -20,7 +20,6 @@ public class PlayerCenter : MonoBehaviour
 
     public void HitPlayer(int damage = 5)
     {
-        playerController.Hit();
         playerStats.GetDamage(damage);
 
         if (0 >= playerStats.currentHealth)

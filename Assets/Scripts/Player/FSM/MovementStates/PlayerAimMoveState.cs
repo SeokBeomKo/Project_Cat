@@ -40,11 +40,12 @@ public class PlayerAimMoveState : IPlayerState
         {
             player.cameraController.SetAimCamera(false);
             stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
+            return;
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
-            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.AIM_MOVE_SHOOT);
+            player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
         }
 
         player.MoveInput();

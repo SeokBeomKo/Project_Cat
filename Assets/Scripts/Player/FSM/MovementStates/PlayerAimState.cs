@@ -39,7 +39,7 @@ public class PlayerAimState : IPlayerState
 
         if (Input.GetButtonDown("Fire1"))
         {
-            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.AIM_SHOOT);
+            player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
         }
     }
 

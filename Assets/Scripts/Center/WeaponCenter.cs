@@ -45,6 +45,6 @@ public class WeaponCenter : MonoBehaviour
         else
             targetPoint = ray.GetPoint(50); // 레이가 부딪히지 않았다면, 일정 거리를 타겟 포인트로 설정합니다.
 
-        curWeapon.Fire(targetPoint);
+        // curWeapon.Fire(targetPoint);
     }
 }

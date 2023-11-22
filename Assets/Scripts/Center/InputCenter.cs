@@ -66,8 +66,6 @@ public class InputCenter : MonoBehaviour
     {
         if (0 == playerController.playerStats.GetRollCount()) return;
 
-        playerController.playerStats.UseRoll();
-
         if (playerController.stateMachine.curState is PlayerIdleState idleState)
         {
             playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.BACKROLL);

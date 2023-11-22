@@ -10,7 +10,24 @@ public class SoapRifle : Weapon
     public float bulletSpeed = 20f;
     public float distance = 10f;
 
-    public override void Fire(Vector3 direction)
+    public override void EnterShot()
+    {
+        
+    }
+    public override void ExcuteShot()
+    {
+        
+    }
+    public override void ExitShot()
+    {
+        
+    }
+
+    public override void SetDirection(Vector3 direction)
+    {
+    }
+
+    public void Fire(Vector3 direction)
     {
         // 레이캐스팅을 사용하여 총알이 맞는 위치를 찾습니다.
         RaycastHit hit;

@@ -14,6 +14,7 @@ public class PlayerNothingShotState : IPlayerShotState
     }
     public void Execute()
     {
+        Debug.Log("NOTHING");
     }
 
     public void OnStateEnter()

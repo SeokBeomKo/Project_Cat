@@ -14,6 +14,8 @@ public class PlayerExitShotState : IPlayerShotState
     }
     public void Execute()
     {
+        stateMachine.ChangeState(PlayerShotStateEnums.NOTHING);
+        Debug.Log("Exit");
     }
 
     public void OnStateEnter()

@@ -13,7 +13,20 @@ public class BubbleGun : Weapon
 
     private float lastFireTime;
 
-    public override void Fire(Vector3 direction)
+    public override void EnterShot()
+    {
+        
+    }
+    public override void ExcuteShot()
+    {
+        
+    }
+    public override void ExitShot()
+    {
+        
+    }
+
+    public override void SetDirection(Vector3 direction)
     {
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);

@@ -44,6 +44,9 @@ public class PlayerBackRollState :  IPlayerState
     {
         ClearAimSetting();
 
+        
+        player.playerStats.UseRoll();
+
         player.animator.SetBool("isDiveRoll",true);
         player.RollInput();
     }
