@@ -27,7 +27,7 @@ public class PlayerShootState : IPlayerState
 
     public void OnStateEnter()
     {
-        player.weaponCenter.FireWeapon();
+        // player.weaponCenter.FireWeapon();
     }
 
     public void OnStateExit()

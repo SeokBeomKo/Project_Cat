@@ -14,12 +14,13 @@ public class PlayerExcuteShotState : IPlayerShotState
     }
     public void Execute()
     {
+        player.weaponCenter.SettingTarget();
+        player.weaponCenter.Shoot();
         if (Input.GetButtonUp("Fire1"))
         {
             stateMachine.ChangeState(PlayerShotStateEnums.EXIT);
             return;
         }
-        Debug.Log("Excute");
     }
 
     public void OnStateEnter()

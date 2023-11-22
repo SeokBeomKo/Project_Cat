@@ -14,7 +14,6 @@ public class PlayerEnterShotState : IPlayerShotState
     }
     public void Execute()
     {
-        Debug.Log("Enter");
         stateMachine.ChangeState(PlayerShotStateEnums.EXCUTE);
     }
 

@@ -7,6 +7,8 @@ public interface IWeapon
     void EnterShot();
     void ExcuteShot();
     void ExitShot();
-    
-    void SetDirection(Vector3 direction);
+
+    void Shoot();
+
+    void SetTarget(Vector3 direction);
 }

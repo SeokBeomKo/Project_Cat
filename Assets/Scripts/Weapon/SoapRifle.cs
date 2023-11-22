@@ -23,8 +23,13 @@ public class SoapRifle : Weapon
         
     }
 
-    public override void SetDirection(Vector3 direction)
+    public override void SetTarget(Vector3 direction)
     {
+    }
+
+    public override void Shoot()
+    {
+        
     }
 
     public void Fire(Vector3 direction)
