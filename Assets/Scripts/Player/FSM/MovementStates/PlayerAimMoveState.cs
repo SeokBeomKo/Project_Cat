@@ -38,7 +38,7 @@ public class PlayerAimMoveState : IPlayerState
 
         if (!Input.GetButton("Fire2"))
         {
-            player.cameraController.SetAimCamera(false);
+            player.cameraController.SetPlayCamera();
             stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
             return;
         }
@@ -55,7 +55,7 @@ public class PlayerAimMoveState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
-        player.cameraController.SetAimCamera(true);
+        player.cameraController.SetAimCamera();
         player.playerStats.FillDoubleCount();
 
         originSpeed = player.playerStats.moveSpeed;

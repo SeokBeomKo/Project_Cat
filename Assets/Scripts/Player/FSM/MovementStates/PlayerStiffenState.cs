@@ -55,6 +55,6 @@ public class PlayerStiffenState : IPlayerState
     public void ClearAimSetting()
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
-        player.cameraController.SetAimCamera(false);
+        player.cameraController.SetPlayCamera();
     }
 }

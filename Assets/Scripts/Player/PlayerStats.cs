@@ -98,7 +98,6 @@ public class PlayerStats : MonoBehaviour, ISubject
     public void UseRoll()
     {
         currentRoll--;
-        Debug.Log("롤");
     }
 
     public void UseDouble()

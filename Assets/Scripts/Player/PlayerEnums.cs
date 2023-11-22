@@ -20,6 +20,11 @@ public enum PlayerMovementStateEnums
     
     STIFFEN,        // 경직 상태
     DEAD,           // 사망 상태
+
+    CHASE_IDLE,     // 추격 _ 대기 상태
+    CHASE_MOVE,     // 추격 _ 이동 상태
+    CHASE_FALL,     // 추격 _ 낙하 상태
+    CHASE_LAND,     // 추격 _ 착지 상태
 }
 
 public enum PlayerShotStateEnums

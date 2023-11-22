@@ -2,27 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : IPlayerState
+public class PlayerChaseMoveState : IPlayerState
 {
     public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerMovementStateEnums.MOVE,
-        PlayerMovementStateEnums.JUMP,
-        PlayerMovementStateEnums.DIVEROLL,
-        PlayerMovementStateEnums.BACKROLL,
-
-        PlayerMovementStateEnums.AIM,
     };
     public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerMovementStateEnums.FALL,
-        PlayerMovementStateEnums.SHOOT,
+        PlayerMovementStateEnums.CHASE_IDLE,
+        PlayerMovementStateEnums.CHASE_FALL,
     };
-
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public PlayerIdleState(PlayerStateMachine _stateMachine)
+    public PlayerChaseMoveState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
         player = stateMachine.playerController;
@@ -35,27 +28,30 @@ public class PlayerIdleState : IPlayerState
             return;
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
+        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
             return;
         }
+
+        player.MoveInput();
     }
 
     public void OnStateEnter()
     {
-        ClearAimSetting();
-        
-        player.playerStats.FillDoubleCount();
+        player.animator.SetBool("isMove",true);
     }
 
     public void OnStateExit()
     {
-    }
+        player.animator.SetFloat("Horizontal", 0);
+        player.animator.SetFloat("Vertical", 0);
+        player.animator.SetBool("isMove",false);
 
-    public void ClearAimSetting()
-    {
-        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
-        player.cameraController.SetPlayCamera();
+        player.moveDirection = Vector3.zero;
+        player.rigid.velocity = Vector3.zero;
     }
 }

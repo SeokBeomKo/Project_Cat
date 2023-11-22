@@ -80,10 +80,10 @@ public class PlayerController : MonoBehaviour
     public Vector3 jumpDirection;
     public Vector3 rollDirection;
 
-    public void AimSwitch()
-    {
-        cameraController.SwitchCamera();
-    }
+    // public void AimSwitch()
+    // {
+    //     cameraController.SwitchCamera();
+    // }
 
     public void MoveRogic()
     {

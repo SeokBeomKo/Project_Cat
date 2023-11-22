@@ -46,7 +46,7 @@ public class PlayerAimState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
-        player.cameraController.SetAimCamera(true);
+        player.cameraController.SetAimCamera();
     }
 
     public void OnStateExit()
