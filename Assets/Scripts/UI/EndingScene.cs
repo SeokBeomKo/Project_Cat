@@ -17,7 +17,6 @@ public class EndingScene : MonoBehaviour
     public string sceneName;
 
     private string endingContent = "±×³É ¿À´ÃÀº ½¯±î ... ?";
-    private float typingSpeed = 0.1f;
 
     private float progress = 0f;
 
@@ -31,11 +30,11 @@ public class EndingScene : MonoBehaviour
     {
         endingText.text = null;
 
-
+        yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < endingContent.Length; i++)
         {
             endingText.text += endingContent[i];
-            yield return new WaitForSeconds(typingSpeed);
+            yield return new WaitForSeconds(0.1f);
         }
 
         yield return new WaitForSeconds(0.5f);
