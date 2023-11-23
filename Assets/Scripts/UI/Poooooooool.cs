@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -129,4 +129,4 @@ public class Poooooooool : Singleton<Poooooooool>
         // 풀에 다시 반환한다
         poolDictionary[tag].Enqueue(obj);
     }
-}
+}*/
