@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerShootState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
+        PlayerMovementStateEnums.IDLE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -21,10 +22,12 @@ public class PlayerShootState : IPlayerState
 
     public void Execute()
     {
+        stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
     }
 
     public void OnStateEnter()
     {
+        // player.weaponCenter.FireWeapon();
     }
 
     public void OnStateExit()

@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public Rigidbody            rigid;
 
     [Header("유한 상태 기계")]
-    [SerializeField]    public PlayerStateMachine   stateMachine;
+    [SerializeField]    public PlayerStateMachine       stateMachine;
+    [SerializeField]    public PlayerShotStateMachine   shotstateMachine;
 
     [Header("모델")]
     [SerializeField]    public Transform            model;
@@ -35,16 +36,15 @@ public class PlayerController : MonoBehaviour
     public float maxSlopeAngle;
     public bool exitingSlope = false;
 
-    public void Hit()
-    {
-        // TODO : 플레이어 경직 상태 및 hp 감소
-    }
-
     private void Update()
     {
         if (null != stateMachine.curState)
         {
             stateMachine.curState.Execute();
+        }
+        if (null != shotstateMachine.curState)
+        {
+            shotstateMachine.curState.Execute();
         }
     }
 
@@ -80,11 +80,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 jumpDirection;
     public Vector3 rollDirection;
 
-    public void AimSwitch()
-    {
-        cameraController.SwitchCamera();
-    }
-
+    public float addMoveSpeed = 5f;
     public void MoveRogic()
     {
         if (OnSlope() && !exitingSlope)
@@ -97,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         else if (isGrounded)
         {
-            rigid.AddForce(moveDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
+            rigid.AddForce(moveDirection.normalized * playerStats.moveSpeed * addMoveSpeed, ForceMode.Force);
         }
         else if (!isGrounded)
         {
@@ -127,6 +123,25 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         moveDirection = transform.rotation * moveDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
+    }
+
+    private Vector3 previousDirection;
+    public void ChaseMoveInput()
+    {
+        Vector3 currentDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        transform.parent.LookAt(transform.parent.position + currentDirection);
+
+        // 이전 프레임의 방향과 현재 프레임의 방향이 다르면 방향 전환으로 간주
+        if (currentDirection != previousDirection)
+        {
+            // 방향 전환 시 캐릭터의 수평 속도를 0으로 만듭니다.
+            rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+        }
+
+        moveDirection = transform.parent.forward;
+
+        // 현재 프레임의 방향을 저장
+        previousDirection = currentDirection;
     }
 
     public void JumpInput()

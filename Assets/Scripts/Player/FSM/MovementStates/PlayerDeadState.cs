@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerDeadState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
     };
     public PlayerController player {get; set;}
@@ -26,6 +26,8 @@ public class PlayerDeadState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.rigid.constraints = RigidbodyConstraints.FreezeAll;
         player.animator.SetTrigger("onDead");
     }
@@ -33,5 +35,11 @@ public class PlayerDeadState : IPlayerState
     public void OnStateExit()
     {
         
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetPlayCamera();
     }
 }

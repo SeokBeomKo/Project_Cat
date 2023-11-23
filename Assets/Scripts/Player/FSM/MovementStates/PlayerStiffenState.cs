@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerStiffenState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.IDLE,
-        PlayerStateEnums.MOVE,
+        PlayerMovementStateEnums.IDLE,
+        PlayerMovementStateEnums.MOVE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -27,12 +27,12 @@ public class PlayerStiffenState : IPlayerState
             {
                 if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
                 {
-                    stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
+                    stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
                     return;
                 }
                 else
                 {
-                    stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+                    stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
                     return;
                 }
             }
@@ -40,6 +40,8 @@ public class PlayerStiffenState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.rigid.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
 
         player.animator.SetTrigger("onHit");
@@ -48,5 +50,11 @@ public class PlayerStiffenState : IPlayerState
     public void OnStateExit()
     {
         player.rigid.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetPlayCamera();
     }
 }

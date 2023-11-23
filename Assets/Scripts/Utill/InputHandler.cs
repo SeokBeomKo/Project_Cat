@@ -5,12 +5,12 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     public delegate void PlayerInputHandle();
-    public delegate void WeaponInputHandle(int number);
     public event PlayerInputHandle OnPlayerRunInput;
     public event PlayerInputHandle OnPlayerJumpInput;
     public event PlayerInputHandle OnPlayerDiveRollInput;
     public event PlayerInputHandle OnPlayerAimSwitchInput;
 
+    public delegate void WeaponInputHandle(int number);
     public event WeaponInputHandle OnWeaponSwapInput;
 
     private void Update() 

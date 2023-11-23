@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerDiveRollState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
         
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.MOVE,
-        PlayerStateEnums.IDLE,
+        PlayerMovementStateEnums.MOVE,
+        PlayerMovementStateEnums.IDLE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -31,12 +31,12 @@ public class PlayerDiveRollState : IPlayerState
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
+                stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
                 return;
             }
             else
             {
-                stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+                stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
                 return;
             }
         }
@@ -60,6 +60,10 @@ public class PlayerDiveRollState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
+        player.playerStats.UseRoll();
+
         origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         
@@ -78,5 +82,11 @@ public class PlayerDiveRollState : IPlayerState
         player.animator.SetBool("isDiveRoll",false);
 
         player.rigid.velocity = Vector3.zero;
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetPlayCamera();
     }
 }

@@ -10,7 +10,30 @@ public class SplashBuster : Weapon
     public int bulletCount = 8; // 한 번에 발사할 총알의 수
     public float bulletSpeed = 10f; // 총알의 속도
     public float spreadAngle;       // 총알이 퍼지는 각도
-    public override void Fire(Vector3 direction)
+
+    public override void EnterShot()
+    {
+        
+    }
+    public override void ExcuteShot()
+    {
+        
+    }
+    public override void ExitShot()
+    {
+        
+    }
+
+    public override void SetTarget(Vector3 direction)
+    {
+    }
+
+    public override void Shoot()
+    {
+        
+    }
+
+    public void Fire(Vector3 direction)
     {
         for (int i = 0; i < bulletCount; i++)
         {

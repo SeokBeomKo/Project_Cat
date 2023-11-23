@@ -7,14 +7,16 @@ public class PlayerAimMoveState : IPlayerState
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
         
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.MOVE,
-        PlayerStateEnums.AIM,
+        PlayerMovementStateEnums.MOVE,
+        PlayerMovementStateEnums.AIM,
+
+        PlayerMovementStateEnums.AIM_MOVE_SHOOT,
     };
 
     public PlayerAimMoveState(PlayerStateMachine _stateMachine)
@@ -30,14 +32,20 @@ public class PlayerAimMoveState : IPlayerState
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.AIM);
             return;
         }
 
         if (!Input.GetButton("Fire2"))
         {
-            player.cameraController.SetAimCamera(false);
-            stateMachine.ChangeStateLogic(PlayerStateEnums.MOVE);
+            player.cameraController.SetPlayCamera();
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
+            return;
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
         }
 
         player.MoveInput();
@@ -47,7 +55,7 @@ public class PlayerAimMoveState : IPlayerState
     public void OnStateEnter()
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
-        player.cameraController.SetAimCamera(true);
+        player.cameraController.SetAimCamera();
         player.playerStats.FillDoubleCount();
 
         originSpeed = player.playerStats.moveSpeed;
@@ -56,8 +64,6 @@ public class PlayerAimMoveState : IPlayerState
 
     public void OnStateExit()
     {
-        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
-        player.cameraController.SetAimCamera(false);
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
 

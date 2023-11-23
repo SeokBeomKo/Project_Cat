@@ -235,6 +235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimCamera: {fileID: 1056335394}
+  playCamera: {fileID: 1056335394}
+  topCamera: {fileID: 0}
 --- !u!114 &38851804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2168,6 +2170,7 @@ GameObject:
   - component: {fileID: 1140737834}
   - component: {fileID: 1140737833}
   - component: {fileID: 1140737832}
+  - component: {fileID: 1140737835}
   - component: {fileID: 1140737831}
   - component: {fileID: 1140737830}
   m_Layer: 7
@@ -2257,6 +2260,7 @@ MonoBehaviour:
   animator: {fileID: 753257952}
   rigid: {fileID: 753257951}
   stateMachine: {fileID: 1140737832}
+  shotstateMachine: {fileID: 1140737835}
   model: {fileID: 1155372946}
   playerStats: {fileID: 1140737831}
   weaponCenter: {fileID: 1140737830}
@@ -2267,6 +2271,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   jumpDirection: {x: 0, y: 0, z: 0}
   rollDirection: {x: 0, y: 0, z: 0}
+  addMoveSpeed: 5
 --- !u!136 &1140737834
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2281,6 +2286,19 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &1140737835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140737828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8654447ea26281543ac3b374b00c7829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1140737833}
 --- !u!1001 &1155372944
 PrefabInstance:
   m_ObjectHideFlags: 0

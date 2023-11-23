@@ -7,16 +7,16 @@ public class PlayerAimState : IPlayerState
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
         
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.IDLE,
-        PlayerStateEnums.AIM_MOVE,
+        PlayerMovementStateEnums.IDLE,
+        PlayerMovementStateEnums.AIM_MOVE,
 
-        PlayerStateEnums.AIM_SHOOT,
+        PlayerMovementStateEnums.AIM_SHOOT,
     };
 
     public PlayerAimState(PlayerStateMachine _stateMachine)
@@ -29,29 +29,27 @@ public class PlayerAimState : IPlayerState
     {
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM_MOVE);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.AIM_MOVE);
         }
 
         if (!Input.GetButton("Fire2"))
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.AIM_SHOOT);
+            player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
         }
     }
 
     public void OnStateEnter()
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
-        player.cameraController.SetAimCamera(true);
+        player.cameraController.SetAimCamera();
     }
 
     public void OnStateExit()
     {
-        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
-        player.cameraController.SetAimCamera(false);
     }
 }

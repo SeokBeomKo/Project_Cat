@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerFallState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.DOUBLE,
+        PlayerMovementStateEnums.DOUBLE,
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.LAND,
+        PlayerMovementStateEnums.LAND,
     };
     
     public PlayerController player {get; set;}
@@ -26,7 +26,7 @@ public class PlayerFallState : IPlayerState
     {
         if (player.CheckGrounded())
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.LAND);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.LAND);
             return;
         }
 
@@ -37,11 +37,19 @@ public class PlayerFallState : IPlayerState
 
     public void OnStateEnter()
     {
+        ClearAimSetting();
+        
         player.animator.SetBool("isFall", true);
     }
 
     public void OnStateExit()
     {
         player.animator.SetBool("isFall", false);
+    }
+
+    public void ClearAimSetting()
+    {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.cameraController.SetPlayCamera();
     }
 }

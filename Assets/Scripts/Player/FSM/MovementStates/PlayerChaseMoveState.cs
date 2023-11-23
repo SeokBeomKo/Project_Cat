@@ -2,24 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveState : IPlayerState
+public class PlayerChaseMoveState : IPlayerState
 {
-    public HashSet<PlayerStateEnums> allowedInputHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedInputHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.JUMP,
-        PlayerStateEnums.DIVEROLL,
-
-        PlayerStateEnums.AIM_MOVE
     };
-    public HashSet<PlayerStateEnums> allowedLogicHash { get; } = new HashSet<PlayerStateEnums>
+    public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerStateEnums.IDLE,
-        PlayerStateEnums.FALL,
+        PlayerMovementStateEnums.CHASE_IDLE,
+        PlayerMovementStateEnums.CHASE_FALL,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
 
-    public PlayerMoveState(PlayerStateMachine _stateMachine)
+    public PlayerChaseMoveState(PlayerStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
         player = stateMachine.playerController;
@@ -28,26 +24,26 @@ public class PlayerMoveState : IPlayerState
     {
         if (!player.CheckGrounded())
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.CHASE_FALL);
             return;
         }
 
-        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
-        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+        // player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+        player.animator.SetFloat("Vertical", 1);
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeStateLogic(PlayerStateEnums.IDLE);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.CHASE_IDLE);
             return;
         }
 
-        player.MoveInput();
+        player.ChaseMoveInput();
     }
 
     public void OnStateEnter()
     {
+        player.addMoveSpeed = 10f;
         player.animator.SetBool("isMove",true);
-        player.playerStats.FillDoubleCount();
     }
 
     public void OnStateExit()
