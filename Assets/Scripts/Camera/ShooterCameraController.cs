@@ -13,18 +13,18 @@ public class ShooterCameraController : MonoBehaviour
     {
         aimCamera.gameObject.SetActive(true);
         playCamera.gameObject.SetActive(false);
-        topCamera.gameObject.SetActive(false);
+        if (null != topCamera) topCamera.gameObject.SetActive(false);
     }
     public void SetPlayCamera()
     {
         aimCamera.gameObject.SetActive(false);
         playCamera.gameObject.SetActive(true);
-        topCamera.gameObject.SetActive(false);
+        if (null != topCamera) topCamera.gameObject.SetActive(false);
     }
     public void SetTopCamera()
     {
         aimCamera.gameObject.SetActive(false);
         playCamera.gameObject.SetActive(false);
-        topCamera.gameObject.SetActive(true);
+        if (null != topCamera) topCamera.gameObject.SetActive(true);
     }
 }
