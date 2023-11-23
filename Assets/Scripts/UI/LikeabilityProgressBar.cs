@@ -10,20 +10,13 @@ public class LikeabilityProgressBar : MonoBehaviour
     public Slider likeabilityProgressBar;
     public TextMeshProUGUI likeabilityText;
 
-    private float likeability = 300;
+    private float totalLikeability = 300;
+    private float currentLikeability;
 
-    void Update()
+    public void UpdateLikeabilityProgress(float current)
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log("A");
-            if (likeability > 0)
-            {
-                likeability -= 30;
-                likeabilityProgressBar.value = Mathf.Clamp01(likeability / 300);
-
-                likeabilityText.text = likeabilityProgressBar.value * 100 + " %";
-            }
-        }
+        currentLikeability = current;
+        likeabilityProgressBar.value = Mathf.Clamp01(currentLikeability / totalLikeability);
+        likeabilityText.text = likeabilityProgressBar.value * 100 + " %";
     }
 }

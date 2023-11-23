@@ -1,46 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class TypingEffect : MonoBehaviour
 {
-    public TextMeshProUGUI subtitleText;
-    
-    [Header("표시할 자막 내용")]
-    public string subtitleContent;
-    [Header("타이핑 속도")]
-    public float typingSpeed;
+    public TextMeshProUGUI endingText;
 
-    private bool hasShow = false;
+    public string endingContent;
+    private float typingSpeed = 0.1f;
 
-
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.CompareTag("Player") && !hasShow)
-        {
-            hasShow = true;
-            subtitleText.gameObject.SetActive(true);
-            StartCoroutine(Typing(subtitleContent));
-        }
+        StartCoroutine(Typing());
     }
 
-    IEnumerator Typing(string txt)
+    IEnumerator Typing()
     {
-        subtitleText.text = null;
+        endingText.text = null;
 
-        // 띄어쓰기 두 번이면 줄 바꿈
-        if (txt.Contains("  "))
-            txt = subtitleContent.Replace("  ", "\n");
+        yield return new WaitForSeconds(typingSpeed);
 
-        for (int i = 0; i < txt.Length; i++)
+        for (int i = 0; i < endingContent.Length; i++)
         {
-            subtitleText.text += txt[i];
+            endingText.text += endingContent[i];
             yield return new WaitForSeconds(typingSpeed);
         }
-
-        yield return new WaitForSeconds(0.5f);
-        subtitleText.gameObject.SetActive(false);
     }
 }
