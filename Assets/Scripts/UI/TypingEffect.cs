@@ -13,27 +13,18 @@ public class TypingEffect : MonoBehaviour
     [Header("타이핑 속도")]
     public float typingSpeed;
 
-    private bool isTyping = false;
+    private bool hasShow = false;
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isTyping)
+        if (other.CompareTag("Player") && !hasShow)
         {
-            isTyping = true;
+            hasShow = true;
             subtitleText.gameObject.SetActive(true);
             StartCoroutine(Typing(subtitleContent));
         }
     }
-
-    /*private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            subtitleText.gameObject.SetActive(false);
-        }
-    }*/
-
 
     IEnumerator Typing(string txt)
     {
@@ -49,7 +40,6 @@ public class TypingEffect : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        isTyping = false;
         yield return new WaitForSeconds(0.5f);
         subtitleText.gameObject.SetActive(false);
     }

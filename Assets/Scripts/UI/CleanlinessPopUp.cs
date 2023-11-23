@@ -24,11 +24,15 @@ public class CleanlinessPopUp : MonoBehaviour
 
     void Update()
     {
-        popUp.SetActive(false);
+        //popUp.SetActive(false);
 
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             popUp.SetActive(true);
+        }
+        if(Input.GetKeyUp(KeyCode.Tab))
+        {
+            popUp.SetActive(false);
         }
 
     }

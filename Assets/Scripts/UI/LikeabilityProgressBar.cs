@@ -16,6 +16,7 @@ public class LikeabilityProgressBar : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
+            Debug.Log("A");
             if (likeability > 0)
             {
                 likeability -= 30;
