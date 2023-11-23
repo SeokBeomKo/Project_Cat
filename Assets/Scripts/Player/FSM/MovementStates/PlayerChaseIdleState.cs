@@ -25,7 +25,7 @@ public class PlayerChaseIdleState : IPlayerState
     {
         if (!player.CheckGrounded())
         {
-            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.CHASE_FALL);
             return;
         }
     }

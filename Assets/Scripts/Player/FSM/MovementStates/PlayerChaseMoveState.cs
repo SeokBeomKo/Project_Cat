@@ -28,8 +28,8 @@ public class PlayerChaseMoveState : IPlayerState
             return;
         }
 
-        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
-        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+        // player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+        player.animator.SetFloat("Vertical", 1);
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
@@ -37,11 +37,12 @@ public class PlayerChaseMoveState : IPlayerState
             return;
         }
 
-        player.MoveInput();
+        player.ChaseMoveInput();
     }
 
     public void OnStateEnter()
     {
+        player.addMoveSpeed = 10f;
         player.animator.SetBool("isMove",true);
     }
 
