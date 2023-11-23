@@ -13,46 +13,41 @@ public class BubbleGun : Weapon
     [Header("진행 방향")]
     private Vector3 shootDirection;
 
-    public float fireRate = 1f; // 발사 속도
-    public float projectileForce;           // 발사체에 가해질 힘
-    public float projectileHoverTime;       // 발사체가 부유하는 시간
-    public float trackingDistance = 5f; // 발사체가 추적 시작하는 거리
-
     [Header("발사 딜레이")]
     public float shootDelay;
+    private float curShootTime;
 
-    public override void EnterShot()
+    public override void EnterShoot()
     {
-        
+        curShootTime = 0;
     }
-    public override void ExcuteShot()
+    public override void ExcuteShoot()
     {
-        StartCoroutine(ShootCoroutine());
-    }
-
-    private IEnumerator ShootCoroutine()
-    {
-        while (true)
+        curShootTime -= Time.deltaTime;
+        if (curShootTime <= 0)
         {
+            curShootTime = shootDelay;
             Shoot();
-            yield return new WaitForSeconds(shootDelay);
         }
     }
 
-    public override void ExitShot()
+    public override void ExitShoot()
     {
-        StopCoroutine(ShootCoroutine());
     }
 
     public override void SetTarget(Vector3 direction)
     {
         shootDirection = direction;
     }
+    private float randomScale;
 
     public override void Shoot()
     {
+        randomScale = Random.Range(0.2f,0.7f);
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
-        bullet.GetComponent<BubbleProjectile>().SetDirection(shootDirection);
+        bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
+        bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootDirection);
+        //
     }
 }

@@ -6,14 +6,14 @@ using TMPro;
 
 public class WeaponSelection : MonoBehaviour
 {
-    //1¹ø ÃÑ : SoftRifle 
-    //2¹ø ÃÑ : SplashBuster
-    //3¹ø ÃÑ : BubbleGun
+    //1ï¿½ï¿½ ï¿½ï¿½ : SoftRifle 
+    //2ï¿½ï¿½ ï¿½ï¿½ : SplashBuster
+    //3ï¿½ï¿½ ï¿½ï¿½ : BubbleGun
 
-    private Transform weaponContainer; // ¹«±â ÄÁÅ×ÀÌ³Ê
+    private Transform weaponContainer; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½
 
     private float softRifleBulletCount = 10;
-    private float splashBusterBulletCount = 40; // 8¹ß¾¿
+    private float splashBusterBulletCount = 40; // 8ï¿½ß¾ï¿½
     private float bubbleGunBulletCount = 400;
 
     public TextMeshProUGUI softRifleText;
@@ -34,7 +34,7 @@ public class WeaponSelection : MonoBehaviour
 
     void Start()
     {
-        // °ÔÀÓ ½ÃÀÛ ½Ã ÃÊ±â ¹«±â ¼±ÅÃ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         weaponContainer = gameObject.transform;
         SelectWeapon(0);
 
@@ -53,10 +53,9 @@ public class WeaponSelection : MonoBehaviour
 
     void Update()
     {
-        // Å°(¿¹: ¼ýÀÚ 1, 2, 3)¸¦ ´­·¯ ¹«±â º¯°æ
+        // Å°(ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ 1, 2, 3)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.Alpha1)) // SoftRifle
         {
-            Debug.Log("1");
             SelectWeapon(0);
 
             isSoftRifleSelected = true;
@@ -74,7 +73,6 @@ public class WeaponSelection : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
         {
-            Debug.Log("2");
             SelectWeapon(1);
 
             isSoftRifleSelected = false;
@@ -92,7 +90,6 @@ public class WeaponSelection : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
         {
-            Debug.Log("3");
             SelectWeapon(2);
 
             isSoftRifleSelected = false;
@@ -120,14 +117,14 @@ public class WeaponSelection : MonoBehaviour
 
     void SelectWeapon(int weaponNum)
     {
-        // ¼±ÅÃÇÑ ¹«±â¸¦ ºÎ¸ð ÄÁÅ×ÀÌ³ÊÀÇ °¡Àå ¾Æ·¡·Î ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¸¦ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         weaponContainer.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
-        // ¼±ÅÃÇÑ ¹«±â Å©±â Ä¿Áö°Ô
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½
         weaponContainer.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
 
         int j = 1;
 
-        // ¸ðµç ¹«±â À§Ä¡ ÀçÁ¤·Ä
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < weaponContainer.childCount; i++)
         {
             if (i == weaponNum) continue;

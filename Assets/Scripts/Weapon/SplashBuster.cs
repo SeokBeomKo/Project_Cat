@@ -11,15 +11,15 @@ public class SplashBuster : Weapon
     public float bulletSpeed = 10f; // 총알의 속도
     public float spreadAngle;       // 총알이 퍼지는 각도
 
-    public override void EnterShot()
+    public override void EnterShoot()
     {
         
     }
-    public override void ExcuteShot()
+    public override void ExcuteShoot()
     {
         
     }
-    public override void ExitShot()
+    public override void ExitShoot()
     {
         
     }

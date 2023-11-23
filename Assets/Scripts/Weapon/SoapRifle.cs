@@ -10,15 +10,15 @@ public class SoapRifle : Weapon
     public float bulletSpeed = 20f;
     public float distance = 10f;
 
-    public override void EnterShot()
+    public override void EnterShoot()
     {
         
     }
-    public override void ExcuteShot()
+    public override void ExcuteShoot()
     {
         
     }
-    public override void ExitShot()
+    public override void ExitShoot()
     {
         
     }

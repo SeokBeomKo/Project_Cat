@@ -20,6 +20,7 @@ public class PlayerExitShotState : IPlayerShotState
 
     public void OnStateEnter()
     {
+        player.weaponCenter.ExitShoot();
     }
 
     public void OnStateExit()

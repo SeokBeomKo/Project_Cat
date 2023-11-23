@@ -19,6 +19,7 @@ public class PlayerEnterShotState : IPlayerShotState
 
     public void OnStateEnter()
     {
+        player.weaponCenter.EnterShoot();
     }
 
     public void OnStateExit()

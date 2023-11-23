@@ -15,7 +15,7 @@ public class PlayerExcuteShotState : IPlayerShotState
     public void Execute()
     {
         player.weaponCenter.SettingTarget();
-        player.weaponCenter.Shoot();
+        player.weaponCenter.ExcuteShoot();
         if (Input.GetButtonUp("Fire1"))
         {
             stateMachine.ChangeState(PlayerShotStateEnums.EXIT);
@@ -25,6 +25,7 @@ public class PlayerExcuteShotState : IPlayerShotState
 
     public void OnStateEnter()
     {
+        
     }
 
     public void OnStateExit()

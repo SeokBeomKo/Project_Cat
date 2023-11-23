@@ -255,7 +255,7 @@ Camera:
     height: 1
   near clip plane: 0.001
   far clip plane: 5000
-  field of view: 40
+  field of view: 55
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -1414,6 +1414,10 @@ PrefabInstance:
     - target: {fileID: 8376252859883388664, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8794248724834909597, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
+      propertyPath: shootDelay
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8794248724834909597, guid: c105328a1a010456a9552d6b058a2e06, type: 3}
       propertyPath: projectileForce
@@ -3569,7 +3573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &615319672
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4296,7 +4300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &786437330
 Transform:
   m_ObjectHideFlags: 0
@@ -4444,7 +4448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &842348756
 Transform:
   m_ObjectHideFlags: 0
@@ -5542,7 +5546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1257875981
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6154,7 +6158,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 930958911}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 55
     OrthographicSize: 10
     NearClipPlane: 0.001
     FarClipPlane: 5000
@@ -7769,7 +7773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1611302416
 Transform:
   m_ObjectHideFlags: 0
@@ -9280,6 +9284,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   jumpDirection: {x: 0, y: 0, z: 0}
   rollDirection: {x: 0, y: 0, z: 0}
+  addMoveSpeed: 5
 --- !u!136 &1720086431
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10134,7 +10139,7 @@ GameObject:
   - component: {fileID: 1915918043}
   - component: {fileID: 1915918042}
   - component: {fileID: 1915918041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Finish
   m_Icon: {fileID: 0}

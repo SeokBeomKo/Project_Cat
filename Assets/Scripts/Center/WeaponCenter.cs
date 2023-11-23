@@ -46,8 +46,22 @@ public class WeaponCenter : MonoBehaviour
         curWeapon.SetTarget(targetPoint);
     }
 
+    public void EnterShoot()
+    {
+        curWeapon.EnterShoot();
+    }
+
+    public void ExcuteShoot()
+    {
+        curWeapon.ExcuteShoot();
+    }
+
+    public void ExitShoot()
+    {
+        curWeapon.ExitShoot();
+    }
+
     public void Shoot()
     {
-        curWeapon.Shoot();
     }
 }

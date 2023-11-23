@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    void EnterShot();
-    void ExcuteShot();
-    void ExitShot();
+    void EnterShoot();
+    void ExcuteShoot();
+    void ExitShoot();
 
     void Shoot();
 
