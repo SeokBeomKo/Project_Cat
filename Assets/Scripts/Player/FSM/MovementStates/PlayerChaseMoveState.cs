@@ -24,7 +24,7 @@ public class PlayerChaseMoveState : IPlayerState
     {
         if (!player.CheckGrounded())
         {
-            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.FALL);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.CHASE_FALL);
             return;
         }
 
@@ -33,7 +33,7 @@ public class PlayerChaseMoveState : IPlayerState
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
+            stateMachine.ChangeStateLogic(PlayerMovementStateEnums.CHASE_IDLE);
             return;
         }
 
