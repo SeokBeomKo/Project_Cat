@@ -7,14 +7,14 @@ public class VirusStaticOperation : MonoBehaviour
     public int HP = 5;
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") || collision.gameObject.CompareTag("Ball"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            HP--;
+            HP--; 
+        }
 
-            if(HP==0)
-            {
-                transform.parent.gameObject.SetActive(false);
-            }
+        if(collision.gameObject.CompareTag("Ball"))
+        {
+            HP = 0;
         }
 
         if(collision.gameObject.CompareTag("Player"))
@@ -25,6 +25,9 @@ public class VirusStaticOperation : MonoBehaviour
 
     private void Update()
     {
-        
+        if (HP == 0)
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
     }
 }
