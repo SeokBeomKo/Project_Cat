@@ -6,8 +6,11 @@ public class Test : MonoBehaviour
 {
     public GameObject Door;
     private bool isDoorOpen = false;
-    public float rotationSpeed = 30.0f; // 초당 회전 각도
     private float angle = 0;
+
+    private void Start()
+    {
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
