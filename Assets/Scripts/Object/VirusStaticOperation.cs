@@ -5,19 +5,23 @@ using UnityEngine;
 public class VirusStaticOperation : MonoBehaviour
 {
     public int HP = 5;
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            HP--; 
+            HP--;
         }
 
-        if(collision.gameObject.CompareTag("Ball"))
+       
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
         {
             HP = 0;
         }
-
-        if(collision.gameObject.CompareTag("Player"))
+        else if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player HP--");
         }

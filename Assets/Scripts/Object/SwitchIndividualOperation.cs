@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SwitchIndividualOperation : SwitchesOperation
 {
-    public int IndividualIndex = 0;
+    public int IndividualIndex;
     public GameObject Switchbone;
     private bool isSwitchOn = false;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
             this[IndividualIndex] = !this[IndividualIndex];
             isSwitchOn = !isSwitchOn;
@@ -29,7 +29,7 @@ public class SwitchIndividualOperation : SwitchesOperation
         }
     }
 
-    // Test }
+    // Test 
     void Update()
     {
         // 키패드에서 1번 키를 입력받으면 OnKeyPressed 메서드 호출

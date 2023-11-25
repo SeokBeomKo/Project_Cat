@@ -44,7 +44,6 @@ public class CCTVOperation : MonoBehaviour
     {
         angle++;
 
-        Debug.Log(angle);
         if(angle > 0)
         {
             isDoorClose = false;
