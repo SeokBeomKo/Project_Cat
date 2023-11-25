@@ -11,13 +11,18 @@ public class ItemWheel : MonoBehaviour
     public GameObject itemMenu; // 아이템 휠 메뉴
     bool isMenuActive; // 메뉴의 활성 상태
 
+    
     public TextMeshProUGUI itemName; // 아이템 이름
     public TextMeshProUGUI itemExplanation; // 아이템 설명
-
+    
+    [Header("아이템 이름")]
     public string[] itemNameArray;
+    [Header("아이템 설명")]
     public string[] itemExplanationArray;
 
+    [Header("아이템 이미지")]
     public Transform[] itemSlotArray; // 아이템 이미지 확대
+    [Header("운동에너지 아이템 이미지")]
     public Transform[] energySlotArray; // 운동에너지 이미지 확대
 
     public Transform itemMin, itemMax; // 아이템 휠 원 경계
@@ -29,8 +34,8 @@ public class ItemWheel : MonoBehaviour
     public GameObject selectEnergyLeft;
     public GameObject selectEnergyRight;
 
-    public TextMeshProUGUI moveSpeed; // 이동속도 설명
-    public TextMeshProUGUI attackSpeed; // 공격속도 설명
+    public TextMeshProUGUI moveSpeed; 
+    public TextMeshProUGUI attackSpeed; 
 
     bool hasRightMouseClicked = false;
 

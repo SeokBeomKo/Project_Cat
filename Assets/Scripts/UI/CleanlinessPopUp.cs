@@ -5,7 +5,7 @@ using TMPro;
 
 public class CleanlinessPopUp : MonoBehaviour
 {
-
+    // ÆË¾÷ Ã¢
     public GameObject popUp;
 
     // ÆË¾÷ Ã¢ ÅØ½ºÆ®
@@ -24,16 +24,18 @@ public class CleanlinessPopUp : MonoBehaviour
 
     void Update()
     {
-        popUp.SetActive(false);
+        //popUp.SetActive(false);
 
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             popUp.SetActive(true);
         }
+        if(Input.GetKeyUp(KeyCode.Tab))
+        {
+            popUp.SetActive(false);
+        }
 
     }
-
-    public float a = 1f;
 
     public void CleanCat(CleanEnums parts,  float cleanliness)
     {
