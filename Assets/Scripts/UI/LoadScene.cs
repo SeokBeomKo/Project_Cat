@@ -13,6 +13,7 @@ public class LoadScene : MonoBehaviour
         fade.FadeIn();
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(sceneName);
+        //SoundManager.Instance.StopBGM();
     }
 
     void OnTriggerEnter(Collider other)

@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : Singleton<ObjectPool>
+public class ObjectPoolManager : Singleton<ObjectPoolManager>
 {
     // 풀에 대한 데이터를 담고 있는 클래스
+    [System.Serializable]
     public class Pool 
     {
         public string tag;          // 풀에 대한 고유 태그

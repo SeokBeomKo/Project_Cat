@@ -17,6 +17,7 @@ public class InteractiveKey : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             interactiveImage.SetActive(true);
+            SoundManager.Instance.PlaySFX("BlockHit");
         }
     }
 

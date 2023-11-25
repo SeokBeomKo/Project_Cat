@@ -42,7 +42,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if (Instance != null && Equals(Instance, this))
+        if (!Application.isPlaying && Instance != null && Equals(Instance, this))
         {
             _instance = null;
         }
