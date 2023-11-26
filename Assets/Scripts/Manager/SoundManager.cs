@@ -13,11 +13,13 @@ public class SoundManager : Singleton<SoundManager>
         public AudioClip audioClip; 
     }
 
+
     public Sound[] bgmList, sfxList;
     public AudioSource bgmSource, sfxSource;
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -25,12 +27,12 @@ public class SoundManager : Singleton<SoundManager>
     {
         StopBGM();
 
-        for(int i = 0; i < bgmList.Length; i++)
+        for (int i = 0; i < bgmList.Length; i++)
         {
             if (scene.name == bgmList[i].soundName)
                 PlayBGM(bgmList[i].soundName);
             else
-                Debug.Log(bgmList[i].soundName + "찾을 수 없음");
+                continue;
         }
     }    
 
@@ -44,9 +46,16 @@ public class SoundManager : Singleton<SoundManager>
         }
         else
         {
-            bgmSource.clip = bgmSound.audioClip;
-            bgmSource.loop = true;
-            bgmSource.Play();
+            if (bgmSource != null)
+            {
+                bgmSource.clip = bgmSound.audioClip;
+                bgmSource.loop = true;
+                bgmSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("bgmSource가 null입니다. AudioSource 컴포넌트를 확인해주세요.");
+            }
         }
     }
 
