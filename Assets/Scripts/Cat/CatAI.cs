@@ -226,6 +226,7 @@ namespace BehaviorTree
                 Vector3 chargeAttackPosition = new Vector3(chargeAttackrPosition.x, transform.parent.position.y, chargeAttackrPosition.z);
                 transform.parent.position = chargeAttackPosition;
 
+                Debug.Log("돌진 공격");
                 return Node.NodeState.SUCCESS;
             }
 
@@ -237,6 +238,7 @@ namespace BehaviorTree
             randomNumber = Random.Range(0f, 1.0f);
             if (playerTransform != null && randomNumber > 0.3f)
             {
+                Debug.Log("근접 기본 공격");
                 animator.SetTrigger("attack");
                 isAttacking = true;
                 isAttackComplete = false;
@@ -250,6 +252,7 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
+                Debug.Log("근접 암전 공격");
                 animator.SetTrigger("attack");
                 isAttacking = true;
                 isAttackComplete = false;
@@ -301,6 +304,7 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
+                Debug.Log("특수 파동 공격");
                 waveCollider.SetActive(true);
                 timer = 0f;
 
