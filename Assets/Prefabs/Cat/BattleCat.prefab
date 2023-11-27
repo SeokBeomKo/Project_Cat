@@ -158,7 +158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1616245281
 Transform:
   m_ObjectHideFlags: 0
@@ -204,7 +204,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1631778884}
   - component: {fileID: 1631778883}
-  m_Layer: 0
+  - component: {fileID: 793963346}
+  m_Layer: 8
   m_Name: HitBox
   m_TagString: HitBox
   m_Icon: {fileID: 0}
@@ -241,6 +242,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &793963346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631778882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96eeb779997e80d4885e783c73813261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1791729391
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1791729392}
   - component: {fileID: 1791729393}
+  - component: {fileID: 1949332291}
   m_Layer: 0
   m_Name: SafeBox
   m_TagString: SafeBox
@@ -288,6 +302,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1949332291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791729391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e431478e19639498d7e6f0864f246c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2000235161
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +325,7 @@ GameObject:
   - component: {fileID: 2000235162}
   - component: {fileID: 2000235164}
   - component: {fileID: 2000235163}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
