@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class VirusStaticOperation : MonoBehaviour
 {
-    public int HP = 5;
+    public float HP = 5;
+    public ObjectHPbar objectHPbar;
+
+    void Start()
+    {
+        objectHPbar.SetHP(HP);
+        objectHPbar.ChechHP();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            HP--;
-        }
-
-       
+            objectHPbar.Demage(1);
+            HP = objectHPbar.GetHP();
+        } 
     }
 
     private void OnCollisionEnter(Collision collision)
