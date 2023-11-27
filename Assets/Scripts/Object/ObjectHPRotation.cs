@@ -9,20 +9,10 @@ public class ObjectHPRotation : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
-        {
-            // 플레이어를 정면으로 향한 벡터를 얻음
-            Vector3 directionToPlayer = player.position - transform.position;
-            directionToPlayer.y = 0f;  // Y 축 값을 0으로 설정하여 수직 회전을 방지
+        // 캔버스가 카메라를 바라보게 함
+        transform.LookAt(Camera.main.transform.position);
 
-            // 플레이어 정면 방향으로만 회전
-            Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
-            
-        }
-        else
-        {
-            Debug.LogError("Player reference is not set. Please assign the player GameObject to the script.");
-        }
+        // 캔버스가 카메라를 정확히 바라보게 하기 위해 회전 값을 반전
+        transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
     }
 }
