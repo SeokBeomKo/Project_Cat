@@ -12,8 +12,8 @@ public class SoapRifle : Weapon
     public GameObject projectilePrefab; // 발사체 프리팹
     public GameObject chargePrefab;     // 차지 프리팹
 
-    [Header("진행 방향")]
-    private Vector3 shootDirection;
+    [Header("목표뮬")]
+    private Vector3 shootTarget;
 
     public float bulletSpeed = 20f;
     public float distance = 10f;
@@ -45,7 +45,7 @@ public class SoapRifle : Weapon
 
     public override void SetTarget(Vector3 direction)
     {
-        shootDirection = direction;
+        shootTarget = direction;
     }
 
     public override void Shoot()
@@ -67,6 +67,6 @@ public class SoapRifle : Weapon
         }
 
         SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
-        projectile.ShootBeamInDir(shootPosition.position, shootDirection);
+        projectile.ShootBeamInDir(shootPosition.position, shootTarget);
     }
 }

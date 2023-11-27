@@ -23,7 +23,9 @@ public class SoapProjectile : MonoBehaviour
 
     public void Explosion()
     {
-        Destroy(transform.gameObject);
+        beam.SetActive(false);
+
+        // StartCoroutine(CheckExit());
     }
 
     private void Update() 
@@ -31,7 +33,20 @@ public class SoapProjectile : MonoBehaviour
         ScrollBeam();
     }
 
-    public void ShootBeamInDir(Vector3 start, Vector3 dir)
+    private IEnumerator CheckExit()
+    {
+        ParticleSystem ps = beamStart.GetComponent<ParticleSystem>();
+        ParticleSystem ps2 = beamEnd.GetComponent<ParticleSystem>();
+    
+        while (ps2.IsAlive() && ps.IsAlive())
+        {
+            yield return null;
+        }
+
+        Destroy(transform.gameObject);
+    }
+
+    public void ShootBeamInDir(Vector3 start, Vector3 target)
     {
         startPoint = start;
         line.SetPosition(0, start);
@@ -39,16 +54,25 @@ public class SoapProjectile : MonoBehaviour
 
         Vector3 end = Vector3.zero;
         RaycastHit hit;
-        if (Physics.Raycast(start, dir, out hit))
-            endPoint = end = hit.point - (dir.normalized);
-        else
-            endPoint = end = transform.position + (dir * 100);
+        if (Physics.Raycast(start, target - start, out hit))
+        {
+            beamEnd.transform.position = endPoint = end = hit.point;
 
-        beamEnd.transform.position = dir;
-        line.SetPosition(1, dir);
+            // 충돌한 오브젝트의 정면을 바라봅니다.
+            Debug.Log(hit.transform.gameObject.name);
+            Debug.Log(hit.normal);
+            // beamEnd.transform.rotation = Quaternion.LookRotation(hit.normal);
+            beamEnd.transform.LookAt(beamEnd.transform.position + hit.normal);
+        }
+        else
+        {
+            Debug.Log("else");
+            beamEnd.transform.position = endPoint = end = target;
+        }
+
+        line.SetPosition(1, target);
 
         beamStart.transform.LookAt(beamEnd.transform.position);
-        beamEnd.transform.LookAt(beamStart.transform.position);
     }
 
     private void ScrollBeam()
