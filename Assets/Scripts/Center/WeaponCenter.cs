@@ -38,7 +38,12 @@ public class WeaponCenter : MonoBehaviour
         Ray ray = activeCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
         RaycastHit hit;
         Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
+        // "PlayerAttack" 레이어의 LayerMask를 구합니다.
+        int playerAttackLayer = LayerMask.NameToLayer("PlayerAttack");
+        // 모든 레이어를 대상으로 하되 "PlayerAttack" 레이어는 제외합니다.
+        int layerMask = ~(1 << playerAttackLayer);
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             targetPoint = hit.point; // 레이가 부딪힌 위치를 타겟 포인트로 설정합니다.
         else
             targetPoint = ray.GetPoint(50); // 레이가 부딪히지 않았다면, 일정 거리를 타겟 포인트로 설정합니다.
@@ -48,20 +53,19 @@ public class WeaponCenter : MonoBehaviour
 
     public void EnterShoot()
     {
+        SettingTarget();
         curWeapon.EnterShoot();
     }
 
     public void ExcuteShoot()
     {
+        SettingTarget();
         curWeapon.ExcuteShoot();
     }
 
     public void ExitShoot()
     {
+        SettingTarget();
         curWeapon.ExitShoot();
-    }
-
-    public void Shoot()
-    {
     }
 }
