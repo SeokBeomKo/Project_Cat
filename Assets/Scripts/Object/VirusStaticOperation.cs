@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VirusStaticOperation : MonoBehaviour
+public class VirusStaticOperation : MonoBehaviour, IDamageable
 {
     // TODO : 옵저버 패턴 .
     public float HP = 5;
@@ -22,9 +22,7 @@ public class VirusStaticOperation : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            objectHPbar.Demage(1);
-            HP = objectHPbar.GetHP();
-            Check();
+            Hit();
         } 
     }
 
@@ -39,6 +37,13 @@ public class VirusStaticOperation : MonoBehaviour
         {
             Debug.Log("Player HP--");
         }
+    }
+
+    private void Hit()
+    {
+        objectHPbar.Demage(1);
+        HP = objectHPbar.GetHP();
+        Check();
     }
 
     private void Check()
@@ -62,5 +67,10 @@ public class VirusStaticOperation : MonoBehaviour
         }
     
         Destroy(transform.parent.gameObject);
+    }
+
+    public void BeAttacked()
+    {
+        Hit();
     }
 }
