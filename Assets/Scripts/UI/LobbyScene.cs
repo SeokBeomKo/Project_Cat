@@ -13,11 +13,14 @@ public class LobbyScene : MonoBehaviour
     [Header("설정창")]
     public GameObject settingPopUp;
 
+    public CanvasGroup canvas;
+
     private void Start()
     {
         settingPopUp.SetActive(false);
     }
 
+    // 버튼 이벤트
     public void OnClickStart()
     {
         SceneManager.LoadScene(sceneName);
@@ -26,6 +29,9 @@ public class LobbyScene : MonoBehaviour
     public void OnClickSetting()
     {
         settingPopUp.SetActive(true);
+        Time.timeScale = 0f;
+
+        canvas.blocksRaycasts = false;
     }
 
     public void OnClickExit()
@@ -35,6 +41,14 @@ public class LobbyScene : MonoBehaviour
 #else
         Application.Quit(); 
 #endif
+    }
+
+    public void ClosePopUp()
+    {
+        settingPopUp.SetActive(false);
+        Time.timeScale = 1f;
+
+        canvas.blocksRaycasts = true;
     }
 }
 

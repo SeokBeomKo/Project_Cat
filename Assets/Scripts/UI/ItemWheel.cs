@@ -51,6 +51,8 @@ public class ItemWheel : MonoBehaviour
 
     void Update()
     {
+        if (PlayerPrefs.GetInt("Pause") == 1) return;
+
         if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
         {
             isMenuActive = !isMenuActive;

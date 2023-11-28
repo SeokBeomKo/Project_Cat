@@ -18,23 +18,12 @@ public class SoundCenter : MonoBehaviour
     public TextMeshProUGUI bgmTxt;
     public TextMeshProUGUI sfxTxt;
 
-    public GameObject soundSetting;
-
     private void Awake()
     {
         InitValue();
         InitToggle();
-    }
 
-    private void Update()
-    {
-        if (soundSetting.activeSelf)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                soundSetting.SetActive(false);
-            }
-        }
+        PlayerPrefs.SetInt("Pause", 0);
     }
 
     public void InitValue()
@@ -72,10 +61,6 @@ public class SoundCenter : MonoBehaviour
         sfxTxt.text = curPercent.ToString();
     }
 
-    public void ClosePopUp()
-    {
-        soundSetting.SetActive(false);
-    }
 
     public void ToggleMaster()
     {
@@ -99,4 +84,5 @@ public class SoundCenter : MonoBehaviour
 
         sfxButton.gameObject.SetActive(PlayerPrefs.GetInt("isSFXOn") == 1);
     }
+
 }

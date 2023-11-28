@@ -26,6 +26,8 @@ public class CleanlinessPopUp : MonoBehaviour
     {
         //popUp.SetActive(false);
 
+        if (PlayerPrefs.GetInt("Pause") == 1) return;
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             popUp.SetActive(true);

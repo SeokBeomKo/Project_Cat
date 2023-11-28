@@ -161,7 +161,6 @@ MonoBehaviour:
   masterTxt: {fileID: 1293963983}
   bgmTxt: {fileID: 1293963982}
   sfxTxt: {fileID: 1293963981}
-  soundSetting: {fileID: 1293963989}
 --- !u!4 &14835134
 Transform:
   m_ObjectHideFlags: 0
@@ -311,6 +310,11 @@ CapsuleCollider:
   m_Height: 0.9
   m_Direction: 1
   m_Center: {x: 0, y: 1.35, z: 0}
+--- !u!1 &144943546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 265373259627370836, guid: 041034234979093408ee81077bc86f11, type: 3}
+  m_PrefabInstance: {fileID: 1293963975}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &169813117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1608,6 +1612,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &469896862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1040387894034188721, guid: 041034234979093408ee81077bc86f11, type: 3}
+  m_PrefabInstance: {fileID: 1293963975}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &469896863
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469896862}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &491803282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1772,6 +1793,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2debaa37fafe68c4290326bd71b4926b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausePopUp: {fileID: 1299729821}
+  cameraRotate: {fileID: 657943387}
+  inputHandle: {fileID: 2092857102}
   playerStats: {fileID: 230927949}
   hpObserver: {fileID: 1293963979}
   rollObserver: {fileID: 1293963978}
@@ -2978,6 +3002,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2583092884764189553, guid: 041034234979093408ee81077bc86f11, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 469896863}
+    - target: {fileID: 2583092884764189553, guid: 041034234979093408ee81077bc86f11, type: 3}
+      propertyPath: pausePopUp
+      value: 
+      objectReference: {fileID: 144943546}
     - target: {fileID: 2658545283615759387, guid: 041034234979093408ee81077bc86f11, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3193,10 +3225,14 @@ PrefabInstance:
     - target: {fileID: 5190599539568210177, guid: 041034234979093408ee81077bc86f11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 14835133}
+      objectReference: {fileID: 1299729821}
     - target: {fileID: 5190599539568210177, guid: 041034234979093408ee81077bc86f11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ClosePopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190599539568210177, guid: 041034234979093408ee81077bc86f11, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PausePopUp, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5190599539600372166, guid: 041034234979093408ee81077bc86f11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3639,11 +3675,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1293963989 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5190599538730265806, guid: 041034234979093408ee81077bc86f11, type: 3}
+--- !u!114 &1299729821 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2583092884764189553, guid: 041034234979093408ee81077bc86f11, type: 3}
   m_PrefabInstance: {fileID: 1293963975}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2625d2dd5dcb2a4ca190e898a78f721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1306353064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6616799150057516709, guid: 1038a98f16ed99d4a9fd5de120bf18e8, type: 3}
@@ -5797,7 +5839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8211913024773823173, guid: a6253dc85b2f54dc0825d4c25fa4f1c8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8211913024773823182, guid: a6253dc85b2f54dc0825d4c25fa4f1c8, type: 3}
       propertyPath: m_RootOrder
