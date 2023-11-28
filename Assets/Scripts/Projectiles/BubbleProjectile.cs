@@ -9,7 +9,7 @@ public class BubbleProjectile : MonoBehaviour
     [Header("프리팹")]
     public GameObject projectile;
     public GameObject explosion;
-    
+
     [Header("리지드바디")]
     public Rigidbody rigidBody;
 
@@ -17,6 +17,7 @@ public class BubbleProjectile : MonoBehaviour
     public Vector3 directionPosition;
     private Vector3 targetDirection;
 
+    [Header("수치 값")]
     public float maxSpeed;
 
     private void OnEnable() 

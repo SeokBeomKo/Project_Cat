@@ -11,9 +11,43 @@ public class SplashProjectile : MonoBehaviour
     [Header("리지드바디")]
     public Rigidbody rigidBody;
 
+    [Header("방향 정보")]
+    public Vector3 directionPosition;
+    private Vector3 targetDirection;
+
+    [Header("수치 값")]
+    public float maxSpeed;
+
     private void OnEnable() 
     {
         Invoke("Explosion", 5f);
+    }
+
+    public void SetDirection(Vector3 direction)
+    {
+        directionPosition = direction;
+    }
+
+    private void FixedUpdate() 
+    {
+        //targetDirection = (directionPosition - transform.position).normalized;
+        rigidBody.velocity = directionPosition * maxSpeed;
+        //SpeedContoll();
+    }
+
+    public void SpeedContoll()
+    {
+        Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+
+        if (flatVel.magnitude > maxSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * maxSpeed;
+            rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z);
+        }
+        else
+        {
+            rigidBody.AddForce(targetDirection * maxSpeed, ForceMode.Force);
+        }
     }
 
     public void Explosion()

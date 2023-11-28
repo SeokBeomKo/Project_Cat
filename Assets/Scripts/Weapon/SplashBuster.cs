@@ -16,55 +16,58 @@ public class SplashBuster : Weapon
     [Header("목표뮬")]
     private Vector3 shootTarget;
 
+    [Header("발사 딜레이")]
+    public float shootDelay;
+    private float curShootTime;
+
     public override void EnterShoot()
     {
-        FireFlash();
-        for (int i = 0; i < bulletCount; i++)
-        {
-            Vector3 spread = Random.insideUnitCircle * spreadAngle;
-            // 총구 위치에서 타겟 포인트를 향하는 방향을 계산합니다.
-            Vector3 fireDirection = Quaternion.Euler(spread) * (shootTarget - shootPosition.position).normalized;
-
-            // 총알을 발사합니다.
-            GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.LookRotation(fireDirection));
-            bullet.transform.LookAt(shootTarget);
-            // bullet.GetComponent<Rigidbody>().velocity = fireDirection * bulletSpeed;
-        }
+        curShootTime = 0;
     }
+
     public override void ExcuteShoot()
     {
-        
+        curShootTime -= Time.deltaTime;
+        if (curShootTime <= 0)
+        {
+            curShootTime = shootDelay;
+            Shoot();
+        }
     }
+
     public override void ExitShoot()
     {
         
     }
 
-    public override void SetTarget(Vector3 direction)
+    public override void SetTarget(Vector3 target)
     {
-        shootTarget = direction;
+        shootTarget = target;
     }
 
     public override void Shoot()
     {
-        
+        Flash();
+        Fire();
     }
-    public void FireFlash()
+
+    public void Flash()
     {
         Instantiate(splashPrefab, shootPosition.position,Quaternion.LookRotation(shootTarget));
     }
 
-    public void Fire(Vector3 direction)
+    public void Fire()
     {
         for (int i = 0; i < bulletCount; i++)
         {
-            Vector3 spread = Random.insideUnitCircle * spreadAngle;
+            Vector3 spread = Random.insideUnitSphere * spreadAngle;
             // 총구 위치에서 타겟 포인트를 향하는 방향을 계산합니다.
-            Vector3 fireDirection = Quaternion.Euler(spread) * (direction - shootPosition.position).normalized;
+            Vector3 fireDirection = Quaternion.Euler(spread) * (shootTarget - shootPosition.position).normalized;
 
             // 총알을 발사합니다.
-            // GameObject bullet = Instantiate(bulletPrefab, shootPosition.position, Quaternion.LookRotation(fireDirection));
-            // bullet.GetComponent<Rigidbody>().velocity = fireDirection * bulletSpeed;
+            GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.LookRotation(fireDirection));
+            bullet.transform.LookAt(fireDirection);
+            bullet.GetComponentInChildren<SplashProjectile>().SetDirection(fireDirection);
         }
     }
 

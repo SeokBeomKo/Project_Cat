@@ -66,7 +66,6 @@ public class SoapProjectile : MonoBehaviour
         }
         else
         {
-            Debug.Log("else");
             beamEnd.transform.position = endPoint = end = target;
         }
 
