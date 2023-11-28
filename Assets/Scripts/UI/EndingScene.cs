@@ -24,6 +24,7 @@ public class EndingScene : MonoBehaviour
     {
         StartCoroutine(Typing());
         button.SetActive(false);
+        SoundManager.Instance.PlaySFX("BadEnd");
     }
 
     IEnumerator Typing()

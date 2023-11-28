@@ -47,9 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmList:
+  - soundName: HanKyeol_Lobby
+    audioClip: {fileID: 8300000, guid: bcdace4fa050617438fdffd073fb49c3, type: 3}
   - soundName: HanKyeol_HUD_1.Searching
-    audioClip: {fileID: 8300000, guid: a436bf1cf71e13e4a918f2e3b3abdaf6, type: 3}
+    audioClip: {fileID: 8300000, guid: 68f6f8eacf0ea0b4993fccfcbc6e7dfa, type: 3}
   - soundName: HanKyeol_HUD_2.Chase
+    audioClip: {fileID: 8300000, guid: a436bf1cf71e13e4a918f2e3b3abdaf6, type: 3}
+  - soundName: HanKyeol_HUD_3.Washing
     audioClip: {fileID: 8300000, guid: 4edaf742bad25314d81f136c3f24e8ef, type: 3}
   sfxList:
   - soundName: GameStart
@@ -60,6 +64,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: dd3942cd04c6b2b4f88abac9270b1308, type: 3}
   bgmSource: {fileID: 8308110340460530107}
   sfxSource: {fileID: 8308110340832057967}
+  mixer: {fileID: 24100000, guid: da6a8181aeee6ea48ad03576f8e6a504, type: 2}
 --- !u!1 &8308110340460530109
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +106,7 @@ AudioSource:
   m_GameObject: {fileID: 8308110340460530109}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4254321965864426343, guid: da6a8181aeee6ea48ad03576f8e6a504, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -229,7 +234,7 @@ AudioSource:
   m_GameObject: {fileID: 8308110340832057873}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2703045410980877487, guid: da6a8181aeee6ea48ad03576f8e6a504, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

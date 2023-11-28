@@ -26,6 +26,17 @@ public class SoundCenter : MonoBehaviour
         InitToggle();
     }
 
+    private void Update()
+    {
+        if (soundSetting.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                soundSetting.SetActive(false);
+            }
+        }
+    }
+
     public void InitValue()
     {
         masterSlider.value = PlayerPrefs.GetFloat("Master");

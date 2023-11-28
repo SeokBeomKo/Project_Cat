@@ -10,6 +10,14 @@ public class LobbyScene : MonoBehaviour
     [Header("이동할 씬 이름")]
     public string sceneName;
 
+    [Header("설정창")]
+    public GameObject settingPopUp;
+
+    private void Start()
+    {
+        settingPopUp.SetActive(false);
+    }
+
     public void OnClickStart()
     {
         SceneManager.LoadScene(sceneName);
@@ -17,7 +25,7 @@ public class LobbyScene : MonoBehaviour
 
     public void OnClickSetting()
     {
-        Debug.Log("세팅");
+        settingPopUp.SetActive(true);
     }
 
     public void OnClickExit()
