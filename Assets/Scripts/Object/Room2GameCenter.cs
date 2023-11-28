@@ -35,10 +35,6 @@ public class Room2GameCenter : MonoBehaviour
             isDoorOpen = value;
         }
     }
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
