@@ -11,8 +11,10 @@ public class HitObserver : MonoBehaviour, IObserver
     public void Notify(ISubject subject)
     {
         var safeSubject = subject as SafeSubject;
-
-        safeCheck = safeSubject.safeCheck;
+        if (safeSubject != null)
+        {
+            safeCheck = safeSubject.safeCheck;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -20,7 +22,10 @@ public class HitObserver : MonoBehaviour, IObserver
         if (other.CompareTag("Player") && safeCheck == false)
         {
             Debug.Log("파동 공격");
-            playerStats.GetDamage(10);
+            if (playerStats != null)
+            {
+                playerStats.GetDamage(10);
+            }
         }
     }
 }

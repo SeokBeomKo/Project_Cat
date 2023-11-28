@@ -25,6 +25,9 @@ namespace BehaviorTree
         [Header("파동 공격 출력 시간")]
         public float waveAttackTime = 15f;
 
+        [Header("근접공격이펙트")]
+        public ParticleSystem meleeParticle;
+
         [Header("속도")]
         [SerializeField]
         private float movementSpeed = 10.0f;
@@ -239,6 +242,7 @@ namespace BehaviorTree
             if (playerTransform != null && randomNumber > 0.3f)
             {
                 Debug.Log("근접 기본 공격");
+                meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
                 isAttackComplete = false;
@@ -253,6 +257,7 @@ namespace BehaviorTree
             if (playerTransform != null)
             {
                 Debug.Log("근접 암전 공격");
+                meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
                 isAttackComplete = false;
