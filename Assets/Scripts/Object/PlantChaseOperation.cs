@@ -4,48 +4,96 @@ using UnityEngine;
 
 public class PlantChaseOperation : MonoBehaviour
 {
+    public GameObject Wall;
+
     public float rotationSpeed = 5f;
     public float moveSpeed = 2f;
 
+    private bool isRotation = false;
+    private bool isFalling = false;
     private bool isRolling = false;
-    private float angle;
 
+    public Vector3 forceDirection;
+    public float forceMagnitude = 10.0f;
+
+    private Rigidbody plantRigidbody;
+
+    private void Start()
+    {
+        plantRigidbody = GetComponent<Rigidbody>();
+
+        plantRigidbody.useGravity = false;
+        plantRigidbody.isKinematic = true;
+
+    }
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.gameObject.tag);
-        if(collision.gameObject.CompareTag("ChaseRoad"))
+
+        if(collision.gameObject.CompareTag("Ball")) // 몬스터
+        {
+            isRotation = true;
+        }
+        if (collision.gameObject.CompareTag("ChaseRoad"))
         {
             Debug.Log("바닥이랑 충돌");
-
+            isFalling = false;
             isRolling = true;
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log("Player HP --");
         }
     }
 
     private void Update()
     {
-        if(isRolling)
+        if(isRotation)
+        {
+            PlantRotate();
+        }
+
+        if(isFalling)
+        {
+            PlantFall();
+        }
+
+        if (isRolling)
         {
             PlantRoll();
         }
     }
 
-    private void PlantRoll()
+    
+
+    private void PlantRotate()
     {
-        angle++;
-        if(angle==360)
+        float zRotation = transform.eulerAngles.z + rotationSpeed * Time.deltaTime;
+
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, zRotation);
+        if (zRotation > 90)
         {
-            angle = 0;
+            plantRigidbody.useGravity = true;
+            plantRigidbody.isKinematic = false;
+            isRotation = false;
+            isFalling = true;
         }
-        //Debug.Log("angle : " + angle);
-        //transform.parent.rotation = Quaternion.Euler(0, angle, 0);
-        //transform.parent.position += new Vector3(0, 0, -1f) * Time.deltaTime;
 
-       
-        // y축을 중심으로 회전
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-
-        // 플레이어 방향으로 이동
-        //transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
     }
 
+    private void PlantFall()
+    {
+        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+    }
+        private void PlantRoll()
+    {
+
+        forceDirection = Wall.transform.position - transform.position;
+        forceDirection.y = 0;
+        forceDirection.x = 0;
+
+        plantRigidbody.AddForce(forceDirection * forceMagnitude);
+    }
 }
