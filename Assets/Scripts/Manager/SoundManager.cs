@@ -99,11 +99,13 @@ public class SoundManager : Singleton<SoundManager>
             bgmSource.Stop();
     }
     
+    // 0 : 재생 중지 1 : 재생 시작
+
     public void ToggleMaster()
     {
         if (PlayerPrefs.GetInt("isMasterOn") == 1)
         {
-            bgmSource.mute = true;
+            bgmSource.mute = true; 
             sfxSource.mute = true;
 
             PlayerPrefs.SetInt("isMasterOn", 0);
@@ -127,13 +129,23 @@ public class SoundManager : Singleton<SoundManager>
     {
         if (PlayerPrefs.GetInt("isBGMOn") == 1)
         {
-            bgmSource.mute = true;
+            bgmSource.mute = true; 
             PlayerPrefs.SetInt("isBGMOn", 0);
+
+            if (PlayerPrefs.GetInt("isMasterOn") == 1 && PlayerPrefs.GetInt("isSFXOn") == 0)
+            {
+                PlayerPrefs.SetInt("isMasterOn", 0);
+            }
         }
-        else
+        else 
         {
-            bgmSource.mute = false;
+            bgmSource.mute = false; 
             PlayerPrefs.SetInt("isBGMOn", 1);
+
+            if (PlayerPrefs.GetInt("isMasterOn") == 0 && PlayerPrefs.GetInt("isSFXOn") == 0)
+            {
+                PlayerPrefs.SetInt("isMasterOn", 1);
+            }
         }
         
     }
@@ -144,11 +156,21 @@ public class SoundManager : Singleton<SoundManager>
         {
             sfxSource.mute = true;
             PlayerPrefs.SetInt("isSFXOn", 0);
+
+            if (PlayerPrefs.GetInt("isMasterOn") == 1 && PlayerPrefs.GetInt("isBGMOn") == 0)
+            {
+                PlayerPrefs.SetInt("isMasterOn", 0);
+            }
         }
         else
         {
             sfxSource.mute = false;
             PlayerPrefs.SetInt("isSFXOn", 1);
+
+            if (PlayerPrefs.GetInt("isMasterOn") == 0 && PlayerPrefs.GetInt("isBGMOn") == 0)
+            {
+                PlayerPrefs.SetInt("isMasterOn", 1);
+            }
         }
     }
 

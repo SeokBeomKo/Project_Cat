@@ -75,6 +75,7 @@ public class SoundCenter : MonoBehaviour
     {
         SoundManager.Instance.ToggleBGM();
 
+        masterButton.gameObject.SetActive(PlayerPrefs.GetInt("isMasterOn") == 1);
         bgmButton.gameObject.SetActive(PlayerPrefs.GetInt("isBGMOn") == 1);
     }
 
@@ -82,6 +83,7 @@ public class SoundCenter : MonoBehaviour
     {
         SoundManager.Instance.ToggleSFX();
 
+        masterButton.gameObject.SetActive(PlayerPrefs.GetInt("isMasterOn") == 1);
         sfxButton.gameObject.SetActive(PlayerPrefs.GetInt("isSFXOn") == 1);
     }
 
