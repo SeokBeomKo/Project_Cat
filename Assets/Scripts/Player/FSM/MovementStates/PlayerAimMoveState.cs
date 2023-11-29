@@ -49,6 +49,7 @@ public class PlayerAimMoveState : IPlayerState
         }
 
         player.MoveInput();
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
     }
 
     float originSpeed;
@@ -56,7 +57,7 @@ public class PlayerAimMoveState : IPlayerState
     {
         player.animator.SetBool("isMove",true);
 
-        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
+        
         player.cameraController.SetAimCamera();
         player.playerStats.FillDoubleCount();
 
