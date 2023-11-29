@@ -15,13 +15,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public Rigidbody            rigid;
 
     [Header("유한 상태 기계")]
-    [SerializeField]    public PlayerStateMachine   stateMachine;
+    [SerializeField]    public PlayerStateMachine       stateMachine;
+    [SerializeField]    public PlayerShotStateMachine   shotstateMachine;
 
     [Header("모델")]
     [SerializeField]    public Transform            model;
 
     [Header("스탯")]
-    [SerializeField]    public PlayerStats          stats;
+    [SerializeField]    public PlayerStats          playerStats;
+
+    [Header("무기")]
+    [SerializeField]    public WeaponCenter         weaponCenter;
 
     [Header("체크")]
     [HideInInspector]   public bool                 isGrounded;
@@ -38,6 +42,10 @@ public class PlayerController : MonoBehaviour
         {
             stateMachine.curState.Execute();
         }
+        if (null != shotstateMachine.curState)
+        {
+            shotstateMachine.curState.Execute();
+        }
     }
 
     private void FixedUpdate() 
@@ -52,17 +60,17 @@ public class PlayerController : MonoBehaviour
     {
         if (OnSlope()&& !exitingSlope)
         {
-            if (rigid.velocity.magnitude > stats.moveSpeed)
-                rigid.velocity = rigid.velocity.normalized * stats.moveSpeed;
+            if (rigid.velocity.magnitude > playerStats.moveSpeed)
+                rigid.velocity = rigid.velocity.normalized * playerStats.moveSpeed;
         }
 
         else
         {
             Vector3 flatVel = new Vector3(rigid.velocity.x, 0f, rigid.velocity.z);
 
-            if (flatVel.magnitude > stats.moveSpeed)
+            if (flatVel.magnitude > playerStats.moveSpeed)
             {
-                Vector3 limitedVel = flatVel.normalized * stats.moveSpeed;
+                Vector3 limitedVel = flatVel.normalized * playerStats.moveSpeed;
                 rigid.velocity = new Vector3(limitedVel.x, rigid.velocity.y, limitedVel.z);
             }
         }
@@ -72,16 +80,12 @@ public class PlayerController : MonoBehaviour
     public Vector3 jumpDirection;
     public Vector3 rollDirection;
 
-    public void AimSwitch()
-    {
-        cameraController.SwitchCamera();
-    }
-
+    public float addMoveSpeed = 5f;
     public void MoveRogic()
     {
         if (OnSlope() && !exitingSlope)
         {
-            rigid.AddForce(GetSlopeMoveDirection() * stats.moveSpeed * 20f, ForceMode.Force);
+            rigid.AddForce(GetSlopeMoveDirection() * playerStats.moveSpeed * 20f, ForceMode.Force);
 
             if (rigid.velocity.y > 0)
                 rigid.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -89,18 +93,26 @@ public class PlayerController : MonoBehaviour
 
         else if (isGrounded)
         {
-            rigid.AddForce(moveDirection.normalized * stats.moveSpeed * 5f, ForceMode.Force);
+            rigid.AddForce(moveDirection.normalized * playerStats.moveSpeed * addMoveSpeed, ForceMode.Force);
         }
         else if (!isGrounded)
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, jumpDirection.normalized, out hit, 0.1f)) return;
-            rigid.AddForce(jumpDirection.normalized * stats.moveSpeed * 5f, ForceMode.Force);
+
+            if (jumpDirection == Vector3.zero)
+            {
+                rigid.velocity = new Vector3(0,rigid.velocity.y,0);
+            }
+            else
+            {
+                rigid.AddForce(jumpDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
+            }
         }
 
         if (isRolled)
         {
-            rigid.AddForce(rollDirection.normalized * stats.rollSpeed * 10f, ForceMode.Force);
+            rigid.AddForce(rollDirection.normalized * playerStats.rollSpeed * 10f, ForceMode.Force);
         }
 
         rigid.useGravity = !OnSlope();
@@ -113,11 +125,35 @@ public class PlayerController : MonoBehaviour
         moveDirection = transform.rotation * moveDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
+    private Vector3 previousDirection;
+    public void ChaseMoveInput()
+    {
+        Vector3 currentDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        transform.parent.LookAt(transform.parent.position + currentDirection);
+
+        // 이전 프레임의 방향과 현재 프레임의 방향이 다르면 방향 전환으로 간주
+        if (currentDirection != previousDirection)
+        {
+            // 방향 전환 시 캐릭터의 수평 속도를 0으로 만듭니다.
+            rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+        }
+
+        moveDirection = transform.parent.forward;
+
+        // 현재 프레임의 방향을 저장
+        previousDirection = currentDirection;
+    }
+
     public void JumpInput()
     {
         jumpDirection = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
 
         jumpDirection = transform.rotation * jumpDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
+    }
+
+    public void ResetJumpInput()
+    {
+        jumpDirection = Vector3.zero;
     }
 
     public void RollInput()
@@ -132,14 +168,14 @@ public class PlayerController : MonoBehaviour
         exitingSlope = true;
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
-        rigid.AddForce(transform.up * stats.jumpForce, ForceMode.Impulse);
+        rigid.AddForce(transform.up * playerStats.jumpForce, ForceMode.Impulse);
     }
 
     public void DoubleJump()
     {
         rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
         
-        rigid.AddForce(transform.up * stats.jumpForce * 1.5f, ForceMode.Impulse);
+        rigid.AddForce(transform.up * playerStats.jumpForce * 1.5f, ForceMode.Impulse);
     }
 
     private bool OnSlope()

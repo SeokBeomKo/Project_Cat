@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon
+public abstract class Weapon : MonoBehaviour, IWeapon
 {
-    private IWeapon weapon;
+    public abstract void SetTarget(Vector3 direction);
+    public abstract void Shoot();
+    public abstract void EnterShoot();
+    public abstract void ExcuteShoot();
+    public abstract void ExitShoot();
 
-    public void SetWeapon(IWeapon weapon)
-    {
-        this.weapon = weapon;
-    }
-
-    public void Shoot()
-    {
-        weapon.Shoot();
-    }
 }

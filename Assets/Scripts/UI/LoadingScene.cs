@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class LoadingScene : MonoBehaviour
 {
+    [Header("í”„ë¡œê·¸ë ˆìŠ¤ë°” ì´ë¯¸ì§€")]
     public Image progressBar;
-    //public string sceneName;
+    [Header("ë¡œë”©í•  ì”¬")]
+    public string sceneName;
 
     private float loadingTime = 5.0f;
     private float time;
@@ -21,11 +23,11 @@ public class LoadingScene : MonoBehaviour
     IEnumerator LoadScene()
     {
         yield return null;
-        // ºñµ¿±â ·Îµå : SceneÀ» ºÒ·¯¿Ã ¶§ ¸ØÃßÁö ¾Ê°í ´Ù¸¥ ÀÛ¾÷ °¡´É
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Test"); // ºñµ¿±âÀûÀ¸·Î ·Îµå ½ÃÀÛ
-        operation.allowSceneActivation = false; // ¾À ·Îµå ÈÄ ÀÚµ¿À¸·Î Àå¸é ÀüÈ¯ÀÌ µÇÁö ¾Êµµ·Ï
+        // ë¹„ë™ê¸° ë¡œë“œ : Sceneì„ ë¶ˆëŸ¬ì˜¬ ë•Œ ë©ˆì¶”ì§€ ì•Šê³  ë‹¤ë¥¸ ì‘ì—… ê°€ëŠ¥
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName); // ë¹„ë™ê¸°ì ìœ¼ë¡œ ë¡œë“œ ì‹œì‘
+        operation.allowSceneActivation = false; // ì”¬ ë¡œë“œ í›„ ìë™ìœ¼ë¡œ ì¥ë©´ ì „í™˜ì´ ë˜ì§€ ì•Šë„ë¡
 
-        while (!operation.isDone) // ·Îµù ¿Ï·á À¯¹« 
+        while (!operation.isDone) // ë¡œë”© ì™„ë£Œ ìœ ë¬´ 
         {
             yield return null;
 
@@ -40,5 +42,5 @@ public class LoadingScene : MonoBehaviour
 
 }
 
-// operation.progress : ÁøÇàÁ¤µµ¸¦ floatÇü 0,1À» ¹İÈ¯ (0 : ÁøÇà Áß , 1 : ÁøÇà¿Ï·á)
+// operation.progress : ì§„í–‰ì •ë„ë¥¼ floatí˜• 0,1ì„ ë°˜í™˜ (0 : ì§„í–‰ ì¤‘ , 1 : ì§„í–‰ì™„ë£Œ)
 // Mathf.MoveTowards(currentPos, targetPos, speed * Time.deltaTime);
