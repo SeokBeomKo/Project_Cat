@@ -12,6 +12,11 @@ public class PausePopUp : MonoBehaviour
     public GameObject settingPopUp;
     public GameObject pausePopUp;
 
+    public CanvasGroup canvas;
+
+    public GameObject clean;
+    public GameObject itemWheel;
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -21,18 +26,27 @@ public class PausePopUp : MonoBehaviour
                 pausePopUp.SetActive(false);
                 Time.timeScale = 1f;
                 OnPausePopupFalse?.Invoke();
+                ShowUI();
             }
             else if(!pausePopUp.activeSelf && !settingPopUp.activeSelf)
             {
                 pausePopUp.SetActive(true);
                 Time.timeScale = 0f;
                 OnPausePopupTrue?.Invoke();
+                
+                RemoveUI();
+                
+                itemWheel.SetActive(false);
+                if (clean.gameObject != null)
+                    clean.SetActive(false);
             }
             else if(settingPopUp.activeSelf)
             {
                 settingPopUp.SetActive(false);
                 Time.timeScale = 1f;
                 OnPausePopupFalse?.Invoke();
+                
+                ShowUI();
             }
         }
     }
@@ -40,6 +54,7 @@ public class PausePopUp : MonoBehaviour
     public void OnClickResume()
     {
         pausePopUp.SetActive(false);
+        ShowUI();
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
     }
@@ -60,5 +75,21 @@ public class PausePopUp : MonoBehaviour
         settingPopUp.SetActive(false);
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
+        
+        ShowUI();
+    }
+
+    public void RemoveUI()
+    {
+        canvas.alpha = 0;
+        canvas.interactable = false;
+        canvas.blocksRaycasts = false;
+    }
+
+    public void ShowUI()
+    {
+        canvas.alpha = 1;
+        canvas.interactable = true;
+        canvas.blocksRaycasts = true;
     }
 }

@@ -13,6 +13,11 @@ public class LikeabilityProgressBar : MonoBehaviour
     private float totalLikeability = 300;
     private float currentLikeability;
 
+    /*public void Notify(ISubject subject)
+    {
+        UpdateLikeabilityProgress(°í¾çÀÌ);
+    }*/
+
     public void UpdateLikeabilityProgress(float current)
     {
         currentLikeability = current;

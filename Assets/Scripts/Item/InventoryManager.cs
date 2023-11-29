@@ -30,6 +30,7 @@ public class InventoryManager : Singleton<InventoryManager>
     {
         // 여러 아이템을 미리 정의하고 인벤토리에 추가
         AddItemToInventory("Chur");
+        
         AddItemToInventory("ProtectEnergy");
         AddItemToInventory("WaterBomb");
         AddItemToInventory("ClearBomb");
@@ -43,6 +44,7 @@ public class InventoryManager : Singleton<InventoryManager>
         SetItemMaxQuantity("KineticEnergy", 1);
         SetItemMaxQuantity("Hairball", 3);
 
+        AddItemToInventory("Chur");
     }
 
     public void SetItemMaxQuantity(string itemName, int maxQuantity)
@@ -96,6 +98,13 @@ public class InventoryManager : Singleton<InventoryManager>
         {
             Debug.Log("아이템을 사용할 수 없음: " + itemName);
         }
+    }
+
+    public int GetItemCount(string itemName)
+    {
+        Item item = inventory.Find(item => item.name == itemName);
+        if (null == item) return 0;
+        return item.quantity;
     }
 }
 

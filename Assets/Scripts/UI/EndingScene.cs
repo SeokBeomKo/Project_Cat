@@ -22,9 +22,10 @@ public class EndingScene : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlaySFX("BadEnd");
         StartCoroutine(Typing());
         button.SetActive(false);
-        SoundManager.Instance.PlaySFX("BadEnd");
+        
     }
 
     IEnumerator Typing()

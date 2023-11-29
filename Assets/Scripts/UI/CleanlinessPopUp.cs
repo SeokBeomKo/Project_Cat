@@ -17,6 +17,9 @@ public class CleanlinessPopUp : MonoBehaviour
     public TextMeshProUGUI forePawLeft;
     public TextMeshProUGUI back;
 
+    // Äµ¹ö½º 
+    public CanvasGroup canvas;
+
     void Start()
     {
         popUp.SetActive(false);
@@ -32,11 +35,11 @@ public class CleanlinessPopUp : MonoBehaviour
         {
             popUp.SetActive(true);
         }
-        if(Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyUp(KeyCode.Tab))
         {
             popUp.SetActive(false);
         }
-
+        
     }
 
     public void CleanCat(CleanEnums parts,  float cleanliness)

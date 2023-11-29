@@ -10,7 +10,6 @@ public class ItemWheel : MonoBehaviour
 
     public GameObject itemMenu; // 아이템 휠 메뉴
     bool isMenuActive; // 메뉴의 활성 상태
-
     
     public TextMeshProUGUI itemName; // 아이템 이름
     public TextMeshProUGUI itemExplanation; // 아이템 설명
@@ -38,7 +37,13 @@ public class ItemWheel : MonoBehaviour
     public TextMeshProUGUI attackSpeed; 
 
     bool hasRightMouseClicked = false;
+    public GameObject crossHair;
 
+    public delegate void UseItem(string itemName);
+    public event UseItem onItemClick;
+
+    [Header("아이템 개수 텍스트")]
+    public TextMeshProUGUI[] itemCountArray; 
 
     void Start()
     {
@@ -58,9 +63,16 @@ public class ItemWheel : MonoBehaviour
             isMenuActive = !isMenuActive;
 
             if (isMenuActive && !isEnergyMenuActive)
+            {
                 itemMenu.SetActive(true);
+                //UpdateText();
+                crossHair.SetActive(false);
+            }
             if (!isMenuActive)
+            {
                 itemMenu.SetActive(false);
+                crossHair.SetActive(true);
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -71,6 +83,7 @@ public class ItemWheel : MonoBehaviour
         if (isMenuActive)
         {
             UpdateMenu();
+            UpdateText();
         }
 
         if (isEnergyMenuActive)
@@ -79,7 +92,15 @@ public class ItemWheel : MonoBehaviour
         }
     }
 
-
+    private void UpdateText()
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            //Debug.Log(itemNameArray[i]);
+            itemCountArray[i].text = InventoryManager.Instance.GetItemCount(itemNameArray[i]).ToString();
+        }
+        
+    }
 
     void ActivateMenu()
     {
@@ -141,15 +162,22 @@ public class ItemWheel : MonoBehaviour
 
                     if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
                     {
-                        hasRightMouseClicked = true;
-
-                        Debug.Log(itemNameArray[currentItem] + "선택");
-                        DeactivateMenu();
-
-                        // 운동에너지 선택시 새로운 팝업창 생성
-                        if (angle >= 120 && angle < 180)
+                        if (InventoryManager.Instance.GetItemCount(itemNameArray[currentItem]) > 0)
                         {
-                            ActivateEnergyMenu();
+                            hasRightMouseClicked = true;
+
+                            Debug.Log(itemNameArray[currentItem] + "선택");
+                            onItemClick?.Invoke(itemNameArray[currentItem]);
+                            InventoryManager.Instance.UseItem(itemNameArray[currentItem]);
+                            DeactivateMenu();
+                            crossHair.SetActive(true);
+
+                            // 운동에너지 선택시 새로운 팝업창 생성
+                            if (angle >= 120 && angle < 180)
+                            {
+                                ActivateEnergyMenu();
+                                crossHair.SetActive(false);
+                            }
                         }
                     }
                 }
@@ -172,6 +200,7 @@ public class ItemWheel : MonoBehaviour
         {
             Debug.Log("선택 취소");
             DeactivateMenu();
+            crossHair.SetActive(true);
         }
     }
 
@@ -188,6 +217,7 @@ public class ItemWheel : MonoBehaviour
             Debug.Log("선택 취소");
             DeactivateEnergyMenu();
             DeactivateMenu();
+            crossHair.SetActive(true);
         }
         
         selectEnergyLeft.SetActive(false);
@@ -221,6 +251,7 @@ public class ItemWheel : MonoBehaviour
                 hasRightMouseClicked = true;
                 Debug.Log(energySlotArray[selectedEnergySlot] + "선택");
                 DeactivateEnergyMenu();
+                crossHair.SetActive(true);
             }
         }
         else
