@@ -108,19 +108,6 @@ namespace BehaviorTree
                     new ActionNode(DoWaveAttack)
                 });
 
-            /*var attack = new Sequence(
-                new List<Node>()
-                {
-                    new ActionNode(CheckAnimation),
-                    new ActionNode(CheckPlayerWithinMeleeAttackRange),
-
-                    new Selector(new List<Node>()
-                    {
-                        chargeAttack,
-                        meleeAttack
-                    })
-                });*/
-
             var triggerAttack = new Sequence(
                 new List<Node>()
                 {
@@ -263,8 +250,8 @@ namespace BehaviorTree
                 isAttackComplete = false;
                 chargeAttackTime = true;
                 canvasImage.enabled = true;
-                StartCoroutine(FadeOutOverTime(10f));
-
+                StartCoroutine(FadeOutOverTime(5.0f));
+                
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
@@ -281,7 +268,8 @@ namespace BehaviorTree
                 timer += Time.deltaTime;
                 float progress = timer / duration;
 
-                imageColor = Color.Lerp(imageColor, transparentColor, progress);
+                //imageColor = Color.Lerp(imageColor, transparentColor, progress);
+                imageColor = Color.Lerp(imageColor, transparentColor, Mathf.SmoothStep(0f, 1f, progress));
 
                 canvasImage.color = imageColor;
                 yield return null;

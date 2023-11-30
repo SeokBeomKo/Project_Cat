@@ -18,7 +18,6 @@ public class SafeSubject : MonoBehaviour, ISubject
         }
     }
 
-
     public void AddObserver<T>(List<T> observerList, T observer) where T : IObserver
     {
         observers.Add(observer);

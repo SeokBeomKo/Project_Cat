@@ -3,19 +3,17 @@ using UnityEngine.AI;
 
 public class ChaseCat : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float jumpHeight = 2f;
-
+    public Animator animator;
     private string targetTag = "ChaseRoad";
+    public float jumpHeightThreshold = 0.5f; // Y 축 차이의 임계값
 
     private Transform[] targets;
-    private int currentTargetIndex = 0;
     private NavMeshAgent agent;
+    private int currentTargetIndex = 0;
     private bool allTargetsReached = false;
 
     void Start()
     {
-        // ChaseRoad 태그로 된 모든 목적지를 찾아 배열에 할당
         GameObject[] targetObjects = GameObject.FindGameObjectsWithTag(targetTag);
         targets = new Transform[targetObjects.Length];
 
@@ -24,45 +22,91 @@ public class ChaseCat : MonoBehaviour
             targets[i] = targetObjects[i].transform;
         }
 
-        agent = transform.parent.GetComponent<NavMeshAgent>();
+        agent = GetComponentInParent<NavMeshAgent>();
+        animator = GetComponentInParent<Animator>();
 
         if (targets.Length > 0)
         {
             SetNextDestination();
         }
-        else
-        {
-            Debug.LogError("No targets with tag '" + targetTag + "' found!");
-        }
     }
 
     void Update()
     {
-        // 목적지에 도착하면 다음 목적지로 이동
         if (agent.remainingDistance < 0.5f && !allTargetsReached)
         {
             SetNextDestination();
         }
 
-        // 모든 목적지를 다 도착했을 때의 동작
         if (allTargetsReached)
         {
-            Debug.Log("All targets reached!");
-            // 여기에 추가적인 동작을 추가할 수 있습니다.
+            Debug.Log("모든 목표 지점에 도착했습니다!");
         }
     }
 
     void SetNextDestination()
     {
-        // 현재 목적지를 배열에서 선택하고 NavMeshAgent에 설정
         if (currentTargetIndex < targets.Length)
         {
-            agent.SetDestination(targets[currentTargetIndex].position);
-            currentTargetIndex++;
+            if (agent.destination != targets[currentTargetIndex].position)
+            {
+                agent.SetDestination(targets[currentTargetIndex].position);
+                currentTargetIndex++;
+
+                if (currentTargetIndex < targets.Length)
+                {
+                    // 목적지 간의 Y 축 차이 계산
+                    float yDifference = Mathf.Abs(transform.position.y - targets[currentTargetIndex].position.y);
+
+                    // Y 축 차이가 특정 높이 이상이면 점프
+                    if (yDifference > jumpHeightThreshold)
+                    {
+                        Jump();
+                    }
+
+                }
+                else
+                {
+                    currentTargetIndex++;
+                    SetNextDestination();
+                }
+            }
+            else
+            {
+                allTargetsReached = true;
+            }
         }
-        else
+    }
+
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == targetTag)
         {
-            allTargetsReached = true;
+            // 체크: currentTargetIndex가 배열의 범위 내에 있는지 확인
+            if (currentTargetIndex < targets.Length)
+            {
+                // 목적지 간의 Y 축 차이 계산
+                float yDifference = Mathf.Abs(transform.position.y - targets[currentTargetIndex].position.y);
+
+                // Y 축 차이가 특정 높이 이상이면 점프
+                if (yDifference > jumpHeightThreshold)
+                {
+                    Jump();
+                }
+
+                // 이후에 currentTargetIndex 증가
+                currentTargetIndex++;
+            }
+            else
+            {
+                // 모든 목표 도착 시에 처리할 내용 추가
+                allTargetsReached = true;
+            }
         }
+    }*/
+
+    void Jump()
+    {
+        animator.SetTrigger("jump");
     }
 }
