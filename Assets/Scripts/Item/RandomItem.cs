@@ -22,6 +22,16 @@ public class RandomItem : MonoBehaviour
             if (ItemNames != null && ItemNames.Length > 0)
             {
                 string itemName = GetRandomName();
+
+                if (itemName == "WaterBottle")
+                {
+                    Debug.Log("탄약 충전");
+                }
+                else if(itemName == "LifeEnergy")
+                {
+                    Debug.Log("플레이어 HP 충전");
+                }
+
                 Debug.Log("item add : " + itemName);
                 InventoryManager.Instance.AddItemToInventory(itemName);
                 gameObject.SetActive(false);

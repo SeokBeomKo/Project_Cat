@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class VirusAttackOperation : MonoBehaviour
 {
+    [Header("HP")]
     public float HP = 5;
     public ObjectHPbar objectHPbar;
-
+ 
+    [Header("플레이어 감지 범위")]
     public float radius = 0.1f;
+    
+    [Header("유한 상태 기계")]
+    [SerializeField] public VirusStateMachine virusMachine;
+
+    public Vector3 PlayerPosition;
+    public GameObject ProjectilePrefab;
 
     void OnDrawGizmosSelected()
     {
@@ -17,20 +25,12 @@ public class VirusAttackOperation : MonoBehaviour
 
     void Update()
     {
-        Collider[] colliders =
-                    Physics.OverlapSphere(this.transform.position, radius);
-
-        foreach (Collider col in colliders)
+        if (null != virusMachine.curState)
         {
-            if (col.name == "Sphere" /* 자기 자신은 제외 */) continue;
-
-            if (col.gameObject.CompareTag("Player"))
-            {
-                Debug.Log("virus attack");
-            }
+            virusMachine.curState.Execute();
         }
-    }
 
+    }
 
     void Start()
     {

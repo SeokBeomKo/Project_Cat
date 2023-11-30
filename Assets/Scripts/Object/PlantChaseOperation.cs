@@ -87,7 +87,8 @@ public class PlantChaseOperation : MonoBehaviour
     {
         transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
     }
-        private void PlantRoll()
+
+    private void PlantRoll()
     {
 
         forceDirection = Wall.transform.position - transform.position;
