@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     [Header("스탯")]
     [SerializeField]    public PlayerStats          playerStats;
 
+    [Header("히트 스캔")]
+    [SerializeField]    public PlayerHitScan        playerHitScan;
+
     [Header("무기")]
     [SerializeField]    public WeaponCenter         weaponCenter;
 
@@ -53,7 +56,12 @@ public class PlayerController : MonoBehaviour
         isGrounded = CheckGrounded();
         SpeedControl();
         MoveRogic();
-    }    
+    }
+
+    public void Invaison(bool set)
+    {
+        playerHitScan.gameObject.SetActive(!set);
+    }
 
 
     private void SpeedControl()

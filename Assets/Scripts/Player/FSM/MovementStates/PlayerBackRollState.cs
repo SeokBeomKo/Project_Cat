@@ -44,20 +44,25 @@ public class PlayerBackRollState :  IPlayerState
 
     public void OnStateEnter()
     {
+        Rolling(true);
         ClearAimSetting();
 
-        
         player.playerStats.UseRoll();
 
-        player.animator.SetBool("isDiveRoll",true);
         player.RollInput();
     }
 
     public void OnStateExit()
     {
-        player.animator.SetBool("isDiveRoll",false);
+        Rolling(false);
 
         player.rigid.velocity = Vector3.zero;
+    }
+
+    public void Rolling(bool set)
+    {
+        player.Invaison(set);
+        player.animator.SetBool("isDiveRoll",set);
     }
 
     public void ClearAimSetting()
