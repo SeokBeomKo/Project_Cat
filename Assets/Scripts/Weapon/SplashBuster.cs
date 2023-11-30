@@ -72,6 +72,9 @@ public class SplashBuster : Weapon
 
     public void Fire()
     {
+        if (curBullet < useBullet) return;
+        UseBullet();
+
         for (int i = 0; i < bulletCount; i++)
         {
             Vector3 spread = Random.insideUnitSphere * spreadAngle;
@@ -83,6 +86,11 @@ public class SplashBuster : Weapon
             bullet.transform.LookAt(fireDirection);
             bullet.GetComponentInChildren<SplashProjectile>().SetDirection(fireDirection);
         }
+    }
+
+    public override void UseBullet()
+    {
+        curBullet -= useBullet;
     }
 
 }

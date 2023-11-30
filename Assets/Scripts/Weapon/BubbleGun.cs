@@ -54,10 +54,18 @@ public class BubbleGun : Weapon
 
     public override void Shoot()
     {
+        if (curBullet < useBullet) return;
+        UseBullet();
+
         randomScale = Random.Range(0.2f,0.7f);
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
         bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
         bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
+    }
+
+    public override void UseBullet()
+    {
+        curBullet -= useBullet;
     }
 }

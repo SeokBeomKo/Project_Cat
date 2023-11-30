@@ -40,7 +40,7 @@ public class SoapRifle : Weapon
         if (chargeTime >= 1)
         {
             chargeTime = 0;
-            if (curChargeLevel < maxChargeLvel) curChargeLevel++;
+            if (curChargeLevel < maxChargeLvel && curChargeLevel + 1 <= curBullet) curChargeLevel++;
             chargePrefab.transform.localScale = curChargeLevel * new Vector3(0.2f,0.2f,0.2f);
         }
     }
@@ -48,6 +48,8 @@ public class SoapRifle : Weapon
     {
         chargePrefab.SetActive(false);
         Shoot();
+
+        useBullet = 1;
     }
 
     public override void SetTarget(Vector3 direction)
@@ -57,10 +59,19 @@ public class SoapRifle : Weapon
 
     public override void Shoot()
     {
+        useBullet *= curChargeLevel + 1;
+        if (curBullet < useBullet) return;
+        UseBullet();
+
         GameObject bullet = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         bullet.transform.position = shootPosition.position;
 
         SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
         projectile.ShootBeamInDir(shootPosition.position, shootTarget, curChargeLevel);
+    }
+
+    public override void UseBullet()
+    {
+        curBullet -= useBullet;
     }
 }
