@@ -23,9 +23,10 @@ public class HUDCenter : MonoBehaviour
     [Header("보스 스탯")]
     [SerializeField] public CatStatsSubject catStatsSubject;
 
-    /*[Header("보스 HUD")]
-    [SerializeField] public CleanlinessObserver cleanlinessObserver;
-    [SerializeField] public LikeabilityObserver likeabilityObserver;*/
+    [Header("보스 HUD")]
+    //[SerializeField] public CleanlinessObserver cleanlinessObserver;
+    [SerializeField] public LikeabilityObserver likeabilityObserver;
+    [SerializeField] public LikeabilityObserver likeabilityPopUpObserver;
 
     private void Start() 
     {
@@ -36,6 +37,9 @@ public class HUDCenter : MonoBehaviour
         {
             partsSubject.AddObserver<IObserver>(partsSubject.observers, catStatsSubject);
         }
+
+        catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityObserver);
+        catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityPopUpObserver);
 
         pausePopUp.OnPausePopupTrue += PauseTrue;
         pausePopUp.OnPausePopupFalse += PauseFalse;

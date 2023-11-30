@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class LikeabilityProgressBar : MonoBehaviour
+public class LikeabilityObserver : MonoBehaviour, IObserver
 {
     public Slider likeabilityProgressBar;
     public TextMeshProUGUI likeabilityText;
@@ -13,15 +13,16 @@ public class LikeabilityProgressBar : MonoBehaviour
     private float totalLikeability = 300;
     private float currentLikeability;
 
-    /*public void Notify(ISubject subject)
+    public void Notify(ISubject subject)
     {
-        UpdateLikeabilityProgress(°í¾çÀÌ);
-    }*/
+        UpdateLikeabilityProgress(subject as CatStatsSubject);
+    }
 
-    public void UpdateLikeabilityProgress(float current)
+    public void UpdateLikeabilityProgress(CatStatsSubject catStats)
     {
-        currentLikeability = current;
+        currentLikeability = catStats.currentLikeability;
         likeabilityProgressBar.value = Mathf.Clamp01(currentLikeability / totalLikeability);
+        
         likeabilityText.text = likeabilityProgressBar.value * 100 + " %";
     }
 }
