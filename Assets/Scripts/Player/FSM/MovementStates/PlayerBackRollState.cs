@@ -28,14 +28,16 @@ public class PlayerBackRollState :  IPlayerState
             stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
             return;
         }
+        Debug.Log(player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll"));
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll") && 
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.5f)
         {
-            // player.BackRoll(Vector3.back);
+            Debug.Log("a");
             player.isRolled = true;
         }
         else
         {
+            Debug.Log("b");
             player.isRolled = false;
         }
     }

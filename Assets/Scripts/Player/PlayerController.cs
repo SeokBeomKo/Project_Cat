@@ -160,6 +160,7 @@ public class PlayerController : MonoBehaviour
     {
         rollDirection = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
         if (rollDirection == Vector3.zero)   rollDirection = Vector3.back;
+
         rollDirection = transform.rotation * rollDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 
