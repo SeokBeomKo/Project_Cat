@@ -29,22 +29,31 @@ public class InventoryManager : Singleton<InventoryManager>
     private void Start()
     {
         // 여러 아이템을 미리 정의하고 인벤토리에 추가
-        AddItemToInventory("Chur");
-        
-        AddItemToInventory("ProtectEnergy");
-        AddItemToInventory("WaterBomb");
-        AddItemToInventory("ClearBomb");
-        AddItemToInventory("KineticEnergy");
-        AddItemToInventory("Hairball");
+        AddItemToInventory("츄르");
+        AddItemToInventory("운동에너지");
+        AddItemToInventory("보호막");
+        AddItemToInventory("털뭉치");
+        AddItemToInventory("물폭탄");
+        AddItemToInventory("세척탄");
 
-        SetItemMaxQuantity("Chur", 3);
-        SetItemMaxQuantity("ProtectEnergy", 1);
-        SetItemMaxQuantity("WaterBomb", 3);
-        SetItemMaxQuantity("ClearBomb", 3);
-        SetItemMaxQuantity("KineticEnergy", 1);
-        SetItemMaxQuantity("Hairball", 3);
+        // 아이템 최대 개수 설정
+        SetItemMaxQuantity("츄르", 3); // 3
+        SetItemMaxQuantity("운동에너지", 1); // 1
+        SetItemMaxQuantity("보호막", 2); // 1
+        SetItemMaxQuantity("털뭉치", 3); // 3
+        SetItemMaxQuantity("물폭탄", 3); // 3
+        SetItemMaxQuantity("세척탄", 3); // 3
 
-        AddItemToInventory("Chur");
+        // =======================================
+        AddItemToInventory("츄르");
+        AddItemToInventory("츄르");
+        AddItemToInventory("츄르");
+        AddItemToInventory("보호막");
+        AddItemToInventory("보호막");
+        AddItemToInventory("털뭉치");
+        AddItemToInventory("털뭉치");
+        AddItemToInventory("털뭉치");
+        AddItemToInventory("운동에너지");
     }
 
     public void SetItemMaxQuantity(string itemName, int maxQuantity)
@@ -72,7 +81,7 @@ public class InventoryManager : Singleton<InventoryManager>
             }
             else
             {
-                Debug.Log("헤당 아이템 보유 개수 초과");
+                Debug.Log("해당 아이템 보유 개수 초과");
             }
 
         }
@@ -91,7 +100,7 @@ public class InventoryManager : Singleton<InventoryManager>
         if (item != null && item.quantity > 0)
         {
             // 아이템 사용 로직을 여기에 추가
-            Debug.Log("아이템을 사용: " + itemName);
+            //Debug.Log("아이템을 사용: " + itemName);
             item.quantity--;
         }
         else

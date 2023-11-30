@@ -33,7 +33,7 @@ public class Subtitle : MonoBehaviour
 
         // 띄어쓰기 두 번이면 줄 바꿈
         if (txt.Contains("  "))
-            txt = subtitleContent.Replace("  ", "\n");
+            txt = txt.Replace("  ", "\n");
 
         for (int i = 0; i < txt.Length; i++)
         {
