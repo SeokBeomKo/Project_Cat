@@ -22,6 +22,11 @@ public class SplashBuster : Weapon
 
     private bool isShooting = false;
 
+    private void Start() 
+    {
+        curBullet = maxBullet;
+    }
+
 
     // : 마우스 클릭 시
     public override void EnterShoot()

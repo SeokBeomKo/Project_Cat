@@ -19,6 +19,7 @@ public class SoapProjectile : MonoBehaviour
     private void Start() 
     {
         Invoke("Explosion",0.1f);
+        StartCoroutine(CheckExit());
     }
 
     public void Explosion()
@@ -44,8 +45,33 @@ public class SoapProjectile : MonoBehaviour
         Destroy(transform.gameObject);
     }
 
-    public void ShootBeamInDir(Vector3 start, Vector3 target)
+    public void SetScale(int charge)
     {
+        switch(charge)
+        {
+            case 1:
+                line.startWidth = 0.2f;
+                line.endWidth = 0.2f;
+                transform.localScale *= 2f;
+                break;
+            case 2:
+                line.startWidth = 0.3f;
+                line.endWidth = 0.3f;
+                transform.localScale *= 3f;
+                break;
+            case 3:
+                line.startWidth = 0.4f;
+                line.endWidth = 0.4f;
+                transform.localScale *= 4f;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ShootBeamInDir(Vector3 start, Vector3 target, int charge = 0)
+    {
+        SetScale(charge);
         startPoint = start;
         line.SetPosition(0, start);
         beamStart.transform.position = start;
