@@ -5,62 +5,68 @@ using UnityEngine;
 
 public class SoapRifle : Weapon
 {
+    [Header("발사 위치")]
     public Transform shootPosition;
-    public GameObject projectilePrefab; // '가짜' 총알 프리팹
+
+    [Header("프리팹")]
+    public GameObject projectilePrefab; // 발사체 프리팹
+    public GameObject chargePrefab;     // 차지 프리팹
+
+    [Header("목표뮬")]
+    private Vector3 shootTarget;
+
     public float bulletSpeed = 20f;
     public float distance = 10f;
 
+    public int maxChargeLvel = 3;
+    public int curChargeLevel = 0;
+
     public override void EnterShoot()
     {
-        
+        curChargeLevel = 0;
     }
+
+    private float chargeTime;
     public override void ExcuteShoot()
     {
-        
+        chargePrefab.SetActive(true);
+        chargeTime += Time.deltaTime;
+        if (chargeTime >= 1)
+        {
+            chargeTime = 0;
+            if (curChargeLevel < maxChargeLvel) curChargeLevel++;
+        }
     }
     public override void ExitShoot()
     {
-        
+        chargePrefab.SetActive(false);
+        Shoot();
     }
 
     public override void SetTarget(Vector3 direction)
     {
+        shootTarget = direction;
     }
 
     public override void Shoot()
     {
-        
-    }
-
-    public void Fire(Vector3 direction)
-    {
-        // 레이캐스팅을 사용하여 총알이 맞는 위치를 찾습니다.
-        RaycastHit hit;
         GameObject bullet = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         bullet.transform.position = shootPosition.position;
-        Vector3 fireDirection = (direction - shootPosition.position).normalized;
-        if (Physics.Raycast(transform.position, direction * distance , out hit))
-        {
-            // '가짜' 총알을 발사합니다.
-            bullet.GetComponent<Rigidbody>().velocity = fireDirection * bulletSpeed;
 
-            // '가짜' 총알을 목표물에 맞는 위치까지 이동시킵니다.
-            StartCoroutine(MoveBullet(bullet, hit.point));
-        }
-        else
+        switch(curChargeLevel)
         {
-            bullet.GetComponent<Rigidbody>().velocity = fireDirection * bulletSpeed;
-            StartCoroutine(MoveBullet(bullet, direction * 10f));
-        }
-    }
-
-    private IEnumerator MoveBullet(GameObject bullet, Vector3 target)
-    {
-        while ((bullet.transform.position - target).magnitude > 0.1f)
-        {
-            yield return null;
+            case 1:
+                bullet.transform.localScale *= 1.5f;
+                break;
+            case 2:
+                bullet.transform.localScale *= 2f;
+                break;
+            case 3:
+                bullet.transform.localScale *= 2.5f;
+                break;
         }
 
-        Destroy(bullet); // 목표물에 도달하면 '가짜' 총알을 제거합니다.
+        SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
+        projectile.ShootBeamInDir(shootPosition.position, shootTarget);
     }
 }

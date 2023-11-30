@@ -28,34 +28,41 @@ public class PlayerBackRollState :  IPlayerState
             stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
             return;
         }
+        Debug.Log(player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll"));
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll") && 
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.5f)
         {
-            // player.BackRoll(Vector3.back);
+            Debug.Log("a");
             player.isRolled = true;
         }
         else
         {
+            Debug.Log("b");
             player.isRolled = false;
         }
     }
 
     public void OnStateEnter()
     {
+        Rolling(true);
         ClearAimSetting();
 
-        
         player.playerStats.UseRoll();
 
-        player.animator.SetBool("isDiveRoll",true);
         player.RollInput();
     }
 
     public void OnStateExit()
     {
-        player.animator.SetBool("isDiveRoll",false);
+        Rolling(false);
 
         player.rigid.velocity = Vector3.zero;
+    }
+
+    public void Rolling(bool set)
+    {
+        player.Invaison(set);
+        player.animator.SetBool("isDiveRoll",set);
     }
 
     public void ClearAimSetting()

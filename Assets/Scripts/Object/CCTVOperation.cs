@@ -7,6 +7,7 @@ public class CCTVOperation : MonoBehaviour
     public Material Screen;
     public GameObject Barrier;
     public GameObject Door;
+    public Room2GameCenter room2GameCenter;
 
     private float angle = -100;
     private bool isBarrierMove = false;
@@ -36,6 +37,7 @@ public class CCTVOperation : MonoBehaviour
             Debug.Log("Input F");
             isBarrierMove = true;
             isDoorClose = true;
+            room2GameCenter.IsSwitchesUnlocked = true;
         }
 
     }
@@ -44,7 +46,6 @@ public class CCTVOperation : MonoBehaviour
     {
         angle++;
 
-        Debug.Log(angle);
         if(angle > 0)
         {
             isDoorClose = false;

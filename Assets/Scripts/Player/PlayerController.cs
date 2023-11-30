@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     [Header("스탯")]
     [SerializeField]    public PlayerStats          playerStats;
 
+    [Header("히트 스캔")]
+    [SerializeField]    public PlayerHitScan        playerHitScan;
+
     [Header("무기")]
     [SerializeField]    public WeaponCenter         weaponCenter;
 
@@ -53,7 +56,12 @@ public class PlayerController : MonoBehaviour
         isGrounded = CheckGrounded();
         SpeedControl();
         MoveRogic();
-    }    
+    }
+
+    public void Invaison(bool set)
+    {
+        playerHitScan.gameObject.SetActive(!set);
+    }
 
 
     private void SpeedControl()
@@ -160,6 +168,7 @@ public class PlayerController : MonoBehaviour
     {
         rollDirection = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
         if (rollDirection == Vector3.zero)   rollDirection = Vector3.back;
+
         rollDirection = transform.rotation * rollDirection; // 오브젝트의 회전을 적용하여 로컬 좌표계로 변환
     }
 

@@ -10,24 +10,30 @@ public class BubbleGun : Weapon
     [Header("발사체 프리팹")]
     public GameObject projectilePrefab; // 발사체 프리팹
 
-    [Header("진행 방향")]
-    private Vector3 shootDirection;
+    [Header("진행 목표")]
+    private Vector3 shootTarget;
 
     [Header("발사 딜레이")]
     public float shootDelay;
-    private float curShootTime;
+    private float lastShootTime;
 
+    // : 마우스 클릭 시
     public override void EnterShoot()
     {
-        curShootTime = 0;
+        if (Time.time - lastShootTime >= shootDelay) 
+        {
+            Shoot();
+            lastShootTime = Time.time;
+        }
     }
+
+    // : 마우스 클릭 중
     public override void ExcuteShoot()
     {
-        curShootTime -= Time.deltaTime;
-        if (curShootTime <= 0)
+        if (Time.time - lastShootTime >= shootDelay) 
         {
-            curShootTime = shootDelay;
             Shoot();
+            lastShootTime = Time.time;
         }
     }
 
@@ -35,9 +41,9 @@ public class BubbleGun : Weapon
     {
     }
 
-    public override void SetTarget(Vector3 direction)
+    public override void SetTarget(Vector3 target)
     {
-        shootDirection = direction;
+        shootTarget = target;
     }
     private float randomScale;
 
@@ -47,7 +53,6 @@ public class BubbleGun : Weapon
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
         bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
-        bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootDirection);
-        //
+        bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
     }
 }

@@ -60,28 +60,30 @@ public class PlayerDiveRollState : IPlayerState
 
     public void OnStateEnter()
     {
+        player.RollInput();
+
         ClearAimSetting();
-        
+        Rolling(true);
         player.playerStats.UseRoll();
 
         origDir = player.model.localRotation; // 원래 회전값 저장
         diveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         
         if (diveDir == Vector3.zero)   diveDir = Vector3.back;
-
-        player.RollInput();
-
-        player.animator.SetBool("isDiveRoll",true);
     }
 
     public void OnStateExit()
     {
-        player.isRolled = false;
+        Rolling(false);
+
         player.model.localRotation = origDir;
-
-        player.animator.SetBool("isDiveRoll",false);
-
         player.rigid.velocity = Vector3.zero;
+    }
+
+    public void Rolling(bool set)
+    {
+        player.Invaison(set);
+        player.animator.SetBool("isDiveRoll",set);
     }
 
     public void ClearAimSetting()

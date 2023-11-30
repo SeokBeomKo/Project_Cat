@@ -6,11 +6,11 @@ public class CapsuleNavigateOperation : MonoBehaviour
 {
     [Header("아이템 리스트")]
     public List<ItemWithProbability> itemsToSpawn;
-
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
+        Debug.Log("trigger : " + other.gameObject.layer);
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
             float randomValue = Random.value;
             float cumulativeProbability = 0.0f;
@@ -22,7 +22,7 @@ public class CapsuleNavigateOperation : MonoBehaviour
                 if (randomValue < cumulativeProbability)
                 {
                     // 아이템을 생성할 위치
-                    Vector3 spawnPosition = transform.position;
+                    Vector3 spawnPosition = transform.parent.position;
 
                     // 아이템 생성
                     Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity);
@@ -33,8 +33,9 @@ public class CapsuleNavigateOperation : MonoBehaviour
                 }
             }
 
-            // 캡슐 오브젝트 비활성화 또는 삭제 (선택적)
-            gameObject.SetActive(false);
+            // 캡슐 오브젝트 삭제
+            transform.parent.gameObject.SetActive(false);
         }
     }
+
 }

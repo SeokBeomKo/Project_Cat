@@ -1894,6 +1894,7 @@ MonoBehaviour:
   animator: {fileID: 999167231}
   rigid: {fileID: 999167230}
   stateMachine: {fileID: 1481596111}
+  shotstateMachine: {fileID: 0}
   model: {fileID: 530538384}
   playerStats: {fileID: 1481596110}
   weaponCenter: {fileID: 0}
@@ -1904,6 +1905,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   jumpDirection: {x: 0, y: 0, z: 0}
   rollDirection: {x: 0, y: 0, z: 0}
+  addMoveSpeed: 5
 --- !u!136 &1481596113
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2200,6 +2202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimCamera: {fileID: 0}
+  playCamera: {fileID: 0}
+  topCamera: {fileID: 0}
 --- !u!114 &1664775628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2393,6 +2397,10 @@ PrefabInstance:
     - target: {fileID: 8211913024773823173, guid: 5e734caccc0433f4cb6f3534d841bdae, type: 3}
       propertyPath: m_Name
       value: ChaseCat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211913024773823173, guid: 5e734caccc0433f4cb6f3534d841bdae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8211913024773823182, guid: 5e734caccc0433f4cb6f3534d841bdae, type: 3}
       propertyPath: m_RootOrder
@@ -2847,7 +2855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2147251563
 Transform:
   m_ObjectHideFlags: 0

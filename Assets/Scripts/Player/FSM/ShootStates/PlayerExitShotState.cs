@@ -15,7 +15,6 @@ public class PlayerExitShotState : IPlayerShotState
     public void Execute()
     {
         stateMachine.ChangeState(PlayerShotStateEnums.NOTHING);
-        Debug.Log("Exit");
     }
 
     public void OnStateEnter()
@@ -25,5 +24,15 @@ public class PlayerExitShotState : IPlayerShotState
 
     public void OnStateExit()
     {
+        Debug.Log(player.stateMachine.curState);
+        Debug.Log(player.stateMachine.curState is PlayerAimState aimstate);
+
+        if (player.stateMachine.curState is PlayerAimState aimstatee ||
+        player.stateMachine.curState is PlayerAimMoveState aimmovestate) return;
+        else
+        {
+            Debug.Log("안됨");
+            player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        }
     }
 }
