@@ -24,8 +24,6 @@ public class SoapProjectile : MonoBehaviour
     public void Explosion()
     {
         beam.SetActive(false);
-
-        // StartCoroutine(CheckExit());
     }
 
     private void Update() 
@@ -57,11 +55,9 @@ public class SoapProjectile : MonoBehaviour
         if (Physics.Raycast(start, target - start, out hit))
         {
             beamEnd.transform.position = endPoint = end = hit.point;
+            if (null != hit.collider.GetComponentInChildren<IDamageable>())
+                hit.collider.GetComponentInChildren<IDamageable>().BeAttacked();
 
-            // 충돌한 오브젝트의 정면을 바라봅니다.
-            Debug.Log(hit.transform.gameObject.name);
-            Debug.Log(hit.normal);
-            // beamEnd.transform.rotation = Quaternion.LookRotation(hit.normal);
             beamEnd.transform.LookAt(beamEnd.transform.position + hit.normal);
         }
         else

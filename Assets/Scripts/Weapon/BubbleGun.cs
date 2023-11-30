@@ -15,19 +15,25 @@ public class BubbleGun : Weapon
 
     [Header("발사 딜레이")]
     public float shootDelay;
-    private float curShootTime;
+    private float lastShootTime;
 
+    // : 마우스 클릭 시
     public override void EnterShoot()
     {
-        
+        if (Time.time - lastShootTime >= shootDelay) 
+        {
+            Shoot();
+            lastShootTime = Time.time;
+        }
     }
+
+    // : 마우스 클릭 중
     public override void ExcuteShoot()
     {
-        curShootTime -= Time.deltaTime;
-        if (curShootTime <= 0)
+        if (Time.time - lastShootTime >= shootDelay) 
         {
-            curShootTime = shootDelay;
             Shoot();
+            lastShootTime = Time.time;
         }
     }
 

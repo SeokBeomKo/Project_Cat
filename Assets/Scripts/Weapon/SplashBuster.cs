@@ -9,8 +9,8 @@ public class SplashBuster : Weapon
     [Header("프리팹")]
     public GameObject projectilePrefab; // 발사체 프리팹
     public GameObject splashPrefab;     // 발사 이펙트 프리팹
-    public int bulletCount = 8; // 한 번에 발사할 총알의 수
-    public float bulletSpeed = 10f; // 총알의 속도
+    public int bulletCount; // 한 번에 발사할 총알의 수
+    public float bulletSpeed; // 총알의 속도
     public float spreadAngle;       // 총알이 퍼지는 각도
 
     [Header("목표뮬")]
@@ -18,26 +18,35 @@ public class SplashBuster : Weapon
 
     [Header("발사 딜레이")]
     public float shootDelay;
-    private float curShootTime;
+    private float lastShootTime;
 
+    private bool isShooting = false;
+
+
+    // : 마우스 클릭 시
     public override void EnterShoot()
     {
-        curShootTime = 0;
-    }
-
-    public override void ExcuteShoot()
-    {
-        curShootTime -= Time.deltaTime;
-        if (curShootTime <= 0)
+        if (Time.time - lastShootTime >= shootDelay) 
         {
-            curShootTime = shootDelay;
             Shoot();
+            lastShootTime = Time.time;
         }
     }
 
+    // : 마우스 클릭 중
+    public override void ExcuteShoot()
+    {
+        if (Time.time - lastShootTime >= shootDelay) 
+        {
+            Shoot();
+            lastShootTime = Time.time;
+        }
+    }
+
+    // : 마우스 클릭 뗌
     public override void ExitShoot()
     {
-        
+        isShooting = false;
     }
 
     public override void SetTarget(Vector3 target)

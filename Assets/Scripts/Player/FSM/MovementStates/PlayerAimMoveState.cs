@@ -49,12 +49,15 @@ public class PlayerAimMoveState : IPlayerState
         }
 
         player.MoveInput();
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
     }
 
     float originSpeed;
     public void OnStateEnter()
     {
-        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
+        player.animator.SetBool("isMove",true);
+
+        
         player.cameraController.SetAimCamera();
         player.playerStats.FillDoubleCount();
 
@@ -64,6 +67,8 @@ public class PlayerAimMoveState : IPlayerState
 
     public void OnStateExit()
     {
+        player.animator.SetBool("isMove",false);
+
         player.animator.SetFloat("Horizontal", 0);
         player.animator.SetFloat("Vertical", 0);
 

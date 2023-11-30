@@ -19,6 +19,7 @@ public class PlayerEnterShotState : IPlayerShotState
 
     public void OnStateEnter()
     {
+        player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
         player.weaponCenter.EnterShoot();
     }
 
