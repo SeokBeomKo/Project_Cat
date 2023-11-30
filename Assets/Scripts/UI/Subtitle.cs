@@ -40,6 +40,7 @@ public class Subtitle : MonoBehaviour
             subtitleText.text += txt[i];
             yield return new WaitForSeconds(typingSpeed);
         }
+        SoundManager.Instance.StopSFX();
 
         yield return new WaitForSeconds(0.5f);
         subtitleText.gameObject.SetActive(false);

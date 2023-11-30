@@ -99,6 +99,12 @@ public class SoundManager : Singleton<SoundManager>
             bgmSource.Stop();
     }
     
+    public void StopSFX()
+    {
+        if (sfxSource != null)
+            sfxSource.Stop();
+    }
+
     // 0 : 재생 중지 1 : 재생 시작
 
     public void ToggleMaster()
