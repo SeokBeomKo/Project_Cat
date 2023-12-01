@@ -44,17 +44,24 @@ public class HUDCenter : MonoBehaviour
         {
             partsSubject.AddObserver<IObserver>(partsSubject.observers, catStatsSubject);
         }
-
-        catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityObserver);
-        catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityPopUpObserver);
+        
+        // catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityObserver);
+        // catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityPopUpObserver);
 
         pausePopUp.OnPausePopupTrue += PauseTrue;
         pausePopUp.OnPausePopupFalse += PauseFalse;
+
+        soapRifle.OnWeaponBullet += UpdateBullet;
+        splashBuster.OnWeaponBullet += UpdateBullet;
+        bubbleGun.OnWeaponBullet += UpdateBullet;
+        UpdateBullet();
     }
 
     public void UpdateBullet()
     {
-        
+        WeaponSelection.SelectSoftRifle(soapRifle.GetBullet());
+        WeaponSelection.SelectSplashBuster(splashBuster.GetBullet());
+        WeaponSelection.SelectBubbleGun(bubbleGun.GetBullet());
     }
 
     public void PauseTrue()

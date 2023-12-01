@@ -8,7 +8,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     public event WeaponBulletHandle OnWeaponBullet;
 
     public int maxBullet;
-    private int _curBullet
+    private int _curBullet;
     public int curBullet 
     {
         get
@@ -25,6 +25,12 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     public abstract void EnterShoot();
     public abstract void ExcuteShoot();
     public abstract void ExitShoot();
+
+    private void Awake() 
+    {
+        Debug.Log(curBullet);
+        ChargeBullet(maxBullet);
+    }
 
     public void ChargeBullet(int count)
     {

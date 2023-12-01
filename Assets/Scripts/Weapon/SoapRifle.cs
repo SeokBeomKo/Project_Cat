@@ -21,11 +21,6 @@ public class SoapRifle : Weapon
     public int maxChargeLvel = 3;
     public int curChargeLevel = 0;
 
-    private void Start() 
-    {
-        curBullet = maxBullet;
-    }
-
     public override void EnterShoot()
     {
         curChargeLevel = 0;

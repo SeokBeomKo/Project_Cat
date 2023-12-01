@@ -19,83 +19,69 @@ public class WeaponSelection : MonoBehaviour
     public TextMeshProUGUI splashBusterText;
     public TextMeshProUGUI bubbleGunText;
     
-    private bool isSoftRifleSelected = false;
-    private bool isSplashBusterSelected = false;
-    private bool isBubbleGunSelected = false;
-    
     public Image softRifleProgress;
     public Image splashBusterProgress;
     public Image bubbleGunProgress;
     public Image softRifleBorder;
     public Image splashBusterBorder;
     public Image bubbleGunBorder;
+
+    public Color selectColor;
+
+    private void Awake() 
+    {
+        selectColor = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+    }
     
     void Start()
     {
         // 게임 시작 시 초기 무기 선택
         weaponContainer = gameObject.transform;
         SelectWeapon(0);
-        isSoftRifleSelected = true;
-        isSplashBusterSelected = false;
-        isBubbleGunSelected = false;
 
-        softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-        softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+        SetWeaponColor(softRifleProgress, softRifleBorder, true);
 
-        splashBusterProgress.color = Color.white;
-        splashBusterBorder.color = Color.white;
-        bubbleGunProgress.color = Color.white;
-        bubbleGunBorder.color = Color.white;
+        SetWeaponColor(splashBusterProgress, splashBusterBorder);
+        SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
     }
+
     void Update()
     {
         // 키(예: 숫자 1, 2, 3)를 눌러 무기 변경
         if (Input.GetKeyDown(KeyCode.Alpha1)) // SoftRifle
         {
             SelectWeapon(0);
-            isSoftRifleSelected = true;
-            isSplashBusterSelected = false;
-            isBubbleGunSelected = false;
 
-            softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-            softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-
-            bubbleGunProgress.color = Color.white;
-            bubbleGunBorder.color = Color.white;
-            splashBusterProgress.color = Color.white;
-            splashBusterBorder.color = Color.white;
+            SetWeaponColor(softRifleProgress, softRifleBorder, true);
+            SetWeaponColor(splashBusterProgress, splashBusterBorder);
+            SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
         {
             SelectWeapon(1);
-            isSoftRifleSelected = false;
-            isSplashBusterSelected = true;
-            isBubbleGunSelected = false;
 
-            splashBusterProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-            splashBusterBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-
-            softRifleProgress.color = Color.white;
-            softRifleBorder.color = Color.white;
-            bubbleGunProgress.color = Color.white;
-            bubbleGunBorder.color = Color.white;
+            SetWeaponColor(softRifleProgress, softRifleBorder);
+            SetWeaponColor(splashBusterProgress, splashBusterBorder, true);
+            SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
         {
             SelectWeapon(2);
-            isSoftRifleSelected = false;
-            isSplashBusterSelected = false;
-            isBubbleGunSelected = true;
 
-            bubbleGunProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-            bubbleGunBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-
-            softRifleProgress.color = Color.white;
-            softRifleBorder.color = Color.white;
-            splashBusterProgress.color = Color.white;
-            splashBusterBorder.color = Color.white;
+            SetWeaponColor(softRifleProgress, softRifleBorder);
+            SetWeaponColor(splashBusterProgress, splashBusterBorder);
+            SetWeaponColor(bubbleGunProgress, bubbleGunBorder, true);
         }
     }
+
+    private void SetWeaponColor(Image progress, Image border, bool select = false)
+    {
+        if (select)
+            progress.color = border.color = selectColor;
+        else
+            progress.color = border.color = Color.white;
+    }
+
     void SelectWeapon(int weaponNum)
     {
         // 선택한 무기를 부모 컨테이너의 가장 아래로 이동
@@ -113,23 +99,21 @@ public class WeaponSelection : MonoBehaviour
         }
     }
 
-
     public void SelectSoftRifle(int bullet)
     {
-        softRifleProgress.fillAmount = bullet / 10;
+        softRifleProgress.fillAmount = bullet / 10f;
         softRifleText.text = bullet.ToString();
         
     }
     public void SelectSplashBuster(int bullet)
     {
-        splashBusterProgress.fillAmount = bullet / 40;
+        splashBusterProgress.fillAmount = bullet / 30f;
         splashBusterText.text = bullet.ToString();
         
     }
     public void SelectBubbleGun(int bullet)
     {
-        bubbleGunProgress.fillAmount = bullet / 400;
+        bubbleGunProgress.fillAmount = bullet / 400f;
         bubbleGunText.text = bullet.ToString();
-      
     }
 }

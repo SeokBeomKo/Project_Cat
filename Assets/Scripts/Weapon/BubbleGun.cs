@@ -17,11 +17,6 @@ public class BubbleGun : Weapon
     public float shootDelay;
     private float lastShootTime;
 
-    private void Start() 
-    {
-        curBullet = maxBullet;
-    }
-
     // : 마우스 클릭 시
     public override void EnterShoot()
     {
