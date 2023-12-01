@@ -6,11 +6,24 @@ using UnityEngine;
 
 public class BubbleProjectile : MonoBehaviour
 {
+    [Header("프리팹")]
+    public GameObject projectile;
+    public GameObject explosion;
+
+    [Header("리지드바디")]
     public Rigidbody rigidBody;
+
+    [Header("방향 정보")]
     public Vector3 directionPosition;
     private Vector3 targetDirection;
 
-    public float maxSpeed  = 0f;
+    [Header("수치 값")]
+    public float maxSpeed;
+
+    private void OnEnable() 
+    {
+        Invoke("Explosion", 5f);
+    }
 
     public void SetDirection(Vector3 direction)
     {
@@ -18,7 +31,7 @@ public class BubbleProjectile : MonoBehaviour
         rigidBody.AddForce(Vector3.up * 200f, ForceMode.Force);
     }
     
-    private void Update() 
+    private void FixedUpdate() 
     {
         targetDirection = (directionPosition - transform.position).normalized;
 
@@ -30,7 +43,7 @@ public class BubbleProjectile : MonoBehaviour
     {
         if (transform.position.y < directionPosition.y) return;
 
-        rigidBody.AddForce(Vector3.down * 0.5f, ForceMode.Force);
+        rigidBody.AddForce(Vector3.down * 0.25f, ForceMode.Force);
     }
 
     public void SpeedContoll()
@@ -44,7 +57,39 @@ public class BubbleProjectile : MonoBehaviour
         }
         else
         {
-            rigidBody.AddForce(targetDirection * 5f, ForceMode.Force);
+            rigidBody.AddForce(targetDirection * maxSpeed, ForceMode.Force);
         }
+    }
+
+    public void Explosion()
+    {
+        rigidBody.isKinematic = true;
+
+        projectile.SetActive(false);
+        explosion.SetActive(true);
+
+        StartCoroutine(DestroyAfterParticles());
+    }
+    
+    private IEnumerator DestroyAfterParticles()
+    {
+        ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
+    
+        while (ps != null && ps.IsAlive())
+        {
+            yield return null;
+        }
+    
+        Destroy(transform.parent.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        Explosion();
+    }
+
+    private void OnCollisionEnter(Collision other) 
+    {
+        Explosion();
     }
 }

@@ -5,30 +5,20 @@ using UnityEngine;
 public class ChargeAttack : MonoBehaviour
 {
     [Header("돌진 시 밀어내는 강도")]
+    public float speed = 3f;
 
-    public float playerSpeed = 5f;
-    private Rigidbody rb;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    private Rigidbody rigidbody;
 
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            rb = other.GetComponentInParent<Rigidbody>();
+            rigidbody = other.GetComponentInParent<Rigidbody>();
 
-            Vector3 pushDirection = - other.transform.parent.position + transform.parent.position;
-            pushDirection.y = 0f;
-            rb.AddForce(Vector3.back * playerSpeed, ForceMode.Impulse);
+            if (rigidbody != null)
+            {
+                rigidbody.AddForce(Vector3.back * speed, ForceMode.Impulse);
+            }
         }
     }
-
 }

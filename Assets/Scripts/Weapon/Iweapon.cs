@@ -4,5 +4,11 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    void Fire(Vector3 direction);
+    void EnterShoot();
+    void ExcuteShoot();
+    void ExitShoot();
+
+    void Shoot();
+
+    void SetTarget(Vector3 direction);
 }

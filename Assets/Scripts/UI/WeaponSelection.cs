@@ -3,180 +3,106 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
 public class WeaponSelection : MonoBehaviour
 {
-    //1π¯ √— : SoftRifle 
-    //2π¯ √— : SplashBuster
-    //3π¯ √— : BubbleGun
-
-    private Transform weaponContainer; // π´±‚ ƒ¡≈◊¿Ã≥ 
-
-    private float softRifleBulletCount = 10;
-    private float splashBusterBulletCount = 40; // 8πﬂæø
-    private float bubbleGunBulletCount = 400;
-
+    //1Î≤à Ï¥ù : SoftRifle 
+    //2Î≤à Ï¥ù : SplashBuster
+    //3Î≤à Ï¥ù : BubbleGun
+    
+    /*private float softRifleBulletCount = 10;
+    private float splashBusterBulletCount = 40; // 8Î∞úÏî©
+    private float bubbleGunBulletCount = 400;*/
+    
+    // private Transform weaponContainer; // Î¨¥Í∏∞ Ïª®ÌÖåÏù¥ÎÑà
+    
     public TextMeshProUGUI softRifleText;
     public TextMeshProUGUI splashBusterText;
     public TextMeshProUGUI bubbleGunText;
-
-    private bool isSoftRifleSelected = false;
-    private bool isSplashBusterSelected = false;
-    private bool isBubbleGunSelected = false;
-
+    
     public Image softRifleProgress;
     public Image splashBusterProgress;
     public Image bubbleGunProgress;
-
     public Image softRifleBorder;
     public Image splashBusterBorder;
     public Image bubbleGunBorder;
 
+    public Color selectColor;
+
+    private void Awake() 
+    {
+        selectColor = new Color(93 / 255f, 123 / 255f, 195 / 255f);
+    }
+    
     void Start()
     {
-        // ∞‘¿” Ω√¿€ Ω√ √ ±‚ π´±‚ º±≈√
-        weaponContainer = gameObject.transform;
-        SelectWeapon(0);
-
-        isSoftRifleSelected = true;
-        isSplashBusterSelected = false;
-        isBubbleGunSelected = false;
-
-        softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-        softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-
-        splashBusterProgress.color = Color.white;
-        splashBusterBorder.color = Color.white;
-        bubbleGunProgress.color = Color.white;
-        bubbleGunBorder.color = Color.white;
+        SetCurWeapon(0);
     }
 
-    void Update()
+    public void SetCurWeapon(int number = 0)
     {
-        // ≈∞(øπ: º˝¿⁄ 1, 2, 3)∏¶ ¥≠∑Ø π´±‚ ∫Ø∞Ê
-        if (Input.GetKeyDown(KeyCode.Alpha1)) // SoftRifle
+        SelectWeapon(number);
+
+        SetWeaponColor(softRifleProgress, softRifleBorder);
+        SetWeaponColor(splashBusterProgress, splashBusterBorder);
+        SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
+
+        switch (number)
         {
-            Debug.Log("1");
-            SelectWeapon(0);
-
-            isSoftRifleSelected = true;
-            isSplashBusterSelected = false;
-            isBubbleGunSelected = false;
-
-            softRifleProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-            softRifleBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-
-            bubbleGunProgress.color = Color.white;
-            bubbleGunBorder.color = Color.white;
-            splashBusterProgress.color = Color.white;
-            splashBusterBorder.color = Color.white;
-
+            case 0:
+                SetWeaponColor(softRifleProgress, softRifleBorder, true);
+                break;
+            case 1:
+                SetWeaponColor(splashBusterProgress, splashBusterBorder, true);
+                break;
+            case 2:
+                SetWeaponColor(bubbleGunProgress, bubbleGunBorder, true);
+                break;
+            default:
+                break;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
-        {
-            Debug.Log("2");
-            SelectWeapon(1);
+        
+    }
 
-            isSoftRifleSelected = false;
-            isSplashBusterSelected = true;
-            isBubbleGunSelected = false;
-
-            splashBusterProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-            splashBusterBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-
-            softRifleProgress.color = Color.white;
-            softRifleBorder.color = Color.white;
-            bubbleGunProgress.color = Color.white;
-            bubbleGunBorder.color = Color.white;
-
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
-        {
-            Debug.Log("3");
-            SelectWeapon(2);
-
-            isSoftRifleSelected = false;
-            isSplashBusterSelected = false;
-            isBubbleGunSelected = true;
-
-            bubbleGunProgress.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-            bubbleGunBorder.color = new Color(93 / 255f, 123 / 255f, 195 / 255f);
-
-            softRifleProgress.color = Color.white;
-            softRifleBorder.color = Color.white;
-            splashBusterProgress.color = Color.white;
-            splashBusterBorder.color = Color.white;
-
-        }
-
-
-        if (isSoftRifleSelected)
-            SelectSoftRifle();
-        else if (isSplashBusterSelected)
-            SelectSplashBuster();
-        else if (isBubbleGunSelected)
-            SelectBubbleGun();
+    private void SetWeaponColor(Image progress, Image border, bool select = false)
+    {
+        if (select)
+            progress.color = border.color = selectColor;
+        else
+            progress.color = border.color = Color.white;
     }
 
     void SelectWeapon(int weaponNum)
     {
-        // º±≈√«— π´±‚∏¶ ∫Œ∏ ƒ¡≈◊¿Ã≥ ¿« ∞°¿Â æ∆∑°∑Œ ¿Ãµø
-        weaponContainer.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
-        // º±≈√«— π´±‚ ≈©±‚ ƒø¡ˆ∞‘
-        weaponContainer.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
-
+        // ÏÑ†ÌÉùÌïú Î¨¥Í∏∞Î•º Î∂ÄÎ™® Ïª®ÌÖåÏù¥ÎÑàÏùò Í∞ÄÏû• ÏïÑÎûòÎ°ú Ïù¥Îèô
+        transform.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
+        // ÏÑ†ÌÉùÌïú Î¨¥Í∏∞ ÌÅ¨Í∏∞ Ïª§ÏßÄÍ≤å
+        transform.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
         int j = 1;
-
-        // ∏µÁ π´±‚ ¿ßƒ° ¿Á¡§∑ƒ
-        for (int i = 0; i < weaponContainer.childCount; i++)
+        // Î™®Îì† Î¨¥Í∏∞ ÏúÑÏπò Ïû¨Ï†ïÎ†¨
+        for (int i = 0; i < transform.childCount; i++)
         {
             if (i == weaponNum) continue;
-
-            weaponContainer.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -270 + j * 60, 0);
-            weaponContainer.GetChild(i).localScale = Vector3.one;
-
+            transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -270 + j * 60, 0);
+            transform.GetChild(i).localScale = Vector3.one;
             j++;
         }
     }
 
-    void SelectSoftRifle() 
+    public void SelectSoftRifle(int bullet)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (softRifleBulletCount > 0)
-            {
-                softRifleBulletCount--;
-                softRifleProgress.fillAmount = softRifleBulletCount / 10;
-                softRifleText.text = softRifleBulletCount.ToString();
-            }
-        }
+        softRifleProgress.fillAmount = bullet / 10f;
+        softRifleText.text = bullet.ToString();
+        
     }
-
-    void SelectSplashBuster() 
+    public void SelectSplashBuster(int bullet)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (splashBusterBulletCount > 0)
-            {
-                splashBusterBulletCount -= 8;
-                splashBusterProgress.fillAmount = splashBusterBulletCount / 40;
-                splashBusterText.text = splashBusterBulletCount.ToString();
-            }
-
-        }
+        splashBusterProgress.fillAmount = bullet / 30f;
+        splashBusterText.text = bullet.ToString();
+        
     }
-
-    void SelectBubbleGun() 
+    public void SelectBubbleGun(int bullet)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (bubbleGunBulletCount > 0)
-            {
-                bubbleGunBulletCount--;
-                bubbleGunProgress.fillAmount = bubbleGunBulletCount / 400;
-                bubbleGunText.text = bubbleGunBulletCount.ToString();
-            }
-        }
+        bubbleGunProgress.fillAmount = bullet / 400f;
+        bubbleGunText.text = bullet.ToString();
     }
-
 }

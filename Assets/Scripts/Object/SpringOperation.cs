@@ -10,6 +10,8 @@ public class SpringOperation : MonoBehaviour
     public float jumpForce = 30f; // 점프력
     public Rigidbody springRigidbody; //= GetComponent<Rigidbody>();
 
+    Rigidbody playerRigidbody;
+
     private bool isCompressed = false; // 스프링이 압축된 상태인지 여부
 
     public float minScale = 0.5f; // 최소 크기
@@ -31,8 +33,8 @@ public class SpringOperation : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Rigidbody rigid = other.gameObject.GetComponentInParent<Rigidbody>();
-            rigid.AddForce(Vector3.up * jumpForce);
+            playerRigidbody = other.gameObject.GetComponentInParent<Rigidbody>();
+            //rigid.AddForce(Vector3.up * jumpForce);
 
             // 플레이어가 스프링과 충돌하면 스프링을 누립니다.
             isCollision = true;
@@ -45,11 +47,10 @@ public class SpringOperation : MonoBehaviour
     }
 
     private void Update()
-    {
-        Debug.Log("isCollision " + isCollision);
+    { 
         if (isCollision)
         {
-            //Jump();
+            Jump();
             isCompressing = true;
         }
 
@@ -101,7 +102,6 @@ public class SpringOperation : MonoBehaviour
 
     private void Jump()
     {
-        Rigidbody playerRigidbody = player.GetComponent<Rigidbody>();
         playerRigidbody.AddForce(Vector3.up * jumpForce);
     }
 

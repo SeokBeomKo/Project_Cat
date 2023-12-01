@@ -21,18 +21,18 @@ public class InputCenter : MonoBehaviour
 
     void SwapWeapon(int number)
     {
-        playerController.weaponCenter.SwapWeapon(number);
+        playerController.weaponStrategy.SwapWeapon(number);
     }
 
     void ChangeAimState()
     {
         if (playerController.stateMachine.curState is PlayerMoveState moveState)
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_MOVE);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.AIM_MOVE);
         }
         else
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.AIM);
         }
     }
 
@@ -40,11 +40,11 @@ public class InputCenter : MonoBehaviour
     {
         if (playerController.stateMachine.curState is PlayerAimState aimState)
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.AIM_MOVE);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.AIM_MOVE);
         }
         else
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.MOVE);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.MOVE);
         }
     }
 
@@ -54,11 +54,11 @@ public class InputCenter : MonoBehaviour
             playerController.stateMachine.curState is PlayerFallState fallState) &&
             playerController.playerStats.GetDoubleCount() > 0)
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.DOUBLE);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.DOUBLE);
         }
         else
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.JUMP);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.JUMP);
         }
     }
 
@@ -66,15 +66,13 @@ public class InputCenter : MonoBehaviour
     {
         if (0 == playerController.playerStats.GetRollCount()) return;
 
-        playerController.playerStats.UseRoll();
-
         if (playerController.stateMachine.curState is PlayerIdleState idleState)
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.BACKROLL);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.BACKROLL);
         }
         else
         {
-            playerController.stateMachine.ChangeStateInput(PlayerStateEnums.DIVEROLL);
+            playerController.stateMachine.ChangeStateInput(PlayerMovementStateEnums.DIVEROLL);
         }
     }
 

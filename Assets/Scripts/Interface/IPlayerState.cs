@@ -8,8 +8,8 @@ public interface IPlayerState
     PlayerStateMachine stateMachine {get; set;}
 
     // >> : 리스트로 자기자신이 변경 가능한 상태 목록 보유
-    HashSet<PlayerStateEnums> allowedInputHash { get; }
-    HashSet<PlayerStateEnums> allowedLogicHash { get; }
+    HashSet<PlayerMovementStateEnums> allowedInputHash { get; }
+    HashSet<PlayerMovementStateEnums> allowedLogicHash { get; }
     void Execute();
 
     void OnStateEnter();

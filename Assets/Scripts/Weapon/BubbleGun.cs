@@ -4,19 +4,58 @@ using UnityEngine;
 
 public class BubbleGun : Weapon
 {
+    [Header("발사 위치")]
     public Transform shootPosition;
+
+    [Header("발사체 프리팹")]
     public GameObject projectilePrefab; // 발사체 프리팹
-    public float fireRate = 1f; // 발사 속도
-    public float projectileForce;           // 발사체에 가해질 힘
-    public float projectileHoverTime;       // 발사체가 부유하는 시간
-    public float trackingDistance = 5f; // 발사체가 추적 시작하는 거리
 
-    private float lastFireTime;
+    [Header("진행 목표")]
+    private Vector3 shootTarget;
 
-    public override void Fire(Vector3 direction)
+    [Header("발사 딜레이")]
+    public float shootDelay;
+    private float lastShootTime;
+
+    // : 마우스 클릭 시
+    public override void EnterShoot()
     {
+        if (Time.time - lastShootTime >= shootDelay) 
+        {
+            Shoot();
+            lastShootTime = Time.time;
+        }
+    }
+
+    // : 마우스 클릭 중
+    public override void ExcuteShoot()
+    {
+        if (Time.time - lastShootTime >= shootDelay) 
+        {
+            Shoot();
+            lastShootTime = Time.time;
+        }
+    }
+
+    public override void ExitShoot()
+    {
+    }
+
+    public override void SetTarget(Vector3 target)
+    {
+        shootTarget = target;
+    }
+    private float randomScale;
+
+    public override void Shoot()
+    {
+        if (curBullet < useBullet) return;
+        UseBullet();
+
+        randomScale = Random.Range(0.2f,0.7f);
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
-        bullet.GetComponent<BubbleProjectile>().SetDirection(direction);
+        bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
+        bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
     }
 }
