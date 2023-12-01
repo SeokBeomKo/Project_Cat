@@ -21,6 +21,8 @@ public class PausePopUp : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.Instance.PlaySFX("Hover");
+
             if (pausePopUp.activeSelf)
             {
                 pausePopUp.SetActive(false);
@@ -85,7 +87,6 @@ public class PausePopUp : MonoBehaviour
 
     public void RemoveUI()
     {
-        SoundManager.Instance.PlaySFX("Click");
         canvas.alpha = 0;
         canvas.interactable = false;
         canvas.blocksRaycasts = false;
@@ -93,7 +94,6 @@ public class PausePopUp : MonoBehaviour
 
     public void ShowUI()
     {
-        SoundManager.Instance.PlaySFX("Click");
         canvas.alpha = 1;
         canvas.interactable = true;
         canvas.blocksRaycasts = true;

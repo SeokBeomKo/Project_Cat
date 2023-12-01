@@ -44,7 +44,7 @@ public class ItemWheel : MonoBehaviour
 
     private bool isEnergyMenuActive; // 운동에너지 메뉴 활성 상태
     private bool hasRightMouseClicked = false;
-    
+
     void Start()
     {
         DeactivateMenu();
@@ -60,6 +60,7 @@ public class ItemWheel : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
         {
+            SoundManager.Instance.PlaySFX("Hover");
             isMenuActive = !isMenuActive;
 
             if (isMenuActive && !isEnergyMenuActive)
@@ -148,7 +149,6 @@ public class ItemWheel : MonoBehaviour
                 
                 if (angle >= i && angle < i + 60)
                 {
-
                     // : 마우스가 마우스 휠에 들어왔을 시 동작
                     if (120 <= i && i < 240) // 비활성화된 아이템 선택 안되게 설정
                     {
@@ -163,6 +163,10 @@ public class ItemWheel : MonoBehaviour
                     //
 
                     // :아이템 이름 및 설명 텍스트
+                    if (itemName.text != itemNameArray[currentItem])
+                    {
+                        SoundManager.Instance.PlaySFX("Hover");
+                    }
                     itemName.text = itemNameArray[currentItem];
                     
                     if(itemExplanationArray[currentItem].Contains(" ")) // 띄어쓰기 두 번이면 줄 바꿈
@@ -184,6 +188,7 @@ public class ItemWheel : MonoBehaviour
                         if (InventoryManager.Instance.GetItemCount(itemNameArray[currentItem]) > 0) // 아이템을 보유하고 있을 때 눌리게
                         {
                             hasRightMouseClicked = true;
+                            SoundManager.Instance.PlaySFX("Click");
 
                             if (angle >= 0 && angle < 60) // : 운동에너지 선택시 새로운 팝업창 생성
                             {
@@ -223,6 +228,7 @@ public class ItemWheel : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+            SoundManager.Instance.PlaySFX("Hover");
             DeactivateMenu();
             crossHair.SetActive(true);
         }
@@ -232,11 +238,13 @@ public class ItemWheel : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1)) // 우클릭 시 아이템 휠 활성화 
         {
+            SoundManager.Instance.PlaySFX("Hover");
             DeactivateEnergyMenu();
             ActivateMenu();
         }
         else if (Input.GetMouseButtonDown(2)) // 스크롤 클릭 시 모든 휠 꺼지게 
         {
+            SoundManager.Instance.PlaySFX("Hover");
             DeactivateEnergyMenu();
             DeactivateMenu();
             crossHair.SetActive(true);
@@ -261,6 +269,9 @@ public class ItemWheel : MonoBehaviour
             {
                 selectEnergyLeft.SetActive(true);
                 selectEnergyRight.SetActive(false);
+
+                if (moveSpeed.text != "캐릭터의 이동속도를 증가시킨다.") SoundManager.Instance.PlaySFX("Hover");
+
                 moveSpeed.text = "캐릭터의 이동속도를 증가시킨다.";
                 attackSpeed.text = " ";
             } 
@@ -269,11 +280,14 @@ public class ItemWheel : MonoBehaviour
                 selectEnergyLeft.SetActive(false);
                 selectEnergyRight.SetActive(true);
                 moveSpeed.text = " ";
+                if (attackSpeed.text != "플레이어의 공격 속도를 상승시킨다.") SoundManager.Instance.PlaySFX("Hover");
                 attackSpeed.text = "플레이어의 공격 속도를 상승시킨다.";
             }
 
             if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
             {
+
+                SoundManager.Instance.PlaySFX("Click");
                 hasRightMouseClicked = true;
                 Debug.Log("[ItemWheel] " + energySlotArray[selectedEnergySlot].name + "선택");                
                 InventoryManager.Instance.UseItem("운동에너지"); 
