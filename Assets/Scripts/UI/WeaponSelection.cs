@@ -8,22 +8,28 @@ public class WeaponSelection : MonoBehaviour
     //1번 총 : SoftRifle 
     //2번 총 : SplashBuster
     //3번 총 : BubbleGun
-    private Transform weaponContainer; // 무기 컨테이너
-    private float softRifleBulletCount = 10;
+    
+    /*private float softRifleBulletCount = 10;
     private float splashBusterBulletCount = 40; // 8발씩
-    private float bubbleGunBulletCount = 400;
+    private float bubbleGunBulletCount = 400;*/
+    
+    private Transform weaponContainer; // 무기 컨테이너
+    
     public TextMeshProUGUI softRifleText;
     public TextMeshProUGUI splashBusterText;
     public TextMeshProUGUI bubbleGunText;
+    
     private bool isSoftRifleSelected = false;
     private bool isSplashBusterSelected = false;
     private bool isBubbleGunSelected = false;
+    
     public Image softRifleProgress;
     public Image splashBusterProgress;
     public Image bubbleGunProgress;
     public Image softRifleBorder;
     public Image splashBusterBorder;
     public Image bubbleGunBorder;
+    
     void Start()
     {
         // 게임 시작 시 초기 무기 선택
@@ -46,7 +52,6 @@ public class WeaponSelection : MonoBehaviour
         // 키(예: 숫자 1, 2, 3)를 눌러 무기 변경
         if (Input.GetKeyDown(KeyCode.Alpha1)) // SoftRifle
         {
-            Debug.Log("1");
             SelectWeapon(0);
             isSoftRifleSelected = true;
             isSplashBusterSelected = false;
@@ -62,7 +67,6 @@ public class WeaponSelection : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
         {
-            Debug.Log("2");
             SelectWeapon(1);
             isSoftRifleSelected = false;
             isSplashBusterSelected = true;
@@ -78,7 +82,6 @@ public class WeaponSelection : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
         {
-            Debug.Log("3");
             SelectWeapon(2);
             isSoftRifleSelected = false;
             isSplashBusterSelected = false;
@@ -92,12 +95,6 @@ public class WeaponSelection : MonoBehaviour
             splashBusterProgress.color = Color.white;
             splashBusterBorder.color = Color.white;
         }
-        if (isSoftRifleSelected)
-            SelectSoftRifle();
-        else if (isSplashBusterSelected)
-            SelectSplashBuster();
-        else if (isBubbleGunSelected)
-            SelectBubbleGun();
     }
     void SelectWeapon(int weaponNum)
     {
@@ -115,40 +112,24 @@ public class WeaponSelection : MonoBehaviour
             j++;
         }
     }
-    void SelectSoftRifle()
+
+
+    public void SelectSoftRifle(int bullet)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (softRifleBulletCount > 0)
-            {
-                softRifleBulletCount--;
-                softRifleProgress.fillAmount = softRifleBulletCount / 10;
-                softRifleText.text = softRifleBulletCount.ToString();
-            }
-        }
+        softRifleProgress.fillAmount = bullet / 10;
+        softRifleText.text = bullet.ToString();
+        
     }
-    void SelectSplashBuster()
+    public void SelectSplashBuster(int bullet)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (splashBusterBulletCount > 0)
-            {
-                splashBusterBulletCount -= 8;
-                splashBusterProgress.fillAmount = splashBusterBulletCount / 40;
-                splashBusterText.text = splashBusterBulletCount.ToString();
-            }
-        }
+        splashBusterProgress.fillAmount = bullet / 40;
+        splashBusterText.text = bullet.ToString();
+        
     }
-    void SelectBubbleGun()
+    public void SelectBubbleGun(int bullet)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (bubbleGunBulletCount > 0)
-            {
-                bubbleGunBulletCount--;
-                bubbleGunProgress.fillAmount = bubbleGunBulletCount / 400;
-                bubbleGunText.text = bubbleGunBulletCount.ToString();
-            }
-        }
+        bubbleGunProgress.fillAmount = bullet / 400;
+        bubbleGunText.text = bullet.ToString();
+      
     }
 }
