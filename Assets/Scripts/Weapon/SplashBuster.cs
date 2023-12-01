@@ -55,7 +55,6 @@ public class SplashBuster : Weapon
 
     public override void Shoot()
     {
-        Flash();
         Fire();
     }
 
@@ -68,6 +67,7 @@ public class SplashBuster : Weapon
     {
         if (curBullet < useBullet) return;
         UseBullet();
+        Flash();
 
         for (int i = 0; i < bulletCount; i++)
         {
