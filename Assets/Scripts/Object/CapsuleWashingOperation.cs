@@ -14,14 +14,14 @@ public class CapsuleWashingOperation : MonoBehaviour
     void Start()
     {
         objectHPbar.SetHP(HP);
-        objectHPbar.ChechHP();
+        objectHPbar.CheckHP();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            objectHPbar.Demage(1);
+            objectHPbar.Damage(1);
             HP = objectHPbar.GetHP();
 
             Debug.Log("HP : " + HP);

@@ -11,11 +11,14 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
     [Header("모델링 정보")]
     public GameObject model;
     public GameObject explosionVFX;
+    public GameObject hpBar;
+
+    public Collider sphereCollider;
 
     void Start()
     {
         objectHPbar.SetHP(HP);
-        objectHPbar.ChechHP();
+        objectHPbar.CheckHP();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,7 +44,7 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
 
     private void Hit()
     {
-        objectHPbar.Demage(1);
+        objectHPbar.Damage(1);
         HP = objectHPbar.GetHP();
         Check();
     }
@@ -51,6 +54,8 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
         if (HP == 0)
         {
             model.SetActive(false);
+            hpBar.SetActive(false);
+            sphereCollider.enabled = false;
             explosionVFX.SetActive(true);
 
             StartCoroutine(DestroyAfterParticles());

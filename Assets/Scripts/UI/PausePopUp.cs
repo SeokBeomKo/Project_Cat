@@ -53,6 +53,7 @@ public class PausePopUp : MonoBehaviour
 
     public void OnClickResume()
     {
+        SoundManager.Instance.PlaySFX("Click");
         pausePopUp.SetActive(false);
         ShowUI();
         Time.timeScale = 1f;
@@ -61,17 +62,20 @@ public class PausePopUp : MonoBehaviour
 
     public void OnClickSetting()
     {
+        SoundManager.Instance.PlaySFX("Click");
         pausePopUp.SetActive(false);
         settingPopUp.SetActive(true);
     }
 
     public void OnClickExit()
     {
+        SoundManager.Instance.PlaySFX("Click");
         SceneManager.LoadScene("HanKyeol_Lobby");
     }
 
     public void ClosePopUp()
     {
+        SoundManager.Instance.PlaySFX("Click");
         settingPopUp.SetActive(false);
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
@@ -81,6 +85,7 @@ public class PausePopUp : MonoBehaviour
 
     public void RemoveUI()
     {
+        SoundManager.Instance.PlaySFX("Click");
         canvas.alpha = 0;
         canvas.interactable = false;
         canvas.blocksRaycasts = false;
@@ -88,6 +93,7 @@ public class PausePopUp : MonoBehaviour
 
     public void ShowUI()
     {
+        SoundManager.Instance.PlaySFX("Click");
         canvas.alpha = 1;
         canvas.interactable = true;
         canvas.blocksRaycasts = true;

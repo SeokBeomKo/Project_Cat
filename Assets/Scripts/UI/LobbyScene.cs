@@ -23,11 +23,14 @@ public class LobbyScene : MonoBehaviour
     // 버튼 이벤트
     public void OnClickStart()
     {
+        SoundManager.Instance.PlaySFX("Click");
         SceneManager.LoadScene(sceneName);
     }
 
     public void OnClickSetting()
     {
+        SoundManager.Instance.PlaySFX("Click");
+
         settingPopUp.SetActive(true);
         Time.timeScale = 0f;
 
@@ -36,6 +39,8 @@ public class LobbyScene : MonoBehaviour
 
     public void OnClickExit()
     {
+        SoundManager.Instance.PlaySFX("Click");
+
 #if UNITY_EDITOR 
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -45,6 +50,8 @@ public class LobbyScene : MonoBehaviour
 
     public void ClosePopUp()
     {
+        SoundManager.Instance.PlaySFX("Click");
+
         settingPopUp.SetActive(false);
         Time.timeScale = 1f;
 
