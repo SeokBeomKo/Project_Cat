@@ -34,9 +34,9 @@ public abstract class Weapon : MonoBehaviour, IWeapon
         ChargeBullet(maxBullet);
     }
 
-    public void SetOffset(float _offset)
+    public void SetOffset(int offset)
     {
-        damageOffset = _offset;
+        damageOffset = offset;
     }
 
     public void ChargeBullet(int count)
