@@ -16,7 +16,7 @@ public class ObjectHPbar : MonoBehaviour
         curHP = maxHP;
     }
 
-    public void ChechHP()
+    public void CheckHP()
     {
         if (HPbar != null)
         {
@@ -24,13 +24,13 @@ public class ObjectHPbar : MonoBehaviour
         }
     }
 
-    public void Demage(float demage)
+    public void Damage(float damage)
     {
         if (maxHP == 0 || curHP <= 0) return;
 
-        curHP -= demage;
+        curHP -= damage;
 
-        ChechHP();
+        CheckHP();
     }
 
     public float GetHP()
@@ -38,8 +38,4 @@ public class ObjectHPbar : MonoBehaviour
         return curHP;
     }
 
-    private void Update()
-    {
-        HPbar.transform.parent.rotation = Quaternion.Euler(0, 90, 0);
-    }
 }
