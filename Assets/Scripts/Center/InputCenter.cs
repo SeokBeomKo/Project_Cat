@@ -21,7 +21,7 @@ public class InputCenter : MonoBehaviour
 
     void SwapWeapon(int number)
     {
-        playerController.weaponCenter.SwapWeapon(number);
+        playerController.weaponStrategy.SwapWeapon(number);
     }
 
     void ChangeAimState()

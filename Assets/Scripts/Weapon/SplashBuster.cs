@@ -22,12 +22,6 @@ public class SplashBuster : Weapon
 
     private bool isShooting = false;
 
-    private void Start() 
-    {
-        curBullet = maxBullet;
-    }
-
-
     // : 마우스 클릭 시
     public override void EnterShoot()
     {
@@ -86,11 +80,6 @@ public class SplashBuster : Weapon
             bullet.transform.LookAt(fireDirection);
             bullet.GetComponentInChildren<SplashProjectile>().SetDirection(fireDirection);
         }
-    }
-
-    public override void UseBullet()
-    {
-        curBullet -= useBullet;
     }
 
 }

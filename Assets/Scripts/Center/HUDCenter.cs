@@ -11,12 +11,22 @@ public class HUDCenter : MonoBehaviour
     [SerializeField] public GameObject cameraRotate;
     [SerializeField] public GameObject inputHandle;
 
+    [Header("무기 관리자")]
+    [SerializeField] public WeaponStrategy weaponStrategy;
+
     [Header("플레이어 스탯")]
     [SerializeField] public PlayerStats playerStats;
+
+    [Header("플레이어 무기")]
+    [SerializeField] public Weapon soapRifle;
+    [SerializeField] public Weapon splashBuster;
+    [SerializeField] public Weapon bubbleGun;
 
     [Header("플레이어 HUD")]
     [SerializeField] public HPObserver hpObserver;
     [SerializeField] public RollObserver rollObserver;
+
+    [SerializeField] public WeaponSelection weaponSelection;
 
     [Header("보스 파츠별 충돌 확인")]
     [SerializeField] public List<PartsSubject> partsSubjects;
@@ -37,12 +47,31 @@ public class HUDCenter : MonoBehaviour
         {
             partsSubject.AddObserver<IObserver>(partsSubject.observers, catStatsSubject);
         }
-
-        catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityObserver);
-        catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityPopUpObserver);
+        
+        // catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityObserver);
+        // catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityPopUpObserver);
 
         pausePopUp.OnPausePopupTrue += PauseTrue;
         pausePopUp.OnPausePopupFalse += PauseFalse;
+
+        soapRifle.OnWeaponBullet += UpdateBullet;
+        splashBuster.OnWeaponBullet += UpdateBullet;
+        bubbleGun.OnWeaponBullet += UpdateBullet;
+        UpdateBullet();
+
+        weaponStrategy.OnSwapWeapon += UpdateWeapon;
+    }
+
+    public void UpdateWeapon(int number)
+    {
+        weaponSelection.SetCurWeapon(number);
+    }
+
+    public void UpdateBullet()
+    {
+        weaponSelection.SelectSoftRifle(soapRifle.GetBullet());
+        weaponSelection.SelectSplashBuster(splashBuster.GetBullet());
+        weaponSelection.SelectBubbleGun(bubbleGun.GetBullet());
     }
 
     public void PauseTrue()
