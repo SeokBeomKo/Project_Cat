@@ -25,7 +25,7 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            Hit();
+            Hit(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
         } 
     }
 
@@ -42,16 +42,16 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
         }
     }
 
-    private void Hit()
+    private void Hit(float damage)
     {
-        objectHPbar.Damage(1);
+        objectHPbar.Damage(damage);
         HP = objectHPbar.GetHP();
         Check();
     }
 
     private void Check()
     {
-        if (HP == 0)
+        if (HP <= 0)
         {
             model.SetActive(false);
             hpBar.SetActive(false);
@@ -74,8 +74,8 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
         Destroy(transform.parent.gameObject);
     }
 
-    public void BeAttacked()
+    public void BeAttacked(float damage)
     {
-        Hit();
+        Hit(damage);
     }
 }

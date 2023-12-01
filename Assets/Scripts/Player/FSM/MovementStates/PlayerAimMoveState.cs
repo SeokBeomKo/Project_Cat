@@ -62,7 +62,7 @@ public class PlayerAimMoveState : IPlayerState
         player.playerStats.FillDoubleCount();
 
         originSpeed = player.playerStats.moveSpeed;
-        player.playerStats.moveSpeed *= 0.5f; 
+        player.playerStats.moveSpeed = 0.8f; 
     }
 
     public void OnStateExit()

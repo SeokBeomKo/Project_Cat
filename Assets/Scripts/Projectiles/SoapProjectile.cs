@@ -94,7 +94,7 @@ public class SoapProjectile : MonoBehaviour, IAttackable, IProjectile
         {
             beamEnd.transform.position = endPoint = end = hit.point;
             if (null != hit.collider.GetComponentInChildren<IDamageable>())
-                hit.collider.GetComponentInChildren<IDamageable>().BeAttacked();
+                hit.collider.GetComponentInChildren<IDamageable>().BeAttacked(damage);
 
             beamEnd.transform.LookAt(beamEnd.transform.position + hit.normal);
         }

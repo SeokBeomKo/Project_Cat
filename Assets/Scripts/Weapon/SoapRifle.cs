@@ -62,7 +62,8 @@ public class SoapRifle : Weapon
         bullet.transform.position = shootPosition.position;
 
         SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
+        projectile.SetDamage(damage * damageOffset);
         projectile.ShootBeamInDir(shootPosition.position, shootTarget, curChargeLevel);
-        projectile.GetComponent<IProjectile>().SetDamage(damage * damageOffset);
+        
     }
 }
