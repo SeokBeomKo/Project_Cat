@@ -45,6 +45,7 @@ public class PlayerStats : MonoBehaviour, ISubject
     public int currentDouble;
 
     [Header("수치 값")]
+    public float moveSpeedOffset = 1f;
     public float moveSpeed;
     public float rollSpeed;
     public float jumpForce;
@@ -54,6 +55,18 @@ public class PlayerStats : MonoBehaviour, ISubject
         currentHealth   = maxHealth;
         currentRoll     = maxRoll;
         currentDouble   = maxDouble;
+    }
+
+    public void AddMoveSpeed(float time)
+    {
+        moveSpeedOffset = 2f;
+        StartCoroutine(RecoveryMoveSpeed(time));
+    }
+
+    IEnumerator RecoveryMoveSpeed(float time)
+    {
+        yield return new WaitForSeconds(time);
+        moveSpeedOffset = 1f;
     }
 
     private void FixedUpdate()

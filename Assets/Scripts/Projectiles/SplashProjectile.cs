@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplashProjectile : MonoBehaviour
+public class SplashProjectile : MonoBehaviour, IAttackable, IProjectile
 {
     [Header("프리팹")]
     public GameObject projectile;
@@ -17,6 +17,18 @@ public class SplashProjectile : MonoBehaviour
 
     [Header("수치 값")]
     public float maxSpeed;
+
+    private float damage;
+
+    public void SetDamage(float _damage)
+    {
+        damage = _damage;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
 
     private void OnEnable() 
     {

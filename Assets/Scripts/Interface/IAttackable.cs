@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IProjectile
+public interface IAttackable
 {
-    void SetDamage(float damage);
+    float GetDamage();
 }

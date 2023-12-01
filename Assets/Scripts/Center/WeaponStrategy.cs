@@ -11,6 +11,8 @@ public class WeaponStrategy : MonoBehaviour
     public List<Weapon> weaponList;
     private Weapon curWeapon;
 
+    public int damageOffset = 1;
+
     private void Start()
     {
         InitWeapon();
@@ -25,6 +27,19 @@ public class WeaponStrategy : MonoBehaviour
         }
     }
 
+    public void DamageUp(float time)
+    {
+        damageOffset = 2;
+        curWeapon.SetOffset(damageOffset);
+        StartCoroutine(RecoveryDamage(time));
+    }
+
+    IEnumerator RecoveryDamage(float time)
+    {
+        yield return new WaitForSeconds(time);
+        damageOffset = 1;
+    }
+
     public void SwapWeapon(int number)
     {
         if (null != curWeapon)
@@ -34,6 +49,7 @@ public class WeaponStrategy : MonoBehaviour
 
         curWeapon = weaponList[number];
         curWeapon.transform.parent.gameObject.SetActive(true);
+        curWeapon.SetOffset(damageOffset);
     }
 
     public void SettingTarget()

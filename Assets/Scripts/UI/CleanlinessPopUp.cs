@@ -33,6 +33,7 @@ public class CleanlinessPopUp : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            SoundManager.Instance.PlaySFX("Hover");
             popUp.SetActive(true);
         }
         if (Input.GetKeyUp(KeyCode.Tab))

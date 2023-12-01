@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -75976,9 +75976,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2debaa37fafe68c4290326bd71b4926b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausePopUp: {fileID: 0}
+  cameraRotate: {fileID: 0}
+  inputHandle: {fileID: 0}
   playerStats: {fileID: 2095130963}
   hpObserver: {fileID: 0}
   rollObserver: {fileID: 0}
+  partsSubjects: []
+  catStatsSubject: {fileID: 0}
+  likeabilityObserver: {fileID: 0}
+  likeabilityPopUpObserver: {fileID: 0}
 --- !u!4 &1733648438
 Transform:
   m_ObjectHideFlags: 0
@@ -92425,6 +92432,7 @@ MonoBehaviour:
   shotstateMachine: {fileID: 0}
   model: {fileID: 837903521}
   playerStats: {fileID: 2095130963}
+  playerHitScan: {fileID: 0}
   weaponCenter: {fileID: 2095130962}
   isGrounded: 0
   isRolled: 0

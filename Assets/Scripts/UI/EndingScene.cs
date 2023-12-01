@@ -33,11 +33,14 @@ public class EndingScene : MonoBehaviour
         endingText.text = null;
 
         yield return new WaitForSeconds(0.5f);
+        
+        SoundManager.Instance.PlaySFX("Keyboard");
         for (int i = 0; i < endingContent.Length; i++)
         {
             endingText.text += endingContent[i];
             yield return new WaitForSeconds(0.1f);
         }
+        SoundManager.Instance.StopSFX();
 
         yield return new WaitForSeconds(0.5f);
         endingText.gameObject.SetActive(false);
@@ -57,11 +60,13 @@ public class EndingScene : MonoBehaviour
 
     public void OnClickRestart()
     {
+        SoundManager.Instance.PlaySFX("Click");
         SceneManager.LoadScene(sceneName);
     }
 
     public void OnClickEnd()
     {
+        SoundManager.Instance.PlaySFX("Click");
         SceneManager.LoadScene("HanKyeol_Lobby");
     }
 

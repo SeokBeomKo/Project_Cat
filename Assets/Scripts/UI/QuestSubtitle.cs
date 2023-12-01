@@ -41,7 +41,7 @@ public class QuestSubtitle : MonoBehaviour
         }
         SoundManager.Instance.StopSFX();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         subtitleText.gameObject.SetActive(false);
     }
 }

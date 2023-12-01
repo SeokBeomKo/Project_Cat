@@ -21,6 +21,8 @@ public class PausePopUp : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.Instance.PlaySFX("Hover");
+
             if (pausePopUp.activeSelf)
             {
                 pausePopUp.SetActive(false);
@@ -53,6 +55,7 @@ public class PausePopUp : MonoBehaviour
 
     public void OnClickResume()
     {
+        SoundManager.Instance.PlaySFX("Click");
         pausePopUp.SetActive(false);
         ShowUI();
         Time.timeScale = 1f;
@@ -61,17 +64,20 @@ public class PausePopUp : MonoBehaviour
 
     public void OnClickSetting()
     {
+        SoundManager.Instance.PlaySFX("Click");
         pausePopUp.SetActive(false);
         settingPopUp.SetActive(true);
     }
 
     public void OnClickExit()
     {
+        SoundManager.Instance.PlaySFX("Click");
         SceneManager.LoadScene("HanKyeol_Lobby");
     }
 
     public void ClosePopUp()
     {
+        SoundManager.Instance.PlaySFX("Click");
         settingPopUp.SetActive(false);
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
