@@ -69,9 +69,4 @@ public class SoapRifle : Weapon
         SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
         projectile.ShootBeamInDir(shootPosition.position, shootTarget, curChargeLevel);
     }
-
-    public override void UseBullet()
-    {
-        curBullet -= useBullet;
-    }
 }

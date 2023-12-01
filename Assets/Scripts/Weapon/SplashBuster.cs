@@ -88,9 +88,4 @@ public class SplashBuster : Weapon
         }
     }
 
-    public override void UseBullet()
-    {
-        curBullet -= useBullet;
-    }
-
 }

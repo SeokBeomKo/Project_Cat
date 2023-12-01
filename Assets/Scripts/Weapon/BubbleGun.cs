@@ -63,9 +63,4 @@ public class BubbleGun : Weapon
         bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
         bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
     }
-
-    public override void UseBullet()
-    {
-        curBullet -= useBullet;
-    }
 }
