@@ -21,12 +21,18 @@ public class SoapRifle : Weapon
     public int maxChargeLvel = 3;
     public int curChargeLevel = 0;
 
+    private void Start() 
+    {
+        curBullet = maxBullet;
+    }
+
     public override void EnterShoot()
     {
         curChargeLevel = 0;
+        chargePrefab.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
     }
 
-    private float chargeTime;
+    private float chargeTime = 0;
     public override void ExcuteShoot()
     {
         chargePrefab.SetActive(true);
@@ -34,13 +40,16 @@ public class SoapRifle : Weapon
         if (chargeTime >= 1)
         {
             chargeTime = 0;
-            if (curChargeLevel < maxChargeLvel) curChargeLevel++;
+            if (curChargeLevel < maxChargeLvel && curChargeLevel + 1 <= curBullet) curChargeLevel++;
+            chargePrefab.transform.localScale = curChargeLevel * new Vector3(0.2f,0.2f,0.2f);
         }
     }
     public override void ExitShoot()
     {
         chargePrefab.SetActive(false);
         Shoot();
+
+        useBullet = 1;
     }
 
     public override void SetTarget(Vector3 direction)
@@ -50,23 +59,19 @@ public class SoapRifle : Weapon
 
     public override void Shoot()
     {
+        useBullet *= curChargeLevel + 1;
+        if (curBullet < useBullet) return;
+        UseBullet();
+
         GameObject bullet = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         bullet.transform.position = shootPosition.position;
 
-        switch(curChargeLevel)
-        {
-            case 1:
-                bullet.transform.localScale *= 1.5f;
-                break;
-            case 2:
-                bullet.transform.localScale *= 2f;
-                break;
-            case 3:
-                bullet.transform.localScale *= 2.5f;
-                break;
-        }
-
         SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
-        projectile.ShootBeamInDir(shootPosition.position, shootTarget);
+        projectile.ShootBeamInDir(shootPosition.position, shootTarget, curChargeLevel);
+    }
+
+    public override void UseBullet()
+    {
+        curBullet -= useBullet;
     }
 }
