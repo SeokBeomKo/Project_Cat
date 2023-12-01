@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class WeaponCenter : MonoBehaviour
+public class WeaponStrategy : MonoBehaviour
 {
+    public delegate void WeaponHandle(int number);
+    public event WeaponHandle OnSwapWeapon;
+
     public List<Weapon> weaponList;
     private Weapon curWeapon;
 
@@ -26,6 +29,8 @@ public class WeaponCenter : MonoBehaviour
     {
         if (null != curWeapon)
             curWeapon.transform.parent.gameObject.SetActive(false);
+
+        OnSwapWeapon?.Invoke(number);
 
         curWeapon = weaponList[number];
         curWeapon.transform.parent.gameObject.SetActive(true);

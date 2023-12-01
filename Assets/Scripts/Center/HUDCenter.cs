@@ -11,6 +11,9 @@ public class HUDCenter : MonoBehaviour
     [SerializeField] public GameObject cameraRotate;
     [SerializeField] public GameObject inputHandle;
 
+    [Header("무기 관리자")]
+    [SerializeField] public WeaponStrategy weaponStrategy;
+
     [Header("플레이어 스탯")]
     [SerializeField] public PlayerStats playerStats;
 
@@ -23,7 +26,7 @@ public class HUDCenter : MonoBehaviour
     [SerializeField] public HPObserver hpObserver;
     [SerializeField] public RollObserver rollObserver;
 
-    [SerializeField] public WeaponSelection WeaponSelection;
+    [SerializeField] public WeaponSelection weaponSelection;
 
     [Header("보스 파츠별 충돌 확인")]
     [SerializeField] public List<PartsSubject> partsSubjects;
@@ -55,13 +58,20 @@ public class HUDCenter : MonoBehaviour
         splashBuster.OnWeaponBullet += UpdateBullet;
         bubbleGun.OnWeaponBullet += UpdateBullet;
         UpdateBullet();
+
+        weaponStrategy.OnSwapWeapon += UpdateWeapon;
+    }
+
+    public void UpdateWeapon(int number)
+    {
+        weaponSelection.SetCurWeapon(number);
     }
 
     public void UpdateBullet()
     {
-        WeaponSelection.SelectSoftRifle(soapRifle.GetBullet());
-        WeaponSelection.SelectSplashBuster(splashBuster.GetBullet());
-        WeaponSelection.SelectBubbleGun(bubbleGun.GetBullet());
+        weaponSelection.SelectSoftRifle(soapRifle.GetBullet());
+        weaponSelection.SelectSplashBuster(splashBuster.GetBullet());
+        weaponSelection.SelectBubbleGun(bubbleGun.GetBullet());
     }
 
     public void PauseTrue()

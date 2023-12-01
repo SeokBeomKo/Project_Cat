@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]    public PlayerHitScan        playerHitScan;
 
     [Header("무기")]
-    [SerializeField]    public WeaponCenter         weaponCenter;
+    [SerializeField]    public WeaponStrategy         weaponStrategy;
 
     [Header("체크")]
     [HideInInspector]   public bool                 isGrounded;

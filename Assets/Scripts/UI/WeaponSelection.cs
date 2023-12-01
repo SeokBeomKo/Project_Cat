@@ -13,7 +13,7 @@ public class WeaponSelection : MonoBehaviour
     private float splashBusterBulletCount = 40; // 8발씩
     private float bubbleGunBulletCount = 400;*/
     
-    private Transform weaponContainer; // 무기 컨테이너
+    // private Transform weaponContainer; // 무기 컨테이너
     
     public TextMeshProUGUI softRifleText;
     public TextMeshProUGUI splashBusterText;
@@ -35,43 +35,32 @@ public class WeaponSelection : MonoBehaviour
     
     void Start()
     {
-        // 게임 시작 시 초기 무기 선택
-        weaponContainer = gameObject.transform;
-        SelectWeapon(0);
-
-        SetWeaponColor(softRifleProgress, softRifleBorder, true);
-
-        SetWeaponColor(splashBusterProgress, splashBusterBorder);
-        SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
+        SetCurWeapon(0);
     }
 
-    void Update()
+    public void SetCurWeapon(int number = 0)
     {
-        // 키(예: 숫자 1, 2, 3)를 눌러 무기 변경
-        if (Input.GetKeyDown(KeyCode.Alpha1)) // SoftRifle
-        {
-            SelectWeapon(0);
+        SelectWeapon(number);
 
-            SetWeaponColor(softRifleProgress, softRifleBorder, true);
-            SetWeaponColor(splashBusterProgress, splashBusterBorder);
-            SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // SplashBuster
-        {
-            SelectWeapon(1);
+        SetWeaponColor(softRifleProgress, softRifleBorder);
+        SetWeaponColor(splashBusterProgress, splashBusterBorder);
+        SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
 
-            SetWeaponColor(softRifleProgress, softRifleBorder);
-            SetWeaponColor(splashBusterProgress, splashBusterBorder, true);
-            SetWeaponColor(bubbleGunProgress, bubbleGunBorder);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) // BubbleGun
+        switch (number)
         {
-            SelectWeapon(2);
-
-            SetWeaponColor(softRifleProgress, softRifleBorder);
-            SetWeaponColor(splashBusterProgress, splashBusterBorder);
-            SetWeaponColor(bubbleGunProgress, bubbleGunBorder, true);
+            case 0:
+                SetWeaponColor(softRifleProgress, softRifleBorder, true);
+                break;
+            case 1:
+                SetWeaponColor(splashBusterProgress, splashBusterBorder, true);
+                break;
+            case 2:
+                SetWeaponColor(bubbleGunProgress, bubbleGunBorder, true);
+                break;
+            default:
+                break;
         }
+        
     }
 
     private void SetWeaponColor(Image progress, Image border, bool select = false)
@@ -85,16 +74,16 @@ public class WeaponSelection : MonoBehaviour
     void SelectWeapon(int weaponNum)
     {
         // 선택한 무기를 부모 컨테이너의 가장 아래로 이동
-        weaponContainer.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
+        transform.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
         // 선택한 무기 크기 커지게
-        weaponContainer.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        transform.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
         int j = 1;
         // 모든 무기 위치 재정렬
-        for (int i = 0; i < weaponContainer.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             if (i == weaponNum) continue;
-            weaponContainer.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -270 + j * 60, 0);
-            weaponContainer.GetChild(i).localScale = Vector3.one;
+            transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -270 + j * 60, 0);
+            transform.GetChild(i).localScale = Vector3.one;
             j++;
         }
     }

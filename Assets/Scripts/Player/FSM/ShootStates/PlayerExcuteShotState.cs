@@ -14,8 +14,8 @@ public class PlayerExcuteShotState : IPlayerShotState
     }
     public void Execute()
     {
-        player.weaponCenter.SettingTarget();
-        player.weaponCenter.ExcuteShoot();
+        player.weaponStrategy.SettingTarget();
+        player.weaponStrategy.ExcuteShoot();
         if (Input.GetButtonUp("Fire1"))
         {
             stateMachine.ChangeState(PlayerShotStateEnums.EXIT);
