@@ -16,6 +16,18 @@ public class PlayerCenter : MonoBehaviour
     private void Start() 
     {
         playerHitScan.OnPlayerHitScan += HitPlayer;
+        playerHitScan.OnPlayerSpeedUp += SpeedUp;
+        playerHitScan.OnPlayerDamageUp += DamageUp;
+    }
+
+    public void DamageUp()
+    {
+        
+    }
+
+    public void SpeedUp()
+    {
+        playerStats.AddMoveSpeed(5);
     }
 
     public void HitPlayer(int damage = 5)

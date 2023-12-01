@@ -20,6 +20,9 @@ public abstract class Weapon : MonoBehaviour, IWeapon
         }
     }
     public int useBullet;
+    public int originDamage;
+    public int curDamage;
+
     public abstract void SetTarget(Vector3 direction);
     public abstract void Shoot();
     public abstract void EnterShoot();
@@ -28,7 +31,6 @@ public abstract class Weapon : MonoBehaviour, IWeapon
 
     private void Awake() 
     {
-        Debug.Log(curBullet);
         ChargeBullet(maxBullet);
     }
 
