@@ -13,9 +13,25 @@ public class PlayerCenter : MonoBehaviour
     [SerializeField]
     PlayerStats playerStats;
 
+    [SerializeField]
+    WeaponStrategy weaponStrategy;
+
     private void Start() 
     {
         playerHitScan.OnPlayerHitScan += HitPlayer;
+
+        playerHitScan.OnPlayerSpeedUp += SpeedUp;
+        playerHitScan.OnPlayerDamageUp += DamageUp;
+    }
+
+    public void DamageUp()
+    {
+        weaponStrategy.DamageUp(5);
+    }
+
+    public void SpeedUp()
+    {
+        playerStats.AddMoveSpeed(5);
     }
 
     public void HitPlayer(int damage = 5)

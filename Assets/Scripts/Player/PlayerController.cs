@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         if (OnSlope() && !exitingSlope)
         {
-            rigid.AddForce(GetSlopeMoveDirection() * playerStats.moveSpeed * 20f, ForceMode.Force);
+            rigid.AddForce(GetSlopeMoveDirection() * playerStats.moveSpeed * 20f * playerStats.moveSpeedOffset, ForceMode.Force);
 
             if (rigid.velocity.y > 0)
                 rigid.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
         else if (isGrounded)
         {
-            rigid.AddForce(moveDirection.normalized * playerStats.moveSpeed * addMoveSpeed, ForceMode.Force);
+            rigid.AddForce(moveDirection.normalized * playerStats.moveSpeed * addMoveSpeed * playerStats.moveSpeedOffset, ForceMode.Force);
         }
         else if (!isGrounded)
         {
@@ -114,13 +114,13 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                rigid.AddForce(jumpDirection.normalized * playerStats.moveSpeed * 5f, ForceMode.Force);
+                rigid.AddForce(jumpDirection.normalized * playerStats.moveSpeed * 5f * playerStats.moveSpeedOffset, ForceMode.Force);
             }
         }
 
         if (isRolled)
         {
-            rigid.AddForce(rollDirection.normalized * playerStats.rollSpeed * 10f, ForceMode.Force);
+            rigid.AddForce(rollDirection.normalized * playerStats.rollSpeed * 10f * playerStats.moveSpeedOffset, ForceMode.Force);
         }
 
         rigid.useGravity = !OnSlope();

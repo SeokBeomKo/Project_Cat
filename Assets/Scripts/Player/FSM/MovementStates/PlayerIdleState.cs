@@ -35,11 +35,11 @@ public class PlayerIdleState : IPlayerState
             return;
         }
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
-            return;
-        }
+        // if (Input.GetButtonDown("Fire1"))
+        // {
+        //     player.shotstateMachine.ChangeState(PlayerShotStateEnums.ENTER);
+        //     return;
+        // }
     }
 
     public void OnStateEnter()

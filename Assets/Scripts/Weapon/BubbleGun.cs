@@ -57,5 +57,6 @@ public class BubbleGun : Weapon
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
         bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
         bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
+        bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);
     }
 }

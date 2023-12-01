@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class BubbleProjectile : MonoBehaviour
+public class BubbleProjectile : MonoBehaviour, IAttackable, IProjectile
 {
     [Header("프리팹")]
     public GameObject projectile;
@@ -19,6 +19,18 @@ public class BubbleProjectile : MonoBehaviour
 
     [Header("수치 값")]
     public float maxSpeed;
+
+    private float damage;
+
+    public void SetDamage(float _damage)
+    {
+        damage = _damage;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
 
     private void OnEnable() 
     {
