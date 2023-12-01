@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoapProjectile : MonoBehaviour
+public class SoapProjectile : MonoBehaviour, IAttackable, IProjectile
 {
     public int gauge;
     public LineRenderer line;
@@ -20,6 +20,18 @@ public class SoapProjectile : MonoBehaviour
     {
         Invoke("Explosion",0.1f);
         StartCoroutine(CheckExit());
+    }
+
+    private float damage;
+
+    public void SetDamage(float _damage)
+    {
+        damage = _damage;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
     }
 
     public void Explosion()

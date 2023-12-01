@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IProjectile : MonoBehaviour
+public interface IProjectile
 {
-    
+    void SetDamage(float damage);
 }

@@ -79,6 +79,7 @@ public class SplashBuster : Weapon
             GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.LookRotation(fireDirection));
             bullet.transform.LookAt(fireDirection);
             bullet.GetComponentInChildren<SplashProjectile>().SetDirection(fireDirection);
+            bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);
         }
     }
 

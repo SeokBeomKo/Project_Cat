@@ -20,8 +20,8 @@ public abstract class Weapon : MonoBehaviour, IWeapon
         }
     }
     public int useBullet;
-    public int originDamage;
-    public int curDamage;
+    public int damage;
+    public float damageOffset;
 
     public abstract void SetTarget(Vector3 direction);
     public abstract void Shoot();
@@ -32,6 +32,11 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     private void Awake() 
     {
         ChargeBullet(maxBullet);
+    }
+
+    public void SetOffset(float _offset)
+    {
+        damageOffset = _offset;
     }
 
     public void ChargeBullet(int count)
