@@ -55,7 +55,6 @@ public class SplashBuster : Weapon
 
     public override void Shoot()
     {
-        Flash();
         Fire();
     }
 
@@ -68,6 +67,7 @@ public class SplashBuster : Weapon
     {
         if (curBullet < useBullet) return;
         UseBullet();
+        Flash();
 
         for (int i = 0; i < bulletCount; i++)
         {
@@ -79,6 +79,7 @@ public class SplashBuster : Weapon
             GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.LookRotation(fireDirection));
             bullet.transform.LookAt(fireDirection);
             bullet.GetComponentInChildren<SplashProjectile>().SetDirection(fireDirection);
+            bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);
         }
     }
 
