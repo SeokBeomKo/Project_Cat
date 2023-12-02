@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CleanlinessPopUp : MonoBehaviour
+public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
 {
     // 팝업 창
     public GameObject popUp;
@@ -20,6 +20,11 @@ public class CleanlinessPopUp : MonoBehaviour
     // 캔버스 
     public CanvasGroup canvas;
 
+    public void Notify(ISubject subject)
+    {
+        CleanCat(subject as CatStatsSubject);
+    }
+
     void Start()
     {
         popUp.SetActive(false);
@@ -27,8 +32,6 @@ public class CleanlinessPopUp : MonoBehaviour
 
     void Update()
     {
-        //popUp.SetActive(false);
-
         if (PlayerPrefs.GetInt("Pause") == 1) return;
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -43,32 +46,14 @@ public class CleanlinessPopUp : MonoBehaviour
         
     }
 
-    public void CleanCat(CleanEnums parts,  float cleanliness)
+    public void CleanCat(CatStatsSubject subject)
     {
-        switch(parts)
-        {
-            case CleanEnums.UPPERBODY:
-                upperBody.text = "상체 : " + cleanliness.ToString("00") + "%";
-                break;
-            case CleanEnums.LOWERBODY:
-                lowerBody.text = "하체 : " + cleanliness.ToString("00") + "%";
-                break;
-            case CleanEnums.REARPAWRIGHT:
-                rearPawRight.text = "앞발 : " + cleanliness.ToString("00") + "%";
-                break;
-            case CleanEnums.REARPAWLEFT:
-                rearPawLeft.text = "앞발 : " + cleanliness.ToString("00") + "%";
-                break;
-            case CleanEnums.FOREPAWRIGHT:
-                forePawRight.text = "뒷발 : " + cleanliness.ToString("00") + "%";
-                break;
-            case CleanEnums.FOREPAWLEFT:
-                forePawLeft.text = "뒷발 : " + cleanliness.ToString("00") + "%";
-                break;
-            case CleanEnums.BACK:
-                back.text = "등 : " + cleanliness.ToString("00") + "%";
-                break;
-                
-        }
+        upperBody.text = "상체 : " + subject.GetPartsCleanliness(PartsEnums.UPPERBODY).ToString("00") + "%";
+        lowerBody.text = "하체 : " + subject.GetPartsCleanliness(PartsEnums.LOWERBODY).ToString("00") + "%";
+        rearPawRight.text = "앞발 : " + subject.GetPartsCleanliness(PartsEnums.REARPAWRIGHT).ToString("00") + "%";
+        rearPawLeft.text = "앞발 : " + subject.GetPartsCleanliness(PartsEnums.REARPAWLEFT).ToString("00") + "%";
+        forePawRight.text = "뒷발 : " + subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT).ToString("00") + "%";
+        forePawLeft.text = "뒷발 : " + subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT).ToString("00") + "%";
+        back.text = "등 : " + subject.GetPartsCleanliness(PartsEnums.BACK).ToString("00") + "%";
     }
 }

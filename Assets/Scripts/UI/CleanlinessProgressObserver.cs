@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CleanlinessProgressBar : MonoBehaviour
+public class CleanlinessProgressObserver : MonoBehaviour, IObserver
 {
     public Slider cleanlinessProgressBar;
     public TextMeshProUGUI cleanlinessText;
@@ -12,15 +12,16 @@ public class CleanlinessProgressBar : MonoBehaviour
     private float totalClean = 700;
     public float currentClean;
 
-    void Start()
+    public void Notify(ISubject subject)
     {
-        currentClean = 0;
+        UpdateProgress(subject as CatStatsSubject);
     }
 
-    public void UpdateProgress(float current)
+
+    public void UpdateProgress(CatStatsSubject catStats)
     {
-        currentClean = current;
-        cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / totalClean);
+        currentClean = catStats.GetTotalCleanliness();
+        cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / catStats.currentMaxCleanliness);
         cleanlinessText.text = Mathf.RoundToInt(cleanlinessProgressBar.value * 100) + " %";
     }
 }
