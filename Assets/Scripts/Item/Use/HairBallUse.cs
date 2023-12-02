@@ -7,13 +7,16 @@ public class HairBallUse : MonoBehaviour
 {
     public GameObject Player;
     public GameObject HairBall;
-    GameObject newObject;
 
     [Header("HP")]
     public float HP = 5;
     public ObjectHPbar objectHPbar;
 
-
+    private void Start()
+    {
+        objectHPbar.SetHP(HP);
+        objectHPbar.ChechHP();
+    }
 
     // Update is called once per frame
     void Update()
@@ -32,12 +35,41 @@ public class HairBallUse : MonoBehaviour
         // 플레이어의 현재 위치에 오브젝트 생성
         Vector3 playerPosition = Player.transform.position;
         playerPosition.z += 0.7f;
-        newObject = Instantiate(HairBall, playerPosition, Quaternion.identity);
+        GameObject newObject = Instantiate(HairBall, playerPosition, Quaternion.identity);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(newObject);
+        if(other.gameObject.CompareTag("Ball")) // 
+        {
+            Hit();
+        }
+        
+        
     }
-  
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ball")) // 고양이 충돌
+        {
+            HP = 0;
+            Check();
+        }
+    }
+
+    private void Hit()
+    {
+        objectHPbar.Demage(1);
+        HP = objectHPbar.GetHP();
+        Check();
+    }
+
+    private void Check()
+    {
+        if (HP == 0)
+        {
+            transform.gameObject.SetActive(false);
+
+        }
+    }
 }

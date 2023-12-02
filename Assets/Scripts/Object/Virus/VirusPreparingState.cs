@@ -35,6 +35,7 @@ public class VirusPreparingState : VirusShotState
 
     public void OnStateEnter()
     {
+        Debug.Log("Preparing");
 
     }
 
@@ -53,7 +54,7 @@ public class VirusPreparingState : VirusShotState
 
             if (col.gameObject.CompareTag("Player"))
             {
-                stateMachine.PlayerPosition = col.transform.position;
+                virus.PlayerPosition = col.transform.parent.position;
                 return true;
             }
         }
