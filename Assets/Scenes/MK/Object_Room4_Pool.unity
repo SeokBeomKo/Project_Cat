@@ -14003,8 +14003,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: HairBall
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8780674313197195425, guid: 573a5b197de6c4828ab6297bb46ea18b, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 573a5b197de6c4828ab6297bb46ea18b, type: 3}
 --- !u!1 &313667453
 GameObject:
@@ -30285,6 +30284,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1435516651, guid: bd4385f4f2e12c140baca87fb83d933c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 908603973200641984, guid: bd4385f4f2e12c140baca87fb83d933c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -75330,6 +75333,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649775569}
   m_Mesh: {fileID: -7585162480612745973, guid: 3e83328de61823347ae89a9ca651e4c0, type: 3}
+--- !u!114 &1651891851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8941143714996827670, guid: 573a5b197de6c4828ab6297bb46ea18b, type: 3}
+  m_PrefabInstance: {fileID: 308908193}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92875033acd4f439b9783ca67aea45ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1652147654
 GameObject:
   m_ObjectHideFlags: 0
@@ -83314,7 +83328,7 @@ MonoBehaviour:
   Player: {fileID: 1104639651}
   HairBall: {fileID: 2320924996755486010, guid: 573a5b197de6c4828ab6297bb46ea18b, type: 3}
   HP: 5
-  objectHPbar: {fileID: 0}
+  objectHPbar: {fileID: 1651891851}
 --- !u!1 &1845363005
 GameObject:
   m_ObjectHideFlags: 0

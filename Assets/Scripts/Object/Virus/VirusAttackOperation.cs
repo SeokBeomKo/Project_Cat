@@ -39,7 +39,7 @@ public class VirusAttackOperation : MonoBehaviour
     void Start()
     {
         objectHPbar.SetHP(HP);
-        objectHPbar.ChechHP();
+        objectHPbar.CheckHP();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,7 +66,7 @@ public class VirusAttackOperation : MonoBehaviour
 
     private void Hit()
     {
-        objectHPbar.Demage(1);
+        objectHPbar.Damage(1);
         HP = objectHPbar.GetHP();
         Check();
     }

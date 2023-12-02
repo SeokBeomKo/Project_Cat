@@ -15,7 +15,7 @@ public class HairBallUse : MonoBehaviour
     private void Start()
     {
         objectHPbar.SetHP(HP);
-        objectHPbar.ChechHP();
+        objectHPbar.CheckHP();
     }
 
     // Update is called once per frame
@@ -59,7 +59,7 @@ public class HairBallUse : MonoBehaviour
 
     private void Hit()
     {
-        objectHPbar.Demage(1);
+        objectHPbar.Damage(1);
         HP = objectHPbar.GetHP();
         Check();
     }
