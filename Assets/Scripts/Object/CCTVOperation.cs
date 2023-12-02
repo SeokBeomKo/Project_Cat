@@ -8,11 +8,13 @@ public class CCTVOperation : MonoBehaviour
     public GameObject Barrier;
     public GameObject Door;
     public Room2GameCenter room2GameCenter;
+    public GameObject interactiveKey;
 
     private float angle = -100;
     private bool isBarrierMove = false;
     private bool isPlayerCollision = false;
     private bool isDoorClose = false;
+    private bool hasput = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,10 +36,12 @@ public class CCTVOperation : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && !isBarrierMove && isPlayerCollision)
         {
-            Debug.Log("Input F");
             isBarrierMove = true;
             isDoorClose = true;
             room2GameCenter.IsSwitchesUnlocked = true;
+            
+            hasput = true;
+            interactiveKey.SetActive(false);
         }
 
     }
@@ -71,6 +75,11 @@ public class CCTVOperation : MonoBehaviour
         {
             isPlayerCollision = true;
             Screen.EnableKeyword("_EMISSION");
+            
+            if (!hasput)
+            {
+                interactiveKey.SetActive(true);
+            }
         }
 
     }
@@ -78,5 +87,10 @@ public class CCTVOperation : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isPlayerCollision = false;
+        
+        if (!hasput)
+        {
+            interactiveKey.SetActive(false);
+        }
     }
 }
