@@ -45,7 +45,7 @@ namespace BehaviorTree
         private Animator animator = null;
         private Transform playerTransform = null;
 
-        private Vector3 chargeAttackrPosition;
+        private Vector3 chargeAttackPosition;
 
         private void Awake()
         {
@@ -188,7 +188,7 @@ namespace BehaviorTree
             return Node.NodeState.FAILURE;
         }
 
-        Node.NodeState CheckChargeTime()
+        /*Node.NodeState CheckChargeTime()
         {
             if (playerTransform != null)
             {
@@ -196,6 +196,7 @@ namespace BehaviorTree
                 {
                     animator.SetTrigger("chargeAttack");
                     chargeAttackrPosition = playerTransform.position;
+
                     chargeDamageBox.SetActive(true);
 
                     chargeAttackTime = false;
@@ -214,16 +215,76 @@ namespace BehaviorTree
                 isAttackComplete = false;
 
                 Vector3 chargeAttackPosition = new Vector3(chargeAttackrPosition.x, transform.parent.position.y, chargeAttackrPosition.z);
-                transform.parent.position = chargeAttackPosition;
 
                 Debug.Log("돌진 공격");
+                transform.parent.position = chargeAttackPosition;
+                return Node.NodeState.SUCCESS;
+            }
+
+            return Node.NodeState.FAILURE;
+        }*/
+
+        Node.NodeState CheckChargeTime()
+        {
+            if (playerTransform != null)
+            {
+                if (chargeAttackTime)
+                {
+                    chargeAttackPosition = playerTransform.position;
+                    chargeAttackTime = false;
+                    return Node.NodeState.SUCCESS;
+                }
+            }
+
+            return Node.NodeState.FAILURE;
+        }
+
+        Node.NodeState DoChargeAttack()
+        {
+            if (playerTransform != null)
+            {
+                animator.SetTrigger("chargeAttack");
+                chargeDamageBox.SetActive(true);
+                StartCoroutine(PerformChargeAttack());
+
+                isAttacking = true;
+                isAttackComplete = false;
+
+                Debug.Log("돌진 공격");
+                
                 return Node.NodeState.SUCCESS;
             }
 
             return Node.NodeState.FAILURE;
         }
 
-        Node.NodeState DoMeleeAttack()
+        IEnumerator PerformChargeAttack()
+        {
+            animator.SetTrigger("chargeAttack");
+
+            yield return null;
+            float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            float time = 0f;
+            Vector3 startPosition = transform.parent.position;
+
+            while (time < animationLength)
+            {
+                float height = Mathf.Sin(Mathf.PI * time / animationLength) * 0.5f;
+
+                Vector3 currentPosition = Vector3.Lerp(startPosition, chargeAttackPosition, time / animationLength);
+                currentPosition.y += height;
+
+                transform.parent.position = currentPosition;
+
+                yield return null;
+
+                time += Time.deltaTime;
+            }
+            transform.parent.position = chargeAttackPosition;
+        }
+
+            Node.NodeState DoMeleeAttack()
         {
             randomNumber = Random.Range(0f, 1.0f);
             if (playerTransform != null && randomNumber > 0.3f)

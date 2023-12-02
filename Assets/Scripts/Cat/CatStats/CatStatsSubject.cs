@@ -9,7 +9,7 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
     [Header("¼¼Ã´µµ ÃÖ´ñ°ª")]
     [SerializeField]
-    private float maxCleanliness = 300;
+    private float maxCleanliness = 100;
 
     private Dictionary<PartsEnums, float> catCleanliness = new Dictionary<PartsEnums, float>();
     private float cleanliness;
