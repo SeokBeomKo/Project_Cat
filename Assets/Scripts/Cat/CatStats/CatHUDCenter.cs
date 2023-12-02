@@ -10,7 +10,8 @@ public class CatHUDCenter : MonoBehaviour
     [SerializeField] public CatStatsSubject catStatsSubject;
 
     [Header("º¸½º HUD")]
-    //[SerializeField] public CleanlinessObserver cleanlinessObserver;
+    [SerializeField] public CleanlinessProgressObserver cleanlinessProgressObserver;
+    [SerializeField] public CleanlinessPopUpObserver cleanlinessPopUp;
     [SerializeField] public LikeabilityObserver likeabilityObserver;
     [SerializeField] public LikeabilityObserver likeabilityPopUpObserver;
 
@@ -24,6 +25,7 @@ public class CatHUDCenter : MonoBehaviour
         catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityObserver);
         catStatsSubject.AddObserver<IObserver>(catStatsSubject.likeabilityObservers, likeabilityPopUpObserver);
 
-        //catStatsSubject.AddObserver<IObserver>(catStatsSubject.cleanlinessObservers, cleanlinessObserver);
+        catStatsSubject.AddObserver<IObserver>(catStatsSubject.cleanlinessObservers, cleanlinessProgressObserver);
+        catStatsSubject.AddObserver<IObserver>(catStatsSubject.cleanlinessObservers, cleanlinessPopUp);
     }
 }

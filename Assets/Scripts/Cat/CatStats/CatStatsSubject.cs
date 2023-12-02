@@ -25,7 +25,7 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         set
         {
             cleanliness = value;
-            //NotifyObservers(cleanlinessObservers);
+            NotifyObservers(cleanlinessObservers);
         }
     }
 
