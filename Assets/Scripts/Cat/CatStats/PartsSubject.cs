@@ -13,17 +13,19 @@ public class PartsSubject : MonoBehaviour, ISubject
         set
         {
             _currentParts = value;
+            NotifyObservers(observers);
         }
     }
 
-    private int _damage = 5;
+    private float damage = 5;
 
-    public int damage
+    public float currentDamage
     {
-        get { return _damage; }
+        get { return damage; }
         set
         {
-            _damage = value;
+            damage = value;
+            NotifyObservers(observers);
         }
     }
 
@@ -31,44 +33,44 @@ public class PartsSubject : MonoBehaviour, ISubject
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
+            currentDamage = other.gameObject.GetComponentInChildren<IAttackable>().GetDamage();
             switch (gameObject.tag)
             {
                 case "Parts1":
-                    _currentParts = PartsEnums.FOREPAWLEFT;
+                    currentParts = PartsEnums.FOREPAWLEFT;
                     break;
 
                 case "Parts2":
-                    _currentParts = PartsEnums.FOREPAWRIGHT;
+                    currentParts = PartsEnums.FOREPAWRIGHT;
                     break;
 
                 case "Parts3":
-                    _currentParts = PartsEnums.HEAD;
+                    currentParts = PartsEnums.HEAD;
                     break;
 
                 case "Parts4":
-                    _currentParts = PartsEnums.UPPERBODY;
+                    currentParts = PartsEnums.UPPERBODY;
                     break;
 
                 case "Parts5":
-                    _currentParts = PartsEnums.BACK;
+                    currentParts = PartsEnums.BACK;
                     break;
 
                 case "Parts6":
-                    _currentParts = PartsEnums.LOWERBODY;
+                    currentParts = PartsEnums.LOWERBODY;
                     break;
 
                 case "Parts7":
-                    _currentParts = PartsEnums.REARPAWLEFT;
+                    currentParts = PartsEnums.REARPAWLEFT;
                     break;
 
                 case "Parts8":
-                    _currentParts = PartsEnums.REARPAWRIGHT;
+                    currentParts = PartsEnums.REARPAWRIGHT;
                     break;
 
                 default:
                     break;
             }
-            NotifyObservers(observers);
         }
     }
 
