@@ -22,7 +22,7 @@ public class VirusIdleState : VirusShotState
 
     public void OnStateEnter()
     {
-        
+        Debug.Log("Idle");
     }
 
     public void OnStateExit()

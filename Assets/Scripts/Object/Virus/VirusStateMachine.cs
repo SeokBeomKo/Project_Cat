@@ -12,8 +12,6 @@ public class VirusStateMachine : MonoBehaviour
 
     public Dictionary<VirusEnum, VirusShotState> virusStateDictionary;
 
-    public Vector3 PlayerPosition;
-
     private void Awake()
     {
         virusStateDictionary = new Dictionary<VirusEnum, VirusShotState>
