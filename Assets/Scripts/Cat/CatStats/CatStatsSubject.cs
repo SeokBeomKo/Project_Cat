@@ -25,7 +25,7 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         set
         {
             cleanliness = value;
-            NotifyObservers(cleanlinessObservers);
+            //NotifyObservers(cleanlinessObservers);
         }
     }
 
@@ -59,7 +59,8 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         catCleanliness.Add(PartsEnums.REARPAWRIGHT, 0);
         catCleanliness.Add(PartsEnums.UPPERBODY, 0);
 
-        likeability = maxLikeability;
+        currentLikeability = maxLikeability;
+        currentCleanliness = maxCleanliness;
     }
 
     public void Notify(ISubject subject)
@@ -126,6 +127,8 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
 
         Debug.Log("호감도 증가 : " + currentLikeability);
+
+        NotifyObservers(likeabilityObservers);
     }
 
     public void DecreaseLikeability(float damage = 5)
