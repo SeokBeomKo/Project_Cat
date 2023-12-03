@@ -16,13 +16,16 @@ public class Subtitle : MonoBehaviour
     private bool hasShow = false;
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && !hasShow)
         {
-            hasShow = true;
-            subtitleText.gameObject.SetActive(true);
-            StartCoroutine(Typing(subtitleContent));
+            if (!subtitleText.gameObject.activeSelf)
+            {
+                hasShow = true;
+                subtitleText.gameObject.SetActive(true);
+                StartCoroutine(Typing(subtitleContent));
+            }
         }
     }
 
@@ -40,7 +43,7 @@ public class Subtitle : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         subtitleText.gameObject.SetActive(false);
     }
 }
