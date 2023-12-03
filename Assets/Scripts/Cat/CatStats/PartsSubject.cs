@@ -5,15 +5,14 @@ using UnityEngine;
 public class PartsSubject : MonoBehaviour, ISubject
 {
     public List<IObserver> observers = new List<IObserver>();
-    private PartsEnums _currentParts;
+    private PartsEnums partsEnum;
 
     public PartsEnums currentParts
     {
-        get { return _currentParts; }
+        get { return partsEnum; }
         set
         {
-            _currentParts = value;
-            NotifyObservers(observers);
+            partsEnum = value;
         }
     }
 
@@ -25,8 +24,13 @@ public class PartsSubject : MonoBehaviour, ISubject
         set
         {
             damage = value;
-            NotifyObservers(observers);
         }
+    }
+
+    private void Start()
+    {
+        currentParts = partsEnum;
+        currentDamage = damage;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -71,6 +75,8 @@ public class PartsSubject : MonoBehaviour, ISubject
                 default:
                     break;
             }
+
+            NotifyObservers(observers);
         }
     }
 

@@ -45,7 +45,7 @@ namespace BehaviorTree
         private Animator animator = null;
         private Transform playerTransform = null;
 
-        private Vector3 chargeAttackrPosition;
+        private Vector3 chargeAttackPosition;
 
         private void Awake()
         {
@@ -151,7 +151,7 @@ namespace BehaviorTree
 
         Node.NodeState CheckAnimation()
         {
-            if (IsAnimationRunning("Run"))
+            if (IsAnimationRunning("Run") && !waveCollider.activeSelf)
             {
                 meleeDamageBox.SetActive(false);
                 chargeDamageBox.SetActive(false);
@@ -180,7 +180,7 @@ namespace BehaviorTree
             if (playerTransform != null)
             {
                 if (playerInMeleeRange && isAttackComplete)
-                 {
+                {
                     return Node.NodeState.SUCCESS;
                 }
             }
@@ -194,10 +194,7 @@ namespace BehaviorTree
             {
                 if (chargeAttackTime)
                 {
-                    animator.SetTrigger("chargeAttack");
-                    chargeAttackrPosition = playerTransform.position;
-                    chargeDamageBox.SetActive(true);
-
+                    chargeAttackPosition = playerTransform.position;
                     chargeAttackTime = false;
                     return Node.NodeState.SUCCESS;
                 }
@@ -210,17 +207,45 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
+                animator.SetTrigger("chargeAttack");
+                chargeDamageBox.SetActive(true);
+                StartCoroutine(PerformChargeAttack());
+
                 isAttacking = true;
                 isAttackComplete = false;
 
-                Vector3 chargeAttackPosition = new Vector3(chargeAttackrPosition.x, transform.parent.position.y, chargeAttackrPosition.z);
-                transform.parent.position = chargeAttackPosition;
-
                 Debug.Log("돌진 공격");
+
                 return Node.NodeState.SUCCESS;
             }
 
             return Node.NodeState.FAILURE;
+        }
+
+        IEnumerator PerformChargeAttack()
+        {
+            animator.SetTrigger("chargeAttack");
+
+            yield return null;
+            float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            float time = 0f;
+            Vector3 startPosition = transform.parent.position;
+
+            while (time < animationLength)
+            {
+                float height = Mathf.Sin(Mathf.PI * time / animationLength) * 0.5f;
+
+                Vector3 currentPosition = Vector3.Lerp(startPosition, chargeAttackPosition, time / animationLength);
+                currentPosition.y += height;
+
+                transform.parent.position = currentPosition;
+
+                yield return null;
+
+                time += Time.deltaTime;
+            }
+            transform.parent.position = chargeAttackPosition;
         }
 
         Node.NodeState DoMeleeAttack()
@@ -251,7 +276,7 @@ namespace BehaviorTree
                 chargeAttackTime = true;
                 canvasImage.enabled = true;
                 StartCoroutine(FadeOutOverTime(5.0f));
-                
+
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
@@ -268,7 +293,6 @@ namespace BehaviorTree
                 timer += Time.deltaTime;
                 float progress = timer / duration;
 
-                //imageColor = Color.Lerp(imageColor, transparentColor, progress);
                 imageColor = Color.Lerp(imageColor, transparentColor, Mathf.SmoothStep(0f, 1f, progress));
 
                 canvasImage.color = imageColor;
@@ -310,7 +334,7 @@ namespace BehaviorTree
         // RUN
         Node.NodeState CheckAttackEndTime()
         {
-            if(playerTransform != null && isAttackComplete)
+            if (playerTransform != null && isAttackComplete)
             {
                 return Node.NodeState.SUCCESS;
             }
@@ -353,7 +377,7 @@ namespace BehaviorTree
         }
 
         private void OnTriggerEnter(Collider other)
-        { 
+        {
             if (other.CompareTag("Player"))
             {
                 playerInMeleeRange = true;

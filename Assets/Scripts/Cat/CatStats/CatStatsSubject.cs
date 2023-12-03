@@ -9,7 +9,7 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
     [Header("세척도 최댓값")]
     [SerializeField]
-    private float maxCleanliness = 300;
+    private float maxCleanliness = 100;
 
     private Dictionary<PartsEnums, float> catCleanliness = new Dictionary<PartsEnums, float>();
     private float cleanliness;
@@ -59,7 +59,8 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         catCleanliness.Add(PartsEnums.REARPAWRIGHT, 0);
         catCleanliness.Add(PartsEnums.UPPERBODY, 0);
 
-        likeability = maxLikeability;
+        currentLikeability = maxLikeability;
+        currentCleanliness = maxCleanliness;
     }
 
     public void Notify(ISubject subject)
@@ -126,6 +127,8 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
 
         Debug.Log("호감도 증가 : " + currentLikeability);
+
+        NotifyObservers(likeabilityObservers);
     }
 
     public void DecreaseLikeability(float damage = 5)
