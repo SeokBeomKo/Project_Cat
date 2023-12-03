@@ -28,8 +28,15 @@ namespace SpecialAttack
 
         private float safeSize = 1f;
         private float attackSize = 1f;
-        private float timer = 0f;    
-        
+        private float timer = 0f;
+
+        private Animator animator = null;
+
+        private void Start()
+        {
+            animator = transform.parent.GetComponent<Animator>();
+        }
+
         private void OnEnable()
         {
             SetInitialSize();
@@ -64,6 +71,7 @@ namespace SpecialAttack
             }
             else
             {
+                animator.SetBool("idle", true);
                 gameObject.SetActive(false);
             }
         }

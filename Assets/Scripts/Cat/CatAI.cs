@@ -295,8 +295,9 @@ namespace BehaviorTree
 
                 imageColor = Color.Lerp(imageColor, transparentColor, Mathf.SmoothStep(0f, 1f, progress));
 
-                canvasImage.color = imageColor;
                 yield return null;
+
+                canvasImage.color = imageColor;
             }
 
             canvasImage.enabled = false;
@@ -321,17 +322,35 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                Debug.Log("특수 파동 공격");
-                waveCollider.SetActive(true);
+                isAttacking = true;
+                isAttackComplete = false;
+                StartCoroutine(PerformWaveAttack());
                 timer = 0f;
-
+                Debug.Log("특수 파동 공격");
                 return Node.NodeState.SUCCESS;
             }
 
             return Node.NodeState.FAILURE;
         }
 
-        // RUN
+        IEnumerator PerformWaveAttack()
+        {
+            animator.SetTrigger("waveAttack");
+
+            yield return null;
+            float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            float time = 0f;
+
+            while (time < animationLength)
+            {
+                yield return null;
+                time += Time.deltaTime;
+            }
+
+            waveCollider.SetActive(true);
+        }
+
         Node.NodeState CheckAttackEndTime()
         {
             if (playerTransform != null && isAttackComplete)
@@ -351,13 +370,15 @@ namespace BehaviorTree
 
                 if (playerDirection != Vector3.zero)
                 {
+                    animator.SetBool("idle", false);
+                    animator.SetBool("run", true);
+
                     Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
                     transform.parent.rotation = targetRotation;
 
                     Vector3 targetPosition = new Vector3(playerTransform.position.x, transform.parent.position.y, playerTransform.position.z);
                     transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime * movementSpeed);
-                    animator.SetBool("run", true);
-
+                    
                     return Node.NodeState.SUCCESS;
                 }
             }
