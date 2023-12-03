@@ -38,10 +38,12 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
         {
             SoundManager.Instance.PlaySFX("Hover");
             popUp.SetActive(true);
+            RemoveUI();
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
             popUp.SetActive(false);
+            ShowUI();
         }
         
     }
@@ -55,5 +57,19 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
         forePawRight.text = "µÞ¹ß : " + subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT).ToString("00") + "%";
         forePawLeft.text = "µÞ¹ß : " + subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT).ToString("00") + "%";
         back.text = "µî : " + subject.GetPartsCleanliness(PartsEnums.BACK).ToString("00") + "%";
+    }
+
+    public void RemoveUI()
+    {
+        canvas.alpha = 0;
+        canvas.interactable = false;
+        canvas.blocksRaycasts = false;
+    }
+
+    public void ShowUI()
+    {
+        canvas.alpha = 1;
+        canvas.interactable = true;
+        canvas.blocksRaycasts = true;
     }
 }
