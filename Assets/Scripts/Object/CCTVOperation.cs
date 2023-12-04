@@ -97,9 +97,14 @@ public class CCTVOperation : MonoBehaviour
         else
         {
             isBarrierMove = false;
-            isDoorClose = true;
+            Invoke("Set", 0.5f);
             OnCloseDoorTrue?.Invoke();
         }
+    }
+
+    void Set()
+    {
+        isDoorClose = true;
     }
 
 

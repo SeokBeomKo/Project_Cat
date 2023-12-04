@@ -23,12 +23,12 @@ public class QuestSubtitle : MonoBehaviour
             {
                 hasShow = true;
                 subtitleText.gameObject.SetActive(true);
-                StartCoroutine(Typing(subtitleContent));
+                StartCoroutine(Typing(subtitleContent, typingSpeed));
             }
         }
     }
 
-    IEnumerator Typing(string txt)
+    IEnumerator Typing(string txt, float speed)
     {
         subtitleText.text = null;
         SoundManager.Instance.PlaySFX("Keyboard");
@@ -40,11 +40,21 @@ public class QuestSubtitle : MonoBehaviour
         for (int i = 0; i < txt.Length; i++)
         {
             subtitleText.text += txt[i];
-            yield return new WaitForSeconds(typingSpeed);
+            yield return new WaitForSeconds(speed);
         }
         SoundManager.Instance.StopSFX();
 
         yield return new WaitForSeconds(1f);
         subtitleText.gameObject.SetActive(false);
+    }
+
+    public void ShowQuestSubtitle(string content, float speed)
+    {
+        if (!subtitleText.gameObject.activeSelf)
+        {
+            hasShow = true;
+            subtitleText.gameObject.SetActive(true);
+            StartCoroutine(Typing(content, speed));
+        }
     }
 }

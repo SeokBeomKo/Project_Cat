@@ -31,9 +31,9 @@ public class ResearchCameraController : MonoBehaviour
         doorCamera.gameObject.SetActive(true);
         playCamera.gameObject.SetActive(false);
 
-        Camera.main.cullingMask = ~(1 << LayerMask.NameToLayer("Item"));
-        Camera.main.cullingMask = ~(1 << LayerMask.NameToLayer("Enemy"));
-        Camera.main.cullingMask = ~(1 << LayerMask.NameToLayer("Object"));
+        Camera.main.cullingMask = Camera.main.cullingMask & ~(1 << LayerMask.NameToLayer("Item"));
+        Camera.main.cullingMask = Camera.main.cullingMask & ~(1 << LayerMask.NameToLayer("Enemy"));
+        Camera.main.cullingMask = Camera.main.cullingMask & ~(1 << LayerMask.NameToLayer("Object"));
     }
 
     public void SetPlayCamera()
