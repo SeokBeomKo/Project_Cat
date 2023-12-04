@@ -54,6 +54,7 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
     {
         if (HP <= 0)
         {
+            SoundManager.Instance.PlaySFX("VirusDeath");
             model.SetActive(false);
             hpBar.SetActive(false);
             sphereCollider.enabled = false;

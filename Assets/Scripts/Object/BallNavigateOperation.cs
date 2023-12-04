@@ -20,7 +20,7 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        Debug.Log("Update");
+        //Debug.Log("Update");
     }
 
     private void OnCollisionEnter(Collision collision)

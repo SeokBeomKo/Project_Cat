@@ -19,6 +19,7 @@ public class Door : MonoBehaviour
 
     public IEnumerator CloseDoor()
     {
+        SoundManager.Instance.PlaySFX("Door");
         while (!isDoorClose)
         {
             closeAngle++;
@@ -39,6 +40,7 @@ public class Door : MonoBehaviour
 
     public IEnumerator OpenDoor()
     {
+        SoundManager.Instance.PlaySFX("Door");
         while (!isDoorOpen)
         {
             openAngle--;

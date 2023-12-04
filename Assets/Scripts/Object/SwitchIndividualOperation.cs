@@ -16,10 +16,9 @@ public class SwitchIndividualOperation : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
         {
-            Debug.Log("switch collision" + IndividualIndex);
+            SoundManager.Instance.PlaySFX("Switch");
             switchesOperation.SetSwitch(IndividualIndex, true);
             StartCoroutine(DisableCollisionForSeconds(2.0f));
-
         }
     }
 

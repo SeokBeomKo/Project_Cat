@@ -59,8 +59,8 @@ public class SoapRifle : Weapon
         UseBullet();
 
         GameObject bullet = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        SoundManager.Instance.PlaySFX("ShootSoapRifle");
         bullet.transform.position = shootPosition.position;
-
         SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
         projectile.SetDamage(damage * damageOffset);
         projectile.ShootBeamInDir(shootPosition.position, shootTarget, curChargeLevel);

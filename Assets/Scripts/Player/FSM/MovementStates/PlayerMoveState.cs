@@ -32,8 +32,8 @@ public class PlayerMoveState : IPlayerState
             return;
         }
 
-        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
-        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+        player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+        player.animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
