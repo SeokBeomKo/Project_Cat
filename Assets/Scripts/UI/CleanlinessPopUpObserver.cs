@@ -50,13 +50,13 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
 
     public void CleanCat(CatStatsSubject subject)
     {
-        upperBody.text = "상체 : " + subject.GetPartsCleanliness(PartsEnums.UPPERBODY).ToString("00") + "%";
-        lowerBody.text = "하체 : " + subject.GetPartsCleanliness(PartsEnums.LOWERBODY).ToString("00") + "%";
-        rearPawRight.text = "앞발 : " + subject.GetPartsCleanliness(PartsEnums.REARPAWRIGHT).ToString("00") + "%";
-        rearPawLeft.text = "앞발 : " + subject.GetPartsCleanliness(PartsEnums.REARPAWLEFT).ToString("00") + "%";
-        forePawRight.text = "뒷발 : " + subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT).ToString("00") + "%";
-        forePawLeft.text = "뒷발 : " + subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT).ToString("00") + "%";
-        back.text = "등 : " + subject.GetPartsCleanliness(PartsEnums.BACK).ToString("00") + "%";
+        upperBody.text = "상체 : " + (subject.GetPartsCleanliness(PartsEnums.UPPERBODY) / subject.currentMaxLikeability * 100).ToString("00") + "%";
+        lowerBody.text = "하체 : " + (subject.GetPartsCleanliness(PartsEnums.LOWERBODY) / subject.currentMaxLikeability * 100).ToString("00") + "%";
+        rearPawRight.text = "앞발 : " + (subject.GetPartsCleanliness(PartsEnums.REARPAWRIGHT) / subject.currentMaxLikeability * 100).ToString("00") + "%";
+        rearPawLeft.text = "앞발 : " + (subject.GetPartsCleanliness(PartsEnums.REARPAWLEFT) / subject.currentMaxLikeability * 100).ToString("00") + "%";
+        forePawRight.text = "뒷발 : " + (subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT) / subject.currentMaxLikeability * 100).ToString("00") + "%";
+        forePawLeft.text = "뒷발 : " + (subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT) / subject.currentMaxLikeability * 100).ToString("00") + "%";
+        back.text = "등 : " + (subject.GetPartsCleanliness(PartsEnums.BACK) / subject.currentMaxLikeability * 100).ToString("00") + "%";
     }
 
     public void RemoveUI()

@@ -7,6 +7,8 @@ public class PartsSubject : MonoBehaviour, ISubject, IDamageable
     public List<IObserver> observers = new List<IObserver>();
     private PartsEnums partsEnum;
 
+    private bool collisionPossible = true;
+
     public PartsEnums currentParts
     {
         get { return partsEnum; }
@@ -17,13 +19,6 @@ public class PartsSubject : MonoBehaviour, ISubject, IDamageable
     }
 
     private float damage = 5;
-
-    public void BeAttacked(float playerDamage)
-    {
-        damage = playerDamage;
-
-        Debug.Log("ÇÃ·¹ÀÌ¾î ÃÑ ½ô" + damage);
-    }
 
     public float currentDamage
     {
@@ -40,9 +35,17 @@ public class PartsSubject : MonoBehaviour, ISubject, IDamageable
         currentDamage = damage;
     }
 
+    public void BeAttacked(float playerDamage)
+    {
+        currentDamage = playerDamage;
+        currentParts = PartsEnums.FOREPAWLEFT;
+
+        NotifyObservers(observers);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
         {
             currentDamage = other.gameObject.GetComponentInChildren<IAttackable>().GetDamage();
             switch (gameObject.tag)
@@ -84,7 +87,16 @@ public class PartsSubject : MonoBehaviour, ISubject, IDamageable
             }
 
             NotifyObservers(observers);
+
+            StartCoroutine(DisableCollisionForSeconds(1.0f));
         }
+    }
+
+    private IEnumerator DisableCollisionForSeconds(float seconds)
+    {
+        collisionPossible = false;
+        yield return new WaitForSeconds(seconds);
+        collisionPossible = true;
     }
 
     public void AddObserver<T>(List<T> observerList, T observer) where T : IObserver

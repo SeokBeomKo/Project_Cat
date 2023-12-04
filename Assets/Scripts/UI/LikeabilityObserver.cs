@@ -23,6 +23,6 @@ public class LikeabilityObserver : MonoBehaviour, IObserver
         currentLikeability = catStats.currentLikeability;
         likeabilityProgressBar.value = Mathf.Clamp01(currentLikeability / catStats.currentMaxLikeability);
         
-        likeabilityText.text = likeabilityProgressBar.value * 100 + " %";
+        likeabilityText.text = Mathf.Floor((likeabilityProgressBar.value * 100)).ToString() + "%";
     }
 }
