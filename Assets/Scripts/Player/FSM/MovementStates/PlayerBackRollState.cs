@@ -32,12 +32,10 @@ public class PlayerBackRollState :  IPlayerState
         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Backward Roll") && 
             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.5f)
         {
-            Debug.Log("a");
             player.isRolled = true;
         }
         else
         {
-            Debug.Log("b");
             player.isRolled = false;
         }
     }
