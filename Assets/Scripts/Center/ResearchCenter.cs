@@ -10,6 +10,9 @@ public class ResearchCenter : MonoBehaviour
     [Header("퀘스트 자막")]
     [SerializeField] public QuestSubtitle questSubtitle;
 
+    [Header("UI")]
+    [SerializeField] public UIController controllerUI;
+
     [Header("CCTV 퀘스트")]
     [SerializeField] public CCTV cctv;
 
@@ -28,11 +31,15 @@ public class ResearchCenter : MonoBehaviour
     [Header("기본 입력 센터")]
     [SerializeField] public InputHandler inputHandler;
 
+    [Header("도착 지점")]
+    public GameObject endPoint;
 
     private void Start()
     {
-        switches.InitSwitch(false);
+        StartCoroutine(StartResearchScene());
+        endPoint.SetActive(false);
 
+        switches.InitSwitch(false);
         cctv.OnCCTV += ShutBarrier; // CCTV 켜기
         barrier.OnBarrier += ShutDoor; // 장벽 내려오기
         door.OnCloseDoor += OnSwitch; // 문 닫김
@@ -40,8 +47,23 @@ public class ResearchCenter : MonoBehaviour
         door.OnOpenDoor += ClearStage; // 문 열림
     }
 
+    public IEnumerator StartResearchScene()
+    {
+        controllerUI.RemoveUI();
+        inputHandler.gameObject.SetActive(false);
+        cameraController.SetIMacCamera();
+        subtitle.ShowSubtitle("카날리아 : 저기 컴퓨터가 있어!  얼른 모든 문을 잠가야해!", delayTime: 1f);
+
+        yield return new WaitForSeconds(6.5f);
+
+        controllerUI.ShowUI();
+        cameraController.SetPlayCamera();
+        inputHandler.gameObject.SetActive(true);
+    }
+
     public void ShutBarrier()
     {
+        controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         StartCoroutine(barrier.MoveBarrierCoroutine());
         subtitle.ShowSubtitle("카날리아 : 좋아! 모든 문을 잠궜어!", speed: 0.09f, delayTime: 2.5f) ;
@@ -60,10 +82,12 @@ public class ResearchCenter : MonoBehaviour
         cameraController.SetPlayCamera();
         subtitle.ShowSubtitle("카날리아 : 저기 있는 스위치를 이용하면 될 것 같은데?");
         switches.InitSwitch();
+        controllerUI.ShowUI();
     }
 
     public void UnlockDoor()
     {
+        controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetDoorCamera();
         StartCoroutine(door.OpenDoor());
@@ -72,8 +96,10 @@ public class ResearchCenter : MonoBehaviour
 
     public void ClearStage()
     {
+        controllerUI.ShowUI();
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
-        subtitle.ShowSubtitle("카날리아 : CCTV에 나온 로키의 위치로 가보자!", delayTime: 2f); ;
+        subtitle.ShowSubtitle("카날리아 : CCTV에 나온 로키의 위치로 가보자!", delayTime: 1f);
+        endPoint.SetActive(true);
     }
 }

@@ -83,7 +83,7 @@ public class SwitchesOperation : MonoBehaviour
 
         if (switchCount == 5)
         {
-            OnSwitch?.Invoke();
+            Invoke("SuccessSwitch", 1f);
         }
     }
 
@@ -101,5 +101,8 @@ public class SwitchesOperation : MonoBehaviour
         Switchbones[index].transform.rotation = Quaternion.Euler(angle, 0, 0);
     }
  
-
+    public void SuccessSwitch()
+    {
+        OnSwitch?.Invoke();
+    }
 }

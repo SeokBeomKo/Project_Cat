@@ -46,7 +46,7 @@ public class Door : MonoBehaviour
             if (openAngle < -100)
             {
                 isDoorOpen = true;
-                Invoke("SuccessOpendDoor", 2f);
+                Invoke("SuccessOpendDoor", 3.5f);
             }
             else
             {
