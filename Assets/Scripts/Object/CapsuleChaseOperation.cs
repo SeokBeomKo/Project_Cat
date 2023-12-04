@@ -14,7 +14,7 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 
     private bool isCollision = false;
 
-    public float moveSpeed = 5.0f; // 이동 속도
+    private float moveSpeed = 0.5f; // 이동 속도
     public Vector3 rotationAxis = Vector3.left; // 회전 축
 
     Vector3 Direction;
@@ -25,8 +25,6 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger : " + other.gameObject.layer);
-
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
             float randomValue = UnityEngine.Random.value;
@@ -54,6 +52,11 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
             transform.parent.gameObject.SetActive(false);
         }
 
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            GetDamage();
+        }
+
     }
 
     private void Start()
@@ -71,14 +74,15 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 
             StartCoroutine("BulletMove");
 
-
         }
 
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.parent.CompareTag("Cat"))
+        string otherTag = collision.transform.tag;
+
+        if (otherTag.Contains("Parts"))
         {
             isCollision = true;
             endPos = chaseCenter.PlayerPosition();
@@ -100,19 +104,21 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
     {
         isCollision = false;
         timer = 0;
-        while (transform.parent.position.y >= startPos.y)
+        while (transform.parent.position.y >= endPos.y)
         {
             transform.parent.rotation = Quaternion.Euler(Time.time * 900, 0, 0);
 
-            timer += Time.deltaTime;
-            Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
+            timer += Time.deltaTime * moveSpeed;
+            Vector3 tempPos = Parabola(startPos, endPos, 1, timer);
             transform.parent.position = tempPos;
 
            
 
 
             yield return new WaitForEndOfFrame();
+
         }
+        transform.parent.gameObject.SetActive(false);
     }
 
     public float GetDamage()

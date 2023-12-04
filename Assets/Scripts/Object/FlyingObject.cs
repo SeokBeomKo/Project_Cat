@@ -14,8 +14,8 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
     private bool isCollision = false;
 
-
-    public float moveSpeed = 5.0f; // 이동 속도
+    public float height = 1;
+    private float moveSpeed = 0.1f; // 이동 속도
     public Vector3 rotationAxis = Vector3.left; // 회전 축
 
     Vector3 Direction;
@@ -36,17 +36,26 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
             StartCoroutine("BulletMove");
 
-
         }
 
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.parent.CompareTag("Cat"))
+        string otherTag = collision.transform.tag;
+
+        if (otherTag.Contains("Parts"))
         {
             isCollision = true;
             endPos = chaseCenter.PlayerPosition();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            GetDamage();
         }
     }
 
@@ -65,19 +74,21 @@ public class FlyingObject : MonoBehaviour, IAttackable
     {
         isCollision = false;
         timer = 0;
-        while (transform.parent.position.y >= startPos.y)
+        while (transform.parent.position.y >= endPos.y)
         {
-            transform.parent.rotation = Quaternion.Euler(Time.time * 900, 0, 0);
+            transform.parent.rotation = Quaternion.Euler(Time.time * 90, 0, 0);
 
-            timer += Time.deltaTime;
-            Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
+            timer += Time.deltaTime * moveSpeed;
+            Vector3 tempPos = Parabola(startPos, endPos, height, timer);
             transform.parent.position = tempPos;
 
 
 
 
             yield return new WaitForEndOfFrame();
+
         }
+        transform.parent.gameObject.SetActive(false);
     }
 
     public float GetDamage()

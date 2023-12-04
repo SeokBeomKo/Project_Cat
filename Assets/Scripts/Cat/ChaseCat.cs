@@ -1,34 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-/*public class ChaseCat : MonoBehaviour
-{
-    public Transform[] waypoints;
-    private int currentWaypointIndex = 0;
-    public float moveSpeed = 2.0f;
-
-    void Update()
-    {
-        if (currentWaypointIndex < waypoints.Length)
-        {
-            Transform currentWaypoint = waypoints[currentWaypointIndex];
-
-            Vector3 direction = (currentWaypoint.position - transform.parent.position).normalized;
-
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.parent.rotation = targetRotation;
-
-            Vector3 targetPosition = new Vector3(currentWaypoint.position.x, currentWaypoint.position.y, currentWaypoint.position.z);
-            transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime * moveSpeed);
-
-            if (Vector3.Distance(transform.parent.position, currentWaypoint.position) < 0.1f)
-            {
-                currentWaypointIndex++;
-            }
-        }
-    }
-}*/
-
 public class ChaseCat : MonoBehaviour
 {
     private Transform[] waypoints;
@@ -37,8 +9,10 @@ public class ChaseCat : MonoBehaviour
     public float moveSpeed = 2.0f;
     public float jumpHeightThreshold = 0.5f;
     public float jumpDistance = 1.0f;
+    public float rotationSpeed = 5.0f;
 
     private Animator animator;
+    private Transform previousWaypoint;
 
     private void Start()
     {
@@ -48,10 +22,12 @@ public class ChaseCat : MonoBehaviour
 
         waypoints = new Transform[childCount];
 
-        for(int i =0;i<childCount;i++)
+        for (int i = 0; i < childCount; i++)
         {
             waypoints[i] = waypointsParent.GetChild(i);
         }
+
+        previousWaypoint = waypoints[0];
     }
 
     void Update()
@@ -63,13 +39,19 @@ public class ChaseCat : MonoBehaviour
             Vector3 direction = (currentWaypoint.position - transform.parent.position).normalized;
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.parent.rotation = targetRotation;
+            targetRotation.eulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
 
-            float yDifference = Mathf.Abs(transform.parent.position.y - currentWaypoint.position.y);
+            transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+            float yDifference = Mathf.Abs(previousWaypoint.position.y - currentWaypoint.position.y);
 
             if (yDifference > jumpHeightThreshold)
             {
-                Jump();
+                animator.SetTrigger("jump");
+            }
+            else if(yDifference == 0)
+            {
+                animator.SetTrigger("run");
             }
 
             Vector3 targetPosition = new Vector3(currentWaypoint.position.x, currentWaypoint.position.y, currentWaypoint.position.z);
@@ -77,13 +59,13 @@ public class ChaseCat : MonoBehaviour
 
             if (Vector3.Distance(transform.parent.position, currentWaypoint.position) < 0.1f)
             {
+                previousWaypoint = currentWaypoint;
                 currentWaypointIndex++;
             }
         }
-    }
-
-    void Jump()
-    {
-        animator.SetTrigger("jump");
+        else if (currentWaypointIndex == waypoints.Length)
+        {
+            animator.SetBool("endIdle", true);
+        }
     }
 }
