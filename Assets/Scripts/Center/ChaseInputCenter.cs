@@ -22,7 +22,7 @@ public class ChaseInputCenter : MonoBehaviour
 
     public void EnterMaze()
     {
-        playerController.transform.parent.LookAt(playerController.transform.parent.position + Vector3.forward);
+        playerController.transform.parent.LookAt(playerController.transform.parent.position);
         playerController.stateMachine.ChangeStateAny(PlayerMovementStateEnums.CHASE_IDLE);
     }
 

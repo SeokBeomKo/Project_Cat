@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VirusAttackOperation : MonoBehaviour
+public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 {
     [Header("HP")]
     public float HP = 5;
@@ -46,7 +46,7 @@ public class VirusAttackOperation : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            Hit();
+            Hit(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
         }
     }
 
@@ -59,14 +59,15 @@ public class VirusAttackOperation : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player HP--");
+            //Debug.Log("Player HP--");
+            GetDamage();
         }
     }
 
 
-    private void Hit()
+    private void Hit(float damage)
     {
-        objectHPbar.Damage(1);
+        objectHPbar.Damage(damage);
         HP = objectHPbar.GetHP();
         Check();
     }
@@ -94,9 +95,14 @@ public class VirusAttackOperation : MonoBehaviour
         Destroy(transform.parent.gameObject);
     }
 
-    public void BeAttacked()
+    public void BeAttacked(float damage)
     {
-        Hit();
+        Hit(damage);
+    }
+
+    public float GetDamage()
+    {
+        return 5;
     }
 
 }

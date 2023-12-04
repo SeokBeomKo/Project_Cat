@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO.Pipes;
 using UnityEngine;
 
-public class VirusProjectile : MonoBehaviour
+public class VirusProjectile : MonoBehaviour, IAttackable
 {
     [Header("프리팹")]
     public GameObject projectile;
@@ -70,5 +70,10 @@ public class VirusProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         Explosion();
+    }
+
+    public float GetDamage()
+    {
+        return 5;
     }
 }
