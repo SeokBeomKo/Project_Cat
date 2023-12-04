@@ -13,6 +13,9 @@ public class BubbleProjectile : MonoBehaviour, IAttackable, IProjectile
     [Header("리지드바디")]
     public Rigidbody rigidBody;
 
+    [Header("콜라이더")]
+    public Collider projectileCollider;
+
     [Header("방향 정보")]
     public Vector3 directionPosition;
     private Vector3 targetDirection;
@@ -21,6 +24,9 @@ public class BubbleProjectile : MonoBehaviour, IAttackable, IProjectile
     public float maxSpeed;
 
     private float damage;
+
+
+
 
     public void SetDamage(float _damage)
     {
@@ -75,6 +81,11 @@ public class BubbleProjectile : MonoBehaviour, IAttackable, IProjectile
 
     public void Explosion()
     {
+        if(projectileCollider.enabled)
+        {
+            SoundManager.Instance.PlaySFX("ExplosionBubbleGun");
+        }
+        projectileCollider.enabled = false;
         rigidBody.isKinematic = true;
 
         projectile.SetActive(false);

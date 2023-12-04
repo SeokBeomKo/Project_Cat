@@ -12,6 +12,7 @@ public class NavigateVaseOperation : MonoBehaviour
         if(collision.transform.tag =="Player")
         {
             Debug.Log("탄약 30 충전");
+            SoundManager.Instance.PlaySFX("GetItem");
             transform.parent.gameObject.SetActive(false);
         }
     }
