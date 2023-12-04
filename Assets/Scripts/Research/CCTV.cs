@@ -9,6 +9,7 @@ public class CCTV : MonoBehaviour
 
     private bool hasput = false;
     private bool isPlayerCollision = false;
+    private bool isTurnOn = false;
 
     public delegate void CCTVHandle();
     public event CCTVHandle OnCCTV;
@@ -33,8 +34,14 @@ public class CCTV : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerCollision = true;
-            Screen.EnableKeyword("_EMISSION");
-
+            Screen.EnableKeyword("_EMISSION");          
+            
+            /*if(!isTurnOn)
+            {
+                SoundManager.Instance.PlaySFX("Computer");
+                isTurnOn = true;
+            }*/
+            
             if (!hasput)
             {
                 interactiveKey.SetActive(true);

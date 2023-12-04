@@ -55,6 +55,7 @@ public class BubbleGun : Weapon
         randomScale = Random.Range(0.2f,0.7f);
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
+        SoundManager.Instance.PlaySFX("ShootBubbleGun");
         bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
         bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
         bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);
