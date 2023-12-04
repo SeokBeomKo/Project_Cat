@@ -23,13 +23,15 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable
         //Debug.Log("Update");
     }
 
+        
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision " + collision.gameObject.layer);
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && !isChange)
         {
-
+            
             Debug.Log(collision.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
             Hit(collision.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
         }
@@ -39,10 +41,11 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable
     {
         Debug.Log("trigger " + other.gameObject.layer);
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && !isChange)
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-
-          Debug.Log(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
+            Vector3 direction = (this.transform.position - other.transform.position).normalized;
+            this.GetComponent<Rigidbody>().AddForce(direction * 10, ForceMode.Impulse);
+            Debug.Log(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
             Hit(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
         }
     }
