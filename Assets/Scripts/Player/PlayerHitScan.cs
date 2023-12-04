@@ -31,6 +31,15 @@ public class PlayerHitScan : MonoBehaviour
         lowerCollider.enabled = true;
     }
 
+    public void GetDamage(float damage = 5f)
+    {
+        if (Time.time - lastHitTime > invincibleTime)
+        {
+            lastHitTime = Time.time; // 공격을 당한 시간을 갱신합니다.
+            OnPlayerHitScan?.Invoke((int)damage);
+        }
+    }
+
     private void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAttack") && Time.time - lastHitTime > invincibleTime)

@@ -34,7 +34,7 @@ public class Door : MonoBehaviour
                 door.transform.rotation = Quaternion.Euler(0, closeAngle, 0);
             }
 
-            yield return null;
+            yield return new WaitForSeconds(0.02f);
         }
     }
 
@@ -55,7 +55,8 @@ public class Door : MonoBehaviour
                 door.transform.rotation = Quaternion.Euler(0, openAngle, 0);
                 fog.SetActive(false);
             }
-            yield return null;
+
+            yield return new WaitForSeconds(0.02f);
         }
     }
 

@@ -39,7 +39,7 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player HP--");
+            collision.transform.GetComponentInChildren<PlayerHitScan>().GetDamage();
         }
     }
 

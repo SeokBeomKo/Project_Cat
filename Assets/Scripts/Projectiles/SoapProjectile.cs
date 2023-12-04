@@ -36,6 +36,7 @@ public class SoapProjectile : MonoBehaviour, IAttackable, IProjectile
 
     public void Explosion()
     {
+        SoundManager.Instance.PlaySFX("ExplosionSoapRifle");
         beam.SetActive(false);
     }
 

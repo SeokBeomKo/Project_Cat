@@ -99,7 +99,7 @@ public class ResearchCenter : MonoBehaviour
         controllerUI.ShowUI();
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
-        subtitle.ShowSubtitle("카날리아 : CCTV에 나온 로키의 위치로 가보자!", delayTime: 1f);
+        subtitle.ShowSubtitle("카날리아 : CCTV에 나온 로키의 위치로 가보자!", delayTime: 0.5f);
         endPoint.SetActive(true);
     }
 }
