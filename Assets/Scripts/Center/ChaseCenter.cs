@@ -21,8 +21,9 @@ public class ChaseCenter : MonoBehaviour
     [Header("미로 입장 판단")]
     [SerializeField] public MazeEnter mazeEnter;
 
-    [Header("종료 UI")]
-    [SerializeField] public List<GameObject> endUIList;
+    [Header("UI")]
+    [SerializeField] public UIController controllerUI;
+
 
     private void Start() 
     {
@@ -42,19 +43,14 @@ public class ChaseCenter : MonoBehaviour
 
         camController.SetTopCamera();
         camRotate.gameObject.SetActive(false);
-        DisableUI();
+        controllerUI.RemoveUI();
     }
 
-    private void DisableUI()
-    {
-        foreach(GameObject obj in endUIList)
-        {
-            obj.SetActive(false);
-        }
-    }
+
 
     public Vector3 PlayerPosition()
     {
+        Debug.Log("PlayerPos : " + Player.transform.position);
         return Player.transform.position;
     }
 }
