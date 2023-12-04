@@ -28,10 +28,11 @@ public class PlantChaseOperation : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
 
-        if(collision.gameObject.CompareTag("Ball")) // 몬스터
+        if(collision.transform.parent.CompareTag("Cat")) // 몬스터
         {
+            Debug.Log(collision.transform.parent.tag);
+
             isRotation = true;
         }
         if (collision.gameObject.CompareTag("ChaseRoad"))
