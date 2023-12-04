@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,10 @@ public class ChaseCat : MonoBehaviour
 
     private Animator animator;
     private Transform previousWaypoint;
+
+    public Transform CutSceneStartPoint;
+    public delegate void CatCutSceneHandle();
+    public event CatCutSceneHandle OnCutSceneStart;
 
     private void Start()
     {
@@ -32,6 +37,8 @@ public class ChaseCat : MonoBehaviour
 
     void Update()
     {
+        Check();
+
         if (currentWaypointIndex < waypoints.Length)
         {
             Transform currentWaypoint = waypoints[currentWaypointIndex];
@@ -66,6 +73,16 @@ public class ChaseCat : MonoBehaviour
         else if (currentWaypointIndex == waypoints.Length)
         {
             animator.SetBool("endIdle", true);
+        }
+    }
+
+    void Check()
+    {
+        if(currentWaypointIndex < waypoints.Length &&
+            CutSceneStartPoint == waypoints[currentWaypointIndex])
+        {
+            Debug.Log("event Invoke");
+            OnCutSceneStart?.Invoke();
         }
     }
 }
