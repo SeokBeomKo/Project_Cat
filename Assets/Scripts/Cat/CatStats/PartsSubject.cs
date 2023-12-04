@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartsSubject : MonoBehaviour, ISubject
+public class PartsSubject : MonoBehaviour, ISubject, IDamageable
 {
     public List<IObserver> observers = new List<IObserver>();
     private PartsEnums partsEnum;
+
+    private bool collisionPossible = true;
 
     public PartsEnums currentParts
     {
@@ -33,9 +35,17 @@ public class PartsSubject : MonoBehaviour, ISubject
         currentDamage = damage;
     }
 
+    public void BeAttacked(float playerDamage)
+    {
+        currentDamage = playerDamage;
+        currentParts = PartsEnums.FOREPAWLEFT;
+
+        NotifyObservers(observers);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
         {
             currentDamage = other.gameObject.GetComponentInChildren<IAttackable>().GetDamage();
             switch (gameObject.tag)
@@ -77,7 +87,16 @@ public class PartsSubject : MonoBehaviour, ISubject
             }
 
             NotifyObservers(observers);
+
+            StartCoroutine(DisableCollisionForSeconds(1.0f));
         }
+    }
+
+    private IEnumerator DisableCollisionForSeconds(float seconds)
+    {
+        collisionPossible = false;
+        yield return new WaitForSeconds(seconds);
+        collisionPossible = true;
     }
 
     public void AddObserver<T>(List<T> observerList, T observer) where T : IObserver

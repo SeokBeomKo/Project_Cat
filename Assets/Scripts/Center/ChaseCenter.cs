@@ -24,6 +24,8 @@ public class ChaseCenter : MonoBehaviour
     [Header("UI")]
     [SerializeField] public UIController controllerUI;
 
+    [Header("Input Handler")]
+    [SerializeField] public InputHandler inputHandler;
 
     private void Start() 
     {
@@ -34,6 +36,8 @@ public class ChaseCenter : MonoBehaviour
 
         camController.SetPlayCamera();
         camRotate.gameObject.SetActive(true);
+
+
     }
 
     public void OnMaze()
@@ -50,7 +54,6 @@ public class ChaseCenter : MonoBehaviour
 
     public Vector3 PlayerPosition()
     {
-        Debug.Log("PlayerPos : " + Player.transform.position);
         return Player.transform.position;
     }
 }
