@@ -25,7 +25,7 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            Debug.Log(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
+            //Debug.Log(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
             Hit(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
         } 
     }

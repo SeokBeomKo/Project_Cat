@@ -11,6 +11,7 @@ public class CCTV : MonoBehaviour
     private bool isPlayerCollision = false;
 
     public delegate void CCTVHandle();
+    public event CCTVHandle OnCCTV;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class CCTV : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && isPlayerCollision)
         {
             hasput = true;
+            OnCCTV?.Invoke();
             interactiveKey.SetActive(false);
         }
     }

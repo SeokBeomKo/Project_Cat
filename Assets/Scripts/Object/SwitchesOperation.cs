@@ -36,7 +36,9 @@ public class SwitchesOperation : MonoBehaviour
     {
         switchesState[index] = !switchesState[index];
         SwitchChange(index);
-
+        
+        CheckSwitch();
+        
         Debug.Log(index+ "번 스위치 " + " : " + !switchesState[index]+ "->" + switchesState[index]);
 
         if (link)
@@ -54,7 +56,7 @@ public class SwitchesOperation : MonoBehaviour
             }
         }
 
-        CheckSwitch();
+        
     }
 
     private void CheckSwitch()

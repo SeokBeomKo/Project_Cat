@@ -28,7 +28,7 @@ public class QuestSubtitle : MonoBehaviour
         }
     }
 
-    IEnumerator Typing(string txt, float speed)
+    IEnumerator Typing(string txt, float speed = 0.1f, float delayTime = 0)
     {
         subtitleText.text = null;
         SoundManager.Instance.PlaySFX("Keyboard");
@@ -36,6 +36,8 @@ public class QuestSubtitle : MonoBehaviour
         // 띄어쓰기 두 번이면 줄 바꿈
         if (txt.Contains("  "))
             txt = txt.Replace("  ", "\n");
+
+        yield return new WaitForSeconds(delayTime);
 
         for (int i = 0; i < txt.Length; i++)
         {
@@ -48,13 +50,13 @@ public class QuestSubtitle : MonoBehaviour
         subtitleText.gameObject.SetActive(false);
     }
 
-    public void ShowQuestSubtitle(string content, float speed)
+    public void ShowQuestSubtitle(string content, float speed = 0.1f, float delayTime = 0)
     {
         if (!subtitleText.gameObject.activeSelf)
         {
             hasShow = true;
             subtitleText.gameObject.SetActive(true);
-            StartCoroutine(Typing(content, speed));
+            StartCoroutine(Typing(content, speed, delayTime));
         }
     }
 }

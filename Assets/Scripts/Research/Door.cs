@@ -7,31 +7,65 @@ public class Door : MonoBehaviour
     public GameObject door;
     public GameObject fog;
 
-    private float angle = -100;
+    private float closeAngle = -100;
+    private float openAngle = 0;
     
     private bool isDoorClose = false;
     private bool isDoorOpen = false;
 
-    private void CloseDoor()
-    {
-        angle++;
+    public delegate void DoorHandle();
+    public event DoorHandle OnCloseDoor;
+    public event DoorHandle OnOpenDoor;
 
-        if (angle > 0)
+    public IEnumerator CloseDoor()
+    {
+        while (!isDoorClose)
         {
-            isDoorClose = true;
+            closeAngle++;
+
+            if (closeAngle > 0)
+            {
+                isDoorClose = true;
+                Invoke("SuccessCloseDoor", 4f);
+            }
+            else
+            {
+                door.transform.rotation = Quaternion.Euler(0, closeAngle, 0);
+            }
+
+            yield return null;
         }
-        door.transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
-    private void OpenDoor()
+    public IEnumerator OpenDoor()
     {
-        angle--;
-
-        if (angle < -100)
+        while (!isDoorOpen)
         {
-            isDoorOpen = true;
+            openAngle--;
+
+            if (openAngle < -100)
+            {
+                isDoorOpen = true;
+            }
+            else
+            {
+                door.transform.rotation = Quaternion.Euler(0, openAngle, 0);
+                fog.SetActive(false);
+            }
+
+            yield return null;
         }
-        door.transform.rotation = Quaternion.Euler(0, angle, 0);
-        fog.SetActive(false);
+    }
+
+
+    public void SuccessCloseDoor()
+    {
+        OnCloseDoor?.Invoke();
+    }
+
+    public void SuccessOpendDoor()
+    {
+        OnOpenDoor?.Invoke();
     }
 }
+
