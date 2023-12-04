@@ -24,12 +24,17 @@ namespace SpecialAttack
         [Header("증가 속도")]
         public float growthSpeed = 1f;
 
-        private bool safeCheck = false;
-
         private float safeSize = 1f;
         private float attackSize = 1f;
-        private float timer = 0f;    
-        
+        private float timer = 0f;
+
+        private Animator animator = null;
+
+        private void Start()
+        {
+            animator = transform.parent.GetComponent<Animator>();
+        }
+
         private void OnEnable()
         {
             SetInitialSize();
@@ -64,6 +69,7 @@ namespace SpecialAttack
             }
             else
             {
+                animator.SetBool("idle", true);
                 gameObject.SetActive(false);
             }
         }

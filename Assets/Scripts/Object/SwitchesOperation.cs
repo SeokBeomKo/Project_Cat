@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SwitchesOperation : MonoBehaviour
 {
-    public Room2GameCenter room2GameCenter;
-
-    public GameObject Door;
+    public GameObject[] Switchbones;
     private bool[] switchesState;
+    private float angle;
+    public GameObject[] switchArray;
+
     int childCount;
+
+    public delegate void SwitchHandle();
+    public event SwitchHandle OnSwitch;
 
     void Start()
     {
@@ -19,58 +25,84 @@ public class SwitchesOperation : MonoBehaviour
         switchesState = new bool[childCount];
         for (int i = 0; i < switchesState.Length; i++)
         {
-            switchesState[i] = false;
+            switchesState[i] = true;
         }
     }
 
-    public bool this[int index, bool link = false]
+    public void InitSwitch(bool set = true)
     {
-        get
+        foreach(var obj in switchArray)
         {
-            return switchesState[index];
+            obj.SetActive(set);
         }
-        set
+    }
+
+    public bool GetSwitch(int index)
+    {
+        return switchesState[index];
+    }
+
+    public void SetSwitch(int index, bool link)
+    {
+        switchesState[index] = !switchesState[index];
+        SwitchChange(index); // 애니메이션       
+        
+        CheckSwitch();
+
+        Debug.Log(index+ "번 스위치 " + " : " + !switchesState[index]+ "->" + switchesState[index]);
+
+        if (link)
         {
-            switchesState[index] = value;
-
-            Debug.Log("index : " + index + ", " + switchesState[index]);
-
-            if (link)
+            Debug.Log("양옆 변경 ");
+            if (index > 0)
             {
-                if (index > 0)
-                {
-                    switchesState[index - 1] = !switchesState[index - 1];
-                    Debug.Log(index + " -1 " + switchesState[index - 1]);
-
-                }
-                else if (index < switchesState.Length)
-                {
-                    switchesState[index + 1] = !switchesState[index + 1];
-                    Debug.Log(index + " +1 " + switchesState[index + 1]);
-
-                }
+                SetSwitch(index - 1, false); // 왼쪽
             }
-           
+
+            if (index < switchesState.Length - 1)
+            {
+                SetSwitch(index + 1, false); // 오른쪽
+            }
         }
     }
 
-    private void Update()
+    private void CheckSwitch()
     {
-        bool allTrue = true;
+        int switchCount = 0;
         for (int i = 0; i < switchesState.Length; i++)
         {
-            if(switchesState[i] == false)
+            if (switchesState[i]) // 꺼짐
             {
-                allTrue = false;
                 break;
+            }
+            else
+            {
+                switchCount++;
             }
         }
 
-        if (allTrue)
+        if (switchCount == 5)
         {
-            room2GameCenter.IsDoorOpen = true;
+            Invoke("SuccessSwitch", 1f);
         }
     }
- 
 
+    public void SwitchChange(int index)
+    {
+        // on : -40 , off : 40
+        if (GetSwitch(index))
+        {
+            angle = -50;
+        }
+        else
+        {
+            angle = -130;
+        }
+        Switchbones[index].transform.rotation = Quaternion.Euler(angle, 0, 0);
+    }
+ 
+    public void SuccessSwitch()
+    {
+        OnSwitch?.Invoke();
+    }
 }

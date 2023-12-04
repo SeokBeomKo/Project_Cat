@@ -25,6 +25,10 @@ public class PausePopUp : MonoBehaviour
 
             if (pausePopUp.activeSelf)
             {
+                //
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                //
                 pausePopUp.SetActive(false);
                 Time.timeScale = 1f;
                 OnPausePopupFalse?.Invoke();
@@ -32,6 +36,10 @@ public class PausePopUp : MonoBehaviour
             }
             else if(!pausePopUp.activeSelf && !settingPopUp.activeSelf)
             {
+                //
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                //
                 pausePopUp.SetActive(true);
                 Time.timeScale = 0f;
                 OnPausePopupTrue?.Invoke();
@@ -44,6 +52,10 @@ public class PausePopUp : MonoBehaviour
             }
             else if(settingPopUp.activeSelf)
             {
+                //
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                //
                 settingPopUp.SetActive(false);
                 Time.timeScale = 1f;
                 OnPausePopupFalse?.Invoke();
@@ -56,6 +68,10 @@ public class PausePopUp : MonoBehaviour
     public void OnClickResume()
     {
         SoundManager.Instance.PlaySFX("Click");
+        //
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        //
         pausePopUp.SetActive(false);
         ShowUI();
         Time.timeScale = 1f;
@@ -78,13 +94,17 @@ public class PausePopUp : MonoBehaviour
     public void ClosePopUp()
     {
         SoundManager.Instance.PlaySFX("Click");
+        //
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        //
         settingPopUp.SetActive(false);
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
         
         ShowUI();
     }
-
+    
     public void RemoveUI()
     {
         canvas.alpha = 0;

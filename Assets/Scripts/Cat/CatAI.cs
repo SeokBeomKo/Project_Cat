@@ -45,7 +45,7 @@ namespace BehaviorTree
         private Animator animator = null;
         private Transform playerTransform = null;
 
-        private Vector3 chargeAttackrPosition;
+        private Vector3 chargeAttackPosition;
 
         private void Awake()
         {
@@ -151,7 +151,7 @@ namespace BehaviorTree
 
         Node.NodeState CheckAnimation()
         {
-            if (IsAnimationRunning("Run"))
+            if (IsAnimationRunning("Run") && !waveCollider.activeSelf)
             {
                 meleeDamageBox.SetActive(false);
                 chargeDamageBox.SetActive(false);
@@ -180,7 +180,7 @@ namespace BehaviorTree
             if (playerTransform != null)
             {
                 if (playerInMeleeRange && isAttackComplete)
-                 {
+                {
                     return Node.NodeState.SUCCESS;
                 }
             }
@@ -194,10 +194,7 @@ namespace BehaviorTree
             {
                 if (chargeAttackTime)
                 {
-                    animator.SetTrigger("chargeAttack");
-                    chargeAttackrPosition = playerTransform.position;
-                    chargeDamageBox.SetActive(true);
-
+                    chargeAttackPosition = playerTransform.position;
                     chargeAttackTime = false;
                     return Node.NodeState.SUCCESS;
                 }
@@ -210,17 +207,45 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
+                animator.SetTrigger("chargeAttack");
+                chargeDamageBox.SetActive(true);
+                StartCoroutine(PerformChargeAttack());
+
                 isAttacking = true;
                 isAttackComplete = false;
 
-                Vector3 chargeAttackPosition = new Vector3(chargeAttackrPosition.x, transform.parent.position.y, chargeAttackrPosition.z);
-                transform.parent.position = chargeAttackPosition;
-
                 Debug.Log("돌진 공격");
+
                 return Node.NodeState.SUCCESS;
             }
 
             return Node.NodeState.FAILURE;
+        }
+
+        IEnumerator PerformChargeAttack()
+        {
+            animator.SetTrigger("chargeAttack");
+
+            yield return null;
+            float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            float time = 0f;
+            Vector3 startPosition = transform.parent.position;
+
+            while (time < animationLength)
+            {
+                float height = Mathf.Sin(Mathf.PI * time / animationLength) * 0.5f;
+
+                Vector3 currentPosition = Vector3.Lerp(startPosition, chargeAttackPosition, time / animationLength);
+                currentPosition.y += height;
+
+                transform.parent.position = currentPosition;
+
+                yield return null;
+
+                time += Time.deltaTime;
+            }
+            transform.parent.position = chargeAttackPosition;
         }
 
         Node.NodeState DoMeleeAttack()
@@ -251,7 +276,7 @@ namespace BehaviorTree
                 chargeAttackTime = true;
                 canvasImage.enabled = true;
                 StartCoroutine(FadeOutOverTime(5.0f));
-                
+
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
@@ -260,21 +285,20 @@ namespace BehaviorTree
         IEnumerator FadeOutOverTime(float duration)
         {
             float timer = 0f;
-            Color imageColor = canvasImage.color;
-            Color transparentColor = new Color(imageColor.r, imageColor.g, imageColor.b, 0f);
+            Color startColor = canvasImage.color;
+            Color transparentColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
 
             while (timer < duration)
             {
                 timer += Time.deltaTime;
                 float progress = timer / duration;
 
-                //imageColor = Color.Lerp(imageColor, transparentColor, progress);
-                imageColor = Color.Lerp(imageColor, transparentColor, Mathf.SmoothStep(0f, 1f, progress));
+                canvasImage.color = Color.Lerp(startColor, transparentColor, Mathf.SmoothStep(0f, 1f, progress));
 
-                canvasImage.color = imageColor;
                 yield return null;
             }
 
+            canvasImage.color = transparentColor;
             canvasImage.enabled = false;
         }
 
@@ -297,20 +321,38 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                Debug.Log("특수 파동 공격");
-                waveCollider.SetActive(true);
+                isAttacking = true;
+                isAttackComplete = false;
+                StartCoroutine(PerformWaveAttack());
                 timer = 0f;
-
+                Debug.Log("특수 파동 공격");
                 return Node.NodeState.SUCCESS;
             }
 
             return Node.NodeState.FAILURE;
         }
 
-        // RUN
+        IEnumerator PerformWaveAttack()
+        {
+            animator.SetTrigger("waveAttack");
+
+            yield return null;
+            float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            float time = 0f;
+
+            while (time < animationLength)
+            {
+                yield return null;
+                time += Time.deltaTime;
+            }
+
+            waveCollider.SetActive(true);
+        }
+
         Node.NodeState CheckAttackEndTime()
         {
-            if(playerTransform != null && isAttackComplete)
+            if (playerTransform != null && isAttackComplete)
             {
                 return Node.NodeState.SUCCESS;
             }
@@ -327,13 +369,15 @@ namespace BehaviorTree
 
                 if (playerDirection != Vector3.zero)
                 {
+                    animator.SetBool("idle", false);
+                    animator.SetBool("run", true);
+
                     Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
                     transform.parent.rotation = targetRotation;
 
                     Vector3 targetPosition = new Vector3(playerTransform.position.x, transform.parent.position.y, playerTransform.position.z);
                     transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime * movementSpeed);
-                    animator.SetBool("run", true);
-
+                    
                     return Node.NodeState.SUCCESS;
                 }
             }
@@ -353,7 +397,7 @@ namespace BehaviorTree
         }
 
         private void OnTriggerEnter(Collider other)
-        { 
+        {
             if (other.CompareTag("Player"))
             {
                 playerInMeleeRange = true;

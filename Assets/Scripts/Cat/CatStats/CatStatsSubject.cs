@@ -9,17 +9,37 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
     [Header("세척도 최댓값")]
     [SerializeField]
-    private int maxCleanliness = 100;
+    private float maxCleanliness = 100;
 
-    private Dictionary<PartsEnums, int> catCleanliness = new Dictionary<PartsEnums, int>();
+    private Dictionary<PartsEnums, float> catCleanliness = new Dictionary<PartsEnums, float>();
+    private float cleanliness;
+
+    public float currentMaxCleanliness
+    {
+        get { return maxCleanliness; }
+    }
+
+    public float currentCleanliness
+    {
+        get { return cleanliness; }
+        set
+        {
+            cleanliness = value;
+            NotifyObservers(cleanlinessObservers);
+        }
+    }
 
     [Header("호감도 최댓값")]
     [SerializeField]
-    private int maxLikeability = 100;
+    private float maxLikeability = 300;
+    private float likeability;
 
-    private int likeability;
+    public float currentMaxLikeability
+    {
+        get { return maxLikeability; }
+    }
 
-    public int currentLikeability
+    public float currentLikeability
     {
         get { return likeability; }
         set
@@ -39,7 +59,8 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         catCleanliness.Add(PartsEnums.REARPAWRIGHT, 0);
         catCleanliness.Add(PartsEnums.UPPERBODY, 0);
 
-        likeability = maxLikeability;
+        currentLikeability = maxLikeability;
+        currentCleanliness = maxCleanliness;
     }
 
     public void Notify(ISubject subject)
@@ -48,18 +69,18 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
         if (partsSubject.currentParts == PartsEnums.HEAD)
         {
-            DecreaseLikeability(partsSubject.damage);
+            DecreaseLikeability(partsSubject.currentDamage);
         }
         else
         {
-            IncreaseCleanliness(partsSubject.currentParts, partsSubject.damage);
-            DecreaseLikeability(partsSubject.damage);
+            IncreaseCleanliness(partsSubject.currentParts, partsSubject.currentDamage);
+            DecreaseLikeability(partsSubject.currentDamage);
         }
     }
 
-    public int GetPartsCleanliness(PartsEnums partsEnum)
+    public float GetPartsCleanliness(PartsEnums partsEnum)
     {
-        if (catCleanliness.TryGetValue(partsEnum, out int cleanlinessValue))
+        if (catCleanliness.TryGetValue(partsEnum, out float cleanlinessValue))
         {
             return cleanlinessValue;
         }
@@ -69,9 +90,9 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
     }
 
-    public int GetTotalCleanliness()
+    public float GetTotalCleanliness()
     {
-        int totalCleanliness = 0;
+        float totalCleanliness = 0;
 
         foreach (var cleanlinessValue in catCleanliness.Values)
         {
@@ -81,40 +102,45 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         return totalCleanliness;
     }
 
-    public void IncreaseCleanliness(PartsEnums currentParts, int fill = 5)
+    public void IncreaseCleanliness(PartsEnums currentParts, float fill = 5)
     {
         catCleanliness[currentParts] += fill;
 
-        if (catCleanliness[currentParts] > maxCleanliness)
+        currentCleanliness = catCleanliness[currentParts];
+
+        if (currentCleanliness > maxCleanliness)
         {
-            catCleanliness[currentParts] = maxCleanliness;
+            currentCleanliness = maxCleanliness;
+            catCleanliness[currentParts] = currentCleanliness;
         }
 
-        Debug.Log("파츠 : " + currentParts + ", 세척도 : " + catCleanliness[currentParts]);
+        Debug.Log("파츠 : " + currentParts + ", 세척도 : " + currentCleanliness);
     }
 
-    public void IncreaseLikeability(int fill = 5)
+    public void IncreaseLikeability(float fill = 5)
     {
-        likeability += fill;
+        currentLikeability += fill;
         
-        if (likeability > maxLikeability)
+        if (currentLikeability > maxLikeability)
         {
-            likeability = maxLikeability;
+            currentLikeability = maxLikeability;
         }
 
-        Debug.Log("호감도 증가 : " + likeability);
+        Debug.Log("호감도 증가 : " + currentLikeability);
+
+        NotifyObservers(likeabilityObservers);
     }
 
-    public void DecreaseLikeability(int damage = 5)
+    public void DecreaseLikeability(float damage = 5)
     {
-        likeability -= damage;
+        currentLikeability -= damage;
 
-        if (likeability <= 0)
+        if (currentLikeability <= 0)
         {
             // 게임 오버
         }
 
-        Debug.Log("호감도 감소 : " + likeability);
+        Debug.Log("호감도 감소 : " + currentLikeability);
     }
 
     public void AddObserver<T>(List<T> observerList, T observer) where T : IObserver

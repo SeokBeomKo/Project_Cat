@@ -77,6 +77,7 @@ public class SplashBuster : Weapon
 
             // 총알을 발사합니다.
             GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.LookRotation(fireDirection));
+            SoundManager.Instance.PlaySFX("ShootSplashBuster");
             bullet.transform.LookAt(fireDirection);
             bullet.GetComponentInChildren<SplashProjectile>().SetDirection(fireDirection);
             bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);

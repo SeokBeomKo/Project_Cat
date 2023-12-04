@@ -21,6 +21,8 @@ public class RandomItem : MonoBehaviour
         {
             if (ItemNames != null && ItemNames.Length > 0)
             {
+                SoundManager.Instance.PlaySFX("GetItem");
+
                 string itemName = GetRandomName();
 
                 if (itemName == "WaterBottle")

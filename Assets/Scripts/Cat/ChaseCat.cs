@@ -1,112 +1,88 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseCat : MonoBehaviour
 {
-    public Animator animator;
-    private string targetTag = "ChaseRoad";
-    public float jumpHeightThreshold = 0.5f; // Y 축 차이의 임계값
+    private Transform[] waypoints;
+    public Transform waypointsParent;
+    private int currentWaypointIndex = 0;
+    public float moveSpeed = 2.0f;
+    public float jumpHeightThreshold = 0.5f;
+    public float jumpDistance = 1.0f;
+    public float rotationSpeed = 5.0f;
 
-    private Transform[] targets;
-    private NavMeshAgent agent;
-    private int currentTargetIndex = 0;
-    private bool allTargetsReached = false;
+    private Animator animator;
+    private Transform previousWaypoint;
 
-    void Start()
+    public Transform CutSceneStartPoint;
+    public delegate void CatCutSceneHandle();
+    public event CatCutSceneHandle OnCutSceneStart;
+
+    private void Start()
     {
-        GameObject[] targetObjects = GameObject.FindGameObjectsWithTag(targetTag);
-        targets = new Transform[targetObjects.Length];
-
-        for (int i = 0; i < targetObjects.Length; i++)
-        {
-            targets[i] = targetObjects[i].transform;
-        }
-
-        agent = GetComponentInParent<NavMeshAgent>();
         animator = GetComponentInParent<Animator>();
 
-        if (targets.Length > 0)
+        int childCount = waypointsParent.childCount;
+
+        waypoints = new Transform[childCount];
+
+        for (int i = 0; i < childCount; i++)
         {
-            SetNextDestination();
+            waypoints[i] = waypointsParent.GetChild(i);
         }
+
+        previousWaypoint = waypoints[0];
     }
 
     void Update()
     {
-        if (agent.remainingDistance < 0.5f && !allTargetsReached)
-        {
-            SetNextDestination();
-        }
+        Check();
 
-        if (allTargetsReached)
+        if (currentWaypointIndex < waypoints.Length)
         {
-            Debug.Log("모든 목표 지점에 도착했습니다!");
-        }
-    }
+            Transform currentWaypoint = waypoints[currentWaypointIndex];
 
-    void SetNextDestination()
-    {
-        if (currentTargetIndex < targets.Length)
-        {
-            if (agent.destination != targets[currentTargetIndex].position)
+            Vector3 direction = (currentWaypoint.position - transform.parent.position).normalized;
+
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            targetRotation.eulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
+
+            transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+            float yDifference = Mathf.Abs(previousWaypoint.position.y - currentWaypoint.position.y);
+
+            if (yDifference > jumpHeightThreshold)
             {
-                agent.SetDestination(targets[currentTargetIndex].position);
-                currentTargetIndex++;
-
-                if (currentTargetIndex < targets.Length)
-                {
-                    // 목적지 간의 Y 축 차이 계산
-                    float yDifference = Mathf.Abs(transform.position.y - targets[currentTargetIndex].position.y);
-
-                    // Y 축 차이가 특정 높이 이상이면 점프
-                    if (yDifference > jumpHeightThreshold)
-                    {
-                        Jump();
-                    }
-
-                }
-                else
-                {
-                    currentTargetIndex++;
-                    SetNextDestination();
-                }
+                animator.SetTrigger("jump");
             }
-            else
+            else if(yDifference == 0)
             {
-                allTargetsReached = true;
+                animator.SetTrigger("run");
             }
+
+            Vector3 targetPosition = new Vector3(currentWaypoint.position.x, currentWaypoint.position.y, currentWaypoint.position.z);
+            transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime * moveSpeed);
+
+            if (Vector3.Distance(transform.parent.position, currentWaypoint.position) < 0.1f)
+            {
+                previousWaypoint = currentWaypoint;
+                currentWaypointIndex++;
+            }
+        }
+        else if (currentWaypointIndex == waypoints.Length)
+        {
+            animator.SetBool("endIdle", true);
         }
     }
 
-    /*private void OnTriggerEnter(Collider other)
+    void Check()
     {
-        if (other.gameObject.tag == targetTag)
+        if(currentWaypointIndex < waypoints.Length &&
+            CutSceneStartPoint == waypoints[currentWaypointIndex])
         {
-            // 체크: currentTargetIndex가 배열의 범위 내에 있는지 확인
-            if (currentTargetIndex < targets.Length)
-            {
-                // 목적지 간의 Y 축 차이 계산
-                float yDifference = Mathf.Abs(transform.position.y - targets[currentTargetIndex].position.y);
-
-                // Y 축 차이가 특정 높이 이상이면 점프
-                if (yDifference > jumpHeightThreshold)
-                {
-                    Jump();
-                }
-
-                // 이후에 currentTargetIndex 증가
-                currentTargetIndex++;
-            }
-            else
-            {
-                // 모든 목표 도착 시에 처리할 내용 추가
-                allTargetsReached = true;
-            }
+            Debug.Log("event Invoke");
+            OnCutSceneStart?.Invoke();
         }
-    }*/
-
-    void Jump()
-    {
-        animator.SetTrigger("jump");
     }
 }

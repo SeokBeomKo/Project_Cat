@@ -28,20 +28,24 @@ public class PlantChaseOperation : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
+        string otherTag = collision.transform.tag;
 
-        if(collision.gameObject.CompareTag("Ball")) // 몬스터
+        if (otherTag.Contains("Parts"))
         {
             isRotation = true;
         }
         if (collision.gameObject.CompareTag("ChaseRoad"))
         {
-            Debug.Log("바닥이랑 충돌");
             isFalling = false;
             isRolling = true;
         }
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("Player HP --");
         }
@@ -66,7 +70,6 @@ public class PlantChaseOperation : MonoBehaviour
     }
 
     
-
     private void PlantRotate()
     {
         float zRotation = transform.eulerAngles.z + rotationSpeed * Time.deltaTime;
@@ -93,7 +96,6 @@ public class PlantChaseOperation : MonoBehaviour
 
         forceDirection = Wall.transform.position - transform.position;
         forceDirection.y = 0;
-        forceDirection.x = 0;
 
         plantRigidbody.AddForce(forceDirection * forceMagnitude);
     }

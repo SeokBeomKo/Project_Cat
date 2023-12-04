@@ -60,16 +60,26 @@ public class ItemWheel : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
         {
+            
+
             SoundManager.Instance.PlaySFX("Hover");
             isMenuActive = !isMenuActive;
 
             if (isMenuActive && !isEnergyMenuActive)
             {
+                //
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                //
                 itemMenu.SetActive(true);
                 crossHair.SetActive(false);
             }
             if (!isMenuActive)
             {
+                //
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                //
                 itemMenu.SetActive(false);
                 crossHair.SetActive(true);
             }
@@ -203,6 +213,10 @@ public class ItemWheel : MonoBehaviour
                                 InventoryManager.Instance.UseItem(itemNameArray[currentItem]);
                                 DeactivateMenu();
                                 crossHair.SetActive(true);
+                                //
+                                Cursor.visible = false;
+                                Cursor.lockState = CursorLockMode.Locked;
+                                //
                             }
 
 
@@ -229,6 +243,10 @@ public class ItemWheel : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             SoundManager.Instance.PlaySFX("Hover");
+            //
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            //
             DeactivateMenu();
             crossHair.SetActive(true);
         }
@@ -245,6 +263,10 @@ public class ItemWheel : MonoBehaviour
         else if (Input.GetMouseButtonDown(2)) // 스크롤 클릭 시 모든 휠 꺼지게 
         {
             SoundManager.Instance.PlaySFX("Hover");
+            //
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            //
             DeactivateEnergyMenu();
             DeactivateMenu();
             crossHair.SetActive(true);
@@ -286,8 +308,11 @@ public class ItemWheel : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)
             {
-
                 SoundManager.Instance.PlaySFX("Click");
+                //
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                //
                 hasRightMouseClicked = true;
                 Debug.Log("[ItemWheel] " + energySlotArray[selectedEnergySlot].name + "선택");                
                 InventoryManager.Instance.UseItem("운동에너지"); 

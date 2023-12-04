@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitObserver : MonoBehaviour, IObserver
+public class HitObserver : MonoBehaviour, IObserver, IAttackable
 {
     PlayerStats playerStats;
 
@@ -25,7 +25,13 @@ public class HitObserver : MonoBehaviour, IObserver
             if (playerStats != null)
             {
                 playerStats.GetDamage(10);
+                GetDamage();
             }
         }
+    }
+
+    public float GetDamage()
+    {
+        return 5;
     }
 }

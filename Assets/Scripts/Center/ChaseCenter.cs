@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChaseCenter : MonoBehaviour
 {
+    public GameObject Player;
+ 
     [Header("카메라 회전")]
     [SerializeField] public CameraRotate camRotate;
 
@@ -19,8 +21,11 @@ public class ChaseCenter : MonoBehaviour
     [Header("미로 입장 판단")]
     [SerializeField] public MazeEnter mazeEnter;
 
-    [Header("종료 UI")]
-    [SerializeField] public List<GameObject> endUIList;
+    [Header("UI")]
+    [SerializeField] public UIController controllerUI;
+
+    [Header("Input Handler")]
+    [SerializeField] public InputHandler inputHandler;
 
     private void Start() 
     {
@@ -31,6 +36,8 @@ public class ChaseCenter : MonoBehaviour
 
         camController.SetPlayCamera();
         camRotate.gameObject.SetActive(true);
+
+
     }
 
     public void OnMaze()
@@ -40,14 +47,13 @@ public class ChaseCenter : MonoBehaviour
 
         camController.SetTopCamera();
         camRotate.gameObject.SetActive(false);
-        DisableUI();
+        controllerUI.RemoveUI();
     }
 
-    private void DisableUI()
+
+
+    public Vector3 PlayerPosition()
     {
-        foreach(GameObject obj in endUIList)
-        {
-            obj.SetActive(false);
-        }
+        return Player.transform.position;
     }
 }

@@ -13,11 +13,22 @@ MonoBehaviour:
   m_Name: Main Camera Blends
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: CM vcam1 Play
-    m_To: CM vcam1 Top
+  - m_From: CM vcam1 Aim
+    m_To: CM vcam1 Play
     m_Blend:
       m_Style: 1
-      m_Time: 1
+      m_Time: 0.1
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: CM vcam1 Play
+    m_To: CM vcam1 Aim
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

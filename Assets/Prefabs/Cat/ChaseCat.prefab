@@ -75,8 +75,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b17f1ec596fefd45815ab9d556138d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  jumpHeightThreshold: 0.5
+  waypointsParent: {fileID: 0}
+  moveSpeed: 1.8
+  jumpHeightThreshold: 0.2
+  jumpDistance: 2
+  rotationSpeed: 5
 --- !u!1 &8211913024773823173
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,14 +90,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8211913024773823182}
   - component: {fileID: 8211913024773823176}
-  - component: {fileID: 1334664597}
   m_Layer: 0
   m_Name: ChaseCat
-  m_TagString: Untagged
+  m_TagString: Cat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8211913024773823182
 Transform:
   m_ObjectHideFlags: 0
@@ -133,28 +135,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!195 &1334664597
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8211913024773823173}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1001 &8211913024138156329
 PrefabInstance:
   m_ObjectHideFlags: 0

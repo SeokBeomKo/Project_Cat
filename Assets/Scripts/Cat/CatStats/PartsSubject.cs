@@ -2,74 +2,101 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartsSubject : MonoBehaviour, ISubject
+public class PartsSubject : MonoBehaviour, ISubject, IDamageable
 {
     public List<IObserver> observers = new List<IObserver>();
-    private PartsEnums _currentParts;
+    private PartsEnums partsEnum;
+
+    private bool collisionPossible = true;
 
     public PartsEnums currentParts
     {
-        get { return _currentParts; }
+        get { return partsEnum; }
         set
         {
-            _currentParts = value;
+            partsEnum = value;
         }
     }
 
-    private int _damage = 5;
+    private float damage = 5;
 
-    public int damage
+    public float currentDamage
     {
-        get { return _damage; }
+        get { return damage; }
         set
         {
-            _damage = value;
+            damage = value;
         }
+    }
+
+    private void Start()
+    {
+        currentParts = partsEnum;
+        currentDamage = damage;
+    }
+
+    public void BeAttacked(float playerDamage)
+    {
+        currentDamage = playerDamage;
+        currentParts = PartsEnums.FOREPAWLEFT;
+
+        NotifyObservers(observers);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
         {
+            currentDamage = other.gameObject.GetComponentInChildren<IAttackable>().GetDamage();
             switch (gameObject.tag)
             {
                 case "Parts1":
-                    _currentParts = PartsEnums.FOREPAWLEFT;
+                    currentParts = PartsEnums.FOREPAWLEFT;
                     break;
 
                 case "Parts2":
-                    _currentParts = PartsEnums.FOREPAWRIGHT;
+                    currentParts = PartsEnums.FOREPAWRIGHT;
                     break;
 
                 case "Parts3":
-                    _currentParts = PartsEnums.HEAD;
+                    currentParts = PartsEnums.HEAD;
                     break;
 
                 case "Parts4":
-                    _currentParts = PartsEnums.UPPERBODY;
+                    currentParts = PartsEnums.UPPERBODY;
                     break;
 
                 case "Parts5":
-                    _currentParts = PartsEnums.BACK;
+                    currentParts = PartsEnums.BACK;
                     break;
 
                 case "Parts6":
-                    _currentParts = PartsEnums.LOWERBODY;
+                    currentParts = PartsEnums.LOWERBODY;
                     break;
 
                 case "Parts7":
-                    _currentParts = PartsEnums.REARPAWLEFT;
+                    currentParts = PartsEnums.REARPAWLEFT;
                     break;
 
                 case "Parts8":
-                    _currentParts = PartsEnums.REARPAWRIGHT;
+                    currentParts = PartsEnums.REARPAWRIGHT;
                     break;
 
                 default:
                     break;
             }
+
             NotifyObservers(observers);
+
+            StartCoroutine(DisableCollisionForSeconds(1.0f));
         }
+    }
+
+    private IEnumerator DisableCollisionForSeconds(float seconds)
+    {
+        collisionPossible = false;
+        yield return new WaitForSeconds(seconds);
+        collisionPossible = true;
     }
 
     public void AddObserver<T>(List<T> observerList, T observer) where T : IObserver

@@ -8,11 +8,23 @@ public class CCTVOperation : MonoBehaviour
     public GameObject Barrier;
     public GameObject Door;
     public Room2GameCenter room2GameCenter;
+    public GameObject interactiveKey;
 
     private float angle = -100;
     private bool isBarrierMove = false;
     private bool isPlayerCollision = false;
     private bool isDoorClose = false;
+    private bool hasput = false;
+
+    private bool isUsed = false;
+    private bool isBarrier = true;
+
+    public delegate void CCTVHandle();
+    public event CCTVHandle OnCloseDoorTrue;
+    public event CCTVHandle OnCloseDoorFalse;
+
+    public event CCTVHandle OnCloseBarrierTrue;
+    public event CCTVHandle OnCloseBarrierFalse;
 
     // Start is called before the first frame update
     void Start()
@@ -27,40 +39,72 @@ public class CCTVOperation : MonoBehaviour
             MoveBarrier();
         }
 
-        if(isDoorClose)
+        if(isDoorClose && !isBarrierMove)
         {
             CloseDoor();
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && !isBarrierMove && isPlayerCollision)
+        if (Input.GetKeyDown(KeyCode.F) && !isBarrierMove && isPlayerCollision && !isUsed)
         {
-            Debug.Log("Input F");
+            isUsed = true;
             isBarrierMove = true;
-            isDoorClose = true;
+            
+            
             room2GameCenter.IsSwitchesUnlocked = true;
+            
+            hasput = true;
+            interactiveKey.SetActive(false);
         }
 
     }
 
     private void CloseDoor()
     {
+        OnCloseDoorTrue?.Invoke();
         angle++;
 
         if(angle > 0)
         {
             isDoorClose = false;
+            Invoke("SuccessCloseDoor", 3f);
         }
         Door.transform.rotation = Quaternion.Euler(0, angle, 0);
 
+
     }
 
+    private void SuccessCloseDoor()
+    {
+        OnCloseDoorFalse?.Invoke();
+    }
+
+    private void SuccessMoveBarrier()
+    {
+        OnCloseBarrierTrue?.Invoke();
+    }
     private void MoveBarrier()
     {
-        Vector3 barrierPosition = Barrier.transform.position;
-        if (barrierPosition.y > 1.5)
+        Vector3 barrierPosition = Barrier.transform.localPosition;
+        if (barrierPosition.y > 0.14f)
         {
-            Barrier.transform.position += new Vector3(0, -1f, 0) * Time.deltaTime;
+            Barrier.transform.position += new Vector3(0, -0.1f, 0) * Time.deltaTime * 8f;
+            if (isBarrier)
+            {
+                Invoke("SuccessMoveBarrier", 2f);
+                isBarrier = false;
+            }
         }
+        else
+        {
+            isBarrierMove = false;
+            Invoke("Set", 0.5f);
+            OnCloseDoorTrue?.Invoke();
+        }
+    }
+
+    void Set()
+    {
+        isDoorClose = true;
     }
 
 
@@ -71,6 +115,11 @@ public class CCTVOperation : MonoBehaviour
         {
             isPlayerCollision = true;
             Screen.EnableKeyword("_EMISSION");
+            
+            if (!hasput)
+            {
+                interactiveKey.SetActive(true);
+            }
         }
 
     }
@@ -78,5 +127,10 @@ public class CCTVOperation : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isPlayerCollision = false;
+        
+        if (!hasput)
+        {
+            interactiveKey.SetActive(false);
+        }
     }
 }

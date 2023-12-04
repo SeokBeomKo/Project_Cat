@@ -32,8 +32,8 @@ public class PlayerMoveState : IPlayerState
             return;
         }
 
-        player.animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
-        player.animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+        player.animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+        player.animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
 
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
@@ -65,6 +65,7 @@ public class PlayerMoveState : IPlayerState
     public void ClearAimSetting()
     {
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+        player.SetRigWeight(0);
         player.cameraController.SetPlayCamera();
     }
 }

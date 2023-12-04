@@ -56,5 +56,7 @@ public class Room2GameCenter : MonoBehaviour
         }
         Door.transform.rotation = Quaternion.Euler(0, angle, 0);
         Fog.SetActive(false);
+
+        Debug.Log("Open door");
     }
 }

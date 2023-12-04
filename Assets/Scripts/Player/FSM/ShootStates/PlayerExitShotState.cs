@@ -29,6 +29,7 @@ public class PlayerExitShotState : IPlayerShotState
         else
         {
             player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
+            player.SetRigWeight(0);
         }
     }
 }
