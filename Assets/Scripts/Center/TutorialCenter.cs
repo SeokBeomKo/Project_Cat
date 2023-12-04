@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutorialCenter : MonoBehaviour
 {
+    [Header("카메라 컨트롤러")]
+    [SerializeField] public TutorialCameraController cameraController;
     [Header("음성 전화 애니메이터")]
     [SerializeField] public Animator voiceMessageAnimator;
 
@@ -13,6 +15,12 @@ public class TutorialCenter : MonoBehaviour
     [Header("인풋 핸들")]
     [SerializeField] public InputHandler inputHandler;
 
+    [Header("고양이")]
+    [SerializeField] public GameObject cat;
+
+    [Header("고양이 충돌 감지")]
+    [SerializeField] public ExitCatMove exitCatMove;
+
     [Header("자막")]
     [SerializeField] public Subtitle subtitle;
     [SerializeField] public QuestSubtitle questSubtitle;
@@ -20,6 +28,16 @@ public class TutorialCenter : MonoBehaviour
     private void Start() 
     {
         stopWatch.OnSubtitle += OnCellPhone;
+        exitCatMove.OnExitCat += ExitCatMove;
+    }
+
+    public void ExitCatMove()
+    {
+        cameraController.SetPlayCamera();
+        cat.SetActive(false);
+        inputHandler.gameObject.SetActive(true);
+
+        questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자");
     }
 
     public void OnCellPhone()
@@ -54,6 +72,15 @@ public class TutorialCenter : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         subtitle.ShowSubtitle("카날리아 : 고양이 털이 매개라면, 로키를 찾아야.. 로키잖아?!");
+
+        yield return new WaitForSeconds(4f);
+        EnterCatMove();
+    }
+
+    public void EnterCatMove()
+    {
+        cameraController.SetCatCamera();
+        cat.SetActive(true);
     }
 
 /*
