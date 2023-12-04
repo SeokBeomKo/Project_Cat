@@ -23,8 +23,13 @@ public class SwitchesOperation : MonoBehaviour
         switchesState = new bool[childCount];
         for (int i = 0; i < switchesState.Length; i++)
         {
-            switchesState[i] = false;
+            switchesState[i] = true;
         }
+    }
+
+    private void Update()
+    {
+        //CheckSwitch();
     }
 
     public bool GetSwitch(int index)
@@ -35,10 +40,10 @@ public class SwitchesOperation : MonoBehaviour
     public void SetSwitch(int index, bool link)
     {
         switchesState[index] = !switchesState[index];
-        SwitchChange(index);
+        SwitchChange(index); // 애니메이션       
         
         CheckSwitch();
-        
+
         Debug.Log(index+ "번 스위치 " + " : " + !switchesState[index]+ "->" + switchesState[index]);
 
         if (link)
@@ -46,35 +51,34 @@ public class SwitchesOperation : MonoBehaviour
             Debug.Log("양옆 변경 ");
             if (index > 0)
             {
-                SetSwitch(index - 1, false);
-
+                SetSwitch(index - 1, false); // 왼쪽
             }
 
             if (index < switchesState.Length - 1)
             {
-                SetSwitch(index + 1, false);
+                SetSwitch(index + 1, false); // 오른쪽
             }
         }
-
-        
     }
 
     private void CheckSwitch()
     {
-        bool allTrue = true;
+        int switchCount = 0;
         for (int i = 0; i < switchesState.Length; i++)
         {
-            if (!switchesState[i])
+            if (switchesState[i]) // 꺼짐
             {
-                allTrue = false;
                 break;
+            }
+            else
+            {
+                switchCount++;
             }
         }
 
-        if (allTrue)
+        if (switchCount == 5)
         {
             Debug.Log("문 열림 전달 ");
-            room2GameCenter.IsDoorOpen = true;
         }
     }
 

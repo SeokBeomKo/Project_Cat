@@ -19,7 +19,7 @@ public class SwitchIndividualOperation : MonoBehaviour
         {
             Debug.Log("switch collision" + IndividualIndex);
             switchesOperation.SetSwitch(IndividualIndex, true);
-            StartCoroutine(DisableCollisionForSeconds(1.0f));
+            StartCoroutine(DisableCollisionForSeconds(2.0f));
 
         }
     }
