@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartsSubject : MonoBehaviour, ISubject
+public class PartsSubject : MonoBehaviour, ISubject, IDamageable
 {
     public List<IObserver> observers = new List<IObserver>();
     private PartsEnums partsEnum;
@@ -17,6 +17,13 @@ public class PartsSubject : MonoBehaviour, ISubject
     }
 
     private float damage = 5;
+
+    public void BeAttacked(float playerDamage)
+    {
+        damage = playerDamage;
+
+        Debug.Log("ÇÃ·¹ÀÌ¾î ÃÑ ½ô" + damage);
+    }
 
     public float currentDamage
     {

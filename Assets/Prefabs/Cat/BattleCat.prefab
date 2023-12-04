@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1555426199}
   - component: {fileID: 1555426200}
   - component: {fileID: 1555426201}
+  - component: {fileID: 1349652294}
   m_Layer: 8
   m_Name: ChargeDamage
   m_TagString: Untagged
@@ -91,6 +92,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
+--- !u!114 &1349652294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555426198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b490dd1b3847274ca91f02477f6df44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
 --- !u!1 &1616245280
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6659254541003212509}
   - component: {fileID: 2984063398341615705}
+  - component: {fileID: 2037419132}
   m_Layer: 8
   m_Name: MeleeDamage
   m_TagString: Untagged
@@ -418,6 +433,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.5, z: 0.25}
   m_Center: {x: 0, y: 0.25, z: 0.4}
+--- !u!114 &2037419132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4813305960789180549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b490dd1b3847274ca91f02477f6df44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &5392148760835737300
 GameObject:
   m_ObjectHideFlags: 0
