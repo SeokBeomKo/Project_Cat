@@ -7,13 +7,15 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class SwitchesOperation : MonoBehaviour
 {
-    private Room2GameCenter room2GameCenter;
-    public GameObject Door;
-    private bool[] switchesState;
     public GameObject[] Switchbones;
+    private bool[] switchesState;
     private float angle;
+    public GameObject[] switchArray;
 
     int childCount;
+
+    public delegate void SwitchHandle();
+    public event SwitchHandle OnSwitch;
 
     void Start()
     {
@@ -27,9 +29,12 @@ public class SwitchesOperation : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void InitSwitch(bool set = true)
     {
-        //CheckSwitch();
+        foreach(var obj in switchArray)
+        {
+            obj.SetActive(set);
+        }
     }
 
     public bool GetSwitch(int index)
@@ -78,7 +83,7 @@ public class SwitchesOperation : MonoBehaviour
 
         if (switchCount == 5)
         {
-            Debug.Log("문 열림 전달 ");
+            OnSwitch?.Invoke();
         }
     }
 

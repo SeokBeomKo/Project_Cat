@@ -20,7 +20,7 @@ public class CCTV : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && isPlayerCollision)
+        if (Input.GetKeyDown(KeyCode.F) && isPlayerCollision && !hasput)
         {
             hasput = true;
             OnCCTV?.Invoke();
@@ -45,10 +45,6 @@ public class CCTV : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isPlayerCollision = false;
-
-        if (!hasput)
-        {
-            interactiveKey.SetActive(false);
-        }
+        interactiveKey.SetActive(false);
     }
 }

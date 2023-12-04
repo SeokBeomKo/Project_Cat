@@ -5,7 +5,6 @@ using UnityEngine;
 public class SwitchIndividualOperation : MonoBehaviour
 {
     public SwitchesOperation switchesOperation;
-    public Room2GameCenter room2GameCenter;
 
     public int IndividualIndex;
     public GameObject Switchbone;
