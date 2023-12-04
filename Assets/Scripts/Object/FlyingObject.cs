@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CapsuleChaseOperation : MonoBehaviour, IAttackable
+public class FlyingObject : MonoBehaviour, IAttackable
 {
     public ChaseCenter chaseCenter;
 
@@ -14,47 +14,12 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 
     private bool isCollision = false;
 
+
     public float moveSpeed = 5.0f; // 이동 속도
     public Vector3 rotationAxis = Vector3.left; // 회전 축
 
     Vector3 Direction;
     Quaternion targetRotation;
-
-    [Header("아이템 리스트")]
-    public List<ItemWithProbability> itemsToSpawn;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("trigger : " + other.gameObject.layer);
-
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
-        {
-            float randomValue = UnityEngine.Random.value;
-            float cumulativeProbability = 0.0f;
-
-            foreach (var item in itemsToSpawn)
-            {
-                cumulativeProbability += item.probability;
-
-                if (randomValue < cumulativeProbability)
-                {
-                    // 아이템을 생성할 위치
-                    Vector3 spawnPosition = transform.parent.position;
-
-                    // 아이템 생성
-                    Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity);
-                    Debug.Log(item.itemPrefab.name);
-
-                    // 생성된 아이템이 있으므로 루프 종료
-                    break;
-                }
-            }
-
-            // 캡슐 오브젝트 삭제
-            transform.parent.gameObject.SetActive(false);
-        }
-
-    }
 
     private void Start()
     {
@@ -108,7 +73,7 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
             Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
             transform.parent.position = tempPos;
 
-           
+
 
 
             yield return new WaitForEndOfFrame();
