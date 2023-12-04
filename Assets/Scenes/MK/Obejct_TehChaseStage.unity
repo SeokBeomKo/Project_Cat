@@ -332,6 +332,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 5
   objectHPbar: {fileID: 77412683}
+  radius: 0.1
+  virusMachine: {fileID: 0}
+  model: {fileID: 0}
+  explosionVFX: {fileID: 0}
+  PlayerPosition: {x: 0, y: 0, z: 0}
+  ProjectilePrefab: {fileID: 0}
 --- !u!1 &89955371
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +401,7 @@ MonoBehaviour:
   playerController: {fileID: 383978807}
   playerHitScan: {fileID: 739912426}
   playerStats: {fileID: 383978805}
+  weaponStrategy: {fileID: 0}
 --- !u!4 &103630233
 Transform:
   m_ObjectHideFlags: 0
@@ -2115,6 +2122,7 @@ MonoBehaviour:
   - {fileID: 204989999}
   - {fileID: 809625592}
   - {fileID: 425735035}
+  damageOffset: 1
 --- !u!114 &383978805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2132,6 +2140,7 @@ MonoBehaviour:
   rollDelay: 2
   maxDouble: 1
   currentDouble: 0
+  moveSpeedOffset: 1
   moveSpeed: 1.5
   rollSpeed: 5
   jumpForce: 2
@@ -2162,12 +2171,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraController: {fileID: 1680607896}
   animator: {fileID: 1271800250}
+  handRig: {fileID: 0}
+  IKRig: {fileID: 0}
   rigid: {fileID: 1271800249}
   stateMachine: {fileID: 383978806}
   shotstateMachine: {fileID: 0}
   model: {fileID: 961978470}
   playerStats: {fileID: 383978805}
-  weaponCenter: {fileID: 383978804}
+  playerHitScan: {fileID: 0}
+  weaponStrategy: {fileID: 0}
   isGrounded: 0
   isRolled: 0
   maxSlopeAngle: 50
@@ -7489,6 +7501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d0dd36d3c748645aab39b8993547d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &1404801110
 GameObject:
   m_ObjectHideFlags: 0
@@ -9081,7 +9094,7 @@ GameObject:
   - component: {fileID: 1701124974}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Ball
+  m_TagString: Parts1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9433,9 +9446,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2debaa37fafe68c4290326bd71b4926b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausePopUp: {fileID: 0}
+  cameraRotate: {fileID: 0}
+  inputHandle: {fileID: 0}
+  weaponStrategy: {fileID: 0}
   playerStats: {fileID: 383978805}
+  soapRifle: {fileID: 0}
+  splashBuster: {fileID: 0}
+  bubbleGun: {fileID: 0}
   hpObserver: {fileID: 0}
   rollObserver: {fileID: 0}
+  weaponSelection: {fileID: 0}
 --- !u!4 &1766077297
 Transform:
   m_ObjectHideFlags: 0
