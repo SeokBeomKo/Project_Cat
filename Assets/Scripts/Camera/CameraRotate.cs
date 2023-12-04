@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CameraRotate : MonoBehaviour
 {
+    public Transform target;
+
     Vector3 camAngle;
     Vector3 parentAngle;
     Vector2 mouseDelta;
@@ -27,5 +29,12 @@ public class CameraRotate : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(x, camAngle.y, camAngle.z);
         transform.parent.rotation = Quaternion.Euler(parentAngle.x,parentAngle.y + mouseDelta.x,parentAngle.z);
+
+        // 회전값을 적용한 위치 계산
+        Vector3 forwardDirection = transform.forward; // 카메라가 바라보는 방향
+        Vector3 newPosition = transform.position + forwardDirection * 20f;
+
+        // target 이동
+        target.position = newPosition;
     }
 }
