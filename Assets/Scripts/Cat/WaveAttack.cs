@@ -24,8 +24,6 @@ namespace SpecialAttack
         [Header("증가 속도")]
         public float growthSpeed = 1f;
 
-        private bool safeCheck = false;
-
         private float safeSize = 1f;
         private float attackSize = 1f;
         private float timer = 0f;

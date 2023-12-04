@@ -46,13 +46,13 @@ public class Door : MonoBehaviour
             if (openAngle < -100)
             {
                 isDoorOpen = true;
+                Invoke("SuccessOpendDoor", 3.5f);
             }
             else
             {
                 door.transform.rotation = Quaternion.Euler(0, openAngle, 0);
                 fog.SetActive(false);
             }
-
             yield return null;
         }
     }

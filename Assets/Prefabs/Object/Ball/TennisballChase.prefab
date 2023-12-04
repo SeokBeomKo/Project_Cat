@@ -91,8 +91,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2823562177406633538}
-  - component: {fileID: 2823562177406633536}
   - component: {fileID: 2823562177406633539}
+  - component: {fileID: 292620468403269669}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -115,21 +115,6 @@ Transform:
   m_Father: {fileID: 2823562177286704292}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2823562177406633536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2823562177406633541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e590ed5b19cff4d838722b6a9c0570fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotationAxis: {x: 1, y: 0, z: 0}
-  EndPosObject: {fileID: 0}
 --- !u!135 &2823562177406633539
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -143,6 +128,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.9
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &292620468403269669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823562177406633541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910f2357eb5824870a0cf1944910d345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseCenter: {fileID: 0}
+  moveSpeed: 5
+  rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!1001 &2823562177364308435
 PrefabInstance:
   m_ObjectHideFlags: 0

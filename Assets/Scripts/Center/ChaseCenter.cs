@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChaseCenter : MonoBehaviour
 {
+    public GameObject Player;
+ 
     [Header("카메라 회전")]
     [SerializeField] public CameraRotate camRotate;
 
@@ -49,5 +51,10 @@ public class ChaseCenter : MonoBehaviour
         {
             obj.SetActive(false);
         }
+    }
+
+    public Vector3 PlayerPosition()
+    {
+        return Player.transform.position;
     }
 }
