@@ -5,62 +5,30 @@ using UnityEngine;
 public class SwitchIndividualOperation : MonoBehaviour
 {
     public SwitchesOperation switchesOperation;
+    public Room2GameCenter room2GameCenter;
 
     public int IndividualIndex;
     public GameObject Switchbone;
-    private bool isSwitchOn = false;
-    private float angle;
 
-    public Room2GameCenter room2GameCenter;
+
+    private bool collisionPossible = true;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (room2GameCenter.IsSwitchesUnlocked)
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
-            {
+            Debug.Log("switch collision" + IndividualIndex);
+            switchesOperation.SetSwitch(IndividualIndex, true);
+            StartCoroutine(DisableCollisionForSeconds(1.0f));
 
-                switchesOperation[IndividualIndex, true] = !switchesOperation[IndividualIndex, true];
-                isSwitchOn = !isSwitchOn;
-
-                // on : -40 , off : 40
-                if (isSwitchOn)
-                {
-                    angle = -50;
-                }
-                else
-                {
-                    angle = -130;
-                }
-                Debug.Log(angle);
-                Switchbone.transform.rotation = Quaternion.Euler(angle, 0, 0);
-                Debug.Log(Switchbone.transform.rotation.x);
-
-            }
         }
     }
 
-    // Test 
-    //void Update()
-    //{
-    //    // 키패드에서 1번 키를 입력받으면 OnKeyPressed 메서드 호출
-    //    if (Input.GetKeyDown(KeyCode.Alpha1))
-    //    {
-    //        switchesOperation[IndividualIndex] = !switchesOperation[IndividualIndex];
-    //        isSwitchOn = !isSwitchOn;
+    private IEnumerator DisableCollisionForSeconds(float seconds)
+    {
+        collisionPossible = false;
+        yield return new WaitForSeconds(seconds);
+        collisionPossible = true;
+    }
 
-    //        // on : -40 , off : 40
-    //        if (isSwitchOn)
-    //        {
-    //            angle = -50;
-    //        }
-    //        else
-    //        {
-    //            angle = -130;
-    //        }
-    //        Debug.Log(angle);
-    //        Switchbone.transform.rotation = Quaternion.Euler(angle, 0, 0);
-    //        Debug.Log(Switchbone.transform.rotation.x);
-    //    }
-    //}
 }
