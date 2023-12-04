@@ -21,7 +21,7 @@ public class CleanlinessProgressObserver : MonoBehaviour, IObserver
     public void UpdateProgress(CatStatsSubject catStats)
     {
         currentClean = catStats.GetTotalCleanliness();
-        cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / catStats.currentMaxCleanliness);
+        cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / (catStats.currentMaxCleanliness * 7));
         cleanlinessText.text = Mathf.RoundToInt(cleanlinessProgressBar.value * 100) + " %";
     }
 }
