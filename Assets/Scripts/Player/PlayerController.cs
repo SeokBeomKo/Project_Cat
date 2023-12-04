@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("애니메이터")]
     [SerializeField]    public Animator             animator;
+    [SerializeField]    public Rig                  handRig;
+    [SerializeField]    public Rig                  IKRig;
+
+    public void SetRigWeight(float weight)
+    {
+        handRig.weight = weight;
+        IKRig.weight = weight;
+    }
 
     [Header("리지드바디")]
     [SerializeField]    public Rigidbody            rigid;
