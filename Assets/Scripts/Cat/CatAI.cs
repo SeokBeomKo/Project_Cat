@@ -285,21 +285,20 @@ namespace BehaviorTree
         IEnumerator FadeOutOverTime(float duration)
         {
             float timer = 0f;
-            Color imageColor = canvasImage.color;
-            Color transparentColor = new Color(imageColor.r, imageColor.g, imageColor.b, 0f);
+            Color startColor = canvasImage.color;
+            Color transparentColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
 
             while (timer < duration)
             {
                 timer += Time.deltaTime;
                 float progress = timer / duration;
 
-                imageColor = Color.Lerp(imageColor, transparentColor, Mathf.SmoothStep(0f, 1f, progress));
+                canvasImage.color = Color.Lerp(startColor, transparentColor, Mathf.SmoothStep(0f, 1f, progress));
 
                 yield return null;
-
-                canvasImage.color = imageColor;
             }
 
+            canvasImage.color = transparentColor;
             canvasImage.enabled = false;
         }
 
