@@ -50,6 +50,7 @@ public class PlayerAimMoveState : IPlayerState
 
         player.MoveInput();
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 1);
+        player.SetRigWeight(1);
     }
 
     float originSpeed;
