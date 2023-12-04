@@ -10,7 +10,6 @@ public class MazeEnter : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("a");
             OnMazeEnter?.Invoke();
         }
     }

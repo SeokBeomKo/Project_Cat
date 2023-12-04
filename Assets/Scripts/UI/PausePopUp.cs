@@ -104,7 +104,7 @@ public class PausePopUp : MonoBehaviour
         
         ShowUI();
     }
-
+    
     public void RemoveUI()
     {
         canvas.alpha = 0;

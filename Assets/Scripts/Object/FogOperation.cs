@@ -6,9 +6,9 @@ public class FogOperation : MonoBehaviour
 {
     public GameObject Fog;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Fog.gameObject.SetActive(true);
         }
