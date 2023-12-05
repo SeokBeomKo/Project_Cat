@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minAttackSize: 1
-  maxAttackSize: 2.5
+  maxAttackSize: 3
   minSafeSize: 0.5
-  maxSafeSize: 2
+  maxSafeSize: 2.5
   maxTimer: 5
   growthSpeed: 0.5
 --- !u!1 &1631778882
@@ -353,8 +353,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa4059ca810d084582881216e33b52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCleanliness: 300
-  maxLikeability: 300
+  maxCleanliness: 100
+  maxLikeability: 500
 --- !u!1 &1798705927399017966
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,8 +528,8 @@ MonoBehaviour:
   meleeDamageBox: {fileID: 4813305960789180549}
   chargeDamageBox: {fileID: 1555426198}
   waveCollider: {fileID: 1616245280}
-  attackResumptionTime: 6
-  waveAttackTime: 18
+  attackResumptionTime: 7
+  waveAttackTime: 10
   meleeParticle: {fileID: 5265559394250039244}
   movementSpeed: 1
 --- !u!65 &1702409614
@@ -4370,6 +4370,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8079296392888639793}
     m_Modifications:
+    - target: {fileID: 1571607545086620168, guid: c3c4b869b1741804ebf3d6188a9fe5e7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1571607545086620170, guid: c3c4b869b1741804ebf3d6188a9fe5e7, type: 3}
       propertyPath: prewarm
       value: 1
