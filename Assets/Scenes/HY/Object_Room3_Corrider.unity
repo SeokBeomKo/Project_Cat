@@ -974,7 +974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!1 &10934163
 GameObject:
@@ -9160,7 +9160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!1 &139186634
 GameObject:
@@ -13343,7 +13343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!1001 &211272763
 PrefabInstance:
@@ -31173,7 +31173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!1 &631510405
 GameObject:
@@ -36767,17 +36767,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760755288}
   m_Mesh: {fileID: 7953927704104317010, guid: 31c005a881a742e4eb30ea53a01137bd, type: 3}
---- !u!114 &762388615 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8303006161338349063, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-  m_PrefabInstance: {fileID: 1254430145}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &763720059
 GameObject:
   m_ObjectHideFlags: 0
@@ -41086,7 +41075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!65 &865296550
 BoxCollider:
@@ -44452,7 +44441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!65 &942247804
 BoxCollider:
@@ -50831,7 +50820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!65 &1100094450
 BoxCollider:
@@ -56639,7 +56628,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
   rotationAxis: {x: 1, y: 0, z: 0}
   itemsToSpawn: []
 --- !u!136 &1238251797
@@ -57204,14 +57192,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8303006160471757330, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: IKRig
-      value: 
-      objectReference: {fileID: 1258492099}
-    - target: {fileID: 8303006160471757330, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: handRig
-      value: 
-      objectReference: {fileID: 762388615}
-    - target: {fileID: 8303006160471757330, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 2057082805}
@@ -57430,17 +57410,6 @@ Transform:
   m_Father: {fileID: 1185647044}
   m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1258492099 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8303006161345271625, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-  m_PrefabInstance: {fileID: 1254430145}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1260152877
 GameObject:
   m_ObjectHideFlags: 0
@@ -63692,6 +63661,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404245273}
   m_Mesh: {fileID: -2952260161716365505, guid: db33c599d7073cc4a92e606fa0a9480b, type: 3}
+--- !u!1 &1406239610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1406239611}
+  m_Layer: 0
+  m_Name: ChaseCat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1406239611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406239610}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22, y: 1.4, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 31
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1406893138
 GameObject:
   m_ObjectHideFlags: 0
@@ -64885,6 +64885,10 @@ PrefabInstance:
     - target: {fileID: 8211913024773823173, guid: 5e734caccc0433f4cb6f3534d841bdae, type: 3}
       propertyPath: m_Name
       value: ChaseCat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211913024773823173, guid: 5e734caccc0433f4cb6f3534d841bdae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8211913024773823182, guid: 5e734caccc0433f4cb6f3534d841bdae, type: 3}
       propertyPath: m_RootOrder
@@ -70851,7 +70855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseCenter: {fileID: 0}
-  moveSpeed: 5
+  height: 1
   rotationAxis: {x: -1, y: 0, z: 0}
 --- !u!1 &1552832540
 GameObject:

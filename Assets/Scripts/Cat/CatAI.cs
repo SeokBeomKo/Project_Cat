@@ -105,7 +105,8 @@ namespace BehaviorTree
                 new List<Node>()
                 {
                     new ActionNode(CheckWaveAttackTime),
-                    new ActionNode(DoWaveAttack)
+                    new ActionNode(DoWaveAttack),
+                    new ActionNode(WaitForWaveAttackCompletion)
                 });
 
             var triggerAttack = new Sequence(
@@ -215,6 +216,7 @@ namespace BehaviorTree
                 isAttackComplete = false;
 
                 Debug.Log("돌진 공격");
+                timer = 0f;
 
                 return Node.NodeState.SUCCESS;
             }
@@ -259,6 +261,7 @@ namespace BehaviorTree
                 isAttacking = true;
                 isAttackComplete = false;
                 chargeAttackTime = true;
+                timer = 0f;
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
@@ -275,6 +278,7 @@ namespace BehaviorTree
                 isAttackComplete = false;
                 chargeAttackTime = true;
                 canvasImage.enabled = true;
+                timer = 0f;
                 StartCoroutine(FadeOutOverTime(5.0f));
 
                 return Node.NodeState.SUCCESS;
@@ -394,6 +398,16 @@ namespace BehaviorTree
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
+        }
+
+        Node.NodeState WaitForWaveAttackCompletion()
+        {
+            if (!isAttacking)
+            {
+                waveCollider.SetActive(false); // 파동 공격 끝나면 콜라이더 비활성화
+                return Node.NodeState.SUCCESS;
+            }
+            return Node.NodeState.RUNNING;
         }
 
         private void OnTriggerEnter(Collider other)
