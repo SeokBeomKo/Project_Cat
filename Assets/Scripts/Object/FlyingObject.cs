@@ -55,7 +55,10 @@ public class FlyingObject : MonoBehaviour, IAttackable
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GetDamage();
+            if (null != other.transform.GetComponentInChildren<PlayerHitScan>())
+            {
+                other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage();
+            }
         }
     }
 

@@ -39,7 +39,10 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            collision.transform.GetComponentInChildren<PlayerHitScan>().GetDamage();
+            if (null != collision.transform.GetComponentInChildren<PlayerHitScan>())
+            {
+                collision.transform.GetComponentInChildren<PlayerHitScan>().GetDamage();
+            }
         }
     }
 

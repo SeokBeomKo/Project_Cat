@@ -13,10 +13,10 @@ public class EndingScene : MonoBehaviour
     public Image topImage;
     public Image bottomImage;
     
-    [Header("Àç½ÃÀÛ ½Ã ÀÌµ¿ÇÒ ¾À ÀÌ¸§")]
+    [Header("ã…‹ã…‹")]
     public string sceneName;
 
-    private string endingContent = "±×³É ¿À´ÃÀº ½¯±î ... ?";
+    private string endingContent = "ê·¸ëƒ¥ ì˜¤ëŠ˜ì€ ì‰´ê¹Œ ... ?";
 
     private float progress = 0f;
 
@@ -53,7 +53,6 @@ public class EndingScene : MonoBehaviour
             yield return null;
         }
 
-        // ÀÚ¸·ÀÌ ³¡³­ ÈÄ ¹öÆ° È°¼ºÈ­
         yield return new WaitForSeconds(0.2f);
         button.SetActive(true);
     }
@@ -67,7 +66,7 @@ public class EndingScene : MonoBehaviour
     public void OnClickEnd()
     {
         SoundManager.Instance.PlaySFX("Click");
-        SceneManager.LoadScene("HanKyeol_Lobby");
+        SceneManager.LoadScene("00-1.Lobby");
     }
 
 }
