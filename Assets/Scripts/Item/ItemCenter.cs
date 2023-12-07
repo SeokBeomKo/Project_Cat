@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemCenter : MonoBehaviour
 {
-    [Header("플레이어")]
+    [Header("플레이어 오브젝트")]
     public GameObject Player;
 
     [Header("아이템 휠 UI")]
@@ -19,10 +19,24 @@ public class ItemCenter : MonoBehaviour
     [Header("랜덤 아이템")]
     public RandomItem randomItem;
 
+    [Header("플레이어 스탯")]
+    public PlayerStats playerStats;
+
+    [Header("총기")]
+    public WeaponStrategy weaponStrategy;
+
+    [Header("이동 속도 증가 지속 시간")]
+    public float moveSpeedTime;
+
+    [Header("공격력 증가 지속 시간")]
+    public float attackPowerTime;
+
+
     private void Start()
     {
         itemWheel.onItemClick += ClickTrue;
-        randomItem.OnRandomItem += GetRandomItem;
+        if (randomItem != null)
+            randomItem.OnRandomItem += GetRandomItem;
     }
 
     public void ClickTrue(string itemName)
@@ -35,10 +49,12 @@ public class ItemCenter : MonoBehaviour
                 break;
 
             case "이동속도":
+                playerStats.AddMoveSpeed(moveSpeedTime);
                 Debug.Log("[ItemCenter] 운동에너지 - 이동속도 선택");
                 break;
 
             case "공격력":
+                weaponStrategy.DamageUp(attackPowerTime);
                 Debug.Log("[ItemCenter] 운동에너지 - 공격력 선택");
                 break;
 

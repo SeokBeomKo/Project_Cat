@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1061346728880433802
+--- !u!1 &5551698075408686037
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3162178079062151337}
-  - component: {fileID: 2643143535520108463}
+  - component: {fileID: 8038181420557021650}
+  - component: {fileID: 7302565731174660443}
   m_Layer: 0
-  m_Name: ItemCenter
+  m_Name: ChangeScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3162178079062151337
+--- !u!4 &8038181420557021650
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061346728880433802}
+  m_GameObject: {fileID: 5551698075408686037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.224, y: 1.208, z: 2.88}
-  m_LocalScale: {x: 1.11, y: 1, z: 0.76}
+  m_LocalPosition: {x: -16.390358, y: 2.2498622, z: 2.5322118}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2643143535520108463
+--- !u!114 &7302565731174660443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061346728880433802}
+  m_GameObject: {fileID: 5551698075408686037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d6051f18369a4441a602eb84cd015aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 6040864f754619e4db56514b1704ad8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  itemWheel: {fileID: 0}
-  energyUse: {fileID: 7457339505662668673, guid: 41533a19c01c7474891fffe80a11c725, type: 3}
-  hairBallUse: {fileID: 2533583578700443892, guid: 573a5b197de6c4828ab6297bb46ea18b, type: 3}
-  randomItem: {fileID: 0}
-  playerStats: {fileID: 0}
-  weaponStrategy: {fileID: 0}
-  moveSpeedTime: 3
-  attackPowerTime: 3
+  lobbyName: 00.Lobby
+  tutorialName: 01.Tutorial
+  researchName: 02.Research
+  chaseName: 03.Chase
+  washingName: 04.Washing
