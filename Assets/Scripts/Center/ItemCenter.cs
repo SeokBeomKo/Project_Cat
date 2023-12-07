@@ -79,7 +79,9 @@ public class ItemCenter : MonoBehaviour
             case "WaterBottle":
                 Debug.Log("[ItemCenter] 탄약 충전");
                 break;
+
             case "LifeEnergy":
+                playerStats.FillHealth(10); // 수치 수정해야 됨
                 Debug.Log("[ItemCenter] 플레이어 HP 충전");
                 break;
         }

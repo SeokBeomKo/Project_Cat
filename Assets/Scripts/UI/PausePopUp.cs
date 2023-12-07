@@ -20,54 +20,47 @@ public class PausePopUp : MonoBehaviour
 
     public CinemachineVirtualCamera playCamera;
 
-    public void Update()
+    public void UpdatePause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (pausePopUp.activeSelf)
         {
-            SoundManager.Instance.PlaySFX("Hover");
+            //
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            //
+            pausePopUp.SetActive(false);
+            Time.timeScale = 1f;
+            OnPausePopupFalse?.Invoke();
 
-            if (pausePopUp.activeSelf)
-            {
-                //
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                //
-                pausePopUp.SetActive(false);
-                Time.timeScale = 1f;
-                OnPausePopupFalse?.Invoke();
+            ShowUI();
+        }
+        else if (!pausePopUp.activeSelf && !settingPopUp.activeSelf)
+        {
+            //
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            //
+            pausePopUp.SetActive(true);
+            Time.timeScale = 0f;
+            OnPausePopupTrue?.Invoke();
 
-                if (playCamera.gameObject.activeSelf)
-                    ShowUI();
-            }
-            else if(!pausePopUp.activeSelf && !settingPopUp.activeSelf)
-            {
-                //
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                //
-                pausePopUp.SetActive(true);
-                Time.timeScale = 0f;
-                OnPausePopupTrue?.Invoke();
-                
-                RemoveUI();
-                
-                itemWheel.SetActive(false);
-                if (clean.gameObject != null)
-                    clean.SetActive(false);
-            }
-            else if(settingPopUp.activeSelf)
-            {
-                //
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                //
-                settingPopUp.SetActive(false);
-                Time.timeScale = 1f;
-                OnPausePopupFalse?.Invoke();
+            RemoveUI();
 
-                if (playCamera.gameObject.activeSelf)
-                    ShowUI();
-            }
+            itemWheel.SetActive(false);
+            if (clean.gameObject != null)
+                clean.SetActive(false);
+        }
+        else if (settingPopUp.activeSelf)
+        {
+            //
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            //
+            settingPopUp.SetActive(false);
+            Time.timeScale = 1f;
+            OnPausePopupFalse?.Invoke();
+
+            ShowUI();
         }
     }
 
@@ -120,8 +113,11 @@ public class PausePopUp : MonoBehaviour
 
     public void ShowUI()
     {
-        canvas.alpha = 1;
-        canvas.interactable = true;
-        canvas.blocksRaycasts = true;
+        if (playCamera.gameObject.activeSelf)
+        {
+            canvas.alpha = 1;
+            canvas.interactable = true;
+            canvas.blocksRaycasts = true;
+        }
     }
 }

@@ -37,7 +37,7 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
         popUp.SetActive(false);
     }
 
-    void Update()
+    public void UpdateCleanliness()
     {
         if (PlayerPrefs.GetInt("Pause") == 1) return;
 
@@ -52,7 +52,6 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
             popUp.SetActive(false);
             ShowUI();
         }
-        
     }
 
     public void CleanCat(CatStatsSubject subject)

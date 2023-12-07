@@ -43,17 +43,6 @@ public class InventoryManager : Singleton<InventoryManager>
         SetItemMaxQuantity("털뭉치", 3); // 3
         SetItemMaxQuantity("물폭탄", 3); // 3
         SetItemMaxQuantity("세척탄", 3); // 3
-
-        // =======================================
-        /*AddItemToInventory("츄르");
-        AddItemToInventory("츄르");
-        AddItemToInventory("츄르");
-        AddItemToInventory("보호막");
-        AddItemToInventory("보호막");
-        AddItemToInventory("털뭉치");
-        AddItemToInventory("털뭉치");
-        AddItemToInventory("털뭉치");
-        AddItemToInventory("운동에너지");*/
     }
 
     public void SetItemMaxQuantity(string itemName, int maxQuantity)

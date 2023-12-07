@@ -54,7 +54,8 @@ public class ItemWheel : MonoBehaviour
         selectEnergyRight.SetActive(false);
     }
 
-    void Update()
+
+    public void Update()
     {
         if (PlayerPrefs.GetInt("Pause") == 1) return;
 
@@ -67,19 +68,13 @@ public class ItemWheel : MonoBehaviour
 
             if (isMenuActive && !isEnergyMenuActive)
             {
-                //
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                //
+                ActivateCursor();
                 itemMenu.SetActive(true);
                 crossHair.SetActive(false);
             }
             if (!isMenuActive)
             {
-                //
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                //
+                DeactivateCursor();
                 itemMenu.SetActive(false);
                 crossHair.SetActive(true);
             }
@@ -109,6 +104,18 @@ public class ItemWheel : MonoBehaviour
             itemCountArray[i].text = InventoryManager.Instance.GetItemCount(itemNameArray[i]).ToString();
         }
         
+    }
+    
+    private void DeactivateCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void ActivateCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void ActivateMenu()
