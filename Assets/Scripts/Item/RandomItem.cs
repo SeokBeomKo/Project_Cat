@@ -7,13 +7,16 @@ public class RandomItem : MonoBehaviour
 {
     public string[] ItemNames =
     {
-        "Chur",
-        "ProtectEnergy",
-        "WaterBomb",
-        "ClearBomb",
-        "KineticEnergy",
-        "Hairball"
+        "운동에너지",
+        "보호막",
+        /*"물폭탄",
+        "세척탄",*/
+        "츄르",
+        "털뭉치"
     };
+
+    public delegate void RandomItemHandle(string itemName);
+    public event RandomItemHandle OnRandomItem;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,11 +30,13 @@ public class RandomItem : MonoBehaviour
 
                 if (itemName == "WaterBottle")
                 {
-                    Debug.Log("탄약 충전");
+                    OnRandomItem?.Invoke("WaterBottle");
+                    Debug.Log("[RandomItem] 탄약 충전");
                 }
                 else if(itemName == "LifeEnergy")
                 {
-                    Debug.Log("플레이어 HP 충전");
+                    OnRandomItem?.Invoke("LifeEnergy");
+                    Debug.Log("[RandomItem] 플레이어 HP 충전");
                 }
 
                 Debug.Log("item add : " + itemName);
