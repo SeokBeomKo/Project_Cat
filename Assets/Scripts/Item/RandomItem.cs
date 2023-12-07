@@ -40,11 +40,10 @@ public class RandomItem : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("item add : " + itemName);
                     InventoryManager.Instance.AddItemToInventory(itemName);
-                    gameObject.SetActive(false);
-                    Debug.Log("Randomly selected name: " + itemName);
+                    Debug.Log("[RandomItem] Randomly selected name: " + itemName);
                 }
+                gameObject.SetActive(false);
             }
             else
             {

@@ -70,7 +70,7 @@ public class InventoryManager : Singleton<InventoryManager>
             }
             else
             {
-                Debug.Log("해당 아이템 보유 개수 초과");
+                Debug.Log( "[InventoryManager]" + itemName + " 해당 아이템 보유 개수 초과 ");
             }
 
         }
@@ -88,8 +88,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
         if (item != null && item.quantity > 0)
         {
-            // 아이템 사용 로직을 여기에 추가
-            //Debug.Log("아이템을 사용: " + itemName);
             item.quantity--;
         }
         else
