@@ -45,17 +45,14 @@ public class ItemCenter : MonoBehaviour
         {
             case "보호막":
                 energyUse.CreateProtectEnergy(Player.transform.position, Player.transform);
-                Debug.Log("[ItemCenter] 보호에너지 선택");
                 break;
 
             case "이동속도":
                 playerStats.AddMoveSpeed(moveSpeedTime);
-                Debug.Log("[ItemCenter] 운동에너지 - 이동속도 선택");
                 break;
 
             case "공격력":
                 weaponStrategy.DamageUp(attackPowerTime);
-                Debug.Log("[ItemCenter] 운동에너지 - 공격력 선택");
                 break;
 
             case "털뭉치":
@@ -67,7 +64,6 @@ public class ItemCenter : MonoBehaviour
                 {
                     Debug.Log("[ItemCenter] 장애물이 있어 생성할 수 없음");
                 }
-                Debug.Log("[ItemCenter] 털뭉치 선택");
                 break;
 
             case "츄르":

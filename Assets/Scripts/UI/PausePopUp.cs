@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class PausePopUp : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PausePopUp : MonoBehaviour
 
     public GameObject clean;
     public GameObject itemWheel;
+
+    public CinemachineVirtualCamera playCamera;
 
     public void Update()
     {
@@ -32,7 +35,9 @@ public class PausePopUp : MonoBehaviour
                 pausePopUp.SetActive(false);
                 Time.timeScale = 1f;
                 OnPausePopupFalse?.Invoke();
-                ShowUI();
+
+                if (playCamera.gameObject.activeSelf)
+                    ShowUI();
             }
             else if(!pausePopUp.activeSelf && !settingPopUp.activeSelf)
             {
@@ -59,8 +64,9 @@ public class PausePopUp : MonoBehaviour
                 settingPopUp.SetActive(false);
                 Time.timeScale = 1f;
                 OnPausePopupFalse?.Invoke();
-                
-                ShowUI();
+
+                if (playCamera.gameObject.activeSelf)
+                    ShowUI();
             }
         }
     }

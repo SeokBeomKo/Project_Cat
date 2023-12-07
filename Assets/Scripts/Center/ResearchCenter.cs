@@ -52,7 +52,7 @@ public class ResearchCenter : MonoBehaviour
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetIMacCamera();
-        subtitle.ShowSubtitle("카날리아 : 저기 컴퓨터가 있어!  얼른 모든 문을 잠가야해!", delayTime: 1f);
+        subtitle.ShowSubtitle("카날리아 : 저기 컴퓨터가 있어!  얼른 모든 문을 잠가야해!", delayTime: 1f) ;
 
         yield return new WaitForSeconds(6.5f);
 
@@ -63,14 +63,14 @@ public class ResearchCenter : MonoBehaviour
 
     public void ShutBarrier()
     {
-        controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         StartCoroutine(barrier.MoveBarrierCoroutine());
-        subtitle.ShowSubtitle("카날리아 : 좋아! 모든 문을 잠궜어!", speed: 0.09f, delayTime: 2.5f) ;
+        subtitle.ShowSubtitle("카날리아 : 좋아! 모든 문을 잠궜어!", delayTime: 2.5f) ;
     }
 
     public void ShutDoor()
     {
+        controllerUI.RemoveUI();
         cameraController.SetDoorCamera();
         StartCoroutine(door.CloseDoor());
         subtitle.ShowSubtitle("카날리아 : 이런! 우리가 있는 방까지 잠겼잖아!");

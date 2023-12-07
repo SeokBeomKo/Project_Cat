@@ -50,7 +50,7 @@ public class Subtitle : MonoBehaviour
         }
     }
 
-    IEnumerator Typing(string txt, float speed = 0.1f, float delayTime = 0)
+    IEnumerator Typing(string txt, float speed = 0.07f, float delayTime = 0)
     {
         subtitleText.text = null;
 
@@ -71,7 +71,7 @@ public class Subtitle : MonoBehaviour
         subtitleText.gameObject.SetActive(false);
     }
 
-    public void ShowSubtitle(string content, float speed = 0.1f, float delayTime = 0)
+    public void ShowSubtitle(string content, float speed = 0.07f, float delayTime = 0)
     {
         if (!subtitleText.gameObject.activeSelf)
         {
