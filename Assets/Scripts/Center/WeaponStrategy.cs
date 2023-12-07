@@ -27,6 +27,16 @@ public class WeaponStrategy : MonoBehaviour
         }
     }
 
+    public void ChargeCurrentBullet()
+    {
+
+    }
+
+    public void ChargeAllBullet()
+    {
+        
+    }
+
     public void DamageUp(float time)
     {
         damageOffset = 2;
