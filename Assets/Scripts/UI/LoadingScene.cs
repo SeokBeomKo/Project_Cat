@@ -8,10 +8,11 @@ public class LoadingScene : MonoBehaviour
 {
     [Header("프로그레스바 이미지")]
     public Image progressBar;
+    
     [Header("로딩할 씬")]
     public string sceneName;
 
-    private float loadingTime = 5.0f;
+    private float loadingTime = 4.0f;
     private float time;
 
     void Start()
@@ -37,9 +38,7 @@ public class LoadingScene : MonoBehaviour
             if (time > loadingTime)
                 operation.allowSceneActivation = true;
         }
-
     }
-
 }
 
 // operation.progress : 진행정도를 float형 0,1을 반환 (0 : 진행 중 , 1 : 진행완료)
