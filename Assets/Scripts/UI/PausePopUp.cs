@@ -88,7 +88,7 @@ public class PausePopUp : MonoBehaviour
     public void OnClickExit()
     {
         SoundManager.Instance.PlaySFX("Click");
-        SceneManager.LoadScene("HanKyeol_Lobby");
+        SceneManager.LoadScene("00-1.Lobby");
     }
 
     public void ClosePopUp()

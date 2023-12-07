@@ -62,6 +62,13 @@ public class TutorialCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(false);
         subtitle.ShowSubtitle("카날리아 : 바이러스가 퍼지는 것을 막기 위해,  나가서 컴퓨터로 모든 문을 잠그자!");
 
+        StartCoroutine(Clear());
+    }
+
+    IEnumerator Clear()
+    {
+        yield return new WaitForSeconds(4f);
+
         endPoint.SetActive(true);
     }
 
