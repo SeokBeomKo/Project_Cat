@@ -13,10 +13,6 @@ public class BubbleGun : Weapon
     [Header("진행 목표")]
     private Vector3 shootTarget;
 
-    [Header("발사 딜레이")]
-    public float shootDelay;
-    private float lastShootTime;
-
     // : 마우스 클릭 시
     public override void EnterShoot()
     {
@@ -58,6 +54,6 @@ public class BubbleGun : Weapon
         SoundManager.Instance.PlaySFX("ShootBubbleGun");
         bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
         bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
-        bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);
+        bullet.GetComponentInChildren<IProjectile>().SetDamage(GetDamage());
     }
 }
