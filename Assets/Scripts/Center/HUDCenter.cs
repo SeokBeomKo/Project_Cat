@@ -28,6 +28,7 @@ public class HUDCenter : MonoBehaviour
 
     [SerializeField] public WeaponSelection weaponSelection;
 
+
     void Awake()
     {
         playerStats.AddObserver<IObserver>(playerStats.hpObserverList,hpObserver);
@@ -45,13 +46,12 @@ public class HUDCenter : MonoBehaviour
 
     private void Start() 
     {
-        UpdateBullet();
         InitBullet();
+        UpdateBullet();
     }
 
     public void InitBullet()
     {
-        // TODO : 총기 총 탄약 수 초기화
         weaponSelection.SetMaxBullet(soapRifle.maxBullet, splashBuster.maxBullet, bubbleGun.maxBullet);
     }
 

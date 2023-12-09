@@ -39,7 +39,7 @@ public class WeaponSelection : MonoBehaviour
     
     void Start()
     {
-        SetCurWeapon(0);
+        SetCurWeapon();
     }
 
     public void SetCurWeapon(int number = 0)
@@ -96,14 +96,14 @@ public class WeaponSelection : MonoBehaviour
     {
         softRifleProgress.fillAmount = bullet / 10f;
         softRifleText.text = bullet.ToString();
-        
     }
+    
     public void SelectSplashBuster(int bullet)
     {
         splashBusterProgress.fillAmount = bullet / 30f;
         splashBusterText.text = bullet.ToString();
-        
     }
+
     public void SelectBubbleGun(int bullet)
     {
         bubbleGunProgress.fillAmount = bullet / 400f;
