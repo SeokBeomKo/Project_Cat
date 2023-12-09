@@ -24,7 +24,6 @@ public class DataLoader : MonoBehaviour
         yield return dataReceiver.DataReceive(gameData.colrowStartNumber, gameData.colrowEndNumber, gameData.sheetNumber, (data) =>
         {
             gameData.ProcessData(data);
-            Debug.Log(data);
         });
     }
 }
