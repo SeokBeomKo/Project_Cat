@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class EndingScene : MonoBehaviour
+public class BadEnding : MonoBehaviour
 {
     public TextMeshProUGUI endingText;
     public GameObject button;
@@ -13,8 +13,11 @@ public class EndingScene : MonoBehaviour
     public Image topImage;
     public Image bottomImage;
     
-    [Header("ㅋㅋ")]
+    [Header("재시작할 씬 이름")]
     public string sceneName;
+
+    [Header("로비씬")]
+    public string lobbySceneName;
 
     private string endingContent = "그냥 오늘은 쉴까 ... ?";
 
@@ -22,7 +25,7 @@ public class EndingScene : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.Instance.PlaySFX("BadEnd");
+        SoundManager.Instance.PlayBGM("BadEnding");
         StartCoroutine(Typing());
         button.SetActive(false);
         
@@ -42,7 +45,7 @@ public class EndingScene : MonoBehaviour
         }
         SoundManager.Instance.StopSFX();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         endingText.gameObject.SetActive(false);
 
         while(progress < 1f)
@@ -66,7 +69,7 @@ public class EndingScene : MonoBehaviour
     public void OnClickEnd()
     {
         SoundManager.Instance.PlaySFX("Click");
-        SceneManager.LoadScene("00-1.Lobby");
+        SceneManager.LoadScene(lobbySceneName);
     }
 
 }
