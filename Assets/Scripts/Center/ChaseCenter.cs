@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChaseCenter : MonoBehaviour
 {
     public GameObject Player;
- 
+
     [Header("카메라 회전")]
     [SerializeField] public CameraRotate camRotate;
 
@@ -27,16 +27,34 @@ public class ChaseCenter : MonoBehaviour
     [Header("Input Handler")]
     [SerializeField] public InputHandler inputHandler;
 
-    private void Start() 
+    [SerializeField] public ChaseCat cat;
+
+    [SerializeField] public ChaseCameraController cameraController;
+    public HairBallUse hairBallUse;
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            if (!hairBallUse.CheckObstacleInFront(Player.transform.position, Player.transform.forward))
+            {
+                hairBallUse.CreateHairBall(Player.transform.position, Player.transform.forward);
+            }
+        }
+    }
+
+    private void Start()
     {
         mazeEnter.OnMazeEnter += OnMaze;
+        cat.OnCutSceneStart += onCat;
+        //cat.OnPlay += onPlay();
+
 
         inputCenter.gameObject.SetActive(true);
         chaseInputCenter.gameObject.SetActive(false);
 
         camController.SetPlayCamera();
         camRotate.gameObject.SetActive(true);
-
 
     }
 
@@ -50,10 +68,27 @@ public class ChaseCenter : MonoBehaviour
         controllerUI.RemoveUI();
     }
 
+    public void onCat()
+    {
+        controllerUI.RemoveUI();
+        inputHandler.gameObject.SetActive(false);
+        cameraController.SetCatCamera();
+    }
+
+    public void onPlay()
+    {
+        controllerUI.ShowUI();
+        inputHandler.gameObject.SetActive(true);
+        cameraController.SetPlayCamera();
+
+    }
+
 
 
     public Vector3 PlayerPosition()
     {
         return Player.transform.position;
     }
+
+ 
 }
