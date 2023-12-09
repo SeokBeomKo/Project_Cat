@@ -28,7 +28,7 @@ public class HUDCenter : MonoBehaviour
 
     [SerializeField] public WeaponSelection weaponSelection;
 
-    private void Start() 
+    void Awake()
     {
         playerStats.AddObserver<IObserver>(playerStats.hpObserverList,hpObserver);
         playerStats.AddObserver<IObserver>(playerStats.rollObserverList,rollObserver);
@@ -39,9 +39,20 @@ public class HUDCenter : MonoBehaviour
         soapRifle.OnWeaponBullet += UpdateBullet;
         splashBuster.OnWeaponBullet += UpdateBullet;
         bubbleGun.OnWeaponBullet += UpdateBullet;
-        UpdateBullet();
 
         weaponStrategy.OnSwapWeapon += UpdateWeapon;
+    }
+
+    private void Start() 
+    {
+        UpdateBullet();
+        InitBullet();
+    }
+
+    public void InitBullet()
+    {
+        // TODO : 총기 총 탄약 수 초기화
+        weaponSelection.SetMaxBullet(soapRifle.maxBullet, splashBuster.maxBullet, bubbleGun.maxBullet);
     }
 
     public void UpdateWeapon(int number)
