@@ -107,10 +107,10 @@ public class ChaseCat : MonoBehaviour
 
     void Check()
     {
-        if(currentWaypointIndex < waypoints.Length &&
-            CutSceneStartPoint == waypoints[currentWaypointIndex])
+        if (currentWaypointIndex < waypoints.Length &&
+        (CutSceneStartPoint == null || CutSceneStartPoint == waypoints[currentWaypointIndex]))
         {
-            Debug.Log("event Invoke");
+            Debug.Log("이벤트 호출");
             OnCutSceneStart?.Invoke();
         }
     }

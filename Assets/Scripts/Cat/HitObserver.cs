@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class HitObserver : MonoBehaviour, IObserver, IAttackable
 {
-    PlayerStats playerStats;
+    [Header("데이터")]
+    public BattleCatDamageData data;
 
+    private float damage = 5f;
     private bool safeCheck = false;
+
+    private void Awake()
+    {
+        damage = data.damage;
+    }
 
     public void Notify(ISubject subject)
     {
@@ -22,16 +29,12 @@ public class HitObserver : MonoBehaviour, IObserver, IAttackable
         if (other.CompareTag("Player") && safeCheck == false)
         {
             Debug.Log("파동 공격");
-            if (playerStats != null)
-            {
-                playerStats.GetDamage(10);
-                GetDamage();
-            }
+            GetDamage();
         }
     }
 
     public float GetDamage()
     {
-        return 5;
+        return damage;
     }
 }

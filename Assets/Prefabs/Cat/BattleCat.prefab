@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b490dd1b3847274ca91f02477f6df44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  data: {fileID: 11400000, guid: bba24c99c8450004195e2a4e4c7d433b, type: 2}
 --- !u!1 &1616245280
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,12 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc32446bf2eced24dbd608d0e7526e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAttackSize: 1
-  maxAttackSize: 3
-  minSafeSize: 0.5
-  maxSafeSize: 2.5
-  maxTimer: 5
-  growthSpeed: 0.5
+  data: {fileID: 11400000, guid: 5dc83116fc77c1d4a8cc6c2485894801, type: 2}
 --- !u!1 &1631778882
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312e4df5acb20b24bbea8beb05717450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 5f653aba6909631499b01fc264de5619, type: 2}
 --- !u!1 &1791729391
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b490dd1b3847274ca91f02477f6df44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  data: {fileID: 11400000, guid: b53ffcb9b03085943a260fbebfbcdcaa, type: 2}
 --- !u!1 &5392148760835737300
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,10 +524,8 @@ MonoBehaviour:
   meleeDamageBox: {fileID: 4813305960789180549}
   chargeDamageBox: {fileID: 1555426198}
   waveCollider: {fileID: 1616245280}
-  attackResumptionTime: 7
-  waveAttackTime: 10
   meleeParticle: {fileID: 5265559394250039244}
-  movementSpeed: 1
+  data: {fileID: 11400000, guid: 137b146d05073964295f1002aacbc4a8, type: 2}
 --- !u!65 &1702409614
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class PlayerDamage : MonoBehaviour, IAttackable
 {
-    public float damage;
+    [Header("ตฅภฬลอ")]
+    public BattleCatDamageData data;
+
+    private float damage;
+
+    private void Awake()
+    {
+        damage = data.damage;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

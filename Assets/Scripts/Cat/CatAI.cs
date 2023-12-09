@@ -19,18 +19,11 @@ namespace BehaviorTree
         [Header("파동콜라이더")]
         public GameObject waveCollider;
 
-        [Header("공격 재개 시간")]
-        public float attackResumptionTime = 2f;
-
-        [Header("파동 공격 출력 시간")]
-        public float waveAttackTime = 15f;
-
         [Header("근접공격이펙트")]
         public ParticleSystem meleeParticle;
 
-        [Header("속도")]
-        [SerializeField]
-        private float movementSpeed = 10.0f;
+        [Header("데이터")]
+        public BattleCatData data;
 
         private bool playerInMeleeRange = false;
         private bool chargeAttackTime = false;
@@ -40,6 +33,9 @@ namespace BehaviorTree
         private float randomNumber = 0f;
         private float attackEndTimer = 0f;
         private float timer = 0f;
+        private float attackResumptionTime = 2f;
+        private float movementSpeed = 10.0f;
+        private float waveAttackTime = 15f;
 
         private Tree tree = null;
         private Animator animator = null;
@@ -49,6 +45,10 @@ namespace BehaviorTree
 
         private void Awake()
         {
+            attackResumptionTime = data.attackResumptionTime;
+            waveAttackTime = data.waveAttackTime;
+            movementSpeed = data.movementSpeed;
+
             tree = new Tree(SetTree());
             animator = transform.parent.GetComponent<Animator>();
 

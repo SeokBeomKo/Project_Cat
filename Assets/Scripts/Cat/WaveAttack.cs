@@ -6,33 +6,32 @@ namespace SpecialAttack
 {
     public class WaveAttack : MonoBehaviour
     {
-        [Header("최소 공격 범위 크기")]
-        public float minAttackSize = 1.5f;
+        [Header("데이터")]
+        public BattleCatWaveData data;
 
-        [Header("최대 공격 범위 크기")]
-        public float maxAttackSize = 3.5f;
-
-        [Header("최소 안전 범위 크기")]
-        public float minSafeSize = 1f;
-
-        [Header("최대 안전 범위 크기")]
-        public float maxSafeSize = 3f;
-
-        [Header("크기 증가 최대 시간")]
-        public float maxTimer = 3.5f;
-
-        [Header("증가 속도")]
-        public float growthSpeed = 1f;
-
+        private float minSafeSize = 0f;
+        private float maxSafeSize = 0f;
         private float safeSize = 1f;
         private float attackSize = 1f;
         private float timer = 0f;
+        private float maxTimer = 3.5f;
+        private float minAttackSize = 1.5f;
+        private float maxAttackSize = 3.5f;
+        private float growthSpeed = 1f;
 
         private Animator animator = null;
 
         private void Start()
         {
+            minAttackSize = data.minAttackSize;
+            maxAttackSize = data.maxAttackSize;
+            growthSpeed = data.growthSpeed;
+
             animator = transform.parent.GetComponent<Animator>();
+
+            minSafeSize = minAttackSize - 0.5f;
+            maxSafeSize = maxAttackSize - 0.5f;
+            maxTimer = (maxAttackSize - minAttackSize) / growthSpeed;
         }
 
         private void OnEnable()
