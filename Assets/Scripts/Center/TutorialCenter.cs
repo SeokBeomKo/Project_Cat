@@ -55,21 +55,60 @@ public class TutorialCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(false);
     }
 
-    public void OnClearGuide()
+    public void OnCellPhone()
     {
+        inputHandler.gameObject.SetActive(false);
+        StartCoroutine(PhoneSubtitle());
+    }
+
+    public IEnumerator PhoneSubtitle()
+    {
+        questSubtitle.ShowQuestSubtitle("리처드 : 카날리아, 괜찮아 ?  너가 실험 기계를 고쳐줬지만,  우리쪽의 실수로 인해 다들 바이러스 X에 감염되어 몸이 작아졌어.");
+        yield return new WaitForSeconds(7f);
+
+        questSubtitle.ShowQuestSubtitle("리처드 : 하지만 치료법은 이미 찾아서 지금 알려줄게.  물과 고양이 샴푸를 50:1 비율로 섞어.");
+
+        yield return new WaitForSeconds(6.5f);
+
+        questSubtitle.ShowQuestSubtitle("리처드 : 왜 고양이 샴푸냐고?  전파 매체가 바로 고양이 털이기 때문이야");
+
+        yield return new WaitForSeconds(6f);
+
+        questSubtitle.ShowQuestSubtitle("리처드 : 이 효과적인 용액은 바이러스를 사라지게 만들지만,  인체에 들어와 변형된 바이러스는 없애지 못해.");
+
+        yield return new WaitForSeconds(7f);
+
+        questSubtitle.ShowQuestSubtitle("리처드 : 우리가 최대한 빨리 연구해서 돌아갈 방법을 찾아볼게.  행운을 빌어 카날리아.");
+
+        yield return new WaitForSeconds(7f);
+
         UIGroup.SetActive(false);
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
-        subtitle.ShowSubtitle("카날리아 : 바이러스가 퍼지는 것을 막기 위해,  나가서 컴퓨터로 모든 문을 잠그자!");
+        VirusGroup.SetActive(false);
 
-        StartCoroutine(Clear());
+        voiceMessageAnimator.SetBool("isHide",true);
+
+        yield return new WaitForSeconds(1f);
+        
+        EnterCatMove();
     }
-
-    IEnumerator Clear()
+    public void EnterCatMove()
     {
-        yield return new WaitForSeconds(4f);
+        cameraController.SetCatCamera();
+        subtitle.ShowSubtitle("카날리아 : 고양이 털이 매개라면, 로키를 찾아야.. 로키잖아?!", delayTime : 1.5f);
+        cat.SetActive(true);
+    }
+    public void ExitCatMove()
+    {
+        cameraController.SetPlayCamera();
+        cat.SetActive(false);
+        inputHandler.gameObject.SetActive(true);
+        UIGroup.SetActive(true);
+        cameraRotate.SetActive(true);
+        VirusGroup.SetActive(true);
 
-        endPoint.SetActive(true);
+        questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자");
     }
 
     public void OnBallGuide()
@@ -86,64 +125,21 @@ public class TutorialCenter : MonoBehaviour
         questSubtitle.ShowQuestSubtitle("물총으로 공을 아래로 떨어뜨려보자");
     }
 
-    public void ExitCatMove()
+
+    public void OnClearGuide()
     {
-        cameraController.SetPlayCamera();
-        cat.SetActive(false);
-        inputHandler.gameObject.SetActive(true);
-        UIGroup.SetActive(true);
-        cameraRotate.SetActive(true);
-        VirusGroup.SetActive(true);
-
-        questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자");
-    }
-
-    public void OnCellPhone()
-    {
-        inputHandler.gameObject.SetActive(false);
-        StartCoroutine(PhoneSubtitle());
-    }
-
-    public IEnumerator PhoneSubtitle()
-    {
-        subtitle.ShowSubtitle("리처드 : 카날리아, 괜찮아 ?  너가 실험 기계를 고쳐줬지만,  우리쪽의 실수로 인해 다들 바이러스 X에 감염되어 몸이 작아졌어.");
-        yield return new WaitForSeconds(10f);
-
-        subtitle.ShowSubtitle("리처드 : 하지만 치료법은 이미 찾아서 지금 알려줄게.  물과 고양이 샴푸를 50:1 비율로 섞어.");
-
-        yield return new WaitForSeconds(7f);
-
-        subtitle.ShowSubtitle("리처드 : 왜 고양이 샴푸냐고?  전파 매체가 바로 고양이 털이기 때문이야");
-
-        yield return new WaitForSeconds(6f);
-
-        subtitle.ShowSubtitle("리차드 : 이 효과적인 용액은 바이러스를 사라지게 만들지만,  인체에 들어와 변형된 바이러스는 없애지 못해.");
-
-        yield return new WaitForSeconds(8f);
-
-        subtitle.ShowSubtitle("리처드 : 우리가 최대한 빨리 연구해서 돌아갈 방법을 찾아볼게.  행운을 빌어 카날리아.");
-
-        yield return new WaitForSeconds(7f);
-
         UIGroup.SetActive(false);
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
-        VirusGroup.SetActive(false);
+        subtitle.ShowSubtitle("카날리아 : 바이러스가 퍼지는 것을 막기 위해,  나가서 컴퓨터로 모든 문을 잠그자!");
 
-        voiceMessageAnimator.SetBool("isHide",true);
-
-        yield return new WaitForSeconds(2f);
-
-        subtitle.ShowSubtitle("카날리아 : 고양이 털이 매개라면, 로키를 찾아야.. 로키잖아?!");
-
-        yield return new WaitForSeconds(4f);
-        EnterCatMove();
+        StartCoroutine(Clear());
     }
-
-    public void EnterCatMove()
+    IEnumerator Clear()
     {
-        cameraController.SetCatCamera();
-        cat.SetActive(true);
+        yield return new WaitForSeconds(4f);
+
+        endPoint.SetActive(true);
     }
 
 /*

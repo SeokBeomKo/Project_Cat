@@ -18,6 +18,8 @@ public class PausePopUp : MonoBehaviour
     public GameObject clean;
     public GameObject itemWheel;
 
+    public string sceneName; 
+
     public CinemachineVirtualCamera playCamera;
 
     public void UpdatePause()
@@ -87,7 +89,7 @@ public class PausePopUp : MonoBehaviour
     public void OnClickExit()
     {
         SoundManager.Instance.PlaySFX("Click");
-        SceneManager.LoadScene("00-1.Lobby");
+        SceneManager.LoadScene(sceneName);
     }
 
     public void ClosePopUp()

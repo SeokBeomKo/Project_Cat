@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Teest : MonoBehaviour
+public class SceneChangeTest : MonoBehaviour
 {
+    public string SceneName;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            SceneManager.LoadScene("HanKyeol_Ending");
+            SceneManager.LoadScene(SceneName);
         }
     }
 }
