@@ -18,6 +18,10 @@ public class WeaponSelection : MonoBehaviour
     public TextMeshProUGUI softRifleText;
     public TextMeshProUGUI splashBusterText;
     public TextMeshProUGUI bubbleGunText;
+
+    public TextMeshProUGUI softRifleMax;
+    public TextMeshProUGUI splashBusterMax;
+    public TextMeshProUGUI bubbleGunMax;
     
     public Image softRifleProgress;
     public Image splashBusterProgress;
@@ -104,5 +108,12 @@ public class WeaponSelection : MonoBehaviour
     {
         bubbleGunProgress.fillAmount = bullet / 400f;
         bubbleGunText.text = bullet.ToString();
+    }
+
+    public void SetMaxBullet(int softBullet, int splashBullet, int bubbleBullet)
+    {
+        softRifleMax.text = softBullet.ToString();
+        splashBusterMax.text = splashBullet.ToString();
+        bubbleGunMax.text = bubbleBullet.ToString();
     }
 }
