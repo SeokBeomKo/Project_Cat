@@ -54,7 +54,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
 
     public float GetDamage()
     {
-        return Random.Range(minDamage,maxDamage) * damageOffset;
+        return (Random.Range(minDamage,maxDamage)) * damageOffset;
     }
 
     public void SetOffset(int offset)
