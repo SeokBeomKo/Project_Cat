@@ -108,7 +108,7 @@ public class TutorialCenter : MonoBehaviour
         cameraRotate.SetActive(true);
         VirusGroup.SetActive(true);
 
-        questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자");
+        questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자", delayTime : 0.5f);
     }
 
     public void OnBallGuide()
