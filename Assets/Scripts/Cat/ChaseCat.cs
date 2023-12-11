@@ -114,4 +114,6 @@ public class ChaseCat : MonoBehaviour
             OnCutSceneStart?.Invoke();
         }
     }
+
+
 }

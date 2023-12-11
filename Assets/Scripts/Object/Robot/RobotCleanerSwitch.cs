@@ -12,14 +12,14 @@ public class RobotCleanerSwitch : MonoBehaviour
         {
             if (RobotCleaner != null)
             {
-                if (transform.name == "20percent")
-                {
-                    RobotCleaner.StartMoving();
-                }
-                else
-                {
-                    RobotCleaner.StopMoving();
-                }
+                //if (transform.name == "20percent")
+                //{
+                //    RobotCleaner.StartMoving();
+                //}
+                //else
+                //{
+                //    RobotCleaner.StopMoving();
+                //}
             }
         }
     }
