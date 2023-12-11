@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChaseCenter : MonoBehaviour
 {
     public GameObject Player;
-
+    
     [Header("카메라 회전")]
     [SerializeField] public CameraRotate camRotate;
 
@@ -29,26 +29,30 @@ public class ChaseCenter : MonoBehaviour
 
     [SerializeField] public ChaseCat cat;
 
+    [SerializeField] public RobotStart robotStart;
+
+    [SerializeField] public RobotCleanerMovement robot;
+
+    [SerializeField] public RobotAttack robotAttack;
+
     [SerializeField] public ChaseCameraController cameraController;
     public HairBallUse hairBallUse;
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            if (!hairBallUse.CheckObstacleInFront(Player.transform.position, Player.transform.forward))
-            {
-                hairBallUse.CreateHairBall(Player.transform.position, Player.transform.forward);
-            }
-        }
-    }
 
     private void Start()
     {
         mazeEnter.OnMazeEnter += OnMaze;
+
         cat.OnCutSceneStart += onCat;
         //cat.OnPlay += onPlay();
 
+        robotStart.onRobot += onRobotStart;
+        robotStart.onPlay += onPlay;
+
+        robot.onMove += onMove;
+
+        robotAttack.onRobotAttack += onRobotAttack;
+        robotAttack.onShoot += onShoot;
+        robotAttack.onPlay += onPlay;
 
         inputCenter.gameObject.SetActive(true);
         chaseInputCenter.gameObject.SetActive(false);
@@ -66,14 +70,33 @@ public class ChaseCenter : MonoBehaviour
         camController.SetTopCamera();
         camRotate.gameObject.SetActive(false);
         controllerUI.RemoveUI();
+
+        SoundManager.Instance.StopBGM();
+        SoundManager.Instance.PlayBGM("Maze");
     }
 
     public void onCat()
     {
+        //controllerUI.RemoveUI();
+        //inputHandler.gameObject.SetActive(false);
+        //cameraController.SetCatCamera();
+    }
+
+    public void onRobotStart()
+    {
+        Debug.Log("robot start");
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
-        cameraController.SetCatCamera();
+        cameraController.SetRobotStartCamera();
     }
+
+    public void onRobotAttack()
+    {
+        controllerUI.RemoveUI();
+        inputHandler.gameObject.SetActive(false);
+        cameraController.SetRobotAttackCamera();
+    }
+
 
     public void onPlay()
     {
@@ -82,6 +105,17 @@ public class ChaseCenter : MonoBehaviour
         cameraController.SetPlayCamera();
 
     }
+
+    public void onShoot()
+    {
+        robotAttack.targetPos = PlayerPosition();
+    }
+
+    public void onMove()
+    {
+        robot.PlayerPos = PlayerPosition();
+    }
+
 
 
 
