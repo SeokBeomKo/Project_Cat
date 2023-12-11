@@ -64,6 +64,7 @@ public class PlayerMoveState : IPlayerState
 
     public void ClearAimSetting()
     {
+        player.shotstateMachine.ChangeState(PlayerShotStateEnums.NOTHING);
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
         player.SetRigWeight(0);
         player.cameraController.SetPlayCamera();

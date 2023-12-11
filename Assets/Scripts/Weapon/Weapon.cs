@@ -37,6 +37,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     public abstract void EnterShoot();
     public abstract void ExcuteShoot();
     public abstract void ExitShoot();
+    public abstract void InitShoot();
 
     private void Awake() 
     {
