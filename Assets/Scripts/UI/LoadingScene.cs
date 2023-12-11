@@ -23,7 +23,6 @@ public class LoadingScene : MonoBehaviour
 
     IEnumerator LoadScene()
     {
-        yield return null;
         // 비동기 로드 : Scene을 불러올 때 멈추지 않고 다른 작업 가능
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName); // 비동기적으로 로드 시작
         if (operation != null)
@@ -41,6 +40,8 @@ public class LoadingScene : MonoBehaviour
             if (time > loadingTime)
                 operation.allowSceneActivation = true;
         }
+
+        yield return null;
     }
 }
 
