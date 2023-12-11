@@ -27,7 +27,7 @@ public class PlayerDeadState : IPlayerState
     public void OnStateEnter()
     {
         ClearAimSetting();
-        
+        Dead();
         player.rigid.constraints = RigidbodyConstraints.FreezeAll;
         player.animator.SetTrigger("onDead");
     }
@@ -35,6 +35,12 @@ public class PlayerDeadState : IPlayerState
     public void OnStateExit()
     {
         
+    }
+
+    public void Dead()
+    {
+        player.cameraRotate.SetActive(false);
+        player.playerHitScan.gameObject.SetActive(false);
     }
 
     public void ClearAimSetting()
