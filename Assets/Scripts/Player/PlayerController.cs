@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     [Header("모델")]
     [SerializeField]    public Transform            model;
 
+    [Header("카메라 회전")]
+    [SerializeField]    public GameObject           cameraRotate;
+
     [Header("스탯")]
     [SerializeField]    public PlayerStats          playerStats;
 
