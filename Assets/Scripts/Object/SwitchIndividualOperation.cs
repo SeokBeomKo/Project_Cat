@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchIndividualOperation : MonoBehaviour
+public class SwitchIndividualOperation : MonoBehaviour, IInteractable
 {
     public SwitchesOperation switchesOperation;
 
@@ -14,11 +14,9 @@ public class SwitchIndividualOperation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            SoundManager.Instance.PlaySFX("Switch");
-            switchesOperation.SetSwitch(IndividualIndex, true);
-            StartCoroutine(DisableCollisionForSeconds(2.0f));
+            Interaction();
         }
     }
 
@@ -29,4 +27,12 @@ public class SwitchIndividualOperation : MonoBehaviour
         collisionPossible = true;
     }
 
+    public void Interaction(Vector3 interPos = new Vector3())
+    {
+        if (!collisionPossible) return;
+
+        SoundManager.Instance.PlaySFX("Switch");
+        switchesOperation.SetSwitch(IndividualIndex, true);
+        StartCoroutine(DisableCollisionForSeconds(1.0f));
+    }
 }
