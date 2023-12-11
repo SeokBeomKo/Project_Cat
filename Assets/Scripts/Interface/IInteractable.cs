@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interaction(Vector3 interPos);
+    void Interaction(Vector3 interPos, float damage = 0f);
 }

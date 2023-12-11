@@ -27,7 +27,7 @@ public class SwitchIndividualOperation : MonoBehaviour, IInteractable
         collisionPossible = true;
     }
 
-    public void Interaction(Vector3 interPos = new Vector3())
+    public void Interaction(Vector3 interPos = new Vector3(), float damage = 0)
     {
         if (!collisionPossible) return;
 
