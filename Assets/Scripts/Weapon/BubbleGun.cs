@@ -37,6 +37,11 @@ public class BubbleGun : Weapon
     {
     }
 
+    public override void InitShoot()
+    {
+        
+    }
+
     public override void SetTarget(Vector3 target)
     {
         shootTarget = target;

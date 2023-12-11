@@ -33,7 +33,8 @@ public class SoapRifle : Weapon
     
     public override void ExcuteShoot()
     {
-        chargePrefab.SetActive(true);
+        if (curBullet >= useBullet)
+            chargePrefab.SetActive(true);
         chargeTime += Time.deltaTime;
         if (chargeTime >= 1)
         {
@@ -48,6 +49,11 @@ public class SoapRifle : Weapon
         Shoot();
 
         useBullet = 1;
+    }
+
+    public override void InitShoot()
+    {
+        chargePrefab.SetActive(false);
     }
 
     public override void SetTarget(Vector3 direction)

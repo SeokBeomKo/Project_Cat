@@ -85,18 +85,23 @@ public class WeaponStrategy : MonoBehaviour
     public void EnterShoot()
     {
         SettingTarget();
-        curWeapon.EnterShoot();
+        if (null != curWeapon) curWeapon.EnterShoot();
     }
 
     public void ExcuteShoot()
     {
         SettingTarget();
-        curWeapon.ExcuteShoot();
+        if (null != curWeapon) curWeapon.ExcuteShoot();
     }
 
     public void ExitShoot()
     {
         SettingTarget();
-        curWeapon.ExitShoot();
+        if (null != curWeapon) curWeapon.ExitShoot();
+    }
+
+    public void InitShoot()
+    {
+        if (null != curWeapon) curWeapon.InitShoot();
     }
 }

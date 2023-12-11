@@ -39,6 +39,12 @@ public class SplashBuster : Weapon
     // : 마우스 클릭 뗌
     public override void ExitShoot()
     {
+
+    }
+
+    public override void InitShoot()
+    {
+        
     }
 
     public override void SetTarget(Vector3 target)

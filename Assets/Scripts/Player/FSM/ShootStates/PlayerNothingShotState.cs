@@ -18,6 +18,7 @@ public class PlayerNothingShotState : IPlayerShotState
 
     public void OnStateEnter()
     {
+        player.weaponStrategy.InitShoot();
     }
 
     public void OnStateExit()
