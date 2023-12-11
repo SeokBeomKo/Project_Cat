@@ -6,15 +6,36 @@ public class SafeSubject : MonoBehaviour, ISubject
 {
     public List<IObserver> observers = new List<IObserver>();
     
-    private bool _safeCheck = false;
+    private bool safeCheck = false;
 
-    public bool safeCheck
+    public bool currentSafeCheck
     {
-        get { return _safeCheck; }
+        get { return safeCheck; }
         set
         {
-            _safeCheck = value;
+            safeCheck = value;
             NotifyObservers(observers);
+        }
+    }
+
+    private void OnEnable()
+    {
+        currentSafeCheck = false;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            currentSafeCheck = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            currentSafeCheck = true;
         }
     }
 
@@ -30,25 +51,9 @@ public class SafeSubject : MonoBehaviour, ISubject
 
     public void NotifyObservers<T>(List<T> observerList) where T : IObserver
     {
-        foreach (var observer in observers)
+        foreach (var observer in observerList)
         {
             observer.Notify(this);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            safeCheck = false;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            safeCheck = true;
         }
     }
 }

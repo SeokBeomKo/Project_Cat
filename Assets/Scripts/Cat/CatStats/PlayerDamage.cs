@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDamage : MonoBehaviour, IAttackable
+public class PlayerDamage : MonoBehaviour
 {
     [Header("µ•¿Ã≈Õ")]
     public BattleCatDamageData data;
@@ -18,13 +18,10 @@ public class PlayerDamage : MonoBehaviour, IAttackable
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GetDamage();
+            if (null != other.transform.GetComponentInChildren<PlayerHitScan>())
+            {
+                other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(damage);
+            }
         }
     }
-
-    public float GetDamage()
-    {
-        return damage;
-    }
-
 }
