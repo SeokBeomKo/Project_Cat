@@ -14,6 +14,8 @@ public class QuestSubtitle : MonoBehaviour
 
     private bool hasShow = false;
 
+    Coroutine curCoroutine;
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -27,6 +29,16 @@ public class QuestSubtitle : MonoBehaviour
             }
         }
     }
+    public void ShowQuestSubtitle(string content, float speed = 0.07f, float delayTime = 0)
+    {
+        if (!subtitleText.gameObject.activeSelf)
+        {
+            hasShow = true;
+            subtitleText.gameObject.SetActive(true);
+            curCoroutine = StartCoroutine(Typing(content, speed, delayTime));
+        }
+    }
+
 
     IEnumerator Typing(string txt, float speed = 0.07f, float delayTime = 0)
     {
@@ -50,13 +62,13 @@ public class QuestSubtitle : MonoBehaviour
         subtitleText.gameObject.SetActive(false);
     }
 
-    public void ShowQuestSubtitle(string content, float speed = 0.07f, float delayTime = 0)
+    public void StopSubtitle()
     {
-        if (!subtitleText.gameObject.activeSelf)
+        if (curCoroutine != null)
         {
-            hasShow = true;
-            subtitleText.gameObject.SetActive(true);
-            StartCoroutine(Typing(content, speed, delayTime));
+            StopCoroutine(curCoroutine);
+            subtitleText.gameObject.SetActive(false);
         }
     }
+
 }

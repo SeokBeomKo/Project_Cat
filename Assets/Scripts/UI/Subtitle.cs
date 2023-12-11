@@ -36,6 +36,7 @@ public class Subtitle : MonoBehaviour
 
     private bool hasShow = false;
 
+    Coroutine curCoroutine;
 
     private void OnTriggerStay(Collider other)
     {
@@ -77,7 +78,16 @@ public class Subtitle : MonoBehaviour
         {
             hasShow = true;
             subtitleText.gameObject.SetActive(true);
-            StartCoroutine(Typing(content, speed, delayTime));
+            curCoroutine = StartCoroutine(Typing(content, speed, delayTime));
+        }
+    }
+
+    public void StopSubtitle()
+    {
+        if (curCoroutine != null)
+        {
+            StopCoroutine(curCoroutine);
+            subtitleText.gameObject.SetActive(false);
         }
     }
 }
