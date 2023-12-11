@@ -131,11 +131,12 @@ Transform:
   m_GameObject: {fileID: 1616245280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.98, y: 2.98, z: 2.98}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1791729392}
   - {fileID: 1631778884}
+  - {fileID: 8079296392888639793}
   m_Father: {fileID: 8211913024773823182}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -181,8 +182,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 0.01, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8079296392888639793}
+  m_Children: []
   m_Father: {fileID: 1616245281}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -240,8 +240,8 @@ Transform:
   m_GameObject: {fileID: 1791729391}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.012, z: 0.8}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.8, y: 1, z: 0.8}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1616245281}
   m_RootOrder: 0
@@ -376,12 +376,12 @@ Transform:
   m_GameObject: {fileID: 1798705927399017966}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4999998, y: 0.1, z: 1.4999998}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3871347827985333823}
-  m_Father: {fileID: 1631778884}
-  m_RootOrder: 0
+  m_Father: {fileID: 1616245281}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4813305960789180549
 GameObject:
@@ -4366,7 +4366,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1571607545086620168, guid: c3c4b869b1741804ebf3d6188a9fe5e7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1571607545086620170, guid: c3c4b869b1741804ebf3d6188a9fe5e7, type: 3}
       propertyPath: prewarm
