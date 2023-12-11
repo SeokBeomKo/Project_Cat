@@ -24,13 +24,13 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable, IInteractable
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            Interaction(other.transform.position);
+            Interaction(other.transform.position, other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
         }
     }
 
-    public void Interaction(Vector3 interPos, float damage = 0)
+    public void Interaction(Vector3 interPos, float damage = 5f)
     {
-        if (isChange)
+        if (!isChange)
         {
             Hit(damage);
         }
