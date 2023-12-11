@@ -45,9 +45,7 @@ public class SplashProjectile : MonoBehaviour, IAttackable, IProjectile
 
     private void FixedUpdate() 
     {
-        //targetDirection = (directionPosition - transform.position).normalized;
         rigidBody.velocity = directionPosition * maxSpeed;
-        //SpeedContoll();
     }
 
     public void SpeedContoll()

@@ -53,7 +53,7 @@ public class BubbleGun : Weapon
         if (curBullet < useBullet) return;
         UseBullet();
 
-        randomScale = Random.Range(0.2f,0.7f);
+        randomScale = Random.Range(0.3f,0.5f);
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
         SoundManager.Instance.PlaySFX("ShootBubbleGun");
