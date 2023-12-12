@@ -13,7 +13,6 @@ public class LoadingScene : MonoBehaviour
     public string sceneName;
 
     private float loadingTime = 4.0f;
-    private float time;
 
     void Start()
     {
@@ -25,10 +24,9 @@ public class LoadingScene : MonoBehaviour
     {
         // 비동기 로드 : Scene을 불러올 때 멈추지 않고 다른 작업 가능
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName); // 비동기적으로 로드 시작
-        if (operation != null)
-        {
-            operation.allowSceneActivation = false; // 씬 로드 후 자동으로 장면 전환이 되지 않도록
-        }
+        operation.allowSceneActivation = false; // 씬 로드 후 자동으로 장면 전환이 되지 않도록
+
+        float time = 0f;
 
         while (!operation.isDone) // 로딩 완료 유무 
         {
@@ -38,9 +36,10 @@ public class LoadingScene : MonoBehaviour
             progressBar.fillAmount = Mathf.Clamp01(time / loadingTime);
 
             if (time > loadingTime)
+            {
                 operation.allowSceneActivation = true;
+            }
         }
-
         yield return null;
     }
 }

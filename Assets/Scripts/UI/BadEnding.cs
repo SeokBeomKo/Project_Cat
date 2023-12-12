@@ -26,6 +26,8 @@ public class BadEnding : MonoBehaviour
     private void Start()
     {
         SoundManager.Instance.PlayBGM("BadEnding");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         StartCoroutine(Typing());
         button.SetActive(false);
         

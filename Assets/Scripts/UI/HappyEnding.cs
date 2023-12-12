@@ -11,6 +11,8 @@ public class HappyEnding : MonoBehaviour
     private void Start()
     {
         SoundManager.Instance.PlayBGM("HappyEnding");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         StartCoroutine(ShowSubtitle());
     }
 
