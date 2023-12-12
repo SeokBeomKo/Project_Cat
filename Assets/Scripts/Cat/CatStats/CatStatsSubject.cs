@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 {
@@ -137,7 +138,7 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
         if (currentLikeability <= 0)
         {
-            // 게임 오버
+            SceneManager.LoadScene("BadEnding");
         }
 
         Debug.Log("호감도 감소 : " + currentLikeability);
