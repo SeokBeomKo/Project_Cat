@@ -43,7 +43,7 @@ public class ChaseCenter : MonoBehaviour
         mazeEnter.OnMazeEnter += OnMaze;
 
         cat.OnCutSceneStart += onCat;
-        //cat.OnPlay += onPlay;
+        cat.OnCutSceneEnd += onPlay;
 
         robotStart.onRobot += onRobotStart;
         robotStart.onPlay += onPlay;
@@ -77,9 +77,9 @@ public class ChaseCenter : MonoBehaviour
 
     public void onCat()
     {
-        //controllerUI.RemoveUI();
-        //inputHandler.gameObject.SetActive(false);
-        //cameraController.SetCatCamera();
+        controllerUI.RemoveUI();
+        inputHandler.gameObject.SetActive(false);
+        cameraController.SetCatCamera();
     }
 
     public void onRobotStart()
