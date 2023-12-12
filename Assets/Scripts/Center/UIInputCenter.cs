@@ -16,8 +16,11 @@ public class UIInputCenter : MonoBehaviour
     private void Start()
     {
         uiHandle.OnPausePopUp += ActivePausePopUp;
-        if(clean != null)
-            uiHandle.OnCleanlinessPopUp += ActiveCleanPopUp;
+        if (clean != null)
+        {
+            uiHandle.OnCleanlinessPopUpTrue += ActiveCleanPopUp;
+            uiHandle.OnCleanlinessPopUpFalse += DeactiveCleanPopUp;
+        }
     }
 
     public void ActivePausePopUp()
@@ -27,8 +30,11 @@ public class UIInputCenter : MonoBehaviour
 
     public void ActiveCleanPopUp()
     {
-        clean.UpdateCleanliness();
+        clean.ActivateCleanliness();
     }
 
-    
+    public void DeactiveCleanPopUp()
+    {
+        clean.DeactivateCleanliness();
+    }
 }
