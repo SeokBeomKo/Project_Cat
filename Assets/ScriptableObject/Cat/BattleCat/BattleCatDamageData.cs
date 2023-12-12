@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "CatAttackTime")]
-public class BattleCatData : GameData
+[CreateAssetMenu(menuName = "Data/BattleCat/CatAttackDamage")]
+
+public class BattleCatDamageData : GameData
 {
     [Header("저장 데이터")]
-    public float attackResumptionTime;
-    public float waveAttackTime;
-    public float movementSpeed;
+    public float damage;
 
     public override void ProcessData(string tsv)
     {
@@ -20,12 +19,9 @@ public class BattleCatData : GameData
         {
             string[] column = row[i].Split('\t');
             for (int j = 0; j < columnSize; j++)
-            {
-                attackResumptionTime = float.Parse(column[0]);
-                waveAttackTime = float.Parse(column[1]);
-                movementSpeed = float.Parse(column[2]);
+            {   
+                damage = float.Parse(column[0]);
             }
         }
     }
 }
-

@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "CatWave")]
-public class BattleCatWaveData : GameData
+[CreateAssetMenu(menuName = "Data/ChaseCat")]
+public class ChaseCatData : GameData
 {
     [Header("저장 데이터")]
-    public float minAttackSize;
-    public float maxAttackSize;
-    public float growthSpeed;
+    public float moveSpeed;
+
     public override void ProcessData(string tsv)
     {
         string[] row = tsv.Split('\n');
@@ -20,10 +19,9 @@ public class BattleCatWaveData : GameData
             string[] column = row[i].Split('\t');
             for (int j = 0; j < columnSize; j++)
             {
-                minAttackSize = float.Parse(column[0]);
-                maxAttackSize = float.Parse(column[1]);
-                growthSpeed = float.Parse(column[2]);
+                moveSpeed = float.Parse(column[0]);
             }
         }
     }
 }
+
