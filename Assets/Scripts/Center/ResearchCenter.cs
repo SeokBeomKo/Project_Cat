@@ -34,6 +34,14 @@ public class ResearchCenter : MonoBehaviour
     [Header("도착 지점")]
     public GameObject endPoint;
 
+    [Header("퀘스트 UI")]
+    public QuestPopUp questUI;
+
+    /*[Header("자막")]
+    *//*public PlayerSubtitle 
+    public PlayerSubtitle 
+    public PlayerSubtitle */
+
     private void Start()
     {
         StartCoroutine(StartResearchScene());
@@ -81,6 +89,7 @@ public class ResearchCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
         subtitle.ShowSubtitle("카날리아 : 저기 있는 스위치를 이용하면 될 것 같은데?");
+        questUI.ActivatePopUP("물총으로 스위치를 맞추자");
         switches.InitSwitch();
         controllerUI.ShowUI();
     }
