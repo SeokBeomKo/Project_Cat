@@ -41,8 +41,6 @@ public class ChaseCat : MonoBehaviour
 
     void Update()
     {
-        CheckCutScene();
-
         if (currentWaypointIndex < waypoints.Length)
         {
             Transform currentWaypoint = waypoints[currentWaypointIndex];
@@ -104,6 +102,8 @@ public class ChaseCat : MonoBehaviour
         {
             animator.SetBool("endIdle", true);
         }
+
+        CheckCutScene();
     }
 
     void CheckCutScene()
