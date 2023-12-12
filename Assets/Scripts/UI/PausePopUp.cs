@@ -89,6 +89,7 @@ public class PausePopUp : MonoBehaviour
     public void OnClickExit()
     {
         SoundManager.Instance.PlaySFX("Click");
+        Time.timeScale = 1f;
         SceneManager.LoadScene(sceneName);
     }
 
