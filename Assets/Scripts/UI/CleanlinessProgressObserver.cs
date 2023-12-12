@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CleanlinessProgressObserver : MonoBehaviour, IObserver
 {
@@ -23,5 +24,10 @@ public class CleanlinessProgressObserver : MonoBehaviour, IObserver
         currentClean = catStats.GetTotalCleanliness();
         cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / (catStats.currentMaxCleanliness * 7));
         cleanlinessText.text = Mathf.RoundToInt(cleanlinessProgressBar.value * 100) + " %";
+
+        if(cleanlinessProgressBar.value == 1)
+        {
+            SceneManager.LoadScene("HappyEnding");
+        }
     }
 }
