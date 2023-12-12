@@ -115,7 +115,7 @@ public class ChaseCat : MonoBehaviour
                 Debug.Log("½ºÅ¸Æ® ÄÆ¾À ÀÌº¥Æ® È£Ãâ");
                 OnCutSceneStart?.Invoke();
             }
-            else if (currentWaypointIndex >= waypoints.Length && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+            else if (currentWaypointIndex == waypoints.Length - 1 && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
             {
                 Debug.Log("¿£µå ÄÆ¾À ÀÌº¥Æ® È£Ãâ");
                 OnCutSceneEnd?.Invoke();
