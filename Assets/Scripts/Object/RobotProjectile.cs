@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingObject : MonoBehaviour, IAttackable
+public class RobotProjectile : MonoBehaviour
 {
-    public ChaseCenter chaseCenter;
-
     private Vector3 startPos, endPos;
     //땅에 닫기까지 걸리는 시간
     protected float timer;
@@ -23,7 +21,7 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
     private void Start()
     {
-        startPos = transform.parent.position;
+        isCollision = true;
     }
 
     private void Update()
@@ -40,16 +38,6 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        string otherTag = collision.transform.tag;
-
-        if (otherTag.Contains("Parts"))
-        {
-            isCollision = true;
-            endPos = chaseCenter.PlayerPosition();
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -57,7 +45,7 @@ public class FlyingObject : MonoBehaviour, IAttackable
         {
             if (null != other.transform.GetComponentInChildren<PlayerHitScan>())
             {
-                other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(GetDamage());
+                other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage();
             }
         }
     }
@@ -87,7 +75,6 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
 
 
-
             yield return new WaitForEndOfFrame();
 
         }
@@ -97,5 +84,11 @@ public class FlyingObject : MonoBehaviour, IAttackable
     public float GetDamage()
     {
         return 5;
+    }
+
+    public void SetEndPos(Vector3 start, Vector3 end)
+    {
+        startPos = start;
+        endPos = end;
     }
 }

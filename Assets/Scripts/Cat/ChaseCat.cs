@@ -10,11 +10,12 @@ public class ChaseCat : MonoBehaviour
     [Header("추격 경로")]
     public Transform waypointsParent;
 
-    [Header("컷씬 포인트1")]
+    [Header("시작 컷씬 포인트")]
     public Transform CutSceneStartPoint;
 
     public delegate void CatCutSceneHandle();
     public event CatCutSceneHandle OnCutSceneStart;
+    public event CatCutSceneHandle OnCutSceneEnd;
 
     private bool checkJump = false;
     private int currentWaypointIndex = 0;
@@ -40,8 +41,6 @@ public class ChaseCat : MonoBehaviour
 
     void Update()
     {
-        Check();
-
         if (currentWaypointIndex < waypoints.Length)
         {
             Transform currentWaypoint = waypoints[currentWaypointIndex];
@@ -103,15 +102,26 @@ public class ChaseCat : MonoBehaviour
         {
             animator.SetBool("endIdle", true);
         }
+
+        CheckCutScene();
     }
 
-    void Check()
+    void CheckCutScene()
     {
-        if (currentWaypointIndex < waypoints.Length &&
-        (CutSceneStartPoint == null || CutSceneStartPoint == waypoints[currentWaypointIndex]))
+        if (CutSceneStartPoint != null && currentWaypointIndex < waypoints.Length)
         {
-            Debug.Log("이벤트 호출");
-            OnCutSceneStart?.Invoke();
+            if (CutSceneStartPoint == waypoints[currentWaypointIndex])
+            {
+                Debug.Log("스타트 컷씬 이벤트 호출");
+                OnCutSceneStart?.Invoke();
+            }
+            else if (currentWaypointIndex == waypoints.Length - 1 && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+            {
+                Debug.Log("엔드 컷씬 이벤트 호출");
+                OnCutSceneEnd?.Invoke();
+            }
         }
     }
+
+
 }

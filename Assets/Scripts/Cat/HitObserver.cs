@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitObserver : MonoBehaviour, IObserver, IAttackable
+public class HitObserver : MonoBehaviour, IObserver
 {
     [Header("데이터")]
     public BattleCatDamageData data;
@@ -20,21 +20,20 @@ public class HitObserver : MonoBehaviour, IObserver, IAttackable
         var safeSubject = subject as SafeSubject;
         if (safeSubject != null)
         {
-            safeCheck = safeSubject.safeCheck;
+            safeCheck = safeSubject.currentSafeCheck;
+            Debug.Log("HitObserver: safeCheck updated to " + safeCheck);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && safeCheck == false)
+        if (other.CompareTag("Player") && !safeCheck)
         {
-            Debug.Log("파동 공격");
-            GetDamage();
+            if (null != other.transform.GetComponentInChildren<PlayerHitScan>())
+            {
+                other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(damage);
+                Debug.Log("공격!!!! safeCheck - " + safeCheck);
+            }
         }
-    }
-
-    public float GetDamage()
-    {
-        return damage;
     }
 }
