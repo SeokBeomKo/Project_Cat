@@ -38,6 +38,9 @@ public class Subtitle : MonoBehaviour
 
     Coroutine curCoroutine;
 
+    public delegate void questHandle();
+    public event questHandle OnQuest;
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && !hasShow)
@@ -47,6 +50,7 @@ public class Subtitle : MonoBehaviour
                 hasShow = true;
                 subtitleText.gameObject.SetActive(true);
                 StartCoroutine(Typing(subtitleContent, typingSpeed));
+                OnQuest?.Invoke();
             }
         }
     }

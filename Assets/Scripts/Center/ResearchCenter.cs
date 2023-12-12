@@ -37,15 +37,20 @@ public class ResearchCenter : MonoBehaviour
     [Header("퀘스트 UI")]
     public QuestPopUp questUI;
 
-    /*[Header("자막")]
-    *//*public PlayerSubtitle 
-    public PlayerSubtitle 
-    public PlayerSubtitle */
+    [Header("퀘스트 위치")]
+    public QuestSubtitle firstQuest; // 바이러스 제거
+    public QuestSubtitle secondQuest; // 위로 올라가자
+    public QuestSubtitle thirdQuest;
 
     private void Start()
     {
         StartCoroutine(StartResearchScene());
         endPoint.SetActive(false);
+        questUI.DeactivatePopUp();
+
+        firstQuest.OnQuest += RemovalVirus;
+        secondQuest.OnQuest += GoUp;
+        thirdQuest.OnQuest += UpTable;
 
         switches.InitSwitch(false);
         cctv.OnCCTV += ShutBarrier; // CCTV 켜기
@@ -96,6 +101,7 @@ public class ResearchCenter : MonoBehaviour
 
     public void UnlockDoor()
     {
+        questUI.DeactivatePopUp();
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetDoorCamera();
@@ -109,6 +115,23 @@ public class ResearchCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
         subtitle.ShowSubtitle("카날리아 : CCTV에 나온 로키의 위치로 가보자!", delayTime: 0.5f);
+        questUI.ActivatePopUP("다음 맵으로 이동하십시오");
         endPoint.SetActive(true);
+    }
+
+    public void RemovalVirus()
+    {
+        questUI.ActivatePopUP("길을 막는 바이러스를 제거하자");
+    }
+
+    public void GoUp()
+    {
+        questUI.DeactivatePopUp();
+        questUI.ActivatePopUP("박스를 타고 탁자 위로 올라가보자");
+    }
+
+    public void UpTable()
+    {
+        questUI.DeactivatePopUp();
     }
 }

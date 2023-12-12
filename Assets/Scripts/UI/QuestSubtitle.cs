@@ -16,6 +16,8 @@ public class QuestSubtitle : MonoBehaviour
 
     Coroutine curCoroutine;
 
+    public delegate void questHandle();
+    public event questHandle OnQuest;
 
     private void OnTriggerStay(Collider other)
     {
@@ -26,6 +28,7 @@ public class QuestSubtitle : MonoBehaviour
                 hasShow = true;
                 subtitleText.gameObject.SetActive(true);
                 StartCoroutine(Typing(subtitleContent, typingSpeed));
+                OnQuest?.Invoke();
             }
         }
     }
