@@ -4,8 +4,8 @@ using UnityEngine.AI;
 
 public class ChaseCat : MonoBehaviour
 {
-    [Header("속도")]
-    public float moveSpeed = 2.0f;
+    [Header("데이터")]
+    public ChaseCatData data;
 
     [Header("추격 경로")]
     public Transform waypointsParent;
@@ -18,15 +18,18 @@ public class ChaseCat : MonoBehaviour
     public event CatCutSceneHandle OnCutSceneEnd;
 
     private bool checkJump = false;
+    private bool checkCutScene = false;
     private int currentWaypointIndex = 0;
     private float jumpSpeed = 3.5f;
     private float rotationSpeed = 5.0f;
+    private float moveSpeed = 2.0f;
     private Animator animator;
     private Transform[] waypoints;
     private Transform previousWaypoint;
 
     private void Start()
     {
+        moveSpeed = data.moveSpeed;
         animator = GetComponentInParent<Animator>();
 
         int childCount = waypointsParent.childCount;
@@ -40,6 +43,12 @@ public class ChaseCat : MonoBehaviour
     }
 
     void Update()
+    {
+        MoveCat();
+        CheckCutScene();
+    }
+
+    private void MoveCat()
     {
         if (currentWaypointIndex < waypoints.Length)
         {
@@ -65,13 +74,13 @@ public class ChaseCat : MonoBehaviour
                     if (!checkJump)
                     {
                         animator.SetTrigger("jump");
-                        
+
                     }
                     checkJump = true;
                 }
-                else if(yDifference < 0)
+                else if (yDifference < 0)
                 {
-                    if(!checkJump)
+                    if (!checkJump)
                     {
                         animator.SetTrigger("drop");
                     }
@@ -89,7 +98,7 @@ public class ChaseCat : MonoBehaviour
             }
 
             Vector3 targetPosition = new Vector3(currentWaypoint.position.x, currentWaypoint.position.y, currentWaypoint.position.z);
-            if(checkJump)
+            if (checkJump)
             {
                 transform.parent.position = Vector3.MoveTowards(transform.parent.position, targetPosition, Time.deltaTime * jumpSpeed);
             }
@@ -103,25 +112,26 @@ public class ChaseCat : MonoBehaviour
             animator.SetBool("endIdle", true);
         }
 
-        CheckCutScene();
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+        {
+            checkCutScene = true;
+        }
     }
 
     void CheckCutScene()
     {
-        if (CutSceneStartPoint != null && currentWaypointIndex < waypoints.Length)
+        if (CutSceneStartPoint != null)
         {
-            if (CutSceneStartPoint == waypoints[currentWaypointIndex])
+            if (currentWaypointIndex < waypoints.Length && CutSceneStartPoint == waypoints[currentWaypointIndex])
             {
                 Debug.Log("스타트 컷씬 이벤트 호출");
                 OnCutSceneStart?.Invoke();
             }
-            else if (currentWaypointIndex == waypoints.Length - 1 && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+            else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
             {
                 Debug.Log("엔드 컷씬 이벤트 호출");
                 OnCutSceneEnd?.Invoke();
             }
         }
     }
-
-
 }
