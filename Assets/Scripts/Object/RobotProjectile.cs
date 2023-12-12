@@ -12,8 +12,8 @@ public class RobotProjectile : MonoBehaviour
 
     private bool isCollision = false;
 
-    public float height = 1;
-    private float moveSpeed = 0.1f; // 이동 속도
+    public float height = 1.5f;
+    private float moveSpeed = 0.5f; // 이동 속도
     public Vector3 rotationAxis = Vector3.left; // 회전 축
 
     Vector3 Direction;
@@ -22,22 +22,18 @@ public class RobotProjectile : MonoBehaviour
     private void Start()
     {
         isCollision = true;
-    }
+        transform.position = startPos;
 
-    private void Update()
-    {
         if (isCollision)
         {
-            Direction = endPos - transform.parent.position;
+            Direction = endPos - transform.position;
             targetRotation = Quaternion.LookRotation(Direction);
-            transform.parent.rotation = targetRotation;
+            transform.rotation = targetRotation;
 
             StartCoroutine("BulletMove");
 
         }
-
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,20 +61,19 @@ public class RobotProjectile : MonoBehaviour
     {
         isCollision = false;
         timer = 0;
-        while (transform.parent.position.y >= endPos.y)
+        while (transform.position.y >= endPos.y)
         {
-            transform.parent.rotation = Quaternion.Euler(Time.time * 90, 0, 0);
+            transform.rotation = Quaternion.Euler(Time.time * 90, 0, 0);
 
             timer += Time.deltaTime * moveSpeed;
             Vector3 tempPos = Parabola(startPos, endPos, height, timer);
-            transform.parent.position = tempPos;
-
-
+            transform.position = tempPos;
 
             yield return new WaitForEndOfFrame();
 
         }
-        transform.parent.gameObject.SetActive(false);
+        transform.gameObject.SetActive(false);
+
     }
 
     public float GetDamage()
@@ -90,5 +85,6 @@ public class RobotProjectile : MonoBehaviour
     {
         startPos = start;
         endPos = end;
+        endPos.y = 0;
     }
 }
