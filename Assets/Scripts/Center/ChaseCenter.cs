@@ -36,6 +36,7 @@ public class ChaseCenter : MonoBehaviour
     [SerializeField] public RobotAttack robotAttack;
 
     [SerializeField] public ChaseCameraController cameraController;
+
     public HairBallUse hairBallUse;
 
     private void Start()
@@ -43,7 +44,7 @@ public class ChaseCenter : MonoBehaviour
         mazeEnter.OnMazeEnter += OnMaze;
 
         cat.OnCutSceneStart += onCat;
-        cat.OnCutSceneEnd += onPlay;
+        cat.OnCutSceneEnd += onMazeCreate;
 
         robotStart.onRobot += onRobotStart;
         robotStart.onPlay += onPlay;
@@ -82,9 +83,15 @@ public class ChaseCenter : MonoBehaviour
         cameraController.SetCatCamera();
     }
 
+    public void onMazeCreate()
+    {
+        cameraController.SetMazeCamera();
+        StartCoroutine("MazeCameraMove");
+        cat.transform.parent.gameObject.SetActive(false);
+    }
+
     public void onRobotStart()
     {
-        Debug.Log("robot start");
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetRobotStartCamera();
@@ -103,7 +110,6 @@ public class ChaseCenter : MonoBehaviour
         controllerUI.ShowUI();
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
-
     }
 
     public void onShoot()
@@ -121,5 +127,15 @@ public class ChaseCenter : MonoBehaviour
         return Player.transform.position;
     }
 
- 
+    protected IEnumerator MazeCameraMove()
+    {
+        StartCoroutine(cameraController.MoveMazeCamera());
+        yield return new WaitForSeconds(3);
+
+        onPlay();
+
+    }
+
+
+
 }
