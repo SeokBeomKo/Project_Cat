@@ -21,7 +21,6 @@ public class RobotProjectile : MonoBehaviour
 
     private void Start()
     {
-        startPos = transform.parent.position;
         isCollision = true;
     }
 
@@ -87,8 +86,9 @@ public class RobotProjectile : MonoBehaviour
         return 5;
     }
 
-    public void SetEndPos(Vector3 pos)
+    public void SetEndPos(Vector3 start, Vector3 end)
     {
-        endPos = pos;
+        startPos = start;
+        endPos = end;
     }
 }

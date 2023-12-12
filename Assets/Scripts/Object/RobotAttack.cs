@@ -30,8 +30,8 @@ public class RobotAttack : MonoBehaviour
         if (Block != null)
         {
             // 새로운 프로젝타일 오브젝트 생성
-            RobotProjectile projectile = Instantiate(Block, transform.position, Quaternion.identity).GetComponent<RobotProjectile>();
-            projectile.SetEndPos(targetPos);
+            RobotProjectile projectile = Instantiate(Block, transform.parent.position, Quaternion.identity).GetComponent<RobotProjectile>();
+            projectile.SetEndPos(transform.parent.position, targetPos);
         }
     }
 
