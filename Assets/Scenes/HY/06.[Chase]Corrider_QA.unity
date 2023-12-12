@@ -10496,7 +10496,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 37
+  m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &157903654
 GameObject:
@@ -33480,6 +33480,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8289807730366443393, guid: cbe3d4e4413898f4793ea9588447de9e, type: 3}
+      propertyPath: cat
+      value: 
+      objectReference: {fileID: 1824330917}
+    - target: {fileID: 8289807730366443393, guid: cbe3d4e4413898f4793ea9588447de9e, type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 739659272}
@@ -33514,6 +33518,10 @@ PrefabInstance:
     - target: {fileID: 8289807730366443398, guid: cbe3d4e4413898f4793ea9588447de9e, type: 3}
       propertyPath: m_Name
       value: ChaseCenter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8289807730366443398, guid: cbe3d4e4413898f4793ea9588447de9e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbe3d4e4413898f4793ea9588447de9e, type: 3}
@@ -49631,7 +49639,7 @@ Transform:
   - {fileID: 183324552}
   - {fileID: 1991272}
   m_Father: {fileID: 0}
-  m_RootOrder: 38
+  m_RootOrder: 39
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1064770209
 GameObject:
@@ -83318,6 +83326,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822300970}
   m_Mesh: {fileID: -5076612985811418484, guid: 06b5bdebc3391884495db7d1fc7badfc, type: 3}
+--- !u!114 &1824330917 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 488606876455022571, guid: 5e734caccc0433f4cb6f3534d841bdae, type: 3}
+  m_PrefabInstance: {fileID: 1418953178}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b17f1ec596fefd45815ab9d556138d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1824952526
 GameObject:
   m_ObjectHideFlags: 0
@@ -91083,6 +91102,66 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975418177}
   m_Mesh: {fileID: -4119317738140548247, guid: db20ecb4728b6ee4097090b0b456bc56, type: 3}
+--- !u!1 &1975865342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1975865345}
+  - component: {fileID: 1975865344}
+  - component: {fileID: 1975865343}
+  m_Layer: 0
+  m_Name: ChaseCatData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1975865343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975865342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d57228b8da9e3d4ab3a94b26678237b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1975865344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975865342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ad1db2187870748890b275fccc04b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataReceiver: {fileID: 1975865343}
+  gameDataList:
+  - {fileID: 11400000, guid: 6f0b1472824a807449cb747e8919a8b1, type: 2}
+--- !u!4 &1975865345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975865342}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.657532, y: 0.9503155, z: -18.218105}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 37
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976314277
 GameObject:
   m_ObjectHideFlags: 0
