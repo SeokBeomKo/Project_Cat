@@ -18,6 +18,7 @@ public class ChaseCat : MonoBehaviour
     public event CatCutSceneHandle OnCutSceneEnd;
 
     private bool checkJump = false;
+    private bool checkCutScene = false;
     private int currentWaypointIndex = 0;
     private float jumpSpeed = 3.5f;
     private float rotationSpeed = 5.0f;
@@ -103,25 +104,28 @@ public class ChaseCat : MonoBehaviour
             animator.SetBool("endIdle", true);
         }
 
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+        {
+            checkCutScene = true;
+        }
+
         CheckCutScene();
     }
 
     void CheckCutScene()
     {
-        if (CutSceneStartPoint != null && currentWaypointIndex < waypoints.Length)
+        if (CutSceneStartPoint != null)
         {
-            if (CutSceneStartPoint == waypoints[currentWaypointIndex])
+            if (currentWaypointIndex < waypoints.Length && CutSceneStartPoint == waypoints[currentWaypointIndex])
             {
                 Debug.Log("½ºÅ¸Æ® ÄÆ¾À ÀÌº¥Æ® È£Ãâ");
                 OnCutSceneStart?.Invoke();
             }
-            else if (currentWaypointIndex == waypoints.Length - 1 && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+            else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
             {
                 Debug.Log("¿£µå ÄÆ¾À ÀÌº¥Æ® È£Ãâ");
                 OnCutSceneEnd?.Invoke();
             }
         }
     }
-
-
 }
