@@ -115,7 +115,7 @@ public class ChaseCat : MonoBehaviour
                 Debug.Log("스타트 컷씬 이벤트 호출");
                 OnCutSceneStart?.Invoke();
             }
-            else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+            else if (currentWaypointIndex >= waypoints.Length && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
             {
                 Debug.Log("엔드 컷씬 이벤트 호출");
                 OnCutSceneEnd?.Invoke();
