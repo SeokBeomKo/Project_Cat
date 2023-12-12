@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class DataLoader : MonoBehaviour
 {
+    public delegate void DataLoadHandle();
+    public event DataLoadHandle OnDataLoad;
     [SerializeField] public DataReceiver dataReceiver;
     [SerializeField] public List<GameData> gameDataList;
     private void Awake() 
     {
+        foreach(GameData data in gameDataList)
+        {
+            data.isLoaded = false;
+        }
         StartCoroutine(LoadAllData());
     }
 
@@ -17,6 +23,33 @@ public class DataLoader : MonoBehaviour
         {
             yield return LoadDataSO(data);
         }
+
+        bool allDataLoaded = false; 
+        while(!allDataLoaded)
+        {
+            allDataLoaded = AllDataLoaded();
+        }
+
+        if(allDataLoaded)
+        {
+            Debug.Log(allDataLoaded);
+            OnDataLoad?.Invoke();
+        }
+    }
+
+    bool AllDataLoaded()
+    {
+        bool dataLoad = true;
+        foreach(GameData data in gameDataList)
+        {
+            Debug.Log(data.isLoaded);
+            if(!data.isLoaded)
+            {
+                dataLoad = false;
+                break;
+            }
+        }
+        return dataLoad;
     }
 
     IEnumerator LoadDataSO(GameData gameData)
