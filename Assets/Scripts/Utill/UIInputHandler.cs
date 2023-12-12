@@ -5,7 +5,8 @@ using UnityEngine;
 public class UIInputHandler : MonoBehaviour
 {
     public delegate void UIInputHandle();
-    public event UIInputHandle OnCleanlinessPopUp;
+    public event UIInputHandle OnCleanlinessPopUpTrue;
+    public event UIInputHandle OnCleanlinessPopUpFalse;
     public event UIInputHandle OnPausePopUp;
     //public event UIInputHandle OnItemWheel;
 
@@ -13,7 +14,11 @@ public class UIInputHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            OnCleanlinessPopUp?.Invoke();
+            OnCleanlinessPopUpTrue?.Invoke();
+        }
+        if(Input.GetKeyUp(KeyCode.Tab))
+        {
+            OnCleanlinessPopUpFalse?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
