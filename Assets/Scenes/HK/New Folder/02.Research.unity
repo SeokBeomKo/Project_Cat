@@ -20034,17 +20034,6 @@ PrefabInstance:
       objectReference: {fileID: 1735661102}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 353485aa61dc5034c9845ea5d6378970, type: 3}
---- !u!114 &674165865 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8303006161338349063, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-  m_PrefabInstance: {fileID: 1286839365}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &677236264
 GameObject:
   m_ObjectHideFlags: 0
@@ -31219,7 +31208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8308110340038031770, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8308110340038031771, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
       propertyPath: m_RootOrder
@@ -31387,6 +31376,9 @@ MonoBehaviour:
   inputHandler: {fileID: 1997382266}
   endPoint: {fileID: 1283094606}
   questUI: {fileID: 361925531}
+  firstQuest: {fileID: 1555069937}
+  secondQuest: {fileID: 1233024061}
+  thirdQuest: {fileID: 32639106}
 --- !u!1 &1145172954
 GameObject:
   m_ObjectHideFlags: 0
@@ -35980,18 +35972,6 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8303006160221918408, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8303006160221918408, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8303006160221918408, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8303006160221918408, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.5
       objectReference: {fileID: 0}
@@ -36032,30 +36012,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8303006160471757330, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: IKRig
-      value: 
-      objectReference: {fileID: 1538388858}
-    - target: {fileID: 8303006160471757330, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: handRig
-      value: 
-      objectReference: {fileID: 674165865}
-    - target: {fileID: 8303006160471757330, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 2124458243}
-    - target: {fileID: 8303006161055506372, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'lowerarm_l'\n\tTransform 'hand_l'\n\tTransform
-        'spine_02'\n\tTransform 'upperarm_r'\n\tTransform 'upperarm_l'\n\tTransform
-        'spine_01'\n\tTransform 'lowerarm_r'\n\tTransform 'hand_r'\n\tTransform 'lowerarm_l'\n\tTransform
-        'hand_l'\n\tand more ..."
-      objectReference: {fileID: 0}
-    - target: {fileID: 8303006161798910977, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
 --- !u!1 &1290112976
@@ -43535,17 +43494,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536384905}
   m_Mesh: {fileID: 2935090030936589175, guid: 9e09fb04a04ab5d40904d4290fbe6f53, type: 3}
---- !u!114 &1538388858 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8303006161345271625, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-  m_PrefabInstance: {fileID: 1286839365}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1541063168
 GameObject:
   m_ObjectHideFlags: 0
@@ -43964,7 +43912,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555069934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16, y: -1.24, z: -0.3}
+  m_LocalPosition: {x: -16, y: -0.5, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43983,7 +43931,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4, y: 0.15288872, z: 1}
-  m_Center: {x: 0, y: -0.068485186, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1555069937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46773,23 +46721,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658664922}
   m_Mesh: {fileID: 8267787464299848482, guid: ecf0a8dae9563bc41a11cb09e08f5453, type: 3}
---- !u!1 &1661694894 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8303006161055506369, guid: bbe4bb4ed755c420191198d1568960e5, type: 3}
-  m_PrefabInstance: {fileID: 1286839365}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1661694898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661694894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c611d9a2bd1bb0c4bbd58958d1578a29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1663007284
 GameObject:
   m_ObjectHideFlags: 0
