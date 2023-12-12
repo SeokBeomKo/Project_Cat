@@ -8,6 +8,11 @@ public class LoadScene : MonoBehaviour
     public string sceneName;
     public FadeInOut fade;
 
+    public void ChangeSceneCoroutine()
+    {
+        StartCoroutine(ChangeScene());
+    }
+
     public IEnumerator ChangeScene()
     {
         fade.FadeIn();

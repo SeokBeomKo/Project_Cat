@@ -28,5 +28,6 @@ public class PlayerData : GameData
                 jumpForce  = float.Parse(column[3]);
             }
         }
+        isLoaded = true;
     }
 }

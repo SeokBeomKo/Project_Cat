@@ -28,5 +28,7 @@ public class WeaponData : GameData
                 shootDelay      = float.Parse(column[3]);
             }
         }
+        
+        isLoaded = true;
     }
 }

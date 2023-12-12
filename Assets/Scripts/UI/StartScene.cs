@@ -8,7 +8,6 @@ public class StartScene : MonoBehaviour
 {
     public VideoPlayer video;
     public string sceneName;
-
     void Start()
     {
         video.loopPointReached += OnVideoEnd;
@@ -16,6 +15,12 @@ public class StartScene : MonoBehaviour
 
     void OnVideoEnd(VideoPlayer video)
     {
+        StartCoroutine(Coroutine());
+    }
+
+    IEnumerator Coroutine()
+    {
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(sceneName);
     }
 }

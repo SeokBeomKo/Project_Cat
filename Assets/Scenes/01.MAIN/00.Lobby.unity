@@ -518,7 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a33ffa81d39470409ea713d8ffecfed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: VedioLoading
+  sceneName: 00.VedioLoading
   settingPopUp: {fileID: 970304506}
   canvas: {fileID: 496557485}
 --- !u!1001 &902223976
@@ -528,9 +528,81 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[5].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e5c000146ec75b347811503cf0c6cb20, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[5].soundName
+      value: Maze
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[6].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c03dd4437f60c8d45b28936cdb9701e3, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[6].soundName
+      value: BadEnding
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[7].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 85305a5029c9bc5459b78e1aef1a08fd, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[7].soundName
+      value: HappyEnding
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[8].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a150c4d57a8524143bdee7701d0a368f, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[8].soundName
+      value: 00.Lobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[9].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 481570dc226d40546a7062d02ed1ebe1, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[9].soundName
+      value: 01.Tutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[10].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d0d345da6e000204081a8cd019aa5a8b, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[10].soundName
+      value: 02.Research
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[11].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5d8d6d38ab79e45469b431a90b2a9d18, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[11].soundName
+      value: 03.Chase
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[12].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 473f232b637dc9244bf6b3ad9a9f9e16, type: 3}
+    - target: {fileID: 8308110340038031768, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: bgmList.Array.data[12].soundName
+      value: 04.Washing
+      objectReference: {fileID: 0}
     - target: {fileID: 8308110340038031770, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308110340038031770, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8308110340038031771, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
       propertyPath: m_RootOrder
@@ -1119,7 +1191,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1209089767
 MonoBehaviour:
@@ -1209,6 +1281,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1567957197
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5551698075408686037, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_Name
+      value: ChangeScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.390358
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.2498622
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.5322118
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038181420557021650, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dc1bd829c88358544a95f7cdb47883d7, type: 3}
 --- !u!1 &1573694171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,7 +1630,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1980921254
 MonoBehaviour:

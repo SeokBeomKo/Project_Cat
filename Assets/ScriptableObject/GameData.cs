@@ -10,6 +10,8 @@ public abstract class GameData : ScriptableObject
     public string colrowStartNumber;
     [Header("종료 행렬")]
     public string colrowEndNumber;
+
+    public bool isLoaded = false;
     
     public abstract void ProcessData(string tsv);
 }
