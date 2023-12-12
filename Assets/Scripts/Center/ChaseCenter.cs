@@ -43,7 +43,7 @@ public class ChaseCenter : MonoBehaviour
         mazeEnter.OnMazeEnter += OnMaze;
 
         cat.OnCutSceneStart += onCat;
-        //cat.OnPlay += onPlay();
+        //cat.OnPlay += onPlay;
 
         robotStart.onRobot += onRobotStart;
         robotStart.onPlay += onPlay;
@@ -115,9 +115,6 @@ public class ChaseCenter : MonoBehaviour
     {
         robot.PlayerPos = PlayerPosition();
     }
-
-
-
 
     public Vector3 PlayerPosition()
     {
