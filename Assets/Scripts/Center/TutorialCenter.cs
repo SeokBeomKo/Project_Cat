@@ -51,6 +51,9 @@ public class TutorialCenter : MonoBehaviour
     [Header("전화 화면")]
     public GameObject voiceMessage;
 
+    [Header("퀘스트 UI")]
+    public QuestPopUp questUI;
+
     private bool isStop = false;
 
     private void Start() 
@@ -60,11 +63,14 @@ public class TutorialCenter : MonoBehaviour
 
         ballPlayerSubtitle.OnPlayerSubtitle += OnBallGuide;
         clearPlayerSubtitle.OnPlayerSubtitle += OnClearGuide;
+
         VirusGroup.SetActive(false);
         UIGroup.SetActive(false);
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
         cursor.SetActive(false);
+
+        questUI.DeactivatePopUp();
     }
 
     public void OnCellPhone()
