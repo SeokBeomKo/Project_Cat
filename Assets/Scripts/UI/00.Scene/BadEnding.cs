@@ -19,7 +19,8 @@ public class BadEnding : MonoBehaviour
     [Header("로비씬")]
     public string lobbySceneName;
 
-    private string endingContent = "그냥 오늘은 쉴까 ... ?";
+    [Header("자막")]
+    public QuestSubtitle questSubtitle;
 
     private float progress = 0f;
 
@@ -28,26 +29,15 @@ public class BadEnding : MonoBehaviour
         SoundManager.Instance.PlayBGM("BadEnding");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        StartCoroutine(Typing());
+        StartCoroutine(Ending());
         button.SetActive(false);
-        
     }
 
-    IEnumerator Typing()
+    IEnumerator Ending()
     {
-        endingText.text = null;
+        questSubtitle.ShowQuestSubtitle("그냥 오늘은 쉴까 ... ?", delayTime: 0.5f);
 
-        yield return new WaitForSeconds(0.5f);
-        
-        SoundManager.Instance.PlaySFX("Keyboard");
-        for (int i = 0; i < endingContent.Length; i++)
-        {
-            endingText.text += endingContent[i];
-            yield return new WaitForSeconds(0.1f);
-        }
-        SoundManager.Instance.StopSFX();
-
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
         endingText.gameObject.SetActive(false);
 
         while(progress < 1f)

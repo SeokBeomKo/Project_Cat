@@ -7,8 +7,8 @@ public class UIInputCenter : MonoBehaviour
     [Header("UI ÀÎÇ² ÇÚµé")]
     public UIInputHandler uiHandle;
 
-    [Header("ÀÏ½ÃÁ¤Áö ÆË¾÷")]
-    public PausePopUp pause;
+    [Header("¼¼ÆÃÃ¢")]
+    public Setting setting;
 
     [Header("¼¼Ã´µµ ÆË¾÷")]
     public CleanlinessPopUpObserver clean;
@@ -25,7 +25,7 @@ public class UIInputCenter : MonoBehaviour
 
     public void ActivePausePopUp()
     {
-        pause.UpdatePause();
+        setting.UpdatePause();
     }
 
     public void ActiveCleanPopUp()

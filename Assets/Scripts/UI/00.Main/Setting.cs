@@ -4,77 +4,74 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 
-public class PausePopUp : MonoBehaviour
+public class Setting : MonoBehaviour
 {
+    [Header("일시정지 팝업")]
+    public GameObject pausePopUp;
+    [Header("설정창 팝업")]
+    public GameObject settingPopUp;
+
+    [Header("세척도 팝업")]
+    public GameObject clean;
+    [Header("아이템 휠")]
+    public GameObject itemWheel;
+
+    [Header("로비씬")]
+    public string lobbyName; 
+
+    [Header("플레이 카메라")]
+    public CinemachineVirtualCamera playCamera;
+
+    public UIController uiController;
+    public CursorEvent cursor;
+
     public delegate void PausePopupHandle();
     public event PausePopupHandle OnPausePopupTrue;
     public event PausePopupHandle OnPausePopupFalse;
 
-    public GameObject settingPopUp;
-    public GameObject pausePopUp;
-
-    public CanvasGroup canvas;
-
-    public GameObject clean;
-    public GameObject itemWheel;
-
-    public string sceneName; 
-
-    public CinemachineVirtualCamera playCamera;
-
     public void UpdatePause()
     {
-        if (pausePopUp.activeSelf)
+        if (pausePopUp.activeSelf) // 일시정지 팝업 활성화 
         {
-            //
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            //
+            cursor.CursorOff();
             pausePopUp.SetActive(false);
             Time.timeScale = 1f;
             OnPausePopupFalse?.Invoke();
 
-            ShowUI();
+            if(playCamera.gameObject.activeSelf)
+                uiController.ShowUI();
         }
-        else if (!pausePopUp.activeSelf && !settingPopUp.activeSelf)
+        else if (!pausePopUp.activeSelf && !settingPopUp.activeSelf) // 둘 다 비활성화
         {
-            //
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            //
+            cursor.CursorOn();
             pausePopUp.SetActive(true);
             Time.timeScale = 0f;
             OnPausePopupTrue?.Invoke();
 
-            RemoveUI();
-
+            uiController.RemoveUI();
             itemWheel.SetActive(false);
+
             if (clean.gameObject != null)
                 clean.SetActive(false);
         }
-        else if (settingPopUp.activeSelf)
+        else if (settingPopUp.activeSelf) // 설정창 활성화
         {
-            //
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            //
+            cursor.CursorOff();
             settingPopUp.SetActive(false);
             Time.timeScale = 1f;
             OnPausePopupFalse?.Invoke();
-
-            ShowUI();
+            
+            if (playCamera.gameObject.activeSelf)
+                uiController.ShowUI();
         }
     }
 
     public void OnClickResume()
     {
         SoundManager.Instance.PlaySFX("Click");
-        //
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        //
+        cursor.CursorOff();
         pausePopUp.SetActive(false);
-        ShowUI();
+        uiController.ShowUI();
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
     }
@@ -90,37 +87,17 @@ public class PausePopUp : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX("Click");
         Time.timeScale = 1f;
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(lobbyName);
     }
 
     public void ClosePopUp()
     {
         SoundManager.Instance.PlaySFX("Click");
-        //
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        //
+        cursor.CursorOff();
         settingPopUp.SetActive(false);
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
-        
-        ShowUI();
+        uiController.ShowUI();
     }
     
-    public void RemoveUI()
-    {
-        canvas.alpha = 0;
-        canvas.interactable = false;
-        canvas.blocksRaycasts = false;
-    }
-
-    public void ShowUI()
-    {
-        if (playCamera.gameObject.activeSelf)
-        {
-            canvas.alpha = 1;
-            canvas.interactable = true;
-            canvas.blocksRaycasts = true;
-        }
-    }
 }

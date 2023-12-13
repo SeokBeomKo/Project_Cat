@@ -8,10 +8,10 @@ public class UIInputHandler : MonoBehaviour
     public event UIInputHandle OnCleanlinessPopUpTrue;
     public event UIInputHandle OnCleanlinessPopUpFalse;
     public event UIInputHandle OnPausePopUp;
-    //public event UIInputHandle OnItemWheel;
 
     void Update()
     {
+        // ¼¼Ã´µµ ÆË¾÷
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             OnCleanlinessPopUpTrue?.Invoke();
@@ -20,13 +20,11 @@ public class UIInputHandler : MonoBehaviour
         {
             OnCleanlinessPopUpFalse?.Invoke();
         }
+
+        // ÀÏ½ÃÁ¤Áö ÆË¾÷
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OnPausePopUp?.Invoke();
         }
-        /*if (Input.GetMouseButtonDown(2))
-        {
-            OnItemWheel?.Invoke();
-        }*/
     }
 }
