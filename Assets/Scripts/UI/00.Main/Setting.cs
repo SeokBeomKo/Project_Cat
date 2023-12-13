@@ -33,6 +33,8 @@ public class Setting : MonoBehaviour
     {
         if (pausePopUp.activeSelf) // 일시정지 팝업 활성화 
         {
+            PlayerPrefs.SetInt("Pause", 0);
+
             cursor.CursorOff();
             pausePopUp.SetActive(false);
             Time.timeScale = 1f;
@@ -46,6 +48,8 @@ public class Setting : MonoBehaviour
         }
         else if (!pausePopUp.activeSelf && !settingPopUp.activeSelf) // 둘 다 비활성화
         {
+            PlayerPrefs.SetInt("Pause", 1);
+
             cursor.CursorOn();
             pausePopUp.SetActive(true);
             Time.timeScale = 0f;
@@ -59,6 +63,8 @@ public class Setting : MonoBehaviour
         }
         else if (settingPopUp.activeSelf) // 설정창 활성화
         {
+            PlayerPrefs.SetInt("Pause", 0);
+
             cursor.CursorOff();
             settingPopUp.SetActive(false);
             Time.timeScale = 1f;

@@ -25,8 +25,6 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
     [Header("µî")]
     public TextMeshProUGUI back;
 
-    public GameObject pause;
-
     public void Notify(ISubject subject)
     {
         CleanCat(subject as CatStatsSubject);
@@ -48,9 +46,10 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
 
     public void DeactivateCleanliness()
     {
-        popUp.SetActive(false);
-        if(!pause.activeSelf)
-            uiController.ShowUI();
+        if (PlayerPrefs.GetInt("Pause") == 1) return;
+
+        popUp.SetActive(false);  
+        uiController.ShowUI();
     }
 
     public void CleanCat(CatStatsSubject subject)
