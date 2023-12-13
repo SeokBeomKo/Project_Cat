@@ -24,17 +24,9 @@ public class DataLoader : MonoBehaviour
             yield return LoadDataSO(data);
         }
 
-        bool allDataLoaded = false; 
-        while(!allDataLoaded)
-        {
-            allDataLoaded = AllDataLoaded();
-        }
+        yield return new WaitUntil(() => AllDataLoaded());
 
-        if(allDataLoaded)
-        {
-            Debug.Log(allDataLoaded);
-            OnDataLoad?.Invoke();
-        }
+        OnDataLoad?.Invoke();
     }
 
     bool AllDataLoaded()

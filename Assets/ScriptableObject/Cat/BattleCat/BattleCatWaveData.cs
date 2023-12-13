@@ -5,7 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/BattleCat/CatWave")]
 public class BattleCatWaveData : GameData
 {
-    [Header("¿˙¿Â µ•¿Ã≈Õ")]
+    string KEY_MIN_ATTACK_SIZE = "BATTLE_CAT_MIN_ATTACK_SIZE";
+    string KEY_MAX_ATTACK_SIZE = "BATTLE_CAT_MAX_ATTACK_SIZE";
+    string KEY_GROWTH_SPEED = "BATTLE_CAT_GROWTH_SPEED";
+
+    [Header("Ï†ÄÏû• Îç∞Ïù¥ÌÑ∞")]
     public float minAttackSize;
     public float maxAttackSize;
     public float growthSpeed;
@@ -23,7 +27,25 @@ public class BattleCatWaveData : GameData
                 minAttackSize = float.Parse(column[0]);
                 maxAttackSize = float.Parse(column[1]);
                 growthSpeed = float.Parse(column[2]);
+
+                PlayerPrefs.SetFloat(key + KEY_MIN_ATTACK_SIZE, minAttackSize);
+                PlayerPrefs.SetFloat(key + KEY_MAX_ATTACK_SIZE, maxAttackSize);
+                PlayerPrefs.SetFloat(key + KEY_GROWTH_SPEED, growthSpeed);
             }
         }
+        isLoaded = true;
     }
+
+    public override void LoadDataFromPrefs()
+    {
+        if(PlayerPrefs.HasKey(key + KEY_MIN_ATTACK_SIZE))
+            minAttackSize = PlayerPrefs.GetFloat(key + KEY_MIN_ATTACK_SIZE);
+
+        if(PlayerPrefs.HasKey(key + KEY_MAX_ATTACK_SIZE))
+            maxAttackSize = PlayerPrefs.GetFloat(key + KEY_MAX_ATTACK_SIZE);
+        
+        if(PlayerPrefs.HasKey(key + KEY_GROWTH_SPEED))
+            growthSpeed = PlayerPrefs.GetFloat(key + KEY_GROWTH_SPEED);
+    }
+    
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/ChaseCat")]
 public class ChaseCatData : GameData
 {
-    [Header("ÀúÀå µ¥ÀÌÅÍ")]
+    string KEY_MOVE_SPEED = "CHASE_CAT_MOVE_SPEED";
+    [Header("ì €ì¥ ë°ì´í„°")]
     public float moveSpeed;
 
     public override void ProcessData(string tsv)
@@ -20,8 +21,17 @@ public class ChaseCatData : GameData
             for (int j = 0; j < columnSize; j++)
             {
                 moveSpeed = float.Parse(column[0]);
+
+                PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, moveSpeed);
             }
         }
+        isLoaded = true;
+    }
+
+    public override void LoadDataFromPrefs()
+    {
+        if(PlayerPrefs.HasKey(key + KEY_MOVE_SPEED))
+            moveSpeed = PlayerPrefs.GetFloat(key + KEY_MOVE_SPEED);
     }
 }
 

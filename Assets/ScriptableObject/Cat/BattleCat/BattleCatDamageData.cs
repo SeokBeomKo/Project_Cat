@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class BattleCatDamageData : GameData
 {
-    [Header("ÀúÀå µ¥ÀÌÅÍ")]
+    string KEY_DAMAGE = "BATTLE_CAT_DAMAGE";
+
+    [Header("ì €ì¥ ë°ì´í„°")]
     public float damage;
 
     public override void ProcessData(string tsv)
@@ -21,7 +23,16 @@ public class BattleCatDamageData : GameData
             for (int j = 0; j < columnSize; j++)
             {   
                 damage = float.Parse(column[0]);
+
+                PlayerPrefs.SetFloat(key + KEY_DAMAGE, damage);
             }
         }
+        isLoaded = true;
+    }
+
+    public override void LoadDataFromPrefs()
+    {
+        if(PlayerPrefs.HasKey(key + KEY_DAMAGE))
+            damage = PlayerPrefs.GetFloat(key + KEY_DAMAGE);
     }
 }

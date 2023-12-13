@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HitObserver : MonoBehaviour, IObserver
 {
-    [Header("µ•¿Ã≈Õ")]
+    [Header("Îç∞Ïù¥ÌÑ∞")]
     public BattleCatDamageData data;
 
     private float damage = 5f;
@@ -12,6 +12,8 @@ public class HitObserver : MonoBehaviour, IObserver
 
     private void Awake()
     {
+        data.LoadDataFromPrefs();
+        
         damage = data.damage;
     }
 
@@ -32,7 +34,7 @@ public class HitObserver : MonoBehaviour, IObserver
             if (null != other.transform.GetComponentInChildren<PlayerHitScan>())
             {
                 other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(damage);
-                Debug.Log("∞¯∞›!!!! safeCheck - " + safeCheck);
+                Debug.Log("ÔøΩÔøΩÔøΩÔøΩ!!!! safeCheck - " + safeCheck);
             }
         }
     }
