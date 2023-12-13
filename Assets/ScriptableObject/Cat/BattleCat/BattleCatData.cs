@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/BattleCat/CatAttackTime")]
 public class BattleCatData : GameData
 {
+    string KEY_RESUMPTION_TIME = "BATTLE_CAT_RESUMPTION_TIME";
+    string KEY_WAVE_TIME = "BATTLE_CAT_WAVE_TIME";
+    string KEY_MOVE_SPEED = "BATTLE_CAT_MOVE_SPEED";
+
     [Header("���� ������")]
     public float attackResumptionTime;
     public float waveAttackTime;
@@ -24,9 +28,25 @@ public class BattleCatData : GameData
                 attackResumptionTime = float.Parse(column[0]);
                 waveAttackTime = float.Parse(column[1]);
                 movementSpeed = float.Parse(column[2]);
+
+                PlayerPrefs.SetFloat(key + KEY_RESUMPTION_TIME, attackResumptionTime);
+                PlayerPrefs.SetFloat(key + KEY_WAVE_TIME, waveAttackTime);
+                PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, movementSpeed);
             }
         }
         isLoaded = true;
+    }
+
+    public override void LoadDataFromPrefs()
+    {
+        if(PlayerPrefs.HasKey(key + KEY_RESUMPTION_TIME))
+            attackResumptionTime = PlayerPrefs.GetInt(key + KEY_RESUMPTION_TIME);
+
+        if(PlayerPrefs.HasKey(key + KEY_WAVE_TIME))
+            waveAttackTime = PlayerPrefs.GetInt(key + KEY_WAVE_TIME);
+        
+        if(PlayerPrefs.HasKey(key + KEY_MOVE_SPEED))
+            movementSpeed = PlayerPrefs.GetInt(key + KEY_MOVE_SPEED);
     }
 }
 

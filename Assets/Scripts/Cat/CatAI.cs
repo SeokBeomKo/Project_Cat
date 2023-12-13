@@ -7,22 +7,22 @@ namespace BehaviorTree
 {
     public class CatAI : MonoBehaviour
     {
-        [Header("¾ÏÀü°ø°ÝÀÌ¹ÌÁö")]
+        [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½")]
         public Image canvasImage;
 
-        [Header("±ÙÁ¢µ¥¹ÌÁö¹Ú½º")]
+        [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½")]
         public GameObject meleeDamageBox;
 
-        [Header("µ¹Áøµ¥¹ÌÁö¹Ú½º")]
+        [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½")]
         public GameObject chargeDamageBox;
 
-        [Header("ÆÄµ¿ÄÝ¶óÀÌ´õ")]
+        [Header("ï¿½Äµï¿½ï¿½Ý¶ï¿½ï¿½Ì´ï¿½")]
         public GameObject waveCollider;
 
-        [Header("±ÙÁ¢°ø°ÝÀÌÆåÆ®")]
+        [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
         public ParticleSystem meleeParticle;
 
-        [Header("µ¥ÀÌÅÍ")]
+        [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
         public BattleCatData data;
 
         private bool playerInMeleeRange = false;
@@ -45,6 +45,8 @@ namespace BehaviorTree
 
         private void Awake()
         {
+            data.LoadDataFromPrefs();
+            
             attackResumptionTime = data.attackResumptionTime;
             waveAttackTime = data.waveAttackTime;
             movementSpeed = data.movementSpeed;
@@ -215,7 +217,7 @@ namespace BehaviorTree
                 isAttacking = true;
                 isAttackComplete = false;
 
-                Debug.Log("µ¹Áø °ø°Ý");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 timer = 0f;
 
                 return Node.NodeState.SUCCESS;
@@ -255,7 +257,7 @@ namespace BehaviorTree
             randomNumber = Random.Range(0f, 1.0f);
             if (playerTransform != null && randomNumber > 0.3f)
             {
-                Debug.Log("±ÙÁ¢ ±âº» °ø°Ý");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½");
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
@@ -271,7 +273,7 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                Debug.Log("±ÙÁ¢ ¾ÏÀü °ø°Ý");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
@@ -329,7 +331,7 @@ namespace BehaviorTree
                 isAttackComplete = false;
                 StartCoroutine(PerformWaveAttack());
                 timer = 0f;
-                Debug.Log("Æ¯¼ö ÆÄµ¿ °ø°Ý");
+                Debug.Log("Æ¯ï¿½ï¿½ ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½");
                 return Node.NodeState.SUCCESS;
             }
 
@@ -404,7 +406,7 @@ namespace BehaviorTree
         {
             if (!isAttacking)
             {
-                waveCollider.SetActive(false); // ÆÄµ¿ °ø°Ý ³¡³ª¸é ÄÝ¶óÀÌ´õ ºñÈ°¼ºÈ­
+                waveCollider.SetActive(false); // ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.RUNNING;
