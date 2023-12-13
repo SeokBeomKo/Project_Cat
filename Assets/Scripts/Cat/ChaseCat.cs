@@ -4,13 +4,13 @@ using UnityEngine.AI;
 
 public class ChaseCat : MonoBehaviour
 {
-    [Header("µ¥ÀÌÅÍ")]
+    [Header("ë°ì´í„°")]
     public ChaseCatData data;
 
-    [Header("Ãß°İ °æ·Î")]
+    [Header("ì›¨ì´ í¬ì¸íŠ¸")]
     public Transform waypointsParent;
 
-    [Header("½ÃÀÛ ÄÆ¾À Æ÷ÀÎÆ®")]
+    [Header("ì‹œì‘ ì§€ì ")]
     public Transform CutSceneStartPoint;
 
     public delegate void CatCutSceneHandle();
@@ -29,6 +29,8 @@ public class ChaseCat : MonoBehaviour
 
     private void Start()
     {
+        data.LoadDataFromPrefs();
+
         moveSpeed = data.moveSpeed;
         animator = GetComponentInParent<Animator>();
 
@@ -124,12 +126,12 @@ public class ChaseCat : MonoBehaviour
         {
             if (currentWaypointIndex < waypoints.Length && CutSceneStartPoint == waypoints[currentWaypointIndex])
             {
-                Debug.Log("½ºÅ¸Æ® ÄÆ¾À ÀÌº¥Æ® È£Ãâ");
+                Debug.Log("ï¿½ï¿½Å¸Æ® ï¿½Æ¾ï¿½ ï¿½Ìºï¿½Æ® È£ï¿½ï¿½");
                 OnCutSceneStart?.Invoke();
             }
             else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
             {
-                Debug.Log("¿£µå ÄÆ¾À ÀÌº¥Æ® È£Ãâ");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Æ¾ï¿½ ï¿½Ìºï¿½Æ® È£ï¿½ï¿½");
                 OnCutSceneEnd?.Invoke();
             }
         }
