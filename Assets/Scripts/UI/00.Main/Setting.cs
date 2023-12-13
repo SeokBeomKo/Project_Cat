@@ -38,8 +38,11 @@ public class Setting : MonoBehaviour
             Time.timeScale = 1f;
             OnPausePopupFalse?.Invoke();
 
-            if(playCamera.gameObject.activeSelf)
+            if (playCamera.gameObject.activeSelf)
+            {
                 uiController.ShowUI();
+                itemWheel.SetActive(true);
+            }
         }
         else if (!pausePopUp.activeSelf && !settingPopUp.activeSelf) // 둘 다 비활성화
         {
@@ -60,9 +63,12 @@ public class Setting : MonoBehaviour
             settingPopUp.SetActive(false);
             Time.timeScale = 1f;
             OnPausePopupFalse?.Invoke();
-            
+
             if (playCamera.gameObject.activeSelf)
+            {
+                itemWheel.SetActive(true);
                 uiController.ShowUI();
+            }
         }
     }
 
@@ -71,7 +77,11 @@ public class Setting : MonoBehaviour
         SoundManager.Instance.PlaySFX("Click");
         cursor.CursorOff();
         pausePopUp.SetActive(false);
-        uiController.ShowUI();
+        if (playCamera.gameObject.activeSelf)
+        {
+            itemWheel.SetActive(true);
+            uiController.ShowUI();
+        }
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
     }
@@ -97,7 +107,12 @@ public class Setting : MonoBehaviour
         settingPopUp.SetActive(false);
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
-        uiController.ShowUI();
+
+        if (playCamera.gameObject.activeSelf)
+        {
+            itemWheel.SetActive(true);
+            uiController.ShowUI();
+        }
     }
     
 }

@@ -42,6 +42,9 @@ public class ResearchCenter : MonoBehaviour
     public QuestSubtitle secondQuest; // 위로 올라가자
     public QuestSubtitle thirdQuest;
 
+    [Header("아이템 휠")]
+    public GameObject itemWheel;
+
     private void Start()
     {
         StartCoroutine(StartResearchScene());
@@ -69,6 +72,7 @@ public class ResearchCenter : MonoBehaviour
 
         yield return new WaitForSeconds(6.5f);
 
+        itemWheel.SetActive(true);
         controllerUI.ShowUI();
         cameraController.SetPlayCamera();
         inputHandler.gameObject.SetActive(true);
@@ -96,6 +100,7 @@ public class ResearchCenter : MonoBehaviour
         subtitle.ShowSubtitle("카날리아 : 저기 있는 스위치를 이용하면 될 것 같은데?");
         questUI.ActivatePopUP("스위치 작동", "물총으로 스위치를 맞추자");
         switches.InitSwitch();
+        itemWheel.SetActive(true);
         controllerUI.ShowUI();
     }
 
@@ -111,6 +116,7 @@ public class ResearchCenter : MonoBehaviour
 
     public void ClearStage()
     {
+        itemWheel.SetActive(true);
         controllerUI.ShowUI();
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
