@@ -8,7 +8,7 @@ public class BattleCatDamageData : GameData
 {
     string KEY_DAMAGE = "BATTLE_CAT_DAMAGE";
 
-    [Header("���� ������")]
+    [Header("저장 데이터")]
     public float damage;
 
     public override void ProcessData(string tsv)
@@ -33,6 +33,6 @@ public class BattleCatDamageData : GameData
     public override void LoadDataFromPrefs()
     {
         if(PlayerPrefs.HasKey(key + KEY_DAMAGE))
-            damage = PlayerPrefs.GetInt(key + KEY_DAMAGE);
+            damage = PlayerPrefs.GetFloat(key + KEY_DAMAGE);
     }
 }

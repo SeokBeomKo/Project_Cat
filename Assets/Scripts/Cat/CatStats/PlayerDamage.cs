@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerDamage : MonoBehaviour
 {
-    [Header("µ•¿Ã≈Õ")]
+    [Header("Îç∞Ïù¥ÌÑ∞")]
     public BattleCatDamageData data;
 
     private float damage;
 
     private void Awake()
     {
+        data.LoadDataFromPrefs();
+        
         damage = data.damage;
     }
 

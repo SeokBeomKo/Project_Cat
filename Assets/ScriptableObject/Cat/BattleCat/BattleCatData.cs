@@ -9,7 +9,7 @@ public class BattleCatData : GameData
     string KEY_WAVE_TIME = "BATTLE_CAT_WAVE_TIME";
     string KEY_MOVE_SPEED = "BATTLE_CAT_MOVE_SPEED";
 
-    [Header("���� ������")]
+    [Header("저장 데이터")]
     public float attackResumptionTime;
     public float waveAttackTime;
     public float movementSpeed;
@@ -40,13 +40,13 @@ public class BattleCatData : GameData
     public override void LoadDataFromPrefs()
     {
         if(PlayerPrefs.HasKey(key + KEY_RESUMPTION_TIME))
-            attackResumptionTime = PlayerPrefs.GetInt(key + KEY_RESUMPTION_TIME);
+            attackResumptionTime = PlayerPrefs.GetFloat(key + KEY_RESUMPTION_TIME);
 
         if(PlayerPrefs.HasKey(key + KEY_WAVE_TIME))
-            waveAttackTime = PlayerPrefs.GetInt(key + KEY_WAVE_TIME);
+            waveAttackTime = PlayerPrefs.GetFloat(key + KEY_WAVE_TIME);
         
         if(PlayerPrefs.HasKey(key + KEY_MOVE_SPEED))
-            movementSpeed = PlayerPrefs.GetInt(key + KEY_MOVE_SPEED);
+            movementSpeed = PlayerPrefs.GetFloat(key + KEY_MOVE_SPEED);
     }
 }
 

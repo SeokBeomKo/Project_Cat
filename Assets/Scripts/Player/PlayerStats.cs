@@ -55,6 +55,8 @@ public class PlayerStats : MonoBehaviour, ISubject
 
     void Awake()
     {
+        data.LoadDataFromPrefs();
+        
         maxHealth = data.maxHealth;
         moveSpeed = data.moveSpeed;
         rollSpeed = data.rollSpeed;

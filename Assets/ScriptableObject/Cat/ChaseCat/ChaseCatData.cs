@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChaseCatData : GameData
 {
     string KEY_MOVE_SPEED = "CHASE_CAT_MOVE_SPEED";
-    [Header("���� ������")]
+    [Header("저장 데이터")]
     public float moveSpeed;
 
     public override void ProcessData(string tsv)
@@ -31,7 +31,7 @@ public class ChaseCatData : GameData
     public override void LoadDataFromPrefs()
     {
         if(PlayerPrefs.HasKey(key + KEY_MOVE_SPEED))
-            moveSpeed = PlayerPrefs.GetInt(key + KEY_MOVE_SPEED);
+            moveSpeed = PlayerPrefs.GetFloat(key + KEY_MOVE_SPEED);
     }
 }
 

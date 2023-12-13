@@ -41,6 +41,8 @@ public abstract class Weapon : MonoBehaviour, IWeapon
 
     private void Awake() 
     {
+        data.LoadDataFromPrefs();
+        
         // 데이터 불러오기
         maxBullet = data.maxBullet;
         minDamage = data.minDamage;

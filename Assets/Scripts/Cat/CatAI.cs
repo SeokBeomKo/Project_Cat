@@ -7,22 +7,22 @@ namespace BehaviorTree
 {
     public class CatAI : MonoBehaviour
     {
-        [Header("���������̹���")]
+        [Header("암전공격이미지")]
         public Image canvasImage;
 
-        [Header("�����������ڽ�")]
+        [Header("근접데미지박스")]
         public GameObject meleeDamageBox;
 
-        [Header("�����������ڽ�")]
+        [Header("돌진데미지박스")]
         public GameObject chargeDamageBox;
 
-        [Header("�ĵ��ݶ��̴�")]
+        [Header("파동콜라이더")]
         public GameObject waveCollider;
 
-        [Header("������������Ʈ")]
+        [Header("근접공격이펙트")]
         public ParticleSystem meleeParticle;
 
-        [Header("������")]
+        [Header("데이터")]
         public BattleCatData data;
 
         private bool playerInMeleeRange = false;

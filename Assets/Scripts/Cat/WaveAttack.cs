@@ -6,7 +6,7 @@ namespace SpecialAttack
 {
     public class WaveAttack : MonoBehaviour
     {
-        [Header("µ•¿Ã≈Õ")]
+        [Header("Îç∞Ïù¥ÌÑ∞")]
         public BattleCatWaveData data;
 
         private float timer = 0f;
@@ -18,6 +18,11 @@ namespace SpecialAttack
         private float size = 0f;
 
         private Animator animator = null;
+
+        void Awake()
+        {
+            data.LoadDataFromPrefs();
+        }
 
         private void Start()
         {

@@ -32,10 +32,10 @@ public class PlayerData : GameData
                 rollSpeed  = float.Parse(column[2]);
                 jumpForce  = float.Parse(column[3]);
 
-                PlayerPrefs.SetInt(key + KEY_MAX_HEALTH, maxHealth);
-                PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, moveSpeed);
-                PlayerPrefs.SetFloat(key + KEY_ROLL_SPEED, rollSpeed);
-                PlayerPrefs.SetFloat(key + KEY_JUMP_FORCE, jumpForce);
+                PlayerPrefs.SetInt(key + KEY_MAX_HEALTH, (int)maxHealth);
+                PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, (float)moveSpeed);
+                PlayerPrefs.SetFloat(key + KEY_ROLL_SPEED, (float)rollSpeed);
+                PlayerPrefs.SetFloat(key + KEY_JUMP_FORCE, (float)jumpForce);
             }
         }
         isLoaded = true;
@@ -47,10 +47,10 @@ public class PlayerData : GameData
             maxHealth = PlayerPrefs.GetInt(key + KEY_MAX_HEALTH);
 
         if(PlayerPrefs.HasKey(key + KEY_MOVE_SPEED))
-            moveSpeed = PlayerPrefs.GetInt(key + KEY_MOVE_SPEED);
+            moveSpeed = PlayerPrefs.GetFloat(key + KEY_MOVE_SPEED);
         
         if(PlayerPrefs.HasKey(key + KEY_ROLL_SPEED))
-            rollSpeed = PlayerPrefs.GetInt(key + KEY_ROLL_SPEED);
+            rollSpeed = PlayerPrefs.GetFloat(key + KEY_ROLL_SPEED);
 
         if(PlayerPrefs.HasKey(key + KEY_JUMP_FORCE))
             jumpForce = PlayerPrefs.GetFloat(key + KEY_JUMP_FORCE);
