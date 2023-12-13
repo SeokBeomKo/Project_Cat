@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class FlyingObject : MonoBehaviour, IAttackable
 {
-    public ChaseCenter chaseCenter;
-
     private Vector3 startPos, endPos;
     //땅에 닫기까지 걸리는 시간
     protected float timer;
@@ -14,12 +12,15 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
     private bool isCollision = false;
 
-    public float height = 1;
-    private float moveSpeed = 0.1f; // 이동 속도
+    public float height = 2;
+    private float moveSpeed = 1f; // 이동 속도
     public Vector3 rotationAxis = Vector3.left; // 회전 축
 
     Vector3 Direction;
     Quaternion targetRotation;
+
+    public delegate void FlyingObjectHandle();
+    public FlyingObjectHandle onFly;
 
     private void Start()
     {
@@ -47,7 +48,7 @@ public class FlyingObject : MonoBehaviour, IAttackable
         if (otherTag.Contains("Parts"))
         {
             isCollision = true;
-            endPos = chaseCenter.PlayerPosition();
+            onFly?.Invoke();
         }
     }
 
@@ -81,7 +82,7 @@ public class FlyingObject : MonoBehaviour, IAttackable
         {
             transform.parent.rotation = Quaternion.Euler(Time.time * 90, 0, 0);
 
-            timer += Time.deltaTime * moveSpeed;
+            timer += Time.deltaTime * moveSpeed * 0.1f;
             Vector3 tempPos = Parabola(startPos, endPos, height, timer);
             transform.parent.position = tempPos;
 
@@ -97,5 +98,11 @@ public class FlyingObject : MonoBehaviour, IAttackable
     public float GetDamage()
     {
         return 5;
+    }
+
+
+    public void SetEndPos(Vector3 pos)
+    {
+        endPos = pos;
     }
 }

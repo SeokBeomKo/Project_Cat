@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class ChaseCenter : MonoBehaviour
 {
     public GameObject Player;
-    
+
     [Header("카메라 회전")]
     [SerializeField] public CameraRotate camRotate;
 
@@ -37,10 +38,14 @@ public class ChaseCenter : MonoBehaviour
 
     [SerializeField] public ChaseCameraController cameraController;
 
+    [SerializeField] public FlyingObject[] flyObject;
+    [SerializeField] public GameObject Object;
+
     public HairBallUse hairBallUse;
 
     private void Start()
     {
+        flyObject = Object.GetComponentsInChildren<FlyingObject>();
         mazeEnter.OnMazeEnter += OnMaze;
 
         cat.OnCutSceneStart += onCat;
@@ -60,6 +65,15 @@ public class ChaseCenter : MonoBehaviour
 
         camController.SetPlayCamera();
         camRotate.gameObject.SetActive(true);
+    
+        if (flyObject != null)
+        { 
+            for (int i = 0; i < flyObject.Length; i++)
+            {
+                int index = i;
+                flyObject[index].onFly += () => onFly(index);
+            }
+        }
 
     }
 
@@ -120,6 +134,11 @@ public class ChaseCenter : MonoBehaviour
     public void onMove()
     {
         robot.PlayerPos = PlayerPosition();
+    }
+
+    public void onFly(int index)
+    {
+        flyObject[index].SetEndPos(PlayerPosition());
     }
 
     public Vector3 PlayerPosition()
