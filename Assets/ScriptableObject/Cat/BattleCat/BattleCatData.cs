@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/BattleCat/CatAttackTime")]
 public class BattleCatData : GameData
 {
-    [Header("ÀúÀå µ¥ÀÌÅÍ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public float attackResumptionTime;
     public float waveAttackTime;
     public float movementSpeed;
@@ -26,6 +26,7 @@ public class BattleCatData : GameData
                 movementSpeed = float.Parse(column[2]);
             }
         }
+        isLoaded = true;
     }
 }
 

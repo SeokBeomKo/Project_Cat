@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/BattleCat/CatWave")]
 public class BattleCatWaveData : GameData
 {
-    [Header("ÀúÀå µ¥ÀÌÅÍ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public float minAttackSize;
     public float maxAttackSize;
     public float growthSpeed;
@@ -25,5 +25,7 @@ public class BattleCatWaveData : GameData
                 growthSpeed = float.Parse(column[2]);
             }
         }
+        isLoaded = true;
     }
+    
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BattleCatDamageData : GameData
 {
-    [Header("ÀúÀå µ¥ÀÌÅÍ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public float damage;
 
     public override void ProcessData(string tsv)
@@ -23,5 +23,6 @@ public class BattleCatDamageData : GameData
                 damage = float.Parse(column[0]);
             }
         }
+        isLoaded = true;
     }
 }

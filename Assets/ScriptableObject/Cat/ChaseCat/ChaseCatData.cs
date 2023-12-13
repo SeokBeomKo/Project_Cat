@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/ChaseCat")]
 public class ChaseCatData : GameData
 {
-    [Header("ÀúÀå µ¥ÀÌÅÍ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public float moveSpeed;
 
     public override void ProcessData(string tsv)
@@ -22,6 +22,7 @@ public class ChaseCatData : GameData
                 moveSpeed = float.Parse(column[0]);
             }
         }
+        isLoaded = true;
     }
 }
 

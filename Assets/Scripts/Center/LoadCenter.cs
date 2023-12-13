@@ -17,5 +17,7 @@ public class LoadCenter : MonoBehaviour
 
     public void ChangeScene()
     {
+        startScene.loadEnd = true;
+        startScene.ChangeScene();
     }
 }
