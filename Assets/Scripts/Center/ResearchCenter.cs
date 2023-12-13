@@ -94,7 +94,7 @@ public class ResearchCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
         subtitle.ShowSubtitle("카날리아 : 저기 있는 스위치를 이용하면 될 것 같은데?");
-        questUI.ActivatePopUP("물총으로 스위치를 맞추자");
+        questUI.ActivatePopUP("스위치 작동", "물총으로 스위치를 맞추자");
         switches.InitSwitch();
         controllerUI.ShowUI();
     }
@@ -115,19 +115,19 @@ public class ResearchCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
         subtitle.ShowSubtitle("카날리아 : CCTV에 나온 로키의 위치로 가보자!", delayTime: 0.5f);
-        questUI.ActivatePopUP("다음 맵으로 이동하십시오");
+        questUI.ActivatePopUP("이동하기", "다음 맵으로 이동하십시오");
         endPoint.SetActive(true);
     }
 
     public void RemovalVirus()
     {
-        questUI.ActivatePopUP("길을 막는 바이러스를 제거하자");
+        questUI.ActivatePopUP("바이러스 처치", "길을 막는 바이러스를 제거하자");
     }
 
     public void GoUp()
     {
         questUI.DeactivatePopUp();
-        questUI.ActivatePopUP("박스를 타고 탁자 위로 올라가보자");
+        questUI.ActivatePopUP("올라가기", "박스를 타고 탁자 위로 올라가보자");
     }
 
     public void UpTable()
