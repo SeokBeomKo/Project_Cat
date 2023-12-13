@@ -21,6 +21,12 @@ public class DataReceiver : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Get(URL);
         yield return www.SendWebRequest();
 
+        if (www.result != UnityWebRequest.Result.Success) // 요청이 실패한 경우
+        {
+            Debug.LogError("Failed to receive data: " + www.error);
+            yield break;
+        }
+        
         string data = www.downloadHandler.text;
         callback?.Invoke(data); // 콜백 실행하여 데이터 전달
     }

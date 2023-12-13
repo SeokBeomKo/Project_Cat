@@ -26,7 +26,6 @@ public class DataLoader : MonoBehaviour
 
         yield return new WaitUntil(() => AllDataLoaded());
 
-        Debug.Log("All data loaded.");
         OnDataLoad?.Invoke();
     }
 

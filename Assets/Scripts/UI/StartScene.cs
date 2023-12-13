@@ -8,19 +8,30 @@ public class StartScene : MonoBehaviour
 {
     public VideoPlayer video;
     public string sceneName;
+
+    public bool videoEnd, loadEnd;
     void Start()
     {
+        videoEnd = loadEnd = false;
+
         video.loopPointReached += OnVideoEnd;
     }
 
     void OnVideoEnd(VideoPlayer video)
     {
-        StartCoroutine(Coroutine());
+        videoEnd = true;
+        ChangeScene();
     }
 
     IEnumerator Coroutine()
     {
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void ChangeScene()
+    {
+        if (videoEnd && loadEnd)
+            SceneManager.LoadScene(sceneName);
     }
 }
