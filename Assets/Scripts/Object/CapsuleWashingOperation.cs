@@ -7,9 +7,18 @@ public class CapsuleWashingOperation : MonoBehaviour
     [Header("아이템 리스트")]
     public List<ItemWithProbability> itemsToSpawn;
 
-    public float HP = 5;
+    [Header("데이터")]
+    public HPData data;
+    private float HP;
 
     public ObjectHPbar objectHPbar;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        HP = data.hp;
+    }
 
     void Start()
     {
