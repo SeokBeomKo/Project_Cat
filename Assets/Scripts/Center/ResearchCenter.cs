@@ -47,6 +47,8 @@ public class ResearchCenter : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("Restart", 1);
+
         StartCoroutine(StartResearchScene());
         endPoint.SetActive(false);
         questUI.DeactivatePopUp();
