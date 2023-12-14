@@ -6,33 +6,33 @@ namespace SpecialAttack
 {
     public class WaveAttack : MonoBehaviour
     {
-        [Header("√÷º“ ∞¯∞› π¸¿ß ≈©±‚")]
-        public float minAttackSize = 1.5f;
+        [Header("Îç∞Ïù¥ÌÑ∞")]
+        public BattleCatWaveData data;
 
-        [Header("√÷¥Î ∞¯∞› π¸¿ß ≈©±‚")]
-        public float maxAttackSize = 3.5f;
-
-        [Header("√÷º“ æ»¿¸ π¸¿ß ≈©±‚")]
-        public float minSafeSize = 1f;
-
-        [Header("√÷¥Î æ»¿¸ π¸¿ß ≈©±‚")]
-        public float maxSafeSize = 3f;
-
-        [Header("≈©±‚ ¡ı∞° √÷¥Î Ω√∞£")]
-        public float maxTimer = 3.5f;
-
-        [Header("¡ı∞° º”µµ")]
-        public float growthSpeed = 1f;
-
-        private float safeSize = 1f;
-        private float attackSize = 1f;
         private float timer = 0f;
+        private float maxTimer = 3.5f;
+        private float growthSpeed = 1f;
+
+        private float minSize = 1f;
+        private float maxSize = 3f;
+        private float size = 0f;
 
         private Animator animator = null;
 
+        void Awake()
+        {
+            data.LoadDataFromPrefs();
+        }
+
         private void Start()
         {
+            minSize = data.minAttackSize;
+            maxSize = data.maxAttackSize;
+            growthSpeed = data.growthSpeed;
+
             animator = transform.parent.GetComponent<Animator>();
+
+            maxTimer = (maxSize - minSize) / growthSpeed;
         }
 
         private void OnEnable()
@@ -49,11 +49,9 @@ namespace SpecialAttack
 
         private void SetInitialSize()
         {
-            transform.Find("SafeBox").localScale = new Vector3(minSafeSize, transform.Find("SafeBox").localScale.y, minSafeSize);
-            transform.Find("HitBox").localScale = new Vector3(minAttackSize, transform.Find("HitBox").localScale.y, minAttackSize);
+            transform.localScale = new Vector3(1, transform.localScale.y, 1);
 
-            safeSize = minSafeSize;
-            attackSize = minAttackSize;
+            size = minSize;
             timer = 0f;
         }
 
@@ -61,11 +59,8 @@ namespace SpecialAttack
         {
             if (timer <= maxTimer)
             {
-                safeSize = Mathf.Lerp(safeSize, maxSafeSize, Time.deltaTime * growthSpeed);
-                transform.Find("SafeBox").localScale = new Vector3(safeSize, transform.Find("SafeBox").localScale.y, safeSize);
-
-                attackSize = Mathf.Lerp(attackSize, maxAttackSize, Time.deltaTime * growthSpeed);
-                transform.Find("HitBox").localScale = new Vector3(attackSize, transform.Find("HitBox").localScale.y, attackSize);
+                size = Mathf.Lerp(size, maxSize, Time.deltaTime * growthSpeed);
+                transform.localScale = new Vector3(size, transform.localScale.y, size);
             }
             else
             {

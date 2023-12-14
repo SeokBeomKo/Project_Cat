@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BubbleProjectile : MonoBehaviour, IAttackable, IProjectile
@@ -25,7 +22,7 @@ public class BubbleProjectile : MonoBehaviour, IAttackable, IProjectile
 
     private float damage;
 
-
+    private float time;
 
 
     public void SetDamage(float _damage)
@@ -46,22 +43,24 @@ public class BubbleProjectile : MonoBehaviour, IAttackable, IProjectile
     public void SetDirection(Vector3 direction)
     {
         directionPosition = direction;
-        rigidBody.AddForce(Vector3.up * 200f, ForceMode.Force);
+        targetDirection = (directionPosition - transform.position).normalized;
+        // rigidBody.AddForce(Vector3.up * 200f, ForceMode.Force);
     }
     
     private void FixedUpdate() 
     {
-        targetDirection = (directionPosition - transform.position).normalized;
-
         UseGravity();
         SpeedContoll();
     }
 
     public void UseGravity()
     {
-        if (transform.position.y < directionPosition.y) return;
+        time += Time.deltaTime * 7.5f;
 
-        rigidBody.AddForce(Vector3.down * 0.25f, ForceMode.Force);
+        float yForce = Mathf.Sin(time) * 2f;
+        rigidBody.AddForce(new Vector3(0, yForce, 0), ForceMode.Force);
+
+        //rigidBody.AddForce(Vector3.down * Mathf.Sin(Time.deltaTime) * 10f, ForceMode.Force);
     }
 
     public void SpeedContoll()

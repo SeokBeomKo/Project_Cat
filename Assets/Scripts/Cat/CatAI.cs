@@ -7,30 +7,23 @@ namespace BehaviorTree
 {
     public class CatAI : MonoBehaviour
     {
-        [Header("¾ÏÀü°ø°İÀÌ¹ÌÁö")]
+        [Header("ì•”ì „ê³µê²©ì´ë¯¸ì§€")]
         public Image canvasImage;
 
-        [Header("±ÙÁ¢µ¥¹ÌÁö¹Ú½º")]
+        [Header("ê·¼ì ‘ë°ë¯¸ì§€ë°•ìŠ¤")]
         public GameObject meleeDamageBox;
 
-        [Header("µ¹Áøµ¥¹ÌÁö¹Ú½º")]
+        [Header("ëŒì§„ë°ë¯¸ì§€ë°•ìŠ¤")]
         public GameObject chargeDamageBox;
 
-        [Header("ÆÄµ¿Äİ¶óÀÌ´õ")]
+        [Header("íŒŒë™ì½œë¼ì´ë”")]
         public GameObject waveCollider;
 
-        [Header("°ø°İ Àç°³ ½Ã°£")]
-        public float attackResumptionTime = 2f;
-
-        [Header("ÆÄµ¿ °ø°İ Ãâ·Â ½Ã°£")]
-        public float waveAttackTime = 15f;
-
-        [Header("±ÙÁ¢°ø°İÀÌÆåÆ®")]
+        [Header("ê·¼ì ‘ê³µê²©ì´í™íŠ¸")]
         public ParticleSystem meleeParticle;
 
-        [Header("¼Óµµ")]
-        [SerializeField]
-        private float movementSpeed = 10.0f;
+        [Header("ë°ì´í„°")]
+        public BattleCatData data;
 
         private bool playerInMeleeRange = false;
         private bool chargeAttackTime = false;
@@ -40,6 +33,9 @@ namespace BehaviorTree
         private float randomNumber = 0f;
         private float attackEndTimer = 0f;
         private float timer = 0f;
+        private float attackResumptionTime = 2f;
+        private float movementSpeed = 10.0f;
+        private float waveAttackTime = 15f;
 
         private Tree tree = null;
         private Animator animator = null;
@@ -49,6 +45,12 @@ namespace BehaviorTree
 
         private void Awake()
         {
+            data.LoadDataFromPrefs();
+            
+            attackResumptionTime = data.attackResumptionTime;
+            waveAttackTime = data.waveAttackTime;
+            movementSpeed = data.movementSpeed;
+
             tree = new Tree(SetTree());
             animator = transform.parent.GetComponent<Animator>();
 
@@ -105,7 +107,8 @@ namespace BehaviorTree
                 new List<Node>()
                 {
                     new ActionNode(CheckWaveAttackTime),
-                    new ActionNode(DoWaveAttack)
+                    new ActionNode(DoWaveAttack),
+                    new ActionNode(WaitForWaveAttackCompletion)
                 });
 
             var triggerAttack = new Sequence(
@@ -214,7 +217,8 @@ namespace BehaviorTree
                 isAttacking = true;
                 isAttackComplete = false;
 
-                Debug.Log("µ¹Áø °ø°İ");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+                timer = 0f;
 
                 return Node.NodeState.SUCCESS;
             }
@@ -253,12 +257,13 @@ namespace BehaviorTree
             randomNumber = Random.Range(0f, 1.0f);
             if (playerTransform != null && randomNumber > 0.3f)
             {
-                Debug.Log("±ÙÁ¢ ±âº» °ø°İ");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½");
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
                 isAttackComplete = false;
                 chargeAttackTime = true;
+                timer = 0f;
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
@@ -268,13 +273,14 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                Debug.Log("±ÙÁ¢ ¾ÏÀü °ø°İ");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
                 isAttackComplete = false;
                 chargeAttackTime = true;
                 canvasImage.enabled = true;
+                timer = 0f;
                 StartCoroutine(FadeOutOverTime(5.0f));
 
                 return Node.NodeState.SUCCESS;
@@ -325,7 +331,7 @@ namespace BehaviorTree
                 isAttackComplete = false;
                 StartCoroutine(PerformWaveAttack());
                 timer = 0f;
-                Debug.Log("Æ¯¼ö ÆÄµ¿ °ø°İ");
+                Debug.Log("Æ¯ï¿½ï¿½ ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½");
                 return Node.NodeState.SUCCESS;
             }
 
@@ -394,6 +400,16 @@ namespace BehaviorTree
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
+        }
+
+        Node.NodeState WaitForWaveAttackCompletion()
+        {
+            if (!isAttacking)
+            {
+                waveCollider.SetActive(false); // ï¿½Äµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½İ¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+                return Node.NodeState.SUCCESS;
+            }
+            return Node.NodeState.RUNNING;
         }
 
         private void OnTriggerEnter(Collider other)

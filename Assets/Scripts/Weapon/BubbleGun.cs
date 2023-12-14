@@ -13,10 +13,6 @@ public class BubbleGun : Weapon
     [Header("진행 목표")]
     private Vector3 shootTarget;
 
-    [Header("발사 딜레이")]
-    public float shootDelay;
-    private float lastShootTime;
-
     // : 마우스 클릭 시
     public override void EnterShoot()
     {
@@ -41,6 +37,11 @@ public class BubbleGun : Weapon
     {
     }
 
+    public override void InitShoot()
+    {
+        
+    }
+
     public override void SetTarget(Vector3 target)
     {
         shootTarget = target;
@@ -52,12 +53,12 @@ public class BubbleGun : Weapon
         if (curBullet < useBullet) return;
         UseBullet();
 
-        randomScale = Random.Range(0.2f,0.7f);
+        randomScale = Random.Range(0.3f,0.5f);
         // 비눗방울을 발사합니다.
         GameObject bullet = Instantiate(projectilePrefab, shootPosition.position, Quaternion.identity);
         SoundManager.Instance.PlaySFX("ShootBubbleGun");
         bullet.transform.localScale = new Vector3(randomScale,randomScale,randomScale);
         bullet.GetComponentInChildren<BubbleProjectile>().SetDirection(shootTarget);
-        bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);
+        bullet.GetComponentInChildren<IProjectile>().SetDamage(GetDamage());
     }
 }

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour, ISubject
 {
+    [Header("데이터")]
+    public PlayerData data;
     public List<IObserver> hpObserverList = new List<IObserver>();
     public List<IObserver> rollObserverList = new List<IObserver>();
 
 
     [Header("체력")]
     [SerializeField]    
-    private int maxHealth = 100;
+    private int maxHealth;
     private int _currentHealth;
 
     public int currentHealth 
@@ -44,12 +46,22 @@ public class PlayerStats : MonoBehaviour, ISubject
     private int maxDouble;
     public int currentDouble;
 
-    [Header("수치 값")]
+    [HideInInspector]
     public float moveSpeedOffset = 1f;
+    [Header("수치 값")]
     public float moveSpeed;
     public float rollSpeed;
     public float jumpForce;
 
+    void Awake()
+    {
+        data.LoadDataFromPrefs();
+        
+        maxHealth = data.maxHealth;
+        moveSpeed = data.moveSpeed;
+        rollSpeed = data.rollSpeed;
+        jumpForce = data.jumpForce;
+    }
     private void Start() 
     {
         currentHealth   = maxHealth;

@@ -2,36 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitObserver : MonoBehaviour, IObserver, IAttackable
+public class HitObserver : MonoBehaviour, IObserver
 {
-    PlayerStats playerStats;
+    [Header("Îç∞Ïù¥ÌÑ∞")]
+    public BattleCatDamageData data;
 
+    private float damage = 5f;
     private bool safeCheck = false;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+        
+        damage = data.damage;
+    }
 
     public void Notify(ISubject subject)
     {
         var safeSubject = subject as SafeSubject;
         if (safeSubject != null)
         {
-            safeCheck = safeSubject.safeCheck;
+            safeCheck = safeSubject.currentSafeCheck;
+            Debug.Log("HitObserver: safeCheck updated to " + safeCheck);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && safeCheck == false)
+        if (other.CompareTag("Player") && !safeCheck)
         {
-            Debug.Log("∆ƒµø ∞¯∞›");
-            if (playerStats != null)
+            if (null != other.transform.GetComponentInChildren<PlayerHitScan>())
             {
-                playerStats.GetDamage(10);
-                GetDamage();
+                other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(damage);
+                Debug.Log("ÔøΩÔøΩÔøΩÔøΩ!!!! safeCheck - " + safeCheck);
             }
         }
-    }
-
-    public float GetDamage()
-    {
-        return 5;
     }
 }

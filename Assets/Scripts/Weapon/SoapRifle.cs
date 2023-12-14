@@ -15,11 +15,14 @@ public class SoapRifle : Weapon
     [Header("목표뮬")]
     private Vector3 shootTarget;
 
+    [Header("수치 값")]
     public float bulletSpeed = 20f;
     public float distance = 10f;
 
+    [Header("차지 정보")]
     public int maxChargeLvel = 3;
     public int curChargeLevel = 0;
+    private float chargeTime = 0;
 
     public override void EnterShoot()
     {
@@ -27,10 +30,11 @@ public class SoapRifle : Weapon
         chargePrefab.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
     }
 
-    private float chargeTime = 0;
+    
     public override void ExcuteShoot()
     {
-        chargePrefab.SetActive(true);
+        if (curBullet >= useBullet)
+            chargePrefab.SetActive(true);
         chargeTime += Time.deltaTime;
         if (chargeTime >= 1)
         {
@@ -45,6 +49,11 @@ public class SoapRifle : Weapon
         Shoot();
 
         useBullet = 1;
+    }
+
+    public override void InitShoot()
+    {
+        chargePrefab.SetActive(false);
     }
 
     public override void SetTarget(Vector3 direction)
@@ -62,7 +71,7 @@ public class SoapRifle : Weapon
         SoundManager.Instance.PlaySFX("ShootSoapRifle");
         bullet.transform.position = shootPosition.position;
         SoapProjectile projectile = bullet.GetComponent<SoapProjectile>();
-        projectile.SetDamage(damage * damageOffset);
+        projectile.SetDamage(GetDamage());
         projectile.ShootBeamInDir(shootPosition.position, shootTarget, curChargeLevel);
         
     }

@@ -38,16 +38,12 @@ public class PartsSubject : MonoBehaviour, ISubject, IDamageable
     public void BeAttacked(float playerDamage)
     {
         currentDamage = playerDamage;
-        currentParts = PartsEnums.FOREPAWLEFT;
-
-        NotifyObservers(observers);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
         {
-            currentDamage = other.gameObject.GetComponentInChildren<IAttackable>().GetDamage();
             switch (gameObject.tag)
             {
                 case "Parts1":
@@ -85,7 +81,6 @@ public class PartsSubject : MonoBehaviour, ISubject, IDamageable
                 default:
                     break;
             }
-
             NotifyObservers(observers);
 
             StartCoroutine(DisableCollisionForSeconds(1.0f));

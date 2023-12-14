@@ -16,12 +16,6 @@ public class SplashBuster : Weapon
     [Header("목표뮬")]
     private Vector3 shootTarget;
 
-    [Header("발사 딜레이")]
-    public float shootDelay;
-    private float lastShootTime;
-
-    private bool isShooting = false;
-
     // : 마우스 클릭 시
     public override void EnterShoot()
     {
@@ -45,7 +39,12 @@ public class SplashBuster : Weapon
     // : 마우스 클릭 뗌
     public override void ExitShoot()
     {
-        isShooting = false;
+
+    }
+
+    public override void InitShoot()
+    {
+        
     }
 
     public override void SetTarget(Vector3 target)
@@ -80,7 +79,7 @@ public class SplashBuster : Weapon
             SoundManager.Instance.PlaySFX("ShootSplashBuster");
             bullet.transform.LookAt(fireDirection);
             bullet.GetComponentInChildren<SplashProjectile>().SetDirection(fireDirection);
-            bullet.GetComponentInChildren<IProjectile>().SetDamage(damage * damageOffset);
+            bullet.GetComponentInChildren<IProjectile>().SetDamage(GetDamage());
         }
     }
 

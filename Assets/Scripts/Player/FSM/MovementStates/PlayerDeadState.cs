@@ -27,7 +27,7 @@ public class PlayerDeadState : IPlayerState
     public void OnStateEnter()
     {
         ClearAimSetting();
-        
+        Dead();
         player.rigid.constraints = RigidbodyConstraints.FreezeAll;
         player.animator.SetTrigger("onDead");
     }
@@ -37,8 +37,15 @@ public class PlayerDeadState : IPlayerState
         
     }
 
+    public void Dead()
+    {
+        player.cameraRotate.SetActive(false);
+        player.playerHitScan.gameObject.SetActive(false);
+    }
+
     public void ClearAimSetting()
     {
+        player.shotstateMachine.ChangeState(PlayerShotStateEnums.NOTHING);
         player.animator.SetLayerWeight(player.animator.GetLayerIndex("PlayerUpper"), 0);
         player.cameraController.SetPlayCamera();
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallNavigateOperation : MonoBehaviour, IDamageable
+public class BallNavigateOperation : MonoBehaviour, IDamageable, IInteractable
 {
     // TODO : 옵저버 패턴 .
     public float HP = 30;
@@ -11,44 +11,33 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable
     public GameObject effect;
     private bool isChange = false;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    public Rigidbody rigidBody;
+
     void Start()
     {
         objectHPbar.SetHP(HP);
         objectHPbar.CheckHP();
     }
 
-    private void Update()
-    {
-        //Debug.Log("Update");
-    }
-
-        
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("collision " + collision.gameObject.layer);
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && !isChange)
-        {
-            
-            Debug.Log(collision.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
-            Hit(collision.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger " + other.gameObject.layer);
-
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            Vector3 direction = (this.transform.position - other.transform.position).normalized;
-            this.GetComponent<Rigidbody>().AddForce(direction * 10, ForceMode.Impulse);
-            Debug.Log(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
-            Hit(other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
+            Interaction(other.transform.position, other.gameObject.GetComponentInChildren<IAttackable>().GetDamage());
         }
     }
+
+    public void Interaction(Vector3 interPos, float damage = 5f)
+    {
+        if (!isChange)
+        {
+            Hit(damage);
+        }
+        Vector3 direction = (transform.position - interPos).normalized;
+        rigidBody.AddForce(direction * 10, ForceMode.Impulse);
+    }
+
     private void Hit(float damage)
     {
         objectHPbar.Damage(damage);
@@ -63,7 +52,7 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable
             hpBar.SetActive(false);
             effect.SetActive(true);
             transform.gameObject.tag = "Ball";
-            transform.parent.gameObject.tag = "Ball";
+            //transform.parent.gameObject.tag = "Ball";
             isChange = true;
         }
     }
@@ -72,4 +61,6 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable
     {
         Hit(damage);
     }
+
+    
 }

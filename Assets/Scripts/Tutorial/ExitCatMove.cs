@@ -10,7 +10,12 @@ public class ExitCatMove : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            OnExitCat?.Invoke();
+            Invoke("ExitCat", 0.5f);
         }
+    }
+
+    void ExitCat()
+    {
+        OnExitCat?.Invoke();
     }
 }

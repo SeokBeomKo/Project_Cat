@@ -5,7 +5,7 @@ using UnityEngine;
 public class HUDCenter : MonoBehaviour
 {
     [Header("일시정지")]
-    [SerializeField] public PausePopUp pausePopUp;
+    [SerializeField] public Setting setting;
 
     [Header("정지 오브젝트")]
     [SerializeField] public GameObject cameraRotate;
@@ -28,20 +28,31 @@ public class HUDCenter : MonoBehaviour
 
     [SerializeField] public WeaponSelection weaponSelection;
 
-    private void Start() 
+
+    void Awake()
     {
         playerStats.AddObserver<IObserver>(playerStats.hpObserverList,hpObserver);
         playerStats.AddObserver<IObserver>(playerStats.rollObserverList,rollObserver);
 
-        pausePopUp.OnPausePopupTrue += PauseTrue;
-        pausePopUp.OnPausePopupFalse += PauseFalse;
+        setting.OnPausePopupTrue += PauseTrue;
+        setting.OnPausePopupFalse += PauseFalse;
 
         soapRifle.OnWeaponBullet += UpdateBullet;
         splashBuster.OnWeaponBullet += UpdateBullet;
         bubbleGun.OnWeaponBullet += UpdateBullet;
-        UpdateBullet();
 
         weaponStrategy.OnSwapWeapon += UpdateWeapon;
+    }
+
+    private void Start() 
+    {
+        InitBullet();
+        UpdateBullet();
+    }
+
+    public void InitBullet()
+    {
+        weaponSelection.SetMaxBullet(soapRifle.maxBullet, splashBuster.maxBullet, bubbleGun.maxBullet);
     }
 
     public void UpdateWeapon(int number)
