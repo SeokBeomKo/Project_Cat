@@ -126,12 +126,10 @@ public class ChaseCat : MonoBehaviour
         {
             if (currentWaypointIndex < waypoints.Length && CutSceneStartPoint == waypoints[currentWaypointIndex])
             {
-                Debug.Log("��ŸƮ �ƾ� �̺�Ʈ ȣ��");
                 OnCutSceneStart?.Invoke();
             }
             else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
             {
-                Debug.Log("���� �ƾ� �̺�Ʈ ȣ��");
                 OnCutSceneEnd?.Invoke();
             }
         }
