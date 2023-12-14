@@ -45,7 +45,6 @@ public class VirusProjectile : MonoBehaviour, IAttackable
     private void FixedUpdate()
     {
         // 실제 이동
-        Debug.Log("Attack : " + directionPosition);
         rigidBody.velocity = directionPosition * speed;
     }
 

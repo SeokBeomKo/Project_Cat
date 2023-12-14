@@ -181,7 +181,7 @@ public class ChaseCenter : MonoBehaviour
     }
     public void onMove()
     {
-        robot.PlayerPos = PlayerPosition();
+        robot.SetEndPos(PlayerPosition());
     }
 
     public void onRobotAttack()
@@ -194,7 +194,7 @@ public class ChaseCenter : MonoBehaviour
 
     public void onShoot()
     {
-        robotAttack.targetPos = PlayerPosition();
+        robotAttack.SetEndPos(PlayerPosition());
     }
 
     public void onFly(int index)

@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 {
-    [Header("HP")]
-    public float HP = 5;
+    [Header("데이터")]
+    public VirusAttackData data;
+
     public ObjectHPbar objectHPbar;
- 
-    [Header("플레이어 감지 범위")]
-    public float radius = 0.1f;
-    
+
+    private float HP;
+    private float radius;
+    private float time;
+    private float damage;
+
+    private Vector3 playerPosition;
+
     [Header("유한 상태 기계")]
     [SerializeField] public VirusStateMachine virusMachine;
 
@@ -18,11 +23,22 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
     public GameObject model;
     public GameObject explosionVFX;
 
-    public Vector3 PlayerPosition;
     public GameObject ProjectilePrefab;
 
     public delegate void VirusRespawnHandle();
     public event VirusRespawnHandle OnRespawnTimerStart;
+
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        HP = data.hp;
+        radius = data.range;
+        time = data.tiime;
+        damage = data.damage;
+
+    }
 
     void OnDrawGizmosSelected()
     {
@@ -41,7 +57,6 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     void Start()
     {
-        HP = 5;
         objectHPbar.SetHP(HP);
         objectHPbar.CheckHP();
     }
@@ -68,8 +83,7 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            //Debug.Log("Player HP--");
-            GetDamage();
+            collision.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(GetDamage());
         }
     }
 
@@ -86,6 +100,7 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
         if (HP <= 0)
         {
             model.SetActive(false);
+            objectHPbar.gameObject.GetComponentInParent<GameObject>().SetActive(false);
             explosionVFX.SetActive(true);
 
             StartCoroutine(DestroyAfterParticles());
@@ -114,6 +129,29 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     public float GetDamage()
     {
-        return 5;
+        return damage;
     }
+
+    public float GetRespawnTime()
+    {
+        return time;
+    }
+
+    public float GetRange()
+    {
+        return radius;
+    }
+
+    public Vector3 GetPlayPosition()
+    {
+
+        return playerPosition;
+    }
+
+    public void SetPlayerPosition(Vector3 pos)
+    {
+        playerPosition = pos;
+    }
+
+
 }

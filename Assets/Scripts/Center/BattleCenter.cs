@@ -22,6 +22,7 @@ public class BattleCenter : MonoBehaviour
             int index = i;
 
             virus[index].OnRespawnTimerStart += () => OnRespawnTimer(index);
+
         }
     }
 
@@ -37,4 +38,6 @@ public class BattleCenter : MonoBehaviour
         virus[index].transform.parent.gameObject.SetActive(true);
         virus[index].transform.gameObject.SetActive(true);
     }
+
+    
 }

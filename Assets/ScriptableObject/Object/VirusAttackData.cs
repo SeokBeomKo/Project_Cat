@@ -8,11 +8,14 @@ public class VirusAttackData : GameData
     string KEY_HP = "VIRUS_ATTACK_HP";
     string KEY_RANGE = "VIRUS_ATTACK_RANGE";
     string KEY_DAMAGE = "VIRUS_ATTACK_DAMAGE";
+    string KEY_TIME = "VIRUS_ATTACK_RESPAWN_TIME";
+
 
     [Header("저장 데이터")]
     public float hp;
     public float range;
     public float damage;
+    public float tiime;
 
     public override void ProcessData(string tsv)
     {
@@ -28,6 +31,8 @@ public class VirusAttackData : GameData
                 hp = int.Parse(column[0]);
                 range = int.Parse(column[1]);
                 damage = int.Parse(column[2]);
+                tiime = int.Parse(column[3]);
+
             }
         }
 
@@ -39,6 +44,8 @@ public class VirusAttackData : GameData
         PlayerPrefs.SetFloat(key + KEY_HP, hp);
         PlayerPrefs.SetFloat(key + KEY_RANGE, range);
         PlayerPrefs.SetFloat(key + KEY_DAMAGE, damage);
+        PlayerPrefs.SetFloat(key + KEY_TIME, tiime);
+
     }
 
     public override void LoadDataFromPrefs()
@@ -51,5 +58,8 @@ public class VirusAttackData : GameData
 
         if (PlayerPrefs.HasKey(key + KEY_DAMAGE))
             damage = PlayerPrefs.GetInt(key + KEY_DAMAGE);
+
+        if (PlayerPrefs.HasKey(key + KEY_TIME))
+            tiime = PlayerPrefs.GetInt(key + KEY_TIME);
     }
 }

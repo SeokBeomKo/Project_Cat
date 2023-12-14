@@ -44,7 +44,7 @@ public class VirusPreparingState : VirusShotState
     private bool CollisionCheck()
     {
         Collider[] colliders =
-                    Physics.OverlapSphere(virus.transform.position, virus.radius);
+                    Physics.OverlapSphere(virus.transform.position, virus.GetRange());
 
         foreach (Collider col in colliders)
         {
@@ -52,7 +52,7 @@ public class VirusPreparingState : VirusShotState
 
             if (col.gameObject.CompareTag("Player"))
             {
-                virus.PlayerPosition = col.transform.parent.position;
+                virus.SetPlayerPosition(col.transform.parent.position);
                 return true;
             }
         }
