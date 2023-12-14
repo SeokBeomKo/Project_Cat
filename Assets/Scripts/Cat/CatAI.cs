@@ -217,7 +217,6 @@ namespace BehaviorTree
                 isAttacking = true;
                 isAttackComplete = false;
 
-                Debug.Log("���� ����");
                 timer = 0f;
 
                 return Node.NodeState.SUCCESS;
@@ -257,7 +256,6 @@ namespace BehaviorTree
             randomNumber = Random.Range(0f, 1.0f);
             if (playerTransform != null && randomNumber > 0.3f)
             {
-                Debug.Log("���� �⺻ ����");
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
@@ -273,7 +271,6 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                Debug.Log("���� ���� ����");
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
                 isAttacking = true;
@@ -331,7 +328,6 @@ namespace BehaviorTree
                 isAttackComplete = false;
                 StartCoroutine(PerformWaveAttack());
                 timer = 0f;
-                Debug.Log("Ư�� �ĵ� ����");
                 return Node.NodeState.SUCCESS;
             }
 

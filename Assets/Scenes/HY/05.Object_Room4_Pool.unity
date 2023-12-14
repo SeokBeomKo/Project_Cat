@@ -4944,7 +4944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8001452705412129266, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
       propertyPath: m_Name
-      value: VirusAttack (3)
+      value: VirusAttack4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
@@ -5567,7 +5567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8001452705412129266, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
       propertyPath: m_Name
-      value: VirusAttack (4)
+      value: VirusAttack4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
@@ -38126,6 +38126,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831834247}
   m_Mesh: {fileID: 445881445704753325, guid: fdab910cb3f156148b7536d90a52848e, type: 3}
+--- !u!1 &833231639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 833231641}
+  - component: {fileID: 833231640}
+  m_Layer: 0
+  m_Name: BattleCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &833231640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833231639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33211067fc81f4f4ea8c6af4e81a4e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virus: []
+  Object: {fileID: 1474940362}
+  respawnTime: 5
+--- !u!4 &833231641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833231639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &833460455
 GameObject:
   m_ObjectHideFlags: 0
@@ -44294,6 +44341,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7248885291674962038, guid: a6253dc85b2f54dc0825d4c25fa4f1c8, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: d8c5ec6ecd689e24a89e005ed3c90f4d, type: 2}
     - target: {fileID: 8211913024642844183, guid: a6253dc85b2f54dc0825d4c25fa4f1c8, type: 3}
       propertyPath: canvasImage
       value: 
@@ -55571,6 +55622,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3208124936671497238, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8001452705412129265, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -55617,7 +55672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8001452705412129266, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
       propertyPath: m_Name
-      value: VirusAttack (1)
+      value: VirusAttack2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
@@ -57081,7 +57136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8001452705412129266, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
       propertyPath: m_Name
-      value: VirusAttack
+      value: VirusAttack1
       objectReference: {fileID: 0}
     - target: {fileID: 8001452705551271725, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
       propertyPath: m_IsTrigger
@@ -65790,7 +65845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8001452705412129266, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
       propertyPath: m_Name
-      value: VirusAttack (2)
+      value: VirusAttack3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d02ac9e9f634a5bbcb6b27f5a9c524, type: 3}
