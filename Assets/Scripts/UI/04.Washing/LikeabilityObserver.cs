@@ -10,7 +10,6 @@ public class LikeabilityObserver : MonoBehaviour, IObserver
     public Slider likeabilityProgressBar;
     public TextMeshProUGUI likeabilityText;
 
-    //private float totalLikeability = 300;
     private float currentLikeability;
 
     public void Notify(ISubject subject)

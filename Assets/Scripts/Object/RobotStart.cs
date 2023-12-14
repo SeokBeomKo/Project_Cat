@@ -9,13 +9,25 @@ public class RobotStart : MonoBehaviour
     public event RobotHandle onPlay;
     public event RobotHandle onRobot;
 
-    public float moveSpeed = 5f;        // 이동 속도
+    [Header("데이터")]
+    public SpeedData data;
+
+    private float moveSpeed;       // 이동 속도
 
     private bool shouldRotateRight = true;  // 오른쪽으로 회전 허용 여부
     private bool shouldRotateLeft = false;  // 왼쪽으로 회전 허용 여부
     private bool hasCollided = false;       // 충돌 여부
 
     private float angle = 180;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        moveSpeed = data.speed;
+    }
+
+
     private void Start()
     {
         onRobot?.Invoke();

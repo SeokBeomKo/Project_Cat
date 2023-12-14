@@ -33,14 +33,19 @@ public class WeaponData : GameData
                 maxBullet       = int.Parse(column[2]);
                 shootDelay      = float.Parse(column[3]);
 
-                PlayerPrefs.SetInt(key + KEY_MIN_DAMAGE, minDamage);
-                PlayerPrefs.SetInt(key + KEY_MAX_DAMAGE, maxDamage);
-                PlayerPrefs.SetInt(key + KEY_MAX_BULLET, maxBullet);
-                PlayerPrefs.SetFloat(key + KEY_SHOOT_DELAY, shootDelay);
+                SaveDataToPrefs();
             }
         }
         
         isLoaded = true;
+    }
+
+    public override void SaveDataToPrefs()
+    {
+        PlayerPrefs.SetInt(key + KEY_MIN_DAMAGE, minDamage);
+        PlayerPrefs.SetInt(key + KEY_MAX_DAMAGE, maxDamage);
+        PlayerPrefs.SetInt(key + KEY_MAX_BULLET, maxBullet);
+        PlayerPrefs.SetFloat(key + KEY_SHOOT_DELAY, shootDelay);
     }
 
     public override void LoadDataFromPrefs()

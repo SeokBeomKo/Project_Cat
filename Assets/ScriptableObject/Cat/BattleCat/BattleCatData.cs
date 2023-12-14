@@ -29,12 +29,17 @@ public class BattleCatData : GameData
                 waveAttackTime = float.Parse(column[1]);
                 movementSpeed = float.Parse(column[2]);
 
-                PlayerPrefs.SetFloat(key + KEY_RESUMPTION_TIME, attackResumptionTime);
-                PlayerPrefs.SetFloat(key + KEY_WAVE_TIME, waveAttackTime);
-                PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, movementSpeed);
+                SaveDataToPrefs();
             }
         }
         isLoaded = true;
+    }
+
+    public override void SaveDataToPrefs()
+    {
+        PlayerPrefs.SetFloat(key + KEY_RESUMPTION_TIME, attackResumptionTime);
+        PlayerPrefs.SetFloat(key + KEY_WAVE_TIME, waveAttackTime);
+        PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, movementSpeed);
     }
 
     public override void LoadDataFromPrefs()

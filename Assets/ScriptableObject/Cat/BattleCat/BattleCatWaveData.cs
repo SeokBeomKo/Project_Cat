@@ -28,12 +28,17 @@ public class BattleCatWaveData : GameData
                 maxAttackSize = float.Parse(column[1]);
                 growthSpeed = float.Parse(column[2]);
 
-                PlayerPrefs.SetFloat(key + KEY_MIN_ATTACK_SIZE, minAttackSize);
-                PlayerPrefs.SetFloat(key + KEY_MAX_ATTACK_SIZE, maxAttackSize);
-                PlayerPrefs.SetFloat(key + KEY_GROWTH_SPEED, growthSpeed);
+                SaveDataToPrefs();
             }
         }
         isLoaded = true;
+    }
+
+    public override void SaveDataToPrefs()
+    {
+        PlayerPrefs.SetFloat(key + KEY_MIN_ATTACK_SIZE, minAttackSize);
+        PlayerPrefs.SetFloat(key + KEY_MAX_ATTACK_SIZE, maxAttackSize);
+        PlayerPrefs.SetFloat(key + KEY_GROWTH_SPEED, growthSpeed);
     }
 
     public override void LoadDataFromPrefs()

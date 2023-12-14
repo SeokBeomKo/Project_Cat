@@ -11,7 +11,7 @@ public class RobotAttack : MonoBehaviour
     public event RobotHandle onPlay;
     public event RobotHandle onShoot;
 
-    public Vector3 targetPos;
+    private Vector3 targetPos;
 
     public GameObject Block; // 프로젝타일 프리팹
 
@@ -41,4 +41,8 @@ public class RobotAttack : MonoBehaviour
         onPlay?.Invoke();
     }
 
+    public void SetEndPos(Vector3 pos)
+    {
+        targetPos = pos;
+    }
 }

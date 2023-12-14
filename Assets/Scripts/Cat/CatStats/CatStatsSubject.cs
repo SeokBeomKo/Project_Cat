@@ -8,36 +8,17 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
     public List<IObserver> likeabilityObservers = new List<IObserver>();
     public List<IObserver> cleanlinessObservers = new List<IObserver>();
 
-    [Header("¼¼Ã´µµ ÃÖ´ñ°ª")]
-    [SerializeField]
-    private float maxCleanliness = 100;
+    [Header("µ¥ÀÌÅÍ")]
+    public CleanlinessLikeability data;
 
-    private Dictionary<PartsEnums, float> catCleanliness = new Dictionary<PartsEnums, float>();
-    private float cleanliness;
-
-    public float currentMaxCleanliness
-    {
-        get { return maxCleanliness; }
-    }
-
-    public float currentCleanliness
-    {
-        get { return cleanliness; }
-        set
-        {
-            cleanliness = value;
-            NotifyObservers(cleanlinessObservers);
-        }
-    }
-
-    [Header("È£°¨µµ ÃÖ´ñ°ª")]
-    [SerializeField]
-    private float maxLikeability = 300;
+    private Dictionary<PartsEnums, (float, float)> catCleanliness = new Dictionary<PartsEnums, (float, float)>();
+    private float partsCleanliness;
+    private float partsMaxCleanliness;
     private float likeability;
 
     public float currentMaxLikeability
     {
-        get { return maxLikeability; }
+        get { return data.maxLikeability; }
     }
 
     public float currentLikeability
@@ -52,16 +33,15 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
     private void Start()
     {
-        catCleanliness.Add(PartsEnums.BACK, 0);
-        catCleanliness.Add(PartsEnums.FOREPAWLEFT, 0);
-        catCleanliness.Add(PartsEnums.FOREPAWRIGHT, 0);
-        catCleanliness.Add(PartsEnums.LOWERBODY, 0);
-        catCleanliness.Add(PartsEnums.REARPAWLEFT, 0);
-        catCleanliness.Add(PartsEnums.REARPAWRIGHT, 0);
-        catCleanliness.Add(PartsEnums.UPPERBODY, 0);
+        catCleanliness.Add(PartsEnums.BACK, (0, data.maxBodyCleanliness));
+        catCleanliness.Add(PartsEnums.FOREPAWLEFT, (0, data.maxFootCleanliness));
+        catCleanliness.Add(PartsEnums.FOREPAWRIGHT, (0, data.maxFootCleanliness));
+        catCleanliness.Add(PartsEnums.LOWERBODY, (0, data.maxBodyCleanliness));
+        catCleanliness.Add(PartsEnums.REARPAWLEFT, (0, data.maxFootCleanliness));
+        catCleanliness.Add(PartsEnums.REARPAWRIGHT, (0, data.maxFootCleanliness));
+        catCleanliness.Add(PartsEnums.UPPERBODY, (0, data.maxBodyCleanliness));
 
-        currentLikeability = maxLikeability;
-        currentCleanliness = maxCleanliness;
+        currentLikeability = data.maxLikeability;
     }
 
     public void Notify(ISubject subject)
@@ -79,11 +59,26 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
     }
 
+    // ¼¼Ã´µµ
     public float GetPartsCleanliness(PartsEnums partsEnum)
     {
-        if (catCleanliness.TryGetValue(partsEnum, out float cleanlinessValue))
+        if (catCleanliness.TryGetValue(partsEnum, out (float, float) cleanlinessValue))
         {
-            return cleanlinessValue;
+            partsCleanliness = cleanlinessValue.Item1;
+            return partsCleanliness;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public float GetPartsMaxCleanliness(PartsEnums partsEnum)
+    {
+        if (catCleanliness.TryGetValue(partsEnum, out (float, float) cleanlinessValue))
+        {
+            partsMaxCleanliness = cleanlinessValue.Item2;
+            return partsMaxCleanliness;
         }
         else
         {
@@ -97,34 +92,49 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
         foreach (var cleanlinessValue in catCleanliness.Values)
         {
-            totalCleanliness += cleanlinessValue;
+            partsCleanliness = cleanlinessValue.Item1;
+            totalCleanliness += partsCleanliness;
         }
 
         return totalCleanliness;
     }
 
-    public void IncreaseCleanliness(PartsEnums currentParts, float fill = 5)
+    public float GetTotalMaxCleanliness()
     {
-        catCleanliness[currentParts] += fill;
+        float totalMaxCleanliness = 0;
 
-        currentCleanliness = catCleanliness[currentParts];
-
-        if (currentCleanliness > maxCleanliness)
+        foreach (var cleanlinessValue in catCleanliness.Values)
         {
-            currentCleanliness = maxCleanliness;
-            catCleanliness[currentParts] = currentCleanliness;
+            partsMaxCleanliness = cleanlinessValue.Item2;
+            totalMaxCleanliness += partsMaxCleanliness;
         }
 
-        Debug.Log("ÆÄÃ÷ : " + currentParts + ", ¼¼Ã´µµ : " + currentCleanliness);
+        return totalMaxCleanliness;
     }
 
+    public void IncreaseCleanliness(PartsEnums currentParts, float fill = 5)
+    {
+        partsCleanliness = catCleanliness[currentParts].Item1;
+        partsMaxCleanliness = catCleanliness[currentParts].Item2;
+
+        catCleanliness[currentParts] = (partsCleanliness + fill, partsMaxCleanliness);
+
+        if (partsCleanliness > partsMaxCleanliness)
+        {
+            catCleanliness[currentParts] = (partsMaxCleanliness, partsMaxCleanliness);
+        }
+
+        Debug.Log("ÆÄÃ÷ : " + currentParts + ", ¼¼Ã´µµ : " + catCleanliness[currentParts].Item1);
+    }
+
+    // È£°¨µµ
     public void IncreaseLikeability(float fill = 5)
     {
         currentLikeability += fill;
         
-        if (currentLikeability > maxLikeability)
+        if (currentLikeability > data.maxLikeability)
         {
-            currentLikeability = maxLikeability;
+            currentLikeability = data.maxLikeability;
         }
 
         Debug.Log("È£°¨µµ Áõ°¡ : " + currentLikeability);

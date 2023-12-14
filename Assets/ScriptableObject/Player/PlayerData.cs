@@ -32,13 +32,18 @@ public class PlayerData : GameData
                 rollSpeed  = float.Parse(column[2]);
                 jumpForce  = float.Parse(column[3]);
 
-                PlayerPrefs.SetInt(key + KEY_MAX_HEALTH, (int)maxHealth);
-                PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, (float)moveSpeed);
-                PlayerPrefs.SetFloat(key + KEY_ROLL_SPEED, (float)rollSpeed);
-                PlayerPrefs.SetFloat(key + KEY_JUMP_FORCE, (float)jumpForce);
+                SaveDataToPrefs();
             }
         }
         isLoaded = true;
+    }
+
+    public override void SaveDataToPrefs()
+    {
+        PlayerPrefs.SetInt(key + KEY_MAX_HEALTH, (int)maxHealth);
+        PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, (float)moveSpeed);
+        PlayerPrefs.SetFloat(key + KEY_ROLL_SPEED, (float)rollSpeed);
+        PlayerPrefs.SetFloat(key + KEY_JUMP_FORCE, (float)jumpForce);
     }
 
     public override void LoadDataFromPrefs()

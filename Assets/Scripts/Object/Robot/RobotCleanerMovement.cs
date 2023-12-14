@@ -5,16 +5,26 @@ using System;
 
 public class RobotCleanerMovement : MonoBehaviour
 {
-    public Vector3 PlayerPos;
+    [Header("데이터")]
+    public SpeedData data;
+    private float Speed;
 
-    public float Speed;
-    public bool isCollision = false;
+    private Vector3 PlayerPos;
+    private bool isCollision = false;
     private bool isMoving = true;
-    public int rotateDirection = 1;
-    public int angle = 90;
+    private int rotateDirection = 1;
+    private int angle = 90;
 
     public delegate void RobotHandle();
     public event RobotHandle onMove;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        Speed = data.speed;
+    }
+
 
     private void OnEnable()
     {
@@ -107,4 +117,8 @@ public class RobotCleanerMovement : MonoBehaviour
         angle++;
     }
 
+    public void SetEndPos(Vector3 pos)
+    {
+        PlayerPos = pos;
+    }
 }

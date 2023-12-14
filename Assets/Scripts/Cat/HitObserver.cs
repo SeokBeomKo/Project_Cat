@@ -23,7 +23,6 @@ public class HitObserver : MonoBehaviour, IObserver
         if (safeSubject != null)
         {
             safeCheck = safeSubject.currentSafeCheck;
-            Debug.Log("HitObserver: safeCheck updated to " + safeCheck);
         }
     }
 
@@ -34,7 +33,6 @@ public class HitObserver : MonoBehaviour, IObserver
             if (null != other.transform.GetComponentInChildren<PlayerHitScan>())
             {
                 other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(damage);
-                Debug.Log("����!!!! safeCheck - " + safeCheck);
             }
         }
     }

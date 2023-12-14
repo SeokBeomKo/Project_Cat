@@ -10,8 +10,8 @@ public class CleanlinessProgressObserver : MonoBehaviour, IObserver
     public Slider cleanlinessProgressBar;
     public TextMeshProUGUI cleanlinessText;
 
-    private float totalClean = 700;
-    public float currentClean;
+    private float totalClean;
+    private float currentClean;
 
     public void Notify(ISubject subject)
     {
@@ -22,7 +22,8 @@ public class CleanlinessProgressObserver : MonoBehaviour, IObserver
     public void UpdateProgress(CatStatsSubject catStats)
     {
         currentClean = catStats.GetTotalCleanliness();
-        cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / (catStats.currentMaxCleanliness * 7));
+        totalClean = catStats.GetTotalMaxCleanliness();
+        cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / totalClean);
         cleanlinessText.text = Mathf.RoundToInt(cleanlinessProgressBar.value * 100) + " %";
 
         if(cleanlinessProgressBar.value == 1)

@@ -6,17 +6,28 @@ public class PlantChaseOperation : MonoBehaviour
 {
     public GameObject Wall;
 
-    public float rotationSpeed = 5f;
-    public float moveSpeed = 2f;
+    private float rotationSpeed = 5f;
+    private float moveSpeed = 2f;
 
     private bool isRotation = false;
     private bool isFalling = false;
     private bool isRolling = false;
 
-    public Vector3 forceDirection;
-    public float forceMagnitude = 10.0f;
+    private Vector3 forceDirection;
+
+    [Header("데이터")]
+    public SpeedData data;
+
+    private float forceMagnitude;
 
     private Rigidbody plantRigidbody;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        forceMagnitude = data.speed;
+    }
 
     private void Start()
     {

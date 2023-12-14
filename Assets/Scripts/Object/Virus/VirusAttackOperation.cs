@@ -21,6 +21,9 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
     public Vector3 PlayerPosition;
     public GameObject ProjectilePrefab;
 
+    public delegate void VirusRespawnHandle();
+    public event VirusRespawnHandle OnRespawnTimerStart;
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
@@ -38,8 +41,14 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     void Start()
     {
+        HP = 5;
         objectHPbar.SetHP(HP);
         objectHPbar.CheckHP();
+    }
+
+    private void OnEnable()
+    {
+        model.SetActive(true);       
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,7 +83,7 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     private void Check()
     {
-        if (HP == 0)
+        if (HP <= 0)
         {
             model.SetActive(false);
             explosionVFX.SetActive(true);
@@ -92,7 +101,10 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
             yield return null;
         }
 
-        Destroy(transform.parent.gameObject);
+        explosionVFX.SetActive(false);
+        OnRespawnTimerStart?.Invoke();
+        transform.gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 
     public void BeAttacked(float damage)
@@ -104,5 +116,4 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
     {
         return 5;
     }
-
 }

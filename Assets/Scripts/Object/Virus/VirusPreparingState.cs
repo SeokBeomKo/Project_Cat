@@ -35,8 +35,6 @@ public class VirusPreparingState : VirusShotState
 
     public void OnStateEnter()
     {
-        Debug.Log("Preparing");
-
     }
 
     public void OnStateExit()
