@@ -54,12 +54,12 @@ public class CleanlinessPopUpObserver : MonoBehaviour, IObserver
 
     public void CleanCat(CatStatsSubject subject)
     {
-        upperBody.text = "상체 : " + (subject.GetPartsCleanliness(PartsEnums.UPPERBODY) / subject.currentMaxCleanliness * 100).ToString("00") + "%";
-        lowerBody.text = "하체 : " + (subject.GetPartsCleanliness(PartsEnums.LOWERBODY) / subject.currentMaxCleanliness * 100).ToString("00") + "%";
-        rearPawRight.text = "뒷발 : " + (subject.GetPartsCleanliness(PartsEnums.REARPAWRIGHT) / subject.currentMaxCleanliness * 100).ToString("00") + "%";
-        rearPawLeft.text = "뒷발 : " + (subject.GetPartsCleanliness(PartsEnums.REARPAWLEFT) / subject.currentMaxCleanliness * 100).ToString("00") + "%";
-        forePawRight.text = "앞발 : " + (subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT) / subject.currentMaxCleanliness * 100).ToString("00") + "%";
-        forePawLeft.text = "앞발 : " + (subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT) / subject.currentMaxCleanliness * 100).ToString("00") + "%";
-        back.text = "등 : " + (subject.GetPartsCleanliness(PartsEnums.BACK) / subject.currentMaxCleanliness * 100).ToString("00") + "%";
+        upperBody.text = "상체 : " + (subject.GetPartsCleanliness(PartsEnums.UPPERBODY) / subject.GetPartsMaxCleanliness(PartsEnums.UPPERBODY) * 100).ToString("00") + "%";
+        lowerBody.text = "하체 : " + (subject.GetPartsCleanliness(PartsEnums.LOWERBODY) / subject.GetPartsMaxCleanliness(PartsEnums.LOWERBODY) * 100).ToString("00") + "%";
+        rearPawRight.text = "뒷발 : " + (subject.GetPartsCleanliness(PartsEnums.REARPAWRIGHT) / subject.GetPartsMaxCleanliness(PartsEnums.REARPAWRIGHT) * 100).ToString("00") + "%";
+        rearPawLeft.text = "뒷발 : " + (subject.GetPartsCleanliness(PartsEnums.REARPAWLEFT) / subject.GetPartsMaxCleanliness(PartsEnums.REARPAWLEFT) * 100).ToString("00") + "%";
+        forePawRight.text = "앞발 : " + (subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT) / subject.GetPartsMaxCleanliness(PartsEnums.FOREPAWRIGHT) * 100).ToString("00") + "%";
+        forePawLeft.text = "앞발 : " + (subject.GetPartsCleanliness(PartsEnums.FOREPAWRIGHT) / subject.GetPartsMaxCleanliness(PartsEnums.FOREPAWRIGHT) * 100).ToString("00") + "%";
+        back.text = "등 : " + (subject.GetPartsCleanliness(PartsEnums.BACK) / subject.GetPartsMaxCleanliness(PartsEnums.BACK) * 100).ToString("00") + "%";
     }
 }
