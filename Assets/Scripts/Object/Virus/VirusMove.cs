@@ -5,8 +5,17 @@ using UnityEngine.UIElements;
 
 public class VirusMove : MonoBehaviour
 {
-    [Header("속도, 길이")]
-    [SerializeField][Range(0f, 10f)] private float speed = 1f;
+    [Header("데이터")]
+    public SpeedData data;
+    private float speed;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        speed = data.speed;
+    }
+
     private float length;
     private float runningTime;
     private float yPos = 0f;

@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 {
-    public ChaseCenter chaseCenter;
+    [Header("데이터")]
+    public FlyObjectData data;
+    private float height;
+    private float moveSpeed = 0.5f; // 이동 속도
 
     private Vector3 startPos, endPos;
     //땅에 닫기까지 걸리는 시간
@@ -14,14 +17,43 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 
     private bool isCollision = false;
 
-    private float moveSpeed = 0.5f; // 이동 속도
-    public Vector3 rotationAxis = Vector3.left; // 회전 축
+    private Vector3 rotationAxis = Vector3.left; // 회전 축
 
     Vector3 Direction;
     Quaternion targetRotation;
 
     [Header("아이템 리스트")]
     public List<ItemWithProbability> itemsToSpawn;
+
+    public delegate void CapsuleHandle();
+    public CapsuleHandle onFly;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        height = data.height;
+        moveSpeed = data.speed;
+    }
+
+    private void Start()
+    {
+        startPos = transform.parent.position;
+    }
+
+    private void Update()
+    {
+        if (isCollision)
+        {
+            Direction = endPos - transform.parent.position;
+            targetRotation = Quaternion.LookRotation(Direction);
+            transform.parent.rotation = targetRotation;
+
+            StartCoroutine("BulletMove");
+
+        }
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -59,24 +91,6 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 
     }
 
-    private void Start()
-    {
-        startPos = transform.parent.position;
-    }
-
-    private void Update()
-    {
-        if (isCollision)
-        {
-            Direction = endPos - transform.parent.position;
-            targetRotation = Quaternion.LookRotation(Direction);
-            transform.parent.rotation = targetRotation;
-
-            StartCoroutine("BulletMove");
-
-        }
-
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -85,7 +99,7 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
         if (otherTag.Contains("Parts"))
         {
             isCollision = true;
-            endPos = chaseCenter.PlayerPosition();
+            onFly?.Invoke();
         }
     }
 
@@ -109,7 +123,7 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
             transform.parent.rotation = Quaternion.Euler(Time.time * 900, 0, 0);
 
             timer += Time.deltaTime * moveSpeed;
-            Vector3 tempPos = Parabola(startPos, endPos, 1, timer);
+            Vector3 tempPos = Parabola(startPos, endPos, height, timer);
             transform.parent.position = tempPos;
 
            
@@ -124,5 +138,10 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
     public float GetDamage()
     {
         return 5;
+    }
+
+    public void SetEndPos(Vector3 pos)
+    {
+        endPos = pos;
     }
 }
