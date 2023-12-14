@@ -18,6 +18,7 @@ public class ResearchCameraController : MonoBehaviour
 
     public void SetIMacCamera()
     {
+        PlayerPrefs.SetInt("Camera", 20);
         iMacCamera.gameObject.SetActive(true);
         doorCamera.gameObject.SetActive(false);
         playCamera.gameObject.SetActive(false);
@@ -27,6 +28,7 @@ public class ResearchCameraController : MonoBehaviour
 
     public void SetDoorCamera()
     {
+        PlayerPrefs.SetInt("Camera", 20);
         iMacCamera.gameObject.SetActive(false);
         doorCamera.gameObject.SetActive(true);
         playCamera.gameObject.SetActive(false);
@@ -38,6 +40,7 @@ public class ResearchCameraController : MonoBehaviour
 
     public void SetPlayCamera()
     {
+        PlayerPrefs.SetInt("Camera", 10);
         iMacCamera.gameObject.SetActive(false);
         doorCamera.gameObject.SetActive(false);
         playCamera.gameObject.SetActive(true);

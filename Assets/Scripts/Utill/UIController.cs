@@ -5,7 +5,16 @@ using UnityEngine;
 public class UIController : MonoBehaviour
 {
     
-    public CanvasGroup canvas;
+    [SerializeField] private CanvasGroup canvas;
+    
+    public CanvasGroup canvasUI
+    {
+        get { return canvas; }
+        set
+        {
+            canvas = value;
+        }
+    }
 
     public void ShowUI()
     {

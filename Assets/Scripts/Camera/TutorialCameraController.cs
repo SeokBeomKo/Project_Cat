@@ -12,6 +12,7 @@ public class TutorialCameraController : MonoBehaviour
 
     public void SetPlayCamera()
     {
+        PlayerPrefs.SetInt("Camera", 10);
         playCamera.gameObject.SetActive(true);
         aimCamera.gameObject.SetActive(false);
 
@@ -20,6 +21,8 @@ public class TutorialCameraController : MonoBehaviour
 
     public void SetCatCamera()
     {
+        PlayerPrefs.SetInt("Camera", 20);
+
         playCamera.gameObject.SetActive(false);
         aimCamera.gameObject.SetActive(false);
 

@@ -12,6 +12,7 @@ public class ChaseCameraController : MonoBehaviour
     [SerializeField] public CinemachineVirtualCamera robotStartCamera;
     [SerializeField] public CinemachineVirtualCamera robotAttackCamera;
     [SerializeField] public CinemachineVirtualCamera playCamera;
+    [SerializeField] public CinemachineVirtualCamera topCamera;
 
 
     private void Start()
@@ -19,32 +20,49 @@ public class ChaseCameraController : MonoBehaviour
         mainCamera = Camera.main;
     }
 
+    public void SetTopCamera()
+    {
+        PlayerPrefs.SetInt("Camera", 30);
+        topCamera.gameObject.SetActive(true);
+        playCamera.gameObject.SetActive(false);
+        robotAttackCamera.gameObject.SetActive(false);
+    }
+
     public void SetCatCamera()
     {
+        PlayerPrefs.SetInt("Camera", 20);
         catCamera.gameObject.SetActive(true);
         playCamera.gameObject.SetActive(false);
     }
 
     public void SetMazeCamera()
     {
+        PlayerPrefs.SetInt("Camera", 20);
         catCamera.gameObject.SetActive(false);
         mazeCamera.gameObject.SetActive(true);
     }
 
     public void SetRobotStartCamera()
     {
+        PlayerPrefs.SetInt("Camera", 20);
+        int cameraValue = PlayerPrefs.GetInt("Camera");
+        Debug.Log("카메라 컨트롤러 : " + cameraValue);
+
         robotStartCamera.gameObject.SetActive(true);
         playCamera.gameObject.SetActive(false);
     }
 
     public void SetRobotAttackCamera()
     {
+        PlayerPrefs.SetInt("Camera", 20);
         robotAttackCamera.gameObject.SetActive(true);
         playCamera.gameObject.SetActive(false);
     }
 
     public void SetPlayCamera()
     {
+        Debug.Log("나 켜짐");
+        PlayerPrefs.SetInt("Camera", 10);
         catCamera.gameObject.SetActive(false);
         mazeCamera.gameObject.SetActive(false);
         robotStartCamera.gameObject.SetActive(false);
