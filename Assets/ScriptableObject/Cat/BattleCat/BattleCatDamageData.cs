@@ -24,10 +24,15 @@ public class BattleCatDamageData : GameData
             {   
                 damage = float.Parse(column[0]);
 
-                PlayerPrefs.SetFloat(key + KEY_DAMAGE, damage);
+                SaveDataToPrefs();
             }
         }
         isLoaded = true;
+    }
+
+    public override void SaveDataToPrefs()
+    {
+        PlayerPrefs.SetFloat(key + KEY_DAMAGE, damage);
     }
 
     public override void LoadDataFromPrefs()

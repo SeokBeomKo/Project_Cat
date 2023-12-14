@@ -18,4 +18,5 @@ public abstract class GameData : ScriptableObject
     
     public abstract void ProcessData(string tsv);
     public abstract void LoadDataFromPrefs();
+    public abstract void SaveDataToPrefs();
 }

@@ -9,7 +9,7 @@ public class CleanlinessLikeability : GameData
     string KEY_MAX_ATTACK_SIZE = "BATTLE_CAT_MAX_ATTACK_SIZE";
     string KEY_GROWTH_SPEED = "BATTLE_CAT_GROWTH_SPEED";
 
-    [Header("ÀúÀå µ¥ÀÌÅÍ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public float maxBodyCleanliness;
     public float maxFootCleanliness;
     public float maxLikeability;
@@ -28,12 +28,17 @@ public class CleanlinessLikeability : GameData
                 maxFootCleanliness = float.Parse(column[1]);
                 maxLikeability = float.Parse(column[2]);
 
-                PlayerPrefs.SetFloat(key + KEY_MIN_ATTACK_SIZE, maxBodyCleanliness);
-                PlayerPrefs.SetFloat(key + KEY_MAX_ATTACK_SIZE, maxFootCleanliness);
-                PlayerPrefs.SetFloat(key + KEY_GROWTH_SPEED, maxLikeability);
+                SaveDataToPrefs();
             }
         }
         isLoaded = true;
+    }
+
+    public override void SaveDataToPrefs()
+    {
+        PlayerPrefs.SetFloat(key + KEY_MIN_ATTACK_SIZE, maxBodyCleanliness);
+        PlayerPrefs.SetFloat(key + KEY_MAX_ATTACK_SIZE, maxFootCleanliness);
+        PlayerPrefs.SetFloat(key + KEY_GROWTH_SPEED, maxLikeability);
     }
 
     public override void LoadDataFromPrefs()

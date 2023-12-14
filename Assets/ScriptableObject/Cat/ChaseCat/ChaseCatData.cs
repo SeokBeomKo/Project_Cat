@@ -22,10 +22,15 @@ public class ChaseCatData : GameData
             {
                 moveSpeed = float.Parse(column[0]);
 
-                PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, moveSpeed);
+                SaveDataToPrefs();
             }
         }
         isLoaded = true;
+    }
+
+    public override void SaveDataToPrefs()
+    {
+        PlayerPrefs.SetFloat(key + KEY_MOVE_SPEED, moveSpeed);
     }
 
     public override void LoadDataFromPrefs()
