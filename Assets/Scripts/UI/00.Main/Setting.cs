@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 
@@ -25,6 +26,7 @@ public class Setting : MonoBehaviour
     public delegate void PausePopupHandle();
     public event PausePopupHandle OnPausePopupTrue;
     public event PausePopupHandle OnPausePopupFalse;
+
 
     public void UpdatePause()
     {
@@ -83,12 +85,12 @@ public class Setting : MonoBehaviour
         SoundManager.Instance.PlaySFX("Click");
         cursor.CursorOff();
         pausePopUp.SetActive(false);
-        
+
         if (PlayerPrefs.GetInt("Camera") != 20)
             uiController.ShowUI();
         if(PlayerPrefs.GetInt("Camera") == 10)
             itemWheel.SetActive(true);
-        
+
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
     }
@@ -120,6 +122,5 @@ public class Setting : MonoBehaviour
         if (PlayerPrefs.GetInt("Camera") == 10)
             itemWheel.SetActive(true);
     }
-    
-
+   
 }
