@@ -27,14 +27,24 @@ public class WeaponStrategy : MonoBehaviour
         }
     }
 
-    public void ChargeCurrentBullet()
+    public void SetCurrentBullet(int soawpBullet, int splashBullet, int bubbleBullet)
     {
+        weaponList[0].curBullet = soawpBullet;
+        weaponList[1].curBullet = splashBullet;
+        weaponList[2].curBullet = bubbleBullet;
+    }
 
+    public void ChargeCurrentBullet(int charge)
+    {
+        curWeapon.ChargeBullet(charge);
     }
 
     public void ChargeAllBullet()
     {
-        
+        foreach(Weapon obj in weaponList)
+        {
+            obj.ChargeAllBullet();
+        }
     }
 
     public void DamageUp(float time)

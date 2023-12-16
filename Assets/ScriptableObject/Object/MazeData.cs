@@ -33,8 +33,8 @@ public class MazeData : GameData
 
     public override void SaveDataToPrefs()
     {
-        PlayerPrefs.SetFloat(key + KEY_WIDTH, width);
-        PlayerPrefs.SetFloat(key + KEY_HEIGHT, height);
+        PlayerPrefs.SetInt(key + KEY_WIDTH, width);
+        PlayerPrefs.SetInt(key + KEY_HEIGHT, height);
     }
 
     public override void LoadDataFromPrefs()

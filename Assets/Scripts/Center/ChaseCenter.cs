@@ -57,7 +57,11 @@ public class ChaseCenter : MonoBehaviour
     [SerializeField] public RobotAttack robotAttack;
 
     [SerializeField] public FlyingObject[] flyObject;
-    [SerializeField] public GameObject Object;
+    [SerializeField] public GameObject flyObjectParent;
+
+    [SerializeField] public CapsuleChaseOperation[] capsule;
+    [SerializeField] public GameObject capsuleObjectParent;
+
 
     public HairBallUse hairBallUse;
     // : <<
@@ -68,10 +72,13 @@ public class ChaseCenter : MonoBehaviour
         PlayerPrefs.SetInt("Restart", 2);
         PlayerPrefs.SetInt("Camera", 10);
         questUI.DeactivatePopUp();
-        flyObject = Object.GetComponentsInChildren<FlyingObject>();
+
+        flyObject = flyObjectParent.GetComponentsInChildren<FlyingObject>();
+        capsule = capsuleObjectParent.GetComponentsInChildren<CapsuleChaseOperation>();
+
+
         itemWheel.SetActive(true);
-        camRotate.gameObject.SetActive(true);    
-        
+        camRotate.gameObject.SetActive(true);
         
         firstQuest.OnQuest += MoveForward;
 
@@ -99,6 +106,15 @@ public class ChaseCenter : MonoBehaviour
             {
                 int index = i;
                 flyObject[index].onFly += () => onFly(index);
+            }
+        }
+
+        if(capsule != null)
+        {
+            for(int i = 0; i<capsule.Length; i++)
+            {
+                int index = i;
+                capsule[index].onFly += () => onCapsuleFly(index);
             }
         }
 
@@ -195,6 +211,11 @@ public class ChaseCenter : MonoBehaviour
     public void onShoot()
     {
         robotAttack.SetEndPos(PlayerPosition());
+    }
+
+    public void onCapsuleFly(int index)
+    {
+        capsule[index].SetEndPos(PlayerPosition());
     }
 
     public void onFly(int index)

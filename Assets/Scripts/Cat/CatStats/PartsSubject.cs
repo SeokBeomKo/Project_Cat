@@ -38,53 +38,62 @@ public class PartsSubject : MonoBehaviour, ISubject, IDamageable
     public void BeAttacked(float playerDamage)
     {
         currentDamage = playerDamage;
+
+        GetPartsTag();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack") && collisionPossible)
         {
-            switch (gameObject.tag)
-            {
-                case "Parts1":
-                    currentParts = PartsEnums.FOREPAWLEFT;
-                    break;
+            currentDamage = other.gameObject.GetComponentInChildren<IAttackable>().GetDamage();
 
-                case "Parts2":
-                    currentParts = PartsEnums.FOREPAWRIGHT;
-                    break;
-
-                case "Parts3":
-                    currentParts = PartsEnums.HEAD;
-                    break;
-
-                case "Parts4":
-                    currentParts = PartsEnums.UPPERBODY;
-                    break;
-
-                case "Parts5":
-                    currentParts = PartsEnums.BACK;
-                    break;
-
-                case "Parts6":
-                    currentParts = PartsEnums.LOWERBODY;
-                    break;
-
-                case "Parts7":
-                    currentParts = PartsEnums.REARPAWLEFT;
-                    break;
-
-                case "Parts8":
-                    currentParts = PartsEnums.REARPAWRIGHT;
-                    break;
-
-                default:
-                    break;
-            }
-            NotifyObservers(observers);
-
-            StartCoroutine(DisableCollisionForSeconds(1.0f));
+            GetPartsTag();
         }
+    }
+
+    private void GetPartsTag()
+    {
+        switch (gameObject.tag)
+        {
+            case "Parts1":
+                currentParts = PartsEnums.FOREPAWLEFT;
+                break;
+
+            case "Parts2":
+                currentParts = PartsEnums.FOREPAWRIGHT;
+                break;
+
+            case "Parts3":
+                currentParts = PartsEnums.HEAD;
+                break;
+
+            case "Parts4":
+                currentParts = PartsEnums.UPPERBODY;
+                break;
+
+            case "Parts5":
+                currentParts = PartsEnums.BACK;
+                break;
+
+            case "Parts6":
+                currentParts = PartsEnums.LOWERBODY;
+                break;
+
+            case "Parts7":
+                currentParts = PartsEnums.REARPAWLEFT;
+                break;
+
+            case "Parts8":
+                currentParts = PartsEnums.REARPAWRIGHT;
+                break;
+
+            default:
+                break;
+        }
+        NotifyObservers(observers);
+
+        StartCoroutine(DisableCollisionForSeconds(1.0f));
     }
 
     private IEnumerator DisableCollisionForSeconds(float seconds)
