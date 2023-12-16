@@ -50,11 +50,6 @@ public abstract class Weapon : MonoBehaviour, IWeapon
         shootDelay = data.shootDelay;
     }
 
-    private void Start() 
-    {
-        ChargeBullet(maxBullet);
-    }
-
     public float GetDamage()
     {
         return (Random.Range(minDamage,maxDamage)) * damageOffset;
@@ -70,6 +65,12 @@ public abstract class Weapon : MonoBehaviour, IWeapon
         curBullet += count;
         if (curBullet > maxBullet)  curBullet = maxBullet;
     }
+
+    public void ChargeAllBullet()
+    {
+        curBullet = maxBullet;
+    }
+
     public void UseBullet()
     {
         curBullet -= useBullet;

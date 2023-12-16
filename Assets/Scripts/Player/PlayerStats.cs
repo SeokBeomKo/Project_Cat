@@ -57,16 +57,19 @@ public class PlayerStats : MonoBehaviour, ISubject
     {
         data.LoadDataFromPrefs();
         
-        maxHealth = data.maxHealth;
         moveSpeed = data.moveSpeed;
         rollSpeed = data.rollSpeed;
         jumpForce = data.jumpForce;
     }
     private void Start() 
     {
-        currentHealth   = maxHealth;
         currentRoll     = maxRoll;
         currentDouble   = maxDouble;
+    }
+
+    public void SetCurHp(int hp)
+    {
+        currentHealth = hp;
     }
 
     public void AddMoveSpeed(float time)

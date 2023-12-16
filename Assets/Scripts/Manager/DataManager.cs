@@ -9,12 +9,17 @@ public enum WEAPON_LIST
     BUBBLE_GUN,
 }
 
-public class DataManager : Singleton<InventoryManager>
+public class DataManager : Singleton<DataManager>
 {
     private int playerCurHP;
     private int soapRifleCurBullet;
     private int splashBusterCurBullet;
     private int bubbleGunCurBullet;
+
+    private void Awake() 
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public int GetPlayerHP()
     {
