@@ -25,9 +25,14 @@ public class TutorialCenter : MonoBehaviour
     [Header("고양이 충돌 감지")]
     [SerializeField] public ExitCatMove exitCatMove;
 
-    [Header("플레이어 충돌 감지")]
+    [Header("플레이어 자막 충돌 감지")]
     [SerializeField] public PlayerSubtitle ballPlayerSubtitle;
     [SerializeField] public PlayerSubtitle clearPlayerSubtitle;
+
+    [Header("플레이어 가이드 충돌 감지")]
+    [SerializeField] public PlayerGuide keyGuide;
+    [SerializeField] public PlayerGuide itemGuide;
+    [SerializeField] public PlayerGuide gunGuide;
 
     [Header("자막")]
     [SerializeField] public Subtitle subtitle;
@@ -36,8 +41,8 @@ public class TutorialCenter : MonoBehaviour
     [Header("바이러스 그룹")]
     [SerializeField] public GameObject VirusGroup;
 
-    [Header("캔버스 그룹")]
-    [SerializeField] public GameObject UIGroup;
+    [Header("UI 컨트롤러")]
+    [SerializeField] public UIController controllerUI;
 
     [Header("클리어 포인트")]
     [SerializeField] public GameObject endPoint;
@@ -58,14 +63,14 @@ public class TutorialCenter : MonoBehaviour
 
     private void Start() 
     {
-        stopWatch.OnSubtitle += OnCellPhone;
-        exitCatMove.OnExitCat += ExitCatMove;
+        stopWatch.OnSubtitle += OnCellPhone; // 전화 컷씬
+        exitCatMove.OnExitCat += ExitCatMove; // 고양이 컷씬
 
-        ballPlayerSubtitle.OnPlayerSubtitle += OnBallGuide;
-        clearPlayerSubtitle.OnPlayerSubtitle += OnClearGuide;
+        ballPlayerSubtitle.OnPlayerSubtitle += OnBallGuide; // 공으로 바이러스 처치
+        clearPlayerSubtitle.OnPlayerSubtitle += OnClearGuide; // 튜토리얼 클리어
 
         VirusGroup.SetActive(false);
-        UIGroup.SetActive(false);
+        controllerUI.RemoveUI();
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
         cursor.SetActive(false);
@@ -112,7 +117,7 @@ public class TutorialCenter : MonoBehaviour
         yield return new WaitForSeconds(7f);
         if (isStop) yield break;
 
-        UIGroup.SetActive(false);
+        controllerUI.ShowUI();
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
         VirusGroup.SetActive(false);
@@ -134,7 +139,7 @@ public class TutorialCenter : MonoBehaviour
         cameraController.SetPlayCamera();
         cat.SetActive(false);
         inputHandler.gameObject.SetActive(true);
-        UIGroup.SetActive(true);
+        controllerUI.ShowUI();
         cameraRotate.SetActive(true);
         VirusGroup.SetActive(true);
         questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자", delayTime : 0.5f);
@@ -158,7 +163,7 @@ public class TutorialCenter : MonoBehaviour
 
     public void OnClearGuide()
     {
-        UIGroup.SetActive(false);
+        controllerUI.RemoveUI();
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
         questUI.DeactivatePopUp();
