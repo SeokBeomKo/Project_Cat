@@ -20,23 +20,30 @@ public class PlayerCenter : MonoBehaviour
     {
         playerStats.SetCurHp(DataManager.Instance.GetPlayerHP());
 
-        weaponStrategy.SetCurrentBullet(DataManager.Instance.GetWeaponBullet(WEAPON_LIST.SOAP_RIFLE), 
-                                        DataManager.Instance.GetWeaponBullet(WEAPON_LIST.SPLASH_BUSTER), 
-                                        DataManager.Instance.GetWeaponBullet(WEAPON_LIST.BUBBLE_GUN));
+        LoadBullet();
     }
 
     private void Start() 
     {
-        weaponStrategy.weaponList[0].OnWeaponBullet += SaveBullet;
+        weaponStrategy.weaponList[0].OnWeaponBullet += UseBullet;
+        weaponStrategy.weaponList[1].OnWeaponBullet += UseBullet;
+        weaponStrategy.weaponList[2].OnWeaponBullet += UseBullet;
         playerHitScan.OnPlayerHitScan += HitPlayer;
 
         playerHitScan.OnPlayerSpeedUp += SpeedUp;
         playerHitScan.OnPlayerDamageUp += DamageUp;
     }
 
-    public void SaveBullet()
+    public void LoadBullet()
     {
-        //DataManager.Instance.SetWeaponBullet();
+        weaponStrategy.SetCurrentBullet(DataManager.Instance.GetWeaponCurBullet(WEAPON_LIST.SOAP_RIFLE), 
+                                        DataManager.Instance.GetWeaponCurBullet(WEAPON_LIST.SPLASH_BUSTER), 
+                                        DataManager.Instance.GetWeaponCurBullet(WEAPON_LIST.BUBBLE_GUN));
+    }
+
+    public void UseBullet()
+    {
+        DataManager.Instance.SetWeaponCurBullet(weaponStrategy.weaponList[0].GetBullet(), weaponStrategy.weaponList[1].GetBullet(), weaponStrategy.weaponList[2].GetBullet());
     }
 
     public void DamageUp()
