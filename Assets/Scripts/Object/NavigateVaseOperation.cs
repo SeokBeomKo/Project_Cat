@@ -6,7 +6,10 @@ public class NavigateVaseOperation : MonoBehaviour
 {
     [Header("데이터")]
     public WaterChargeAmountData data;
-    private float waterCharge;
+    private int waterCharge;
+
+    public delegate void BottleHandle();
+    public event BottleHandle OnCharge;
 
     private void Awake()
     {
@@ -20,8 +23,14 @@ public class NavigateVaseOperation : MonoBehaviour
         if(collision.transform.tag =="Player")
         {
             Debug.Log("탄약 충전량 : " + waterCharge);
+
             SoundManager.Instance.PlaySFX("GetItem");
             transform.parent.gameObject.SetActive(false);
         }
+    }
+
+    public int GetChargeAmount()
+    {
+        return waterCharge;
     }
 }
