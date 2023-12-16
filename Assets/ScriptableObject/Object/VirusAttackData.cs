@@ -28,10 +28,10 @@ public class VirusAttackData : GameData
             string[] column = row[i].Split('\t');
             for (int j = 0; j < columnSize; j++)
             {
-                hp = int.Parse(column[0]);
-                range = int.Parse(column[1]);
-                damage = int.Parse(column[2]);
-                tiime = int.Parse(column[3]);
+                hp = float.Parse(column[0]);
+                range = float.Parse(column[1]);
+                damage = float.Parse(column[2]);
+                tiime = float.Parse(column[3]);
 
             }
         }
@@ -51,15 +51,15 @@ public class VirusAttackData : GameData
     public override void LoadDataFromPrefs()
     {
         if (PlayerPrefs.HasKey(key + KEY_HP))
-            hp = PlayerPrefs.GetInt(key + KEY_HP);
+            hp = PlayerPrefs.GetFloat(key + KEY_HP);
 
         if (PlayerPrefs.HasKey(key + KEY_RANGE))
-            range = PlayerPrefs.GetInt(key + KEY_RANGE);
+            range = PlayerPrefs.GetFloat(key + KEY_RANGE);
 
         if (PlayerPrefs.HasKey(key + KEY_DAMAGE))
-            damage = PlayerPrefs.GetInt(key + KEY_DAMAGE);
+            damage = PlayerPrefs.GetFloat(key + KEY_DAMAGE);
 
         if (PlayerPrefs.HasKey(key + KEY_TIME))
-            tiime = PlayerPrefs.GetInt(key + KEY_TIME);
+            tiime = PlayerPrefs.GetFloat(key + KEY_TIME);
     }
 }
