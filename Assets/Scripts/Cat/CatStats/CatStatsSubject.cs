@@ -124,6 +124,8 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
             catCleanliness[currentParts] = (partsMaxCleanliness, partsMaxCleanliness);
         }
 
+        NotifyObservers(cleanlinessObservers);
+
         Debug.Log("ÆÄÃ÷ : " + currentParts + ", ¼¼Ã´µµ : " + catCleanliness[currentParts].Item1);
     }
 
@@ -138,8 +140,6 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
 
         Debug.Log("È£°¨µµ Áõ°¡ : " + currentLikeability);
-
-        NotifyObservers(likeabilityObservers);
     }
 
     public void DecreaseLikeability(float damage = 5)
