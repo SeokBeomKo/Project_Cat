@@ -12,9 +12,14 @@ public enum WEAPON_LIST
 public class DataManager : Singleton<DataManager>
 {
     private int playerCurHP;
+
     private int soapRifleCurBullet;
     private int splashBusterCurBullet;
     private int bubbleGunCurBullet;
+
+    private int soapRifleMaxBullet;
+    private int splashBusterMaxBullet;
+    private int bubbleGunMaxBullet;
 
     private void Awake() 
     {
@@ -26,7 +31,33 @@ public class DataManager : Singleton<DataManager>
         return playerCurHP;
     }
 
-    public int GetWeaponBullet(WEAPON_LIST wepon)
+    public void SetPlayerHP(int hp)
+    {
+        playerCurHP = hp;
+    }
+
+    public int GetWeaponMaxBullet(WEAPON_LIST wepon)
+    {
+        switch(wepon)
+        {
+            case WEAPON_LIST.SOAP_RIFLE:
+                return soapRifleMaxBullet;
+            case WEAPON_LIST.SPLASH_BUSTER:
+                return splashBusterMaxBullet;
+            case WEAPON_LIST.BUBBLE_GUN:
+                return bubbleGunMaxBullet;
+        }
+        return 0;
+    }
+
+    public void SetWeaponMaxBullet(int soapRifle, int splashBuster, int bubbleGun)
+    {
+        soapRifleMaxBullet = soapRifle;
+        splashBusterMaxBullet = splashBuster;
+        bubbleGunMaxBullet = bubbleGun;
+    }
+
+    public int GetWeaponCurBullet(WEAPON_LIST wepon)
     {
         switch(wepon)
         {
@@ -39,15 +70,11 @@ public class DataManager : Singleton<DataManager>
         }
         return 0;
     }
-    public void SetPlayerHP(int hp)
-    {
-        playerCurHP = hp;
-    }
-
-    public void SetWeaponBullet(int soapRifle, int splashBuster, int bubbleGun)
+    public void SetWeaponCurBullet(int soapRifle, int splashBuster, int bubbleGun)
     {
         soapRifleCurBullet = soapRifle;
         splashBusterCurBullet = splashBuster;
         bubbleGunCurBullet = bubbleGun;
     }
+
 }
