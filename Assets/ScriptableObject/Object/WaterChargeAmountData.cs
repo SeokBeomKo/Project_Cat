@@ -24,6 +24,7 @@ public class WaterChargeAmountData : GameData
                 amount = float.Parse(column[0]);
             }
         }
+        SaveDataToPrefs();
 
         isLoaded = true;
     }
