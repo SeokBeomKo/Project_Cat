@@ -149,9 +149,10 @@ public class TutorialCenter : MonoBehaviour
     {
         subtitle.ShowSubtitle("카날리아 : 탁자 위에 공을 활용할 수 있을거 같아");
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
 
-        questSubtitle.ShowQuestSubtitle("물총으로 공을 아래로 떨어뜨려보자");
+        //questSubtitle.ShowQuestSubtitle("물총으로 공을 아래로 떨어뜨려보자");*/
+        questUI.ActivatePopUP("공굴리기 활용", "물총으로 물총으로 공을 아래로 떨어뜨려보자");
     }
 
 
@@ -160,7 +161,9 @@ public class TutorialCenter : MonoBehaviour
         UIGroup.SetActive(false);
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
+        questUI.DeactivatePopUp();
         subtitle.ShowSubtitle("카날리아 : 바이러스가 퍼지는 것을 막기 위해,  나가서 컴퓨터로 모든 문을 잠그자!");
+        questUI.ActivatePopUP("이동하기", "다음 맵으로 이동하십시오");
         StartCoroutine(Clear());
     }
 
