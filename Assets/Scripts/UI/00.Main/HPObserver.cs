@@ -7,6 +7,7 @@ public class HPObserver : MonoBehaviour, IObserver
 {
     public Image[] hpImageArray;
     public TextMeshProUGUI hpText;
+    public TextMeshProUGUI maxhpText;
 
     public void Notify(ISubject subject)
     {
@@ -20,5 +21,6 @@ public class HPObserver : MonoBehaviour, IObserver
         }
 
         hpText.text = playerStats.currentHealth.ToString();
+        maxhpText.text = playerStats.maxHealth.ToString();
     }
 }

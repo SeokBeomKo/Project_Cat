@@ -12,7 +12,7 @@ public class PlayerStats : MonoBehaviour, ISubject
 
     [Header("체력")]
     [SerializeField]    
-    private int maxHealth;
+    public int maxHealth;
     private int _currentHealth;
 
     public int currentHealth 

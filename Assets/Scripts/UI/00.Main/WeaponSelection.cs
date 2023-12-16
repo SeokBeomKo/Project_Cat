@@ -42,6 +42,11 @@ public class WeaponSelection : MonoBehaviour
         SetCurWeapon();
     }
 
+    public void SetMaxBullet()
+    {
+        
+    }
+
     public void SetCurWeapon(int number = 0)
     {
         SelectWeapon(number);

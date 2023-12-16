@@ -6,7 +6,7 @@ public class DataInitializater : MonoBehaviour
 {
     void Awake()
     {
-        PlayerPrefs.SetInt("SoapRifleWEAPON_CURRENT_BULLET",0);
+        PlayerPrefs.SetInt("SoapRifleWEAPON_CURRENT_BULLET",10);
         PlayerPrefs.SetInt("SplashBusterWEAPON_CURRENT_BULLET",0);
         PlayerPrefs.SetInt("BubbleGunWEAPON_CURRENT_BULLET",0);
     }
