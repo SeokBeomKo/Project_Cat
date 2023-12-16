@@ -27,7 +27,7 @@ public class MazeData : GameData
                 height = int.Parse(column[1]);
             }
         }
-
+        SaveDataToPrefs();
         isLoaded = true;
     }
 

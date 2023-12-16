@@ -24,7 +24,7 @@ public class HPData : GameData
                 hp = float.Parse(column[0]);
             }
         }
-
+        SaveDataToPrefs();
         isLoaded = true;
     }
 
