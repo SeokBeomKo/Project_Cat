@@ -9,6 +9,9 @@ namespace SpecialAttack
         [Header("데이터")]
         public BattleCatWaveData data;
 
+        [Header("히트 박스")]
+        public GameObject hitBox;
+
         private float timer = 0f;
         private float maxTimer = 3.5f;
         private float growthSpeed = 1f;
@@ -18,6 +21,8 @@ namespace SpecialAttack
         private float size = 0f;
 
         private Animator animator = null;
+        private Renderer waveRenderer = null;
+        private Color initialColor;
 
         void Awake()
         {
@@ -31,6 +36,8 @@ namespace SpecialAttack
             growthSpeed = data.growthSpeed;
 
             animator = transform.parent.GetComponent<Animator>();
+            waveRenderer = hitBox.GetComponent<Renderer>();
+            initialColor = waveRenderer.material.color;
 
             maxTimer = (maxSize - minSize) / growthSpeed;
         }
@@ -38,6 +45,11 @@ namespace SpecialAttack
         private void OnEnable()
         {
             SetInitialSize();
+
+            if(waveRenderer != null)
+            {
+                waveRenderer.material.color = initialColor;
+            }
         }
 
         void Update()
@@ -61,6 +73,8 @@ namespace SpecialAttack
             {
                 size = Mathf.Lerp(size, maxSize, Time.deltaTime * growthSpeed);
                 transform.localScale = new Vector3(size, transform.localScale.y, size);
+                Color newColor = new Color(initialColor.r, Mathf.Lerp(initialColor.g, initialColor.g - growthSpeed * 5, timer / maxTimer), initialColor.b, initialColor.a);
+                waveRenderer.material.color = newColor;
             }
             else
             {

@@ -24,6 +24,8 @@ public class BattleCenter : MonoBehaviour
             virus[index].OnRespawnTimerStart += () => OnRespawnTimer(index);
 
         }
+
+        PlayerPrefs.SetInt("Restart", 3);
     }
 
     public void OnRespawnTimer(int index)

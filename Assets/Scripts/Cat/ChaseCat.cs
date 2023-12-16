@@ -27,10 +27,13 @@ public class ChaseCat : MonoBehaviour
     private Transform[] waypoints;
     private Transform previousWaypoint;
 
-    private void Start()
+    private void Awake()
     {
         data.LoadDataFromPrefs();
+    }
 
+    private void Start()
+    {
         moveSpeed = data.moveSpeed;
         animator = GetComponentInParent<Animator>();
 
