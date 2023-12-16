@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/BattleCat/CleanlinessLikeability")]
 public class CleanlinessLikeability : GameData
 {
-    string KEY_MIN_ATTACK_SIZE = "BATTLE_CAT_MIN_ATTACK_SIZE";
-    string KEY_MAX_ATTACK_SIZE = "BATTLE_CAT_MAX_ATTACK_SIZE";
-    string KEY_GROWTH_SPEED = "BATTLE_CAT_GROWTH_SPEED";
+    string KEY_MAX_BODY_CLEANLINESS = "BATTLE_CAT_MAX_BODY_CLEANLINESS";
+    string KEY_MAX_FOOT_CLEANLINESS = "BATTLE_MAX_FOOT_CLEANLINESS";
+    string KEY_MAX_LIKEABILITY = "BATTLE_CAT_MAX_LIKEABILITY";
 
-    [Header("���� ������")]
+    [Header("저장 데이터")]
     public float maxBodyCleanliness;
     public float maxFootCleanliness;
     public float maxLikeability;
@@ -36,21 +36,21 @@ public class CleanlinessLikeability : GameData
 
     public override void SaveDataToPrefs()
     {
-        PlayerPrefs.SetFloat(key + KEY_MIN_ATTACK_SIZE, maxBodyCleanliness);
-        PlayerPrefs.SetFloat(key + KEY_MAX_ATTACK_SIZE, maxFootCleanliness);
-        PlayerPrefs.SetFloat(key + KEY_GROWTH_SPEED, maxLikeability);
+        PlayerPrefs.SetFloat(key + KEY_MAX_BODY_CLEANLINESS, maxBodyCleanliness);
+        PlayerPrefs.SetFloat(key + KEY_MAX_FOOT_CLEANLINESS, maxFootCleanliness);
+        PlayerPrefs.SetFloat(key + KEY_MAX_LIKEABILITY, maxLikeability);
     }
 
     public override void LoadDataFromPrefs()
     {
-        if (PlayerPrefs.HasKey(key + KEY_MIN_ATTACK_SIZE))
-            maxBodyCleanliness = PlayerPrefs.GetFloat(key + KEY_MIN_ATTACK_SIZE);
+        if (PlayerPrefs.HasKey(key + KEY_MAX_BODY_CLEANLINESS))
+            maxBodyCleanliness = PlayerPrefs.GetFloat(key + KEY_MAX_BODY_CLEANLINESS);
 
-        if (PlayerPrefs.HasKey(key + KEY_MAX_ATTACK_SIZE))
-            maxFootCleanliness = PlayerPrefs.GetFloat(key + KEY_MAX_ATTACK_SIZE);
+        if (PlayerPrefs.HasKey(key + KEY_MAX_FOOT_CLEANLINESS))
+            maxFootCleanliness = PlayerPrefs.GetFloat(key + KEY_MAX_FOOT_CLEANLINESS);
 
-        if (PlayerPrefs.HasKey(key + KEY_GROWTH_SPEED))
-            maxLikeability = PlayerPrefs.GetFloat(key + KEY_GROWTH_SPEED);
+        if (PlayerPrefs.HasKey(key + KEY_MAX_LIKEABILITY))
+            maxLikeability = PlayerPrefs.GetFloat(key + KEY_MAX_LIKEABILITY);
     }
 
 }
