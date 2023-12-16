@@ -24,7 +24,7 @@ public class SpeedData : GameData
                 speed = float.Parse(column[0]);
             }
         }
-
+        SaveDataToPrefs();
         isLoaded = true;
     }
 

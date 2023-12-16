@@ -28,6 +28,8 @@ public class FlyObjectData : GameData
             }
         }
 
+        SaveDataToPrefs();
+
         isLoaded = true;
     }
 

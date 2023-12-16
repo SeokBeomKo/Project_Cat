@@ -27,7 +27,7 @@ public class VirusStaticData : GameData
                 damage = int.Parse(column[1]);
             }
         }
-
+        SaveDataToPrefs();
         isLoaded = true;
     }
 
