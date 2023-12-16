@@ -7,6 +7,13 @@ public class GameGuide : MonoBehaviour
     public GameObject keyGuide;
     public GameObject itemGuide;
     public GameObject gunGuide;
+    public GameObject virusGuide;
+
+    public delegate void GuideHandler();
+    public event GuideHandler OnCloseKey;
+    public event GuideHandler OnCloseItem;
+    public event GuideHandler OnCloseGun;
+    public event GuideHandler OnCloseVirus;
 
     public void ShowKeyPopUp()
     {
@@ -17,6 +24,7 @@ public class GameGuide : MonoBehaviour
     public void CloseKeyPopUp()
     {
         keyGuide.SetActive(false);
+        OnCloseKey?.Invoke();
         Time.timeScale = 1f;
     }
 
@@ -30,6 +38,7 @@ public class GameGuide : MonoBehaviour
     {
         itemGuide.SetActive(false);
         Time.timeScale = 1f;
+        OnCloseItem?.Invoke();
     }
 
     public void ShowGunPopUp()
@@ -42,5 +51,19 @@ public class GameGuide : MonoBehaviour
     {
         gunGuide.SetActive(false);
         Time.timeScale = 1f;
+        OnCloseGun?.Invoke();
+    }
+
+    public void ShowVirusPopUp()
+    {
+        virusGuide.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void CloseVirusPopUp()
+    {
+        virusGuide.SetActive(false);
+        Time.timeScale = 1f;
+        OnCloseVirus?.Invoke();
     }
 }
