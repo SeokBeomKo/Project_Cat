@@ -23,8 +23,8 @@ public class VirusStaticData : GameData
             string[] column = row[i].Split('\t');
             for (int j = 0; j < columnSize; j++)
             {
-                hp = int.Parse(column[0]);
-                damage = int.Parse(column[1]);
+                hp = float.Parse(column[0]);
+                damage = float.Parse(column[1]);
             }
         }
         SaveDataToPrefs();
@@ -40,9 +40,9 @@ public class VirusStaticData : GameData
     public override void LoadDataFromPrefs()
     {
         if (PlayerPrefs.HasKey(key + KEY_HP))
-            hp = PlayerPrefs.GetInt(key + KEY_HP);
+            hp = PlayerPrefs.GetFloat(key + KEY_HP);
 
         if (PlayerPrefs.HasKey(key + KEY_DAMAGE))
-            damage = PlayerPrefs.GetInt(key + KEY_DAMAGE);
+            damage = PlayerPrefs.GetFloat(key + KEY_DAMAGE);
     }
 }
