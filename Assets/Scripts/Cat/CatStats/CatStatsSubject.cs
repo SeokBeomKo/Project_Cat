@@ -31,6 +31,11 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
     }
 
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+    }
+
     private void Start()
     {
         catCleanliness.Add(PartsEnums.BACK, (0, data.maxBodyCleanliness));

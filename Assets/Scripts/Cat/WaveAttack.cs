@@ -57,7 +57,6 @@ namespace SpecialAttack
             timer += Time.deltaTime;
 
             IncreaseSize();
-            
         }
 
         private void SetInitialSize()
