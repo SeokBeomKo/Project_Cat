@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BigBottle : MonoBehaviour
 {
+    public delegate void BigBottleHandle();
+    public event BigBottleHandle OnChargeAll;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))

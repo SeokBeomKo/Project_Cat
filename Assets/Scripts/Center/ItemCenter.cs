@@ -4,32 +4,38 @@ using UnityEngine;
 
 public class ItemCenter : MonoBehaviour
 {
-    [Header("ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®")]
+    [Header("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
     public GameObject Player;
 
-    [Header("¾ÆÀÌÅÛ ÈÙ UI")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ UI")]
     public ItemWheel itemWheel;
     
-    [Header("º¸È£ ¿¡³ÊÁö")]
+    [Header("ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public ProtectEnergyUse energyUse;
     
-    [Header("Çì¾îº¼")]
+    [Header("ï¿½ï¿½îº¼")]
     public HairBallUse hairBallUse;
 
-    [Header("·£´ý ¾ÆÀÌÅÛ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public RandomItem randomItem;
 
-    [Header("ÇÃ·¹ÀÌ¾î ½ºÅÈ")]
+    [Header("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public PlayerStats playerStats;
 
-    [Header("ÃÑ±â")]
+    [Header("ï¿½Ñ±ï¿½")]
     public WeaponStrategy weaponStrategy;
 
-    [Header("ÀÌµ¿ ¼Óµµ Áõ°¡ Áö¼Ó ½Ã°£")]
+    [Header("ï¿½Ìµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
     public float moveSpeedTime;
 
-    [Header("°ø°Ý·Â Áõ°¡ Áö¼Ó ½Ã°£")]
+    [Header("ï¿½ï¿½ï¿½Ý·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
     public float attackPowerTime;
+
+    public WeaponStrategy weapon;
+    public GameObject bigBottleObject;
+    private BigBottle bigBottle;
+    public GameObject bottleObject;
+    private NavigateVaseOperation bottle;
 
 
     private void Start()
@@ -37,37 +43,42 @@ public class ItemCenter : MonoBehaviour
         itemWheel.onItemClick += ClickTrue;
         if (randomItem != null)
             randomItem.OnRandomItem += GetRandomItem;
+
+        bigBottle.OnChargeAll += ChargeAll;
+
+        bigBottle = GetComponentInChildren<BigBottle>();
+        bottle = GetComponentInChildren<NavigateVaseOperation>();
     }
 
     public void ClickTrue(string itemName)
     {
         switch(itemName)
         {
-            case "º¸È£¸·":
+            case "ï¿½ï¿½È£ï¿½ï¿½":
                 energyUse.CreateProtectEnergy(Player.transform.position, Player.transform);
                 break;
 
-            case "ÀÌµ¿¼Óµµ":
+            case "ï¿½Ìµï¿½ï¿½Óµï¿½":
                 playerStats.AddMoveSpeed(moveSpeedTime);
                 break;
 
-            case "°ø°Ý·Â":
+            case "ï¿½ï¿½ï¿½Ý·ï¿½":
                 weaponStrategy.DamageUp(attackPowerTime);
                 break;
 
-            case "ÅÐ¹¶Ä¡":
+            case "ï¿½Ð¹ï¿½Ä¡":
                 if (!hairBallUse.CheckObstacleInFront(Player.transform.position, Player.transform.forward))
                 {
                     hairBallUse.CreateHairBall(Player.transform.position, Player.transform.forward);
                 }
                 else
                 {
-                    Debug.Log("[ItemCenter] Àå¾Ö¹°ÀÌ ÀÖ¾î »ý¼ºÇÒ ¼ö ¾øÀ½");
+                    Debug.Log("[ItemCenter] ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 }
                 break;
 
-            case "Ãò¸£":
-                Debug.Log("[ItemCenter] Ãò¸£ ¼±ÅÃ");
+            case "ï¿½ï¿½":
+                Debug.Log("[ItemCenter] ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
@@ -77,13 +88,23 @@ public class ItemCenter : MonoBehaviour
         switch(itemName)
         {
             case "WaterBottle":
-                Debug.Log("[ItemCenter] Åº¾à ÃæÀü");
+                Debug.Log("[ItemCenter] Åºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 break;
 
             case "LifeEnergy":
-                playerStats.FillHealth(10); // ¼öÄ¡ ¼öÁ¤ÇØ¾ß µÊ
-                Debug.Log("[ItemCenter] ÇÃ·¹ÀÌ¾î HP ÃæÀü");
+                playerStats.FillHealth(10); // ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½
+                Debug.Log("[ItemCenter] ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ HP ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
+    }
+
+    public void ChargeAll()
+    {
+        weapon.ChargeAllBullet();
+    }
+
+    public void ChargeCurrent()
+    {
+        weapon.ChargeCurrentBullet(bottle.GetChargeAmount());
     }
 }

@@ -8,7 +8,7 @@ public class WaterChargeAmountData : GameData
     string KEY_AMOUNT = "WATER_CHARGE_AMOUNT";
 
     [Header("저장 데이터")]
-    public float amount;
+    public int amount;
 
     public override void ProcessData(string tsv)
     {
@@ -21,7 +21,7 @@ public class WaterChargeAmountData : GameData
             string[] column = row[i].Split('\t');
             for (int j = 0; j < columnSize; j++)
             {
-                amount = float.Parse(column[0]);
+                amount = int.Parse(column[0]);
             }
         }
         SaveDataToPrefs();
@@ -31,13 +31,13 @@ public class WaterChargeAmountData : GameData
 
     public override void SaveDataToPrefs()
     {
-        PlayerPrefs.SetFloat(key + KEY_AMOUNT, amount);
+        PlayerPrefs.SetInt(key + KEY_AMOUNT, amount);
     }
 
     public override void LoadDataFromPrefs()
     {
         if (PlayerPrefs.HasKey(key + KEY_AMOUNT))
-            amount = PlayerPrefs.GetFloat(key + KEY_AMOUNT);
+            amount = PlayerPrefs.GetInt(key + KEY_AMOUNT);
         
 
     }

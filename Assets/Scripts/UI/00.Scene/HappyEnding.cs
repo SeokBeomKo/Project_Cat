@@ -8,6 +8,9 @@ public class HappyEnding : MonoBehaviour
     public QuestSubtitle questSubtitle;
     public Subtitle subtitle;
 
+    [Header("로드 씬")]
+    public LoadScene loadScene;
+    
     private void Start()
     {
         SoundManager.Instance.PlayBGM("HappyEnding");
@@ -32,5 +35,8 @@ public class HappyEnding : MonoBehaviour
         questSubtitle.ShowQuestSubtitle("카날리아 : 널 만나서 정말 다행이야.  앞으로도 잘 부탁해!");
         yield return new WaitForSeconds(5f);
         questSubtitle.ShowQuestSubtitle("로키 : 애옹");
+
+        yield return new WaitForSeconds(5f);
+        loadScene.ChangeSceneCoroutine();
     }
 }

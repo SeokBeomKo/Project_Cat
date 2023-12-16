@@ -98,8 +98,8 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
 
         if (otherTag.Contains("Parts"))
         {
-            isCollision = true;
             onFly?.Invoke();
+            isCollision = true;
         }
     }
 
