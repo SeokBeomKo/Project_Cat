@@ -16,12 +16,27 @@ public class PlayerCenter : MonoBehaviour
     [SerializeField]
     WeaponStrategy weaponStrategy;
 
+    void Awake()
+    {
+        playerStats.SetCurHp(DataManager.Instance.GetPlayerHP());
+
+        weaponStrategy.SetCurrentBullet(DataManager.Instance.GetWeaponBullet(WEAPON_LIST.SOAP_RIFLE), 
+                                        DataManager.Instance.GetWeaponBullet(WEAPON_LIST.SPLASH_BUSTER), 
+                                        DataManager.Instance.GetWeaponBullet(WEAPON_LIST.BUBBLE_GUN));
+    }
+
     private void Start() 
     {
+        weaponStrategy.weaponList[0].OnWeaponBullet += SaveBullet;
         playerHitScan.OnPlayerHitScan += HitPlayer;
 
         playerHitScan.OnPlayerSpeedUp += SpeedUp;
         playerHitScan.OnPlayerDamageUp += DamageUp;
+    }
+
+    public void SaveBullet()
+    {
+        //DataManager.Instance.SetWeaponBullet();
     }
 
     public void DamageUp()
