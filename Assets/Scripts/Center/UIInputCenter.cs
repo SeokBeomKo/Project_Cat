@@ -13,6 +13,9 @@ public class UIInputCenter : MonoBehaviour
     [Header("¼¼Ã´µµ ÆË¾÷")]
     public CleanlinessPopUpObserver clean;
 
+    [Header("Å©·Î½º Çì¾î")]
+    public CrossHairSelection crossHair;
+
     private void Start()
     {
         uiHandle.OnPausePopUp += ActivePausePopUp;
@@ -21,6 +24,9 @@ public class UIInputCenter : MonoBehaviour
             uiHandle.OnCleanlinessPopUpTrue += ActiveCleanPopUp;
             uiHandle.OnCleanlinessPopUpFalse += DeactiveCleanPopUp;
         }
+        uiHandle.OnSelectSoapRifle += OnSoapRifle;
+        uiHandle.OnSelectSplashBuster += OnSplashBuster;
+        uiHandle.OnselectBubbleGun += OnBubbleGun;
     }
 
     public void ActivePausePopUp()
@@ -36,5 +42,20 @@ public class UIInputCenter : MonoBehaviour
     public void DeactiveCleanPopUp()
     {
         clean.DeactivateCleanliness();
+    }
+
+    public void OnSoapRifle()
+    {
+        crossHair.SelectSoapRifle();
+    }
+
+    public void OnSplashBuster()
+    {
+        crossHair.SelectSplashBuster();
+    }
+
+    public void OnBubbleGun()
+    {
+        crossHair.SelectBubbleGun();
     }
 }
