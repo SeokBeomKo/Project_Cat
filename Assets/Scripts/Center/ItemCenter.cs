@@ -9,10 +9,10 @@ public class ItemCenter : MonoBehaviour
 
     [Header("������ �� UI")]
     public ItemWheel itemWheel;
-    
+
     [Header("��ȣ ������")]
     public ProtectEnergyUse energyUse;
-    
+
     [Header("��")]
     public HairBallUse hairBallUse;
 
@@ -31,11 +31,11 @@ public class ItemCenter : MonoBehaviour
     [Header("���ݷ� ���� ���� �ð�")]
     public float attackPowerTime;
 
-    public WeaponStrategy weapon;
     public GameObject bigBottleObject;
-    private BigBottle bigBottle;
+    public BigBottle[] bigBottle;
+
     public GameObject bottleObject;
-    private NavigateVaseOperation bottle;
+    public NavigateVaseOperation[] bottle;
 
 
     private void Start()
@@ -44,11 +44,27 @@ public class ItemCenter : MonoBehaviour
         if (randomItem != null)
             randomItem.OnRandomItem += GetRandomItem;
 
-        bigBottle.OnChargeAll += ChargeAll;
+        bigBottle = bigBottleObject.GetComponentsInChildren<BigBottle>();
+        bottle = bottleObject.GetComponentsInChildren<NavigateVaseOperation>();
 
-        bigBottle = GetComponentInChildren<BigBottle>();
-        bottle = GetComponentInChildren<NavigateVaseOperation>();
-    }
+        if (bigBottle != null)
+        {
+           for(int i=0; i<bigBottle.Length; i++)
+            {
+                int index = i;
+                bigBottle[index].OnChargeAll += GetRandomItem;
+            }
+        }
+
+        if (bottle != null)
+        {
+            for (int i = 0; i < bottle.Length; i++)
+            {
+                int index = i;
+                bottle[index].OnCharge += GetRandomItem;
+            }
+        }
+    } 
 
     public void ClickTrue(string itemName)
     {
@@ -85,26 +101,23 @@ public class ItemCenter : MonoBehaviour
 
     public void GetRandomItem(string itemName)
     {
-        switch(itemName)
+        Debug.Log(" function call");
+
+        switch (itemName)
         {
             case "WaterBottle":
-                Debug.Log("[ItemCenter] ź�� ����");
+                weaponStrategy.ChargeCurrentBullet(bottle[0].GetChargeAmount());
                 break;
 
             case "LifeEnergy":
                 playerStats.FillHealth(10); // ��ġ �����ؾ� ��
-                Debug.Log("[ItemCenter] �÷��̾� HP ����");
+                break;
+
+            case "BigBottle":
+                Debug.Log("item all charge function call");
+
+                weaponStrategy.ChargeAllBullet();
                 break;
         }
-    }
-
-    public void ChargeAll()
-    {
-        weapon.ChargeAllBullet();
-    }
-
-    public void ChargeCurrent()
-    {
-        weapon.ChargeCurrentBullet(bottle.GetChargeAmount());
     }
 }

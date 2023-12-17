@@ -8,7 +8,7 @@ public class NavigateVaseOperation : MonoBehaviour
     public WaterChargeAmountData data;
     private int waterCharge;
 
-    public delegate void BottleHandle();
+    public delegate void BottleHandle(string name);
     public event BottleHandle OnCharge;
 
     private void Awake()
@@ -22,8 +22,7 @@ public class NavigateVaseOperation : MonoBehaviour
     {
         if(collision.transform.tag =="Player")
         {
-            Debug.Log("탄약 충전량 : " + waterCharge);
-
+            OnCharge?.Invoke("WaterBottle");
             SoundManager.Instance.PlaySFX("GetItem");
             transform.parent.gameObject.SetActive(false);
         }
