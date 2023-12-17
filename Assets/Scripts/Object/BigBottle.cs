@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class BigBottle : MonoBehaviour
 {
-    public delegate void BigBottleHandle();
+    public delegate void BigBottleHandle(string name);
     public event BigBottleHandle OnChargeAll;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("탄약 풀 충전 ");
+            Debug.Log("item all charge");
+            OnChargeAll?.Invoke("BigBottle");
             transform.parent.gameObject.SetActive(false);
-
         }
     }
 }
