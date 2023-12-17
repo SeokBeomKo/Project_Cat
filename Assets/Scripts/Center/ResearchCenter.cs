@@ -45,6 +45,9 @@ public class ResearchCenter : MonoBehaviour
     [Header("아이템 휠")]
     public GameObject itemWheel;
 
+    [Header("고양이")]
+    [SerializeField] public GameObject cat;
+
     private void Start()
     {
         PlayerPrefs.SetInt("Restart", 1);
@@ -84,6 +87,7 @@ public class ResearchCenter : MonoBehaviour
     {
         inputHandler.gameObject.SetActive(false);
         StartCoroutine(barrier.MoveBarrierCoroutine());
+        cat.SetActive(true);
         subtitle.ShowSubtitle("카날리아 : 좋아! 모든 문을 잠궜어!", delayTime: 2.5f) ;
     }
 
