@@ -6,8 +6,8 @@ public class PlantChaseOperation : MonoBehaviour
 {
     public GameObject Wall;
 
-    private float rotationSpeed = 5f;
-    private float moveSpeed = 2f;
+    private float rotationSpeed = 200f;
+    private float moveSpeed = 0.7f;
 
     private bool isRotation = false;
     private bool isFalling = false;

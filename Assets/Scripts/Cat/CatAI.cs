@@ -27,16 +27,15 @@ namespace BehaviorTree
 
         private bool playerInMeleeRange = false;
         private bool chargeAttackTime = false;
-        private bool isAttackComplete = true;
-        private bool isAttacking = false;
         private bool isWaveAttacking = false;
+        private bool isAttackReady = true;
 
         private float randomNumber = 0f;
         private float attackEndTimer = 0f;
-        private float waveTimer = 0f;
         private float attackResumptionTime = 2f;
         private float movementSpeed = 10.0f;
         private float waveAttackTime = 15f;
+        private float waveTimer = 0f;
 
         private Tree tree = null;
         private Animator animator = null;
@@ -71,13 +70,12 @@ namespace BehaviorTree
 
         private void ReAttack()
         {
-            if (isAttacking)
+            if(!isAttackReady)
             {
                 attackEndTimer += Time.deltaTime;
-                if (attackEndTimer >= attackResumptionTime)
+                if(attackEndTimer >= attackResumptionTime)
                 {
-                    isAttackComplete = true;
-                    isAttacking = false;
+                    isAttackReady = true;
                     attackEndTimer = 0f;
                 }
             }
@@ -122,8 +120,7 @@ namespace BehaviorTree
                 new List<Node>()
                 {
                     new ActionNode(CheckWaveAttackTime),
-                    new ActionNode(DoWaveAttack),
-                    new ActionNode(WaitForWaveAttackCompletion)
+                    new ActionNode(DoWaveAttack)
                 });
 
             var triggerAttack = new Sequence(
@@ -169,39 +166,32 @@ namespace BehaviorTree
 
         Node.NodeState CheckAnimation()
         {
-            if (IsAnimationRunning("Run") && !waveCollider.activeSelf)
+            if ((IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack") || isWaveAttacking) && isAttackReady)
             {
-                meleeDamageBox.SetActive(false);
-                chargeDamageBox.SetActive(false);
-                return Node.NodeState.SUCCESS;
-            }
-            else if (IsAnimationRunning("Attack") || IsAnimationRunning("ChargeAttack") || waveCollider.activeSelf)
-            {
-                if (IsAnimationRunning("Attack"))
-                {
-                    meleeDamageBox.SetActive(true);
-                }
-                else
-                {
-                    chargeDamageBox.SetActive(true);
-                }
                 return Node.NodeState.RUNNING;
             }
 
-            meleeDamageBox.SetActive(false);
-            chargeDamageBox.SetActive(false);
-            
+            if (IsAnimationRunning("Run") && isAttackReady)
+            {
+                return Node.NodeState.SUCCESS;
+            }
+
+            if (IsAnimationRunning("Idle"))
+            {
+                meleeDamageBox.SetActive(false);
+                chargeDamageBox.SetActive(false);
+                return Node.NodeState.FAILURE;
+            }
+
             return Node.NodeState.FAILURE;
+            
         }
 
         Node.NodeState CheckPlayerWithinMeleeAttackRange()
         {
-            if (playerTransform != null)
+            if (playerInMeleeRange)
             {
-                if (playerInMeleeRange && isAttackComplete)
-                {
-                    return Node.NodeState.SUCCESS;
-                }
+                return Node.NodeState.SUCCESS;
             }
 
             return Node.NodeState.FAILURE;
@@ -209,16 +199,12 @@ namespace BehaviorTree
 
         Node.NodeState CheckChargeTime()
         {
-            if (playerTransform != null)
+            if (playerTransform != null && chargeAttackTime)
             {
-                if (chargeAttackTime)
-                {
-                    chargeAttackPosition = playerTransform.position;
-                    chargeAttackTime = false;
-                    return Node.NodeState.SUCCESS;
-                }
+                chargeAttackPosition = playerTransform.position;
+                
+                return Node.NodeState.SUCCESS;
             }
-
             return Node.NodeState.FAILURE;
         }
 
@@ -226,13 +212,11 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                animator.SetTrigger("chargeAttack");
                 chargeDamageBox.SetActive(true);
                 StartCoroutine(PerformChargeAttack());
-
-                isAttacking = true;
-                isAttackComplete = false;
-
+                chargeAttackTime = false;
+                isAttackReady = false;
+                
                 return Node.NodeState.SUCCESS;
             }
 
@@ -270,13 +254,14 @@ namespace BehaviorTree
         Node.NodeState DoMeleeAttack()
         {
             randomNumber = Random.Range(0f, 1.0f);
-            if (playerTransform != null && randomNumber > 0.3f)
+            if (randomNumber > 0.3f)
             {
+                meleeDamageBox.SetActive(true);
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
-                isAttacking = true;
-                isAttackComplete = false;
+                isAttackReady = false;
                 chargeAttackTime = true;
+
                 SoundManager.Instance.PlaySFX("CatBasicAttack");
                 return Node.NodeState.SUCCESS;
             }
@@ -287,11 +272,12 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
+                meleeDamageBox.SetActive(true);
                 meleeParticle.Play();
                 animator.SetTrigger("attack");
-                isAttacking = true;
-                isAttackComplete = false;
+                isAttackReady = false;
                 chargeAttackTime = true;
+
                 canvasImage.enabled = true;
                 SoundManager.Instance.PlaySFX("CatBasicAttack");
                 StartCoroutine(FadeOutOverTime(5.0f));
@@ -323,15 +309,12 @@ namespace BehaviorTree
 
         Node.NodeState CheckWaveAttackTime()
         {
-            if (playerTransform != null)
+            if (waveTimer >= waveAttackTime)
             {
-                if (waveTimer >= waveAttackTime)
-                {
-                    chargeAttackTime = false;
-                    waveTimer = 0f;
+                chargeAttackTime = false;
+                waveTimer = 0f;
 
-                    return Node.NodeState.SUCCESS;
-                }
+                return Node.NodeState.SUCCESS;
             }
 
             return Node.NodeState.FAILURE;
@@ -341,8 +324,6 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
-                isAttacking = true;
-                isAttackComplete = false;
                 StartCoroutine(PerformWaveAttack());
                 return Node.NodeState.SUCCESS;
             }
@@ -368,11 +349,13 @@ namespace BehaviorTree
             }
             waveCollider.SetActive(true);
             isWaveAttacking = true;
+            isAttackReady = false;
         }
 
+        // RUN
         Node.NodeState CheckAttackEndTime()
         {
-            if (playerTransform != null && isAttackComplete)
+            if (isAttackReady)
             {
                 return Node.NodeState.SUCCESS;
             }
@@ -392,7 +375,8 @@ namespace BehaviorTree
                     animator.SetBool("idle", false);
                     animator.SetBool("run", true);
 
-                    Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+                    Vector3 playerDirectionNoY = new Vector3(playerDirection.x, 0f, playerDirection.z);
+                    Quaternion targetRotation = Quaternion.LookRotation(playerDirectionNoY);
                     transform.parent.rotation = targetRotation;
 
                     Vector3 targetPosition = new Vector3(playerTransform.position.x, transform.parent.position.y, playerTransform.position.z);
@@ -401,7 +385,6 @@ namespace BehaviorTree
                     return Node.NodeState.SUCCESS;
                 }
             }
-
             return Node.NodeState.FAILURE;
         }
 
@@ -414,16 +397,6 @@ namespace BehaviorTree
                 return Node.NodeState.SUCCESS;
             }
             return Node.NodeState.FAILURE;
-        }
-
-        Node.NodeState WaitForWaveAttackCompletion()
-        {
-            if (!isAttacking)
-            {
-                waveCollider.SetActive(false);
-                return Node.NodeState.SUCCESS;
-            }
-            return Node.NodeState.RUNNING;
         }
 
         private void OnTriggerEnter(Collider other)
