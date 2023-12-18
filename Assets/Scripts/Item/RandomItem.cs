@@ -31,17 +31,14 @@ public class RandomItem : MonoBehaviour
                 if (itemName == "WaterBottle")
                 {
                     OnRandomItem?.Invoke("WaterBottle");
-                    Debug.Log("[RandomItem] WaterBottle : 탄약 충전");
                 }
                 else if (itemName == "LifeEnergy")
                 {
                     OnRandomItem?.Invoke("LifeEnergy");
-                    Debug.Log("[RandomItem] LifeEnergy : 플레이어 HP 충전");
                 }
                 else
                 {
                     InventoryManager.Instance.AddItemToInventory(itemName);
-                    Debug.Log("[RandomItem] Randomly selected name: " + itemName);
                 }
                 gameObject.SetActive(false);
             }

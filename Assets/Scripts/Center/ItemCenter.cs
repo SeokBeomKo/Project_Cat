@@ -4,31 +4,34 @@ using UnityEngine;
 
 public class ItemCenter : MonoBehaviour
 {
-    [Header("�÷��̾� ������Ʈ")]
+    [Header("플레이어")]
     public GameObject Player;
 
-    [Header("������ �� UI")]
+    [Header("아이템 휠 UI")]
     public ItemWheel itemWheel;
 
-    [Header("��ȣ ������")]
+    [Header("보호에너지")]
     public ProtectEnergyUse energyUse;
 
-    [Header("��")]
+    [Header("털뭉치")]
     public HairBallUse hairBallUse;
 
-    [Header("���� ������")]
+    [Header("랜덤 아이템")]
     public RandomItem randomItem;
 
-    [Header("�÷��̾� ����")]
+    [Header("플레이어 스탯")]
     public PlayerStats playerStats;
 
-    [Header("�ѱ�")]
+    [Header("무기")]
     public WeaponStrategy weaponStrategy;
 
-    [Header("�̵� �ӵ� ���� ���� �ð�")]
+    [Header("고양이")]
+    public CatStatsSubject catSubject;
+
+    [Header("이동속도 시간")]
     public float moveSpeedTime;
 
-    [Header("���ݷ� ���� ���� �ð�")]
+    [Header("공격력 시간")]
     public float attackPowerTime;
 
     public GameObject bigBottleObject;
@@ -70,31 +73,28 @@ public class ItemCenter : MonoBehaviour
     {
         switch(itemName)
         {
-            case "��ȣ��":
+            case "보호막":
                 energyUse.CreateProtectEnergy(Player.transform.position, Player.transform);
                 break;
 
-            case "�̵��ӵ�":
+            case "이동속도":
                 playerStats.AddMoveSpeed(moveSpeedTime);
                 break;
 
-            case "���ݷ�":
+            case "공격력":
                 weaponStrategy.DamageUp(attackPowerTime);
                 break;
 
-            case "�й�ġ":
+            case "털뭉치":
                 if (!hairBallUse.CheckObstacleInFront(Player.transform.position, Player.transform.forward))
                 {
                     hairBallUse.CreateHairBall(Player.transform.position, Player.transform.forward);
                 }
-                else
-                {
-                    Debug.Log("[ItemCenter] ��ֹ��� �־� ������ �� ����");
-                }
-                break;
+                 break;
 
-            case "��":
-                Debug.Log("[ItemCenter] �� ����");
+            case "츄르":
+                if(catSubject != null)
+                    catSubject.IncreaseLikeability(30);
                 break;
         }
     }
@@ -110,7 +110,7 @@ public class ItemCenter : MonoBehaviour
                 break;
 
             case "LifeEnergy":
-                playerStats.FillHealth(10); // ��ġ �����ؾ� ��
+                playerStats.FillHealth(10); 
                 break;
 
             case "BigBottle":
