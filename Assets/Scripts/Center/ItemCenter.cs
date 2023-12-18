@@ -19,6 +19,9 @@ public class ItemCenter : MonoBehaviour
     [Header("랜덤 아이템")]
     public RandomItem randomItem;
 
+    [Header("아이템")]
+    public Item[] itemArray;
+
     [Header("플레이어 스탯")]
     public PlayerStats playerStats;
 
@@ -34,6 +37,9 @@ public class ItemCenter : MonoBehaviour
     [Header("공격력 시간")]
     public float attackPowerTime;
 
+    [Header("아이템 출력 UI")]
+    public GetItem getItem;
+
     public GameObject bigBottleObject;
     public BigBottle[] bigBottle;
 
@@ -44,8 +50,18 @@ public class ItemCenter : MonoBehaviour
     private void Start()
     {
         itemWheel.onItemClick += ClickTrue;
+        
         if (randomItem != null)
             randomItem.OnRandomItem += GetRandomItem;
+
+        if (itemArray != null)
+        {
+            for(int i = 0; i < itemArray.Length; i++)
+            {
+                int index = i;
+                itemArray[i].OnItem += GetItems;
+            }
+        }
 
         bigBottle = bigBottleObject.GetComponentsInChildren<BigBottle>();
         bottle = bottleObject.GetComponentsInChildren<NavigateVaseOperation>();
@@ -63,15 +79,18 @@ public class ItemCenter : MonoBehaviour
         {
             for (int i = 0; i < bottle.Length; i++)
             {
+                Debug.Log("등록");
                 int index = i;
                 bottle[index].OnCharge += GetRandomItem;
             }
         }
+
+        getItem.gameObject.SetActive(false);
     } 
 
     public void ClickTrue(string itemName)
     {
-        switch(itemName)
+        switch (itemName)
         {
             case "보호막":
                 energyUse.CreateProtectEnergy(Player.transform.position, Player.transform);
@@ -102,6 +121,9 @@ public class ItemCenter : MonoBehaviour
     public void GetRandomItem(string itemName)
     {
         Debug.Log(" function call");
+        Debug.Log(itemName);
+        getItem.gameObject.SetActive(true);
+        StartCoroutine(getItem.ShowGetItemText(itemName));
 
         switch (itemName)
         {
@@ -109,15 +131,20 @@ public class ItemCenter : MonoBehaviour
                 weaponStrategy.ChargeCurrentBullet(bottle[0].GetChargeAmount());
                 break;
 
-            case "LifeEnergy":
+            case "생명에너지":
                 playerStats.FillHealth(10); 
                 break;
 
             case "BigBottle":
                 Debug.Log("item all charge function call");
-
                 weaponStrategy.ChargeAllBullet();
                 break;
         }
+    }
+
+    public void GetItems(string itemName)
+    {
+        getItem.gameObject.SetActive(true);
+        StartCoroutine(getItem.ShowGetItemText(itemName));
     }
 }

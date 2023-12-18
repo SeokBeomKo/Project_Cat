@@ -11,8 +11,8 @@ public class RandomItem : MonoBehaviour
         "보호막",
         "츄르",
         "털뭉치",
-        "WaterBottle",
-        "LifeEnergy"
+        "탄약",
+        "생명에너지"
     };
 
     public delegate void RandomItemHandle(string itemName);
@@ -32,13 +32,14 @@ public class RandomItem : MonoBehaviour
                 {
                     OnRandomItem?.Invoke("WaterBottle");
                 }
-                else if (itemName == "LifeEnergy")
+                else if (itemName == "생명에너지")
                 {
-                    OnRandomItem?.Invoke("LifeEnergy");
+                    OnRandomItem?.Invoke("생명에너지");
                 }
                 else
                 {
                     InventoryManager.Instance.AddItemToInventory(itemName);
+                    OnRandomItem?.Invoke(itemName);
                 }
                 gameObject.SetActive(false);
             }

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour
-{    
+{
+    public delegate void ItemHandle(string itemName);
+    public event ItemHandle OnItem;
 
+    public string itemCode;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            string itemName = gameObject.name;
+            string itemName = itemCode;
 
             // "(Clone)" 문자열을 제거
             if (itemName.EndsWith("(Clone)"))
@@ -17,8 +20,8 @@ public class Item : MonoBehaviour
                 itemName = itemName.Substring(0, itemName.Length - 7); // 7은 "(Clone)" 문자열의 길이입니다.
             }
 
-            Debug.Log("item add : " + itemName);
             InventoryManager.Instance.AddItemToInventory(itemName);
+            OnItem?.Invoke(itemName);
             gameObject.SetActive(false);
 
         }
