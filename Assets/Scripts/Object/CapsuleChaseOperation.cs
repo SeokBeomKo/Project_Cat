@@ -120,7 +120,7 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
         timer = 0;
         while (transform.parent.position.y >= endPos.y)
         {
-            transform.parent.rotation = Quaternion.Euler(Time.time * 900, 0, 0);
+            transform.parent.rotation = Quaternion.Euler(Time.time * 300, 0, 0);
 
             timer += Time.deltaTime * moveSpeed;
             Vector3 tempPos = Parabola(startPos, endPos, height, timer);
