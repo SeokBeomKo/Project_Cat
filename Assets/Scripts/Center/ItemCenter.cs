@@ -17,7 +17,7 @@ public class ItemCenter : MonoBehaviour
     public HairBallUse hairBallUse;
 
     [Header("랜덤 아이템")]
-    public RandomItem randomItem;
+    public RandomItem[] randomItem;
 
     [Header("아이템")]
     public Item[] itemArray;
@@ -50,15 +50,17 @@ public class ItemCenter : MonoBehaviour
     private void Start()
     {
         itemWheel.onItemClick += ClickTrue;
-        
+
         if (randomItem != null)
-            randomItem.OnRandomItem += GetRandomItem;
+        {
+            for(int i = 0; i < randomItem.Length; i++)
+                randomItem[i].OnRandomItem += GetRandomItem;
+        }
 
         if (itemArray != null)
         {
             for(int i = 0; i < itemArray.Length; i++)
             {
-                int index = i;
                 itemArray[i].OnItem += GetItems;
             }
         }
@@ -79,7 +81,6 @@ public class ItemCenter : MonoBehaviour
         {
             for (int i = 0; i < bottle.Length; i++)
             {
-                Debug.Log("등록");
                 int index = i;
                 bottle[index].OnCharge += GetRandomItem;
             }
