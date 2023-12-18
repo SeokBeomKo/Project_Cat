@@ -127,6 +127,8 @@ public class ChaseCenter : MonoBehaviour
 
     public void onRobotStart()
     {
+        cat.transform.parent.gameObject.SetActive(false);
+
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetRobotStartCamera();
@@ -136,6 +138,8 @@ public class ChaseCenter : MonoBehaviour
     }
     public void onPlay()
     {
+        cat.transform.parent.gameObject.SetActive(true);
+
         //controllerUI.canvasUI = mazeCanvas;
         controllerUI.ShowUI();
         itemWheel.SetActive(true);
