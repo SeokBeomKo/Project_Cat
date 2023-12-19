@@ -29,7 +29,7 @@ public class CleanlinessProgressObserver : MonoBehaviour, IObserver
         Debug.Log("¼¼Ã´µµ : " + cleanlinessText.text);
         if(cleanlinessProgressBar.value == 1)
         {
-            SceneManager.LoadScene("HappyEnding");
+            SceneManager.LoadScene("99.HappyEnding");
         }
     }
 }

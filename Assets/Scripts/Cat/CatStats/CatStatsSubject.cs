@@ -153,7 +153,7 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
         if (currentLikeability <= 0)
         {
-            SceneManager.LoadScene("BadEnding");
+            SceneManager.LoadScene("99.BadEnding");
         }
 
         Debug.Log("호감도 감소 : " + currentLikeability);
