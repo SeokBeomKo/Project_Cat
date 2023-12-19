@@ -19,11 +19,13 @@ public class BattleCenter : MonoBehaviour
     private float minYPosition = -1.614f;
     private float maxYPosition = 1.385f;
 
+    public delegate void ItemCreateHandle(Item item);
+    public event ItemCreateHandle onItemCreate;
+
     //private int index;
 
     void Start()
     {
-
         if (itemsToSpawn.Count > 0)
         {
             foreach (var item in itemsToSpawn)
@@ -88,6 +90,8 @@ public class BattleCenter : MonoBehaviour
                     Vector3 randomSpawnPosition = new Vector3(Random.Range(35.05f, 43.51f), maxYPosition, Random.Range(-5.43f, 3.05f)); // 예시로 x, z축은 -5에서 5 사이의 랜덤한 값으로 설정
 
                     GameObject newItem = Instantiate(item.itemPrefab, randomSpawnPosition, Quaternion.identity);
+
+                    onItemCreate?.Invoke(newItem.GetComponent<Item>());
 
                     StartCoroutine(MoveItemDown(newItem.transform));
 

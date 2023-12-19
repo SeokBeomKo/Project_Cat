@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CapsuleWashingOperation : MonoBehaviour
 {
+    public delegate void ItemCreateHandle(Item item);
+    public event ItemCreateHandle onItemCreate;
+
     [Header("아이템 리스트")]
     public List<ItemWithProbability> itemsToSpawn;
 
@@ -33,8 +36,6 @@ public class CapsuleWashingOperation : MonoBehaviour
             objectHPbar.Damage(1);
             HP = objectHPbar.GetHP();
 
-            Debug.Log("HP : " + HP);
-
             if (HP == 0)
             {
                 float randomValue = Random.value;
@@ -49,11 +50,10 @@ public class CapsuleWashingOperation : MonoBehaviour
                         // 아이템을 생성할 위치
                         Vector3 spawnPosition = transform.parent.position;
 
-                        // 아이템 생성
-                        Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity);
+                        Item tempitem = Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity).GetComponent<Item>();
+                        onItemCreate?.Invoke(tempitem);
                         Debug.Log(item.itemPrefab.name);
 
-                        // 생성된 아이템이 있으므로 루프 종료
                         break;
                     }
                 }
