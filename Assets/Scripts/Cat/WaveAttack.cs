@@ -78,7 +78,6 @@ namespace SpecialAttack
             }
             else
             {
-                animator.SetBool("idle", true);
                 gameObject.SetActive(false);
             }
         }

@@ -366,15 +366,14 @@ namespace BehaviorTree
         {
             if (playerTransform != null)
             {
+                animator.SetBool("run", true);
+
                 Vector3 playerDirection = playerTransform.position - transform.parent.position;
                 playerDirection.y = 0f;
                 playerDirection = Vector3.Normalize(playerDirection);
 
                 if (playerDirection != Vector3.zero)
                 {
-                    animator.SetBool("idle", false);
-                    animator.SetBool("run", true);
-
                     Vector3 playerDirectionNoY = new Vector3(playerDirection.x, 0f, playerDirection.z);
                     Quaternion targetRotation = Quaternion.LookRotation(playerDirectionNoY);
                     transform.parent.rotation = targetRotation;
