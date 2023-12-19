@@ -107,7 +107,7 @@ public class BattleCenter : MonoBehaviour
 
     protected IEnumerator MoveItemDown(Transform itemTransform)
     {
-        float moveSpeed = 2f; // 아이템의 떨어지는 속도
+        float moveSpeed = 3f; // 아이템의 떨어지는 속도
 
         while (itemTransform.position.y > minYPosition)
         {

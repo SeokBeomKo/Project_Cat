@@ -25,7 +25,8 @@ public class Item : MonoBehaviour
             {
                 InventoryManager.Instance.AddItemToInventory(itemName);
             }
- 
+
+            SoundManager.Instance.PlaySFX("GetItem");
             gameObject.SetActive(false);
             OnItem?.Invoke(itemName);
 

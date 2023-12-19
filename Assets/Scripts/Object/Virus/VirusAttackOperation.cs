@@ -99,6 +99,8 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
     {
         if (HP <= 0)
         {
+            SoundManager.Instance.PlaySFX("VirusDeath");
+
             model.SetActive(false);
             objectHPbar.gameObject.GetComponentInParent<GameObject>().SetActive(false);
             explosionVFX.SetActive(true);

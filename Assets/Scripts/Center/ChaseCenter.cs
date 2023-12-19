@@ -182,7 +182,7 @@ public class ChaseCenter : MonoBehaviour
     protected IEnumerator MazeCameraMove()
     {
         StartCoroutine(cameraController.MoveMazeCamera());
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3f);
 
         onPlay();
     }

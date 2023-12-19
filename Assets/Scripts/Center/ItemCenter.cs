@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class ItemCenter : MonoBehaviour
 {
-    public int SceneNumber;
 
     [Header("플레이어")]
     public GameObject Player;
@@ -22,11 +21,11 @@ public class ItemCenter : MonoBehaviour
     public HairBallUse hairBallUse;
 
     [Header("랜덤 아이템")]
-    public RandomItem[] randomItem;
+    private RandomItem[] randomItem;
     public GameObject randomItemParent;
 
     [Header("아이템")]
-    public Item[] itemArray;
+    private Item[] itemArray;
     public GameObject ItemParent;
 
     [Header("플레이어 스탯")]
@@ -103,9 +102,6 @@ public class ItemCenter : MonoBehaviour
                 randomItem[i].OnRandomItem += GetRandomItem;
         }
         else
-        {
-            Debug.Log("randomItem empty");
-        }
 
 
         if (ItemParent != null)
@@ -119,10 +115,6 @@ public class ItemCenter : MonoBehaviour
             {
                 itemArray[i].OnItem += GetItems;
             }
-        }
-        else
-        {
-            Debug.Log("itemArray empty");
         }
 
         if(bigBottleObject != null)
