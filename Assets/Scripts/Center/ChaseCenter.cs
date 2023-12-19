@@ -165,6 +165,7 @@ public class ChaseCenter : MonoBehaviour
 
     public void onCat()
     {
+        robot.SetIsMoving(false);
         itemWheel.SetActive(false);
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
@@ -183,6 +184,7 @@ public class ChaseCenter : MonoBehaviour
     {
         StartCoroutine(cameraController.MoveMazeCamera());
         yield return new WaitForSeconds(3f);
+        robot.SetIsMoving(true);
 
         onPlay();
     }

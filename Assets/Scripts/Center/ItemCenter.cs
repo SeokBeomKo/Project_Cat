@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class ItemCenter : MonoBehaviour
@@ -25,7 +21,7 @@ public class ItemCenter : MonoBehaviour
     public GameObject randomItemParent;
 
     [Header("아이템")]
-    private Item[] itemArray;
+    public Item[] itemArray;
     public GameObject ItemParent;
 
     [Header("플레이어 스탯")]
@@ -62,7 +58,6 @@ public class ItemCenter : MonoBehaviour
 
     private void Start()
     {
-        itemArray = new Item[0];
         itemWheel.onItemClick += ClickTrue;
 
         if (CapsuleNavigateParent != null)
@@ -107,6 +102,11 @@ public class ItemCenter : MonoBehaviour
         if (ItemParent != null)
         {
             itemArray = ItemParent.GetComponentsInChildren<Item>();
+        }
+        else
+        {
+        itemArray = new Item[0];
+
         }
 
         if (itemArray != null)
@@ -190,24 +190,38 @@ public class ItemCenter : MonoBehaviour
     }
     public void GetItems(string itemName)
     {
+        Debug.Log("먹어짐222222 " + itemName);
+
         getItem.gameObject.SetActive(true);
+
         GetDirectItem(itemName);
         StartCoroutine(getItem.ShowGetItemText(itemName));
     }
 
     public void CreateItem(Item item)
     {
-        getItem.gameObject.SetActive(true);
-        StartCoroutine(getItem.ShowGetItemText(item.name));
+        Debug.Log("[아이템센터] Create Item " + item.name);
+
+         if (item.name.EndsWith("(Clone)"))
+            {
+                item.name = item.name.Substring(0, item.name.Length - 7); // 7은 "(Clone)" 문자열의 길이입니다.
+            }
         Array.Resize(ref itemArray, itemArray.Length + 1);
         itemArray[itemArray.Length - 1] = item;
+        itemArray[itemArray.Length - 1].OnItem += GetItems;
     }
 
     private void GetDirectItem(string itemName)
     {
+        Debug.Log("먹어짐 " + itemName);
+        
+
         switch (itemName)
         {
+            
             case "WaterBottle":
+                Debug.Log("사용됨 " + itemName);
+
                 weaponStrategy.ChargeCurrentBullet(bottle[0].GetChargeAmount());
                 break;
 

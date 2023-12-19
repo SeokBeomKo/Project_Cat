@@ -120,4 +120,11 @@ public class RobotCleanerMovement : MonoBehaviour
     {
         PlayerPos = pos;
     }
+
+    public void SetIsMoving(bool move)
+    {
+        isMoving = move;
+        
+    }
+
 }

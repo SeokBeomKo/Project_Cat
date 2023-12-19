@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -25,11 +26,21 @@ public class Item : MonoBehaviour
             {
                 InventoryManager.Instance.AddItemToInventory(itemName);
             }
+           
+            OnItem?.Invoke(itemName);
+            Debug.Log("[아이템] " + itemName);
+            
 
             SoundManager.Instance.PlaySFX("GetItem");
             gameObject.SetActive(false);
-            OnItem?.Invoke(itemName);
 
         }
+
+         
+    }
+
+    public bool getIsSave()
+    {
+        return isSave;
     }
 }

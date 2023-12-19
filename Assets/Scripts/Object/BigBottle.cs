@@ -11,6 +11,7 @@ public class BigBottle : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            SoundManager.Instance.PlaySFX("GetItem");
             Debug.Log("item all charge");
             OnChargeAll?.Invoke("BigBottle");
             transform.parent.gameObject.SetActive(false);

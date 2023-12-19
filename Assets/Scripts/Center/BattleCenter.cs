@@ -58,7 +58,7 @@ public class BattleCenter : MonoBehaviour
     protected IEnumerator Respawn(int index)
     {
         yield return new WaitForSeconds(respawnTime);
-
+        
         virus[index].transform.parent.gameObject.SetActive(true);
         virus[index].transform.gameObject.SetActive(true);
     }
