@@ -46,7 +46,6 @@ public class RobotCleanerMovement : MonoBehaviour
 
         onMove?.Invoke();
 
-        Debug.Log("robot collision : " + collision.gameObject.tag);
         isCollision = true;
 
         Vector3 direction = PlayerPos - transform.position;

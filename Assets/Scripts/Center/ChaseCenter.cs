@@ -47,6 +47,9 @@ public class ChaseCenter : MonoBehaviour
     [Header("아이템 휠")]
     public GameObject itemWheel;
 
+    [Header("로봇 청소기 프로그레스바")]
+    public GameObject robotProgressbar;
+
     [Header("오브젝트")]
     [SerializeField] public ChaseCat cat;
 
@@ -61,6 +64,7 @@ public class ChaseCenter : MonoBehaviour
 
     [SerializeField] public CapsuleChaseOperation[] capsule;
     [SerializeField] public GameObject capsuleObjectParent;
+
 
 
     public HairBallUse hairBallUse;
@@ -98,8 +102,10 @@ public class ChaseCenter : MonoBehaviour
 
         inputCenter.gameObject.SetActive(true);
         chaseInputCenter.gameObject.SetActive(false);
+        robotProgressbar.SetActive(false);
 
-    
+
+
         if (flyObject != null)
         { 
             for (int i = 0; i < flyObject.Length; i++)
@@ -130,6 +136,7 @@ public class ChaseCenter : MonoBehaviour
         cat.transform.parent.gameObject.SetActive(false);
 
         controllerUI.RemoveUI();
+        robotProgressbar.SetActive(true);
         inputHandler.gameObject.SetActive(false);
         cameraController.SetRobotStartCamera();
         questUI.DeactivatePopUp();
