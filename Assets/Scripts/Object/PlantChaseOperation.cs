@@ -58,7 +58,7 @@ public class PlantChaseOperation : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("Player HP --");
+            other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(5);
         }
     }
 

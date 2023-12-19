@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CapsuleWashingOperation : MonoBehaviour
+public class CapsuleWashingOperation : MonoBehaviour, IDamageable
 {
     public delegate void ItemCreateHandle(Item item);
     public event ItemCreateHandle onItemCreate;
@@ -33,35 +33,45 @@ public class CapsuleWashingOperation : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            objectHPbar.Damage(1);
-            HP = objectHPbar.GetHP();
-
-            if (HP == 0)
-            {
-                float randomValue = Random.value;
-                float cumulativeProbability = 0.0f;
-
-                foreach (var item in itemsToSpawn)
-                {
-                    cumulativeProbability += item.probability;
-
-                    if (randomValue < cumulativeProbability)
-                    {
-                        // 아이템을 생성할 위치
-                        Vector3 spawnPosition = transform.parent.position;
-
-                        Item tempitem = Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity).GetComponent<Item>();
-                        onItemCreate?.Invoke(tempitem);
-                        Debug.Log(item.itemPrefab.name);
-
-                        break;
-                    }
-                }
-
-
-                // 캡슐 오브젝트 비활성화 또는 삭제 (선택적)
-                transform.parent.gameObject.SetActive(false);
-            }
+            CapsuleDestroy();
         }
+    }
+
+    private void CapsuleDestroy()
+    {
+        objectHPbar.Damage(1);
+        HP = objectHPbar.GetHP();
+
+        if (HP == 0)
+        {
+            float randomValue = Random.value;
+            float cumulativeProbability = 0.0f;
+
+            foreach (var item in itemsToSpawn)
+            {
+                cumulativeProbability += item.probability;
+
+                if (randomValue < cumulativeProbability)
+                {
+                    // 아이템을 생성할 위치
+                    Vector3 spawnPosition = transform.parent.position;
+
+                    Item tempitem = Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity).GetComponent<Item>();
+                    onItemCreate?.Invoke(tempitem);
+                    Debug.Log(item.itemPrefab.name);
+
+                    break;
+                }
+            }
+
+
+            // 캡슐 오브젝트 비활성화 또는 삭제 (선택적)
+            transform.parent.gameObject.SetActive(false);
+        }
+    }
+
+        public void BeAttacked(float damage)
+    {
+        CapsuleDestroy();
     }
 }

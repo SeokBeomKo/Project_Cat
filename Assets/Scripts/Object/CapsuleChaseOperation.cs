@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CapsuleChaseOperation : MonoBehaviour, IAttackable
+public class CapsuleChaseOperation : MonoBehaviour, IAttackable, IDamageable
 {
     [Header("데이터")]
     public FlyObjectData data;
@@ -59,36 +59,41 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
         {
-            float randomValue = UnityEngine.Random.value;
-            float cumulativeProbability = 0.0f;
-
-            foreach (var item in itemsToSpawn)
-            {
-                cumulativeProbability += item.probability;
-
-                if (randomValue < cumulativeProbability)
-                {
-                    // 아이템을 생성할 위치
-                    Vector3 spawnPosition = transform.parent.position;
-
-                    // 아이템 생성
-                    Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity);
-                    Debug.Log(item.itemPrefab.name);
-
-                    // 생성된 아이템이 있으므로 루프 종료
-                    break;
-                }
-            }
-
-            // 캡슐 오브젝트 삭제
-            transform.parent.gameObject.SetActive(false);
+            CapsuleDestroy();
         }
 
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GetDamage();
+            other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(GetDamage());
         }
 
+    }
+
+    private void CapsuleDestroy()
+    {
+        float randomValue = UnityEngine.Random.value;
+        float cumulativeProbability = 0.0f;
+
+        foreach (var item in itemsToSpawn)
+        {
+            cumulativeProbability += item.probability;
+
+            if (randomValue < cumulativeProbability)
+            {
+                // 아이템을 생성할 위치
+                Vector3 spawnPosition = transform.parent.position;
+
+                // 아이템 생성
+                Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity);
+                Debug.Log(item.itemPrefab.name);
+
+                // 생성된 아이템이 있으므로 루프 종료
+                break;
+            }
+        }
+
+        // 캡슐 오브젝트 삭제
+        transform.parent.gameObject.SetActive(false);
     }
 
 
@@ -143,5 +148,10 @@ public class CapsuleChaseOperation : MonoBehaviour, IAttackable
     public void SetEndPos(Vector3 pos)
     {
         endPos = pos;
+    }
+
+    public void BeAttacked(float damage)
+    {
+        CapsuleDestroy();
     }
 }
