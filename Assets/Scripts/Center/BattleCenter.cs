@@ -14,11 +14,25 @@ public class BattleCenter : MonoBehaviour
     [Header("아이템 리스트")]
     public List<ItemWithProbability> itemsToSpawn;
 
+    private float itemAppearTime = 10f;
+    private float itemDisappearTime = 15f;
+    private float minYPosition = -1.614f;
+    private float maxYPosition = 1.385f;
+
     //private int index;
 
     void Start()
     {
-        virus = Object.GetComponentsInChildren<VirusAttackOperation>();
+
+        if (itemsToSpawn.Count > 0)
+        {
+            foreach (var item in itemsToSpawn)
+            {
+                item.probability = 1.0f / itemsToSpawn.Count;
+            }
+
+            virus = Object.GetComponentsInChildren<VirusAttackOperation>();
+        }
 
         for (int i = 0; i < virus.Length; i++)
         {
@@ -51,7 +65,7 @@ public class BattleCenter : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f); // 10초 대기
+            yield return new WaitForSeconds(itemAppearTime); // 10초 대기
 
             SpawnRandomItem();
         }
@@ -71,18 +85,39 @@ public class BattleCenter : MonoBehaviour
                 if (randomValue < cumulativeProbability)
                 {
                     // 아이템을 생성할 위치
-                    Vector3 randomSpawnPosition = new Vector3(Random.Range(-5f, 5f), 10f, Random.Range(-5f, 5f)); // 예시로 x, z축은 -5에서 5 사이의 랜덤한 값으로 설정
+                    Vector3 randomSpawnPosition = new Vector3(Random.Range(35.05f, 43.51f), maxYPosition, Random.Range(-5.43f, 3.05f)); // 예시로 x, z축은 -5에서 5 사이의 랜덤한 값으로 설정
 
-                    // 아이템 생성
-                    Instantiate(item.itemPrefab, randomSpawnPosition, Quaternion.identity);
-                    Debug.Log(item.itemPrefab.name);
+                    GameObject newItem = Instantiate(item.itemPrefab, randomSpawnPosition, Quaternion.identity);
+
+                    StartCoroutine(MoveItemDown(newItem.transform));
+
+                    StartCoroutine(DestroyItemAfterTime(newItem));
 
                     // 생성된 아이템이 있으므로 루프 종료
                     break;
                 }
             }
-
         }
+
+    }
+
+    protected IEnumerator MoveItemDown(Transform itemTransform)
+    {
+        float moveSpeed = 2f; // 아이템의 떨어지는 속도
+
+        while (itemTransform.position.y > minYPosition)
+        {
+            itemTransform.position += Vector3.down * moveSpeed * Time.deltaTime;
+
+            yield return null;
+        }
+
+    }
+
+    protected IEnumerator DestroyItemAfterTime(GameObject item)
+    {
+        yield return new WaitForSeconds(itemDisappearTime);
+        Destroy(item);
     }
 
 
