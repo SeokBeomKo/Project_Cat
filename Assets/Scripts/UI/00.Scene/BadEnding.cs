@@ -14,9 +14,7 @@ public class BadEnding : MonoBehaviour
     public Image bottomImage;
     
     [Header("재시작할 씬 이름")]
-    public string researchScene;
-    public string runningScene;
-    public string washingScene;
+    public string loadingScene;
 
     [Header("로비씬")]
     public string lobbySceneName;
@@ -57,12 +55,8 @@ public class BadEnding : MonoBehaviour
     public void OnClickRestart()
     {
         SoundManager.Instance.PlaySFX("Click");
-        if (PlayerPrefs.GetInt("Restart") == 1)
-            SceneManager.LoadScene(researchScene);
-        if(PlayerPrefs.GetInt("Restart") == 2)
-            SceneManager.LoadScene(runningScene);
-        if (PlayerPrefs.GetInt("Restart") == 3)
-            SceneManager.LoadScene(washingScene);
+
+        SceneManager.LoadScene(loadingScene);
     }
 
     public void OnClickEnd()

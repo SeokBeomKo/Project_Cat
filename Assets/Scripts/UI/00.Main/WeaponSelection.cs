@@ -99,19 +99,19 @@ public class WeaponSelection : MonoBehaviour
 
     public void SelectSoftRifle(int bullet)
     {
-        softRifleProgress.fillAmount = bullet / 10f;
+        softRifleProgress.fillAmount = bullet / 500f;
         softRifleText.text = bullet.ToString();
     }
     
     public void SelectSplashBuster(int bullet)
     {
-        splashBusterProgress.fillAmount = bullet / 30f;
+        splashBusterProgress.fillAmount = bullet / 500f;
         splashBusterText.text = bullet.ToString();
     }
 
     public void SelectBubbleGun(int bullet)
     {
-        bubbleGunProgress.fillAmount = bullet / 400f;
+        bubbleGunProgress.fillAmount = bullet / 500f;
         bubbleGunText.text = bullet.ToString();
     }
 

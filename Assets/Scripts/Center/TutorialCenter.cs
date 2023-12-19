@@ -74,6 +74,8 @@ public class TutorialCenter : MonoBehaviour
 
     private void Start() 
     {
+        PlayerPrefs.SetString("nextScene", "04.Tutorial");
+
         stopWatch.OnSubtitle += OnCellPhone; // 전화 컷씬
         exitCatMove.OnExitCat += ExitCatMove; // 고양이 컷씬
 

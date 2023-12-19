@@ -62,6 +62,7 @@ public class ItemCenter : MonoBehaviour
 
     private void Start()
     {
+        itemArray = new Item[0];
         itemWheel.onItemClick += ClickTrue;
 
         if (CapsuleNavigateParent != null)
@@ -101,7 +102,6 @@ public class ItemCenter : MonoBehaviour
             for(int i = 0; i < randomItem.Length; i++)
                 randomItem[i].OnRandomItem += GetRandomItem;
         }
-        else
 
 
         if (ItemParent != null)
@@ -197,6 +197,8 @@ public class ItemCenter : MonoBehaviour
 
     public void CreateItem(Item item)
     {
+        getItem.gameObject.SetActive(true);
+        StartCoroutine(getItem.ShowGetItemText(item.name));
         Array.Resize(ref itemArray, itemArray.Length + 1);
         itemArray[itemArray.Length - 1] = item;
     }

@@ -1596,7 +1596,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1671202982}
   - component: {fileID: 1671202981}
-  - component: {fileID: 1671202980}
   m_Layer: 0
   m_Name: LoadScene
   m_TagString: Untagged
@@ -1604,36 +1603,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1671202980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671202979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 344afb5efe736354fb8995ddaba8798e, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1671202981}
-          m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
-          m_MethodName: ChangeSceneCoroutine
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &1671202981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1646,7 +1615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1bd3eb5cdc0a9b48997c299b33f3486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 01.Tutorial
+  sceneName: 01.Lobby
   fade: {fileID: 1222921295}
 --- !u!4 &1671202982
 Transform:
