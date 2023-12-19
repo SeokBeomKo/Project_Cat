@@ -67,6 +67,8 @@ public class InventoryManager : Singleton<InventoryManager>
             if (existingItem.quantity < existingItem.maxQuantity)
             {
                 existingItem.quantity++;
+                Debug.Log("[InventoryManager]" + itemName + " : " + existingItem.quantity);
+
             }
             else
             {

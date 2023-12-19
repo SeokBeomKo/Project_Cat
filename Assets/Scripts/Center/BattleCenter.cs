@@ -11,6 +11,9 @@ public class BattleCenter : MonoBehaviour
     [SerializeField]
     private float respawnTime;
 
+    [Header("아이템 리스트")]
+    public List<ItemWithProbability> itemsToSpawn;
+
     //private int index;
 
     void Start()
@@ -26,6 +29,9 @@ public class BattleCenter : MonoBehaviour
         }
 
         PlayerPrefs.SetInt("Restart", 3);
+
+        // Item Create
+        StartCoroutine(SpawnItemsPeriodically());
     }
 
     public void OnRespawnTimer(int index)
@@ -41,5 +47,43 @@ public class BattleCenter : MonoBehaviour
         virus[index].transform.gameObject.SetActive(true);
     }
 
-    
+    protected IEnumerator SpawnItemsPeriodically()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10f); // 10초 대기
+
+            SpawnRandomItem();
+        }
+    }
+
+    protected void SpawnRandomItem()
+    {
+        if (itemsToSpawn.Count > 0)
+        {
+            float randomValue = Random.value;
+            float cumulativeProbability = 0.0f;
+
+            foreach (var item in itemsToSpawn)
+            {
+                cumulativeProbability += item.probability;
+
+                if (randomValue < cumulativeProbability)
+                {
+                    // 아이템을 생성할 위치
+                    Vector3 randomSpawnPosition = new Vector3(Random.Range(-5f, 5f), 10f, Random.Range(-5f, 5f)); // 예시로 x, z축은 -5에서 5 사이의 랜덤한 값으로 설정
+
+                    // 아이템 생성
+                    Instantiate(item.itemPrefab, randomSpawnPosition, Quaternion.identity);
+                    Debug.Log(item.itemPrefab.name);
+
+                    // 생성된 아이템이 있으므로 루프 종료
+                    break;
+                }
+            }
+
+        }
+    }
+
+
 }
