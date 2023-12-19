@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCenter : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class PlayerCenter : MonoBehaviour
         if (0 >= playerStats.currentHealth)
         {
             playerController.stateMachine.ChangeStateAny(PlayerMovementStateEnums.DEAD);
+            SceneManager.LoadScene("99.BadEnding");
         }
         else
         {
