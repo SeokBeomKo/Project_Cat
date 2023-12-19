@@ -17,6 +17,7 @@ public class LobbyScene : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetString("nextScene", "03.Tutorial_CutScene");
         settingPopUp.SetActive(false);
     }
 

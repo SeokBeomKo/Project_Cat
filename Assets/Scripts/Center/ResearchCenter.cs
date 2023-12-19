@@ -4,53 +4,53 @@ using UnityEngine;
 
 public class ResearchCenter : MonoBehaviour
 {                                                                   
-    [Header("ÇÃ·¹ÀÌ¾î ÀÚ¸·")]
+    [Header("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ú¸ï¿½")]
     [SerializeField] public Subtitle subtitle;
 
-    [Header("Äù½ºÆ® ÀÚ¸·")]
+    [Header("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ú¸ï¿½")]
     [SerializeField] public QuestSubtitle questSubtitle;
 
     [Header("UI")]
     [SerializeField] public UIController controllerUI;
 
-    [Header("CCTV Äù½ºÆ®")]
+    [Header("CCTV ï¿½ï¿½ï¿½ï¿½Æ®")]
     [SerializeField] public CCTV cctv;
 
-    [Header("¹® ¿ÀºêÁ§Æ®")]
+    [Header("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
     [SerializeField] public Barrier barrier;
 
-    [Header("º® ¿ÀºêÁ§Æ®")]
+    [Header("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
     [SerializeField] public Door door;
 
-    [Header("½ºÀ§Ä¡ ¿ÀºêÁ§Æ®")]
+    [Header("ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
     [SerializeField] public SwitchesOperation switches;
 
-    [Header("Ä«¸Þ¶ó ½ÃÁ¡")]
+    [Header("Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] public ResearchCameraController cameraController;
     
-    [Header("±âº» ÀÔ·Â ¼¾ÅÍ")]
+    [Header("ï¿½âº» ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] public InputHandler inputHandler;
 
-    [Header("µµÂø ÁöÁ¡")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public GameObject endPoint;
 
-    [Header("Äù½ºÆ® UI")]
+    [Header("ï¿½ï¿½ï¿½ï¿½Æ® UI")]
     public QuestPopUp questUI;
 
-    [Header("Äù½ºÆ® À§Ä¡")]
-    public QuestSubtitle firstQuest; // ¹ÙÀÌ·¯½º Á¦°Å
-    public QuestSubtitle secondQuest; // À§·Î ¿Ã¶ó°¡ÀÚ
+    [Header("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡")]
+    public QuestSubtitle firstQuest; // ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public QuestSubtitle secondQuest; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½
     public QuestSubtitle thirdQuest;
 
-    [Header("¾ÆÀÌÅÛ ÈÙ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½")]
     public GameObject itemWheel;
 
-    [Header("°í¾çÀÌ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] public GameObject cat;
 
     private void Start()
     {
-        PlayerPrefs.SetInt("Restart", 1);
+        PlayerPrefs.SetString("nextScene", "05.Research");
 
         StartCoroutine(StartResearchScene());
         endPoint.SetActive(false);
@@ -61,11 +61,11 @@ public class ResearchCenter : MonoBehaviour
         thirdQuest.OnQuest += UpTable;
 
         switches.InitSwitch(false);
-        cctv.OnCCTV += ShutBarrier; // CCTV ÄÑ±â
-        barrier.OnBarrier += ShutDoor; // Àåº® ³»·Á¿À±â
-        door.OnCloseDoor += OnSwitch; // ¹® ´Ý±è
-        switches.OnSwitch += UnlockDoor; // ½ºÀ§Ä¡ Äù½ºÆ®
-        door.OnOpenDoor += ClearStage; // ¹® ¿­¸²
+        cctv.OnCCTV += ShutBarrier; // CCTV ï¿½Ñ±ï¿½
+        barrier.OnBarrier += ShutDoor; // ï¿½åº® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        door.OnCloseDoor += OnSwitch; // ï¿½ï¿½ ï¿½Ý±ï¿½
+        switches.OnSwitch += UnlockDoor; // ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½Æ®
+        door.OnOpenDoor += ClearStage; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     public IEnumerator StartResearchScene()
@@ -73,7 +73,7 @@ public class ResearchCenter : MonoBehaviour
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetIMacCamera();
-        subtitle.ShowSubtitle("Ä«³¯¸®¾Æ : Àú±â ÄÄÇ»ÅÍ°¡ ÀÖ¾î!  ¾ó¸¥ ¸ðµç ¹®À» Àá°¡¾ßÇØ!", delayTime: 1f) ;
+        subtitle.ShowSubtitle("Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç»ï¿½Í°ï¿½ ï¿½Ö¾ï¿½!  ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½á°¡ï¿½ï¿½ï¿½ï¿½!", delayTime: 1f) ;
 
         yield return new WaitForSeconds(6.5f);
 
@@ -88,7 +88,7 @@ public class ResearchCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(false);
         StartCoroutine(barrier.MoveBarrierCoroutine());
         cat.SetActive(true);
-        subtitle.ShowSubtitle("Ä«³¯¸®¾Æ : ÁÁ¾Æ! ¸ðµç ¹®À» Àá±É¾î!", delayTime: 2.5f) ;
+        subtitle.ShowSubtitle("Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½! ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½É¾ï¿½!", delayTime: 2.5f) ;
     }
 
     public void ShutDoor()
@@ -96,15 +96,15 @@ public class ResearchCenter : MonoBehaviour
         controllerUI.RemoveUI();
         cameraController.SetDoorCamera();
         StartCoroutine(door.CloseDoor());
-        subtitle.ShowSubtitle("Ä«³¯¸®¾Æ : ÀÌ·±! ¿ì¸®°¡ ÀÖ´Â ¹æ±îÁö Àá°åÀÝ¾Æ!");
+        subtitle.ShowSubtitle("Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½Ì·ï¿½! ï¿½ì¸®ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ý¾ï¿½!");
     }
 
     public void OnSwitch()
     {
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
-        subtitle.ShowSubtitle("Ä«³¯¸®¾Æ : Àú±â ÀÖ´Â ½ºÀ§Ä¡¸¦ ÀÌ¿ëÇÏ¸é µÉ °Í °°Àºµ¥?");
-        questUI.ActivatePopUP("½ºÀ§Ä¡ ÀÛµ¿", "¹°ÃÑÀ¸·Î ½ºÀ§Ä¡¸¦ ¸ÂÃßÀÚ");
+        subtitle.ShowSubtitle("Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?");
+        questUI.ActivatePopUP("ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½Ûµï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         switches.InitSwitch();
         itemWheel.SetActive(true);
         controllerUI.ShowUI();
@@ -117,7 +117,7 @@ public class ResearchCenter : MonoBehaviour
         inputHandler.gameObject.SetActive(false);
         cameraController.SetDoorCamera();
         StartCoroutine(door.OpenDoor());
-        subtitle.ShowSubtitle("Ä«³¯¸®¾Æ : ÇØ³Â´Ù! ¹®ÀÌ ¿­·È¾î!", delayTime : 1f);
+        subtitle.ShowSubtitle("Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½Ø³Â´ï¿½! ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È¾ï¿½!", delayTime : 1f);
     }
 
     public void ClearStage()
@@ -126,20 +126,20 @@ public class ResearchCenter : MonoBehaviour
         controllerUI.ShowUI();
         inputHandler.gameObject.SetActive(true);
         cameraController.SetPlayCamera();
-        subtitle.ShowSubtitle("Ä«³¯¸®¾Æ : CCTV¿¡ ³ª¿Â ·ÎÅ°ÀÇ À§Ä¡·Î °¡º¸ÀÚ!", delayTime: 0.5f);
-        questUI.ActivatePopUP("ÀÌµ¿ÇÏ±â", "´ÙÀ½ ¸ÊÀ¸·Î ÀÌµ¿ÇÏ½Ê½Ã¿À");
+        subtitle.ShowSubtitle("Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : CCTVï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", delayTime: 0.5f);
+        questUI.ActivatePopUP("ï¿½Ìµï¿½ï¿½Ï±ï¿½", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï½Ê½Ã¿ï¿½");
         endPoint.SetActive(true);
     }
 
     public void RemovalVirus()
     {
-        questUI.ActivatePopUP("¹ÙÀÌ·¯½º Ã³Ä¡", "±æÀ» ¸·´Â ¹ÙÀÌ·¯½º¸¦ Á¦°ÅÇÏÀÚ");
+        questUI.ActivatePopUP("ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ Ã³Ä¡", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
     }
 
     public void GoUp()
     {
         questUI.DeactivatePopUp();
-        questUI.ActivatePopUP("¿Ã¶ó°¡±â", "¹Ú½º¸¦ Å¸°í Å¹ÀÚ À§·Î ¿Ã¶ó°¡º¸ÀÚ");
+        questUI.ActivatePopUP("ï¿½Ã¶ó°¡±ï¿½", "ï¿½Ú½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ Å¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¡ºï¿½ï¿½ï¿½");
     }
 
     public void UpTable()

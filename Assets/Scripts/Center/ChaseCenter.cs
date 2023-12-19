@@ -73,7 +73,7 @@ public class ChaseCenter : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.SetInt("Restart", 2);
+        PlayerPrefs.SetString("nextScene", "06.Chase");
         PlayerPrefs.SetInt("Camera", 10);
         questUI.DeactivatePopUp();
 

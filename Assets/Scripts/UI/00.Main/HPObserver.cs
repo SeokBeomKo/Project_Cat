@@ -21,6 +21,6 @@ public class HPObserver : MonoBehaviour, IObserver
         }
 
         hpText.text = playerStats.currentHealth.ToString();
-        maxhpText.text = playerStats.maxHealth.ToString();
+        maxhpText.text = " / " + playerStats.maxHealth.ToString();
     }
 }

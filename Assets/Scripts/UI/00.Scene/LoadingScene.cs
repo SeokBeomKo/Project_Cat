@@ -16,14 +16,13 @@ public class LoadingScene : MonoBehaviour
 
     void Start()
     {
-        //progressBar = GetComponent<Image>();
         StartCoroutine(LoadScene());
     }
 
     IEnumerator LoadScene()
     {
         // 비동기 로드 : Scene을 불러올 때 멈추지 않고 다른 작업 가능
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName); // 비동기적으로 로드 시작
+        AsyncOperation operation = SceneManager.LoadSceneAsync(PlayerPrefs.GetString("nextScene")); // 비동기적으로 로드 시작
         operation.allowSceneActivation = false; // 씬 로드 후 자동으로 장면 전환이 되지 않도록
 
         float time = 0f;

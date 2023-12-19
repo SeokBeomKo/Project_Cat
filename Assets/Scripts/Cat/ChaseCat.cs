@@ -123,6 +123,8 @@ public class ChaseCat : MonoBehaviour
         }
     }
 
+    bool temp = true;
+
     void CheckCutScene()
     {
         if (CutSceneStartPoint != null)
@@ -131,9 +133,10 @@ public class ChaseCat : MonoBehaviour
             {
                 OnCutSceneStart?.Invoke();
             }
-            else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+            else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle") && temp)
             {
                 OnCutSceneEnd?.Invoke();
+                temp = false;
             }
         }
     }
