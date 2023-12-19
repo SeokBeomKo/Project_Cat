@@ -6,7 +6,8 @@ public class Item : MonoBehaviour
 {
     public delegate void ItemHandle(string itemName);
     public event ItemHandle OnItem;
-
+    [SerializeField]
+    private bool isSave;
     public string itemCode;
     private void OnTriggerEnter(Collider other)
     {
@@ -20,9 +21,13 @@ public class Item : MonoBehaviour
                 itemName = itemName.Substring(0, itemName.Length - 7); // 7은 "(Clone)" 문자열의 길이입니다.
             }
 
-            InventoryManager.Instance.AddItemToInventory(itemName);
-            OnItem?.Invoke(itemName);
+            if(isSave)
+            {
+                InventoryManager.Instance.AddItemToInventory(itemName);
+            }
+ 
             gameObject.SetActive(false);
+            OnItem?.Invoke(itemName);
 
         }
     }

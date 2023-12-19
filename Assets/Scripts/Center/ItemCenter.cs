@@ -1,9 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class ItemCenter : MonoBehaviour
 {
+    public int SceneNumber;
+
     [Header("플레이어")]
     public GameObject Player;
 
@@ -18,9 +23,11 @@ public class ItemCenter : MonoBehaviour
 
     [Header("랜덤 아이템")]
     public RandomItem[] randomItem;
+    public GameObject randomItemParent;
 
     [Header("아이템")]
     public Item[] itemArray;
+    public GameObject ItemParent;
 
     [Header("플레이어 스탯")]
     public PlayerStats playerStats;
@@ -41,20 +48,69 @@ public class ItemCenter : MonoBehaviour
     public GetItem getItem;
 
     public GameObject bigBottleObject;
-    public BigBottle[] bigBottle;
+    private BigBottle[] bigBottle;
 
     public GameObject bottleObject;
-    public NavigateVaseOperation[] bottle;
+    private NavigateVaseOperation[] bottle;
 
+    public GameObject CapsuleNavigateParent;
+    private CapsuleNavigateOperation[] CapsuleNavigates;
+
+    public GameObject CapsuleWashingParent;
+    private CapsuleWashingOperation[] CapsuleWashing;
+
+    public BattleCenter battleCenter;
 
     private void Start()
     {
         itemWheel.onItemClick += ClickTrue;
 
+        if (CapsuleNavigateParent != null)
+        {
+            CapsuleNavigates = CapsuleNavigateParent.GetComponentsInChildren<CapsuleNavigateOperation>();
+        }
+
+        if(CapsuleNavigates != null)
+        {
+            for (int i = 0; i < CapsuleNavigates.Length; i++)
+                CapsuleNavigates[i].onItemCreate += CreateItem;
+        }
+
+        if(CapsuleWashingParent != null)
+        {
+            CapsuleWashing = CapsuleWashingParent.GetComponentsInChildren<CapsuleWashingOperation>();
+        }
+
+        if (CapsuleWashing != null)
+        {
+            for (int i = 0; i < CapsuleWashing.Length; i++)
+                CapsuleWashing[i].onItemCreate += CreateItem;
+        }
+
+        if (battleCenter != null)
+        {
+            battleCenter.onItemCreate += CreateItem;
+        }
+
+        if(randomItemParent!= null)
+        {
+            randomItem = randomItemParent.GetComponentsInChildren<RandomItem>();
+        }
+
         if (randomItem != null)
         {
             for(int i = 0; i < randomItem.Length; i++)
                 randomItem[i].OnRandomItem += GetRandomItem;
+        }
+        else
+        {
+            Debug.Log("randomItem empty");
+        }
+
+
+        if (ItemParent != null)
+        {
+            itemArray = ItemParent.GetComponentsInChildren<Item>();
         }
 
         if (itemArray != null)
@@ -64,9 +120,23 @@ public class ItemCenter : MonoBehaviour
                 itemArray[i].OnItem += GetItems;
             }
         }
+        else
+        {
+            Debug.Log("itemArray empty");
+        }
 
-        bigBottle = bigBottleObject.GetComponentsInChildren<BigBottle>();
-        bottle = bottleObject.GetComponentsInChildren<NavigateVaseOperation>();
+        if(bigBottleObject != null)
+        {
+            bigBottle = bigBottleObject.GetComponentsInChildren<BigBottle>();
+
+        }
+
+
+        if(bottleObject != null)
+        {
+            bottle = bottleObject.GetComponentsInChildren<NavigateVaseOperation>();
+
+        }
 
         if (bigBottle != null)
         {
@@ -121,11 +191,26 @@ public class ItemCenter : MonoBehaviour
 
     public void GetRandomItem(string itemName)
     {
-        Debug.Log(" function call");
         Debug.Log(itemName);
         getItem.gameObject.SetActive(true);
+        GetDirectItem(itemName);
         StartCoroutine(getItem.ShowGetItemText(itemName));
+    }
+    public void GetItems(string itemName)
+    {
+        getItem.gameObject.SetActive(true);
+        GetDirectItem(itemName);
+        StartCoroutine(getItem.ShowGetItemText(itemName));
+    }
 
+    public void CreateItem(Item item)
+    {
+        Array.Resize(ref itemArray, itemArray.Length + 1);
+        itemArray[itemArray.Length - 1] = item;
+    }
+
+    private void GetDirectItem(string itemName)
+    {
         switch (itemName)
         {
             case "WaterBottle":
@@ -133,19 +218,16 @@ public class ItemCenter : MonoBehaviour
                 break;
 
             case "생명에너지":
-                playerStats.FillHealth(10); 
+                Debug.Log("+10");
+                playerStats.FillHealth(10);
                 break;
 
             case "BigBottle":
-                Debug.Log("item all charge function call");
                 weaponStrategy.ChargeAllBullet();
                 break;
+            case "MoveSpeed":
+                playerStats.AddMoveSpeed(moveSpeedTime);
+                break;
         }
-    }
-
-    public void GetItems(string itemName)
-    {
-        getItem.gameObject.SetActive(true);
-        StartCoroutine(getItem.ShowGetItemText(itemName));
     }
 }
