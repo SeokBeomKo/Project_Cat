@@ -31,6 +31,8 @@ public class VirusAttackState :MonoBehaviour, VirusShotState
 
     public void Fire()
     {
+        SoundManager.Instance.PlaySFX("VirusAttack");
+
         // 총구 위치에서 타겟 포인트를 향하는 방향을 계산합니다.
         Vector3 fireDirection = (virus.GetPlayPosition() - virus.transform.parent.position);
         fireDirection.y += 0.2f;
