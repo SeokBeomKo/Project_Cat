@@ -7,8 +7,10 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
     [Header("데이터")]
     public VirusAttackData data;
 
+    public GameObject HPBar;
     public ObjectHPbar objectHPbar;
 
+    private float originHP;
     private float HP;
     private float radius;
     private float time;
@@ -33,7 +35,7 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
     {
         data.LoadDataFromPrefs();
 
-        HP = data.hp;
+        originHP = data.hp;
         radius = data.range;
         time = data.tiime;
         damage = data.damage;
@@ -57,13 +59,19 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     void Start()
     {
+        HP = originHP;
         objectHPbar.SetHP(HP);
         objectHPbar.CheckHP();
     }
 
     private void OnEnable()
     {
-        model.SetActive(true);       
+        HP = originHP;
+
+        model.SetActive(true);
+        HPBar.SetActive(true);
+        objectHPbar.SetHP(HP);
+        objectHPbar.CheckHP();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,16 +109,17 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
         {
             SoundManager.Instance.PlaySFX("VirusDeath");
 
-            model.SetActive(false);
-            objectHPbar.gameObject.GetComponentInParent<GameObject>().SetActive(false);
             explosionVFX.SetActive(true);
-
             StartCoroutine(DestroyAfterParticles());
         }
     }
 
     private IEnumerator DestroyAfterParticles()
     {
+        model.SetActive(false);
+
+        HPBar.gameObject.SetActive(false);
+
         ParticleSystem ps = explosionVFX.GetComponent<ParticleSystem>();
 
         while (ps != null && ps.IsAlive())
