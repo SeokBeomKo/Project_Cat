@@ -69,6 +69,7 @@ public class PlayerCenter : MonoBehaviour
         else
         {
             playerController.stateMachine.ChangeStateAny(PlayerMovementStateEnums.STIFFEN);
+            SoundManager.Instance.PlaySFX("PlayerHit");
         }
     }
 }
