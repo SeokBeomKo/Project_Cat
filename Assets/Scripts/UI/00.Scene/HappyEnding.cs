@@ -8,7 +8,7 @@ public class HappyEnding : MonoBehaviour
     public QuestSubtitle questSubtitle;
     public Subtitle subtitle;
 
-    [Header("·Îµå ¾À")]
+    [Header("ï¿½Îµï¿½ ï¿½ï¿½")]
     public LoadScene loadScene;
     
     private void Start()
@@ -22,19 +22,19 @@ public class HappyEnding : MonoBehaviour
     public IEnumerator ShowSubtitle()
     {
         yield return new WaitForSeconds(1f);
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ·ÎÅ°...¾ß..µµ¿Í...Áà...");
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ë¡œí‚¤...ì•¼..ë„ì™€...ì¤˜...");
         yield return new WaitForSeconds(8f);
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : Äİ·Ï! Äİ·Ï! ¹°À»... ³Ê¹« ¸¹ÀÌ ¸Ô¾ú¾î...");
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ì½œë¡! ì½œë¡! ë¬¼ì„... ë„ˆë¬´ ë§ì´ ë¨¹ì—ˆì–´...");
         yield return new WaitForSeconds(20f);
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ±×·¡µµ ¾ÄÀ¸´Ï±î °³¿îÇÏÁö?");
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ê·¸ë˜ë„ ì”»ìœ¼ë‹ˆê¹Œ ê°œìš´í•˜ì§€?");
         yield return new WaitForSeconds(5f);
-        questSubtitle.ShowQuestSubtitle("·ÎÅ° : ¾Ö¿Ë");
+        questSubtitle.ShowQuestSubtitle("ë¡œí‚¤ : ì• ì˜¹");
         yield return new WaitForSeconds(2f);
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ±×·¡ ±×·¡, »ì·ÁÁà¼­ °í¸¶¿ö.  ¿ª½Ã ·ÎÅ°¶ó´Ï±î.");
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ê·¸ë˜ ê·¸ë˜, ì‚´ë ¤ì¤˜ì„œ ê³ ë§ˆì›Œ.  ì—­ì‹œ ë¡œí‚¤ë¼ë‹ˆê¹Œ.");
         yield return new WaitForSeconds(5f);
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ³Î ¸¸³ª¼­ Á¤¸» ´ÙÇàÀÌ¾ß.  ¾ÕÀ¸·Îµµ Àß ºÎÅ¹ÇØ!");
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ë„ ë§Œë‚˜ì„œ ì •ë§ ë‹¤í–‰ì´ì•¼.  ì•ìœ¼ë¡œë„ ì˜ ë¶€íƒí•´!");
         yield return new WaitForSeconds(5f);
-        questSubtitle.ShowQuestSubtitle("·ÎÅ° : ¾Ö¿Ë");
+        questSubtitle.ShowQuestSubtitle("ë¡œí‚¤ : ì• ì˜¹");
 
         yield return new WaitForSeconds(5f);
         loadScene.ChangeSceneCoroutine();
