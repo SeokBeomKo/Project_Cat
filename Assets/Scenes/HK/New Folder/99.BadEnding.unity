@@ -633,10 +633,8 @@ MonoBehaviour:
   button: {fileID: 687691153}
   topImage: {fileID: 376297409}
   bottomImage: {fileID: 1087425827}
-  researchScene: 02.Research
-  runningScene: 03.Chase
-  washingScene: 04.Pool
-  lobbySceneName: 00.Lobby
+  loadingScene: 02.VideoLoading
+  lobbySceneName: 01.Lobby
   questSubtitle: {fileID: 1735240577}
 --- !u!1 &687691153
 GameObject:
@@ -712,7 +710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -190, y: 100}
+  m_AnchoredPosition: {x: -190, y: 180}
   m_SizeDelta: {x: 250, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &845791981
@@ -760,8 +758,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 603501007}
-        m_TargetAssemblyTypeName: EndingScene, Assembly-CSharp
-        m_MethodName: OnClickEnd
+        m_TargetAssemblyTypeName: BadEnding, Assembly-CSharp
+        m_MethodName: OnClickRestart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -921,7 +919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -190, y: 180}
+  m_AnchoredPosition: {x: -190, y: 100}
   m_SizeDelta: {x: 250, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1133458361
@@ -969,8 +967,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 603501007}
-        m_TargetAssemblyTypeName: EndingScene, Assembly-CSharp
-        m_MethodName: OnClickRestart
+        m_TargetAssemblyTypeName: BadEnding, Assembly-CSharp
+        m_MethodName: OnClickEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1273,7 +1271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8308110340038031770, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8308110340038031771, guid: 0e9aa7eeee37f984fb9d8c4a0943bba1, type: 3}
       propertyPath: m_RootOrder
