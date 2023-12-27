@@ -95,6 +95,13 @@ public class InventoryManager : Singleton<InventoryManager>
         
     }
 
+    public int GetItemMaxCount(string itemName)
+    {
+        Item item = inventory.Find(item => item.name == itemName);
+        if (null == item) return 0;
+        return item.maxQuantity;
+    }
+
     public int GetItemCount(string itemName)
     {
         Item item = inventory.Find(item => item.name == itemName);

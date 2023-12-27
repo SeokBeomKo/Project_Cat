@@ -8,9 +8,9 @@ public class EscapeCat : MonoBehaviour
     public Transform waypointsParent;
 
     private int currentWaypointIndex = 0;
-    private float jumpSpeed = 3.5f;
     private float rotationSpeed = 5.0f;
-    private float moveSpeed = 2.0f;
+    [Header("¼Óµµ")]
+    public float moveSpeed = 2.0f;
     private Animator animator;
     private Transform[] waypoints;
     private Transform previousWaypoint;

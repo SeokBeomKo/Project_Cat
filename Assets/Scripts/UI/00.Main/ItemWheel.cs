@@ -37,7 +37,10 @@ public class ItemWheel : MonoBehaviour
     public GameObject crossHair;
 
     [Header("아이템 개수 텍스트")]
-    public TextMeshProUGUI[] itemCountArray; 
+    public TextMeshProUGUI[] itemCountArray;
+
+    [Header("아이템 최대 개수 텍스트")]
+    public TextMeshProUGUI[] itemMaxNumArray;
 
     public delegate void UseItem(string itemName);
     public event UseItem onItemClick;
@@ -52,6 +55,7 @@ public class ItemWheel : MonoBehaviour
         selectObject.gameObject.SetActive(false);
         selectEnergyLeft.SetActive(false);
         selectEnergyRight.SetActive(false);
+        UpdateMaxNum();
     }
 
 
@@ -61,8 +65,6 @@ public class ItemWheel : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2)) // 마우스 휠 버튼 무기창 활성화
         {
-            
-
             SoundManager.Instance.PlaySFX("Hover");
             isMenuActive = !isMenuActive;
 
@@ -97,13 +99,20 @@ public class ItemWheel : MonoBehaviour
         }
     }
 
+    private void UpdateMaxNum()
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            itemMaxNumArray[i].text = InventoryManager.Instance.GetItemMaxCount(itemNameArray[i]).ToString();
+        }
+    }
+
     private void UpdateText()
     {
         for(int i = 0; i < 6; i++)
         {
             itemCountArray[i].text = InventoryManager.Instance.GetItemCount(itemNameArray[i]).ToString();
         }
-        
     }
     
     private void DeactivateCursor()
