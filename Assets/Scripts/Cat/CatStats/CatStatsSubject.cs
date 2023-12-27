@@ -122,11 +122,13 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         partsCleanliness = catCleanliness[currentParts].Item1;
         partsMaxCleanliness = catCleanliness[currentParts].Item2;
 
-        catCleanliness[currentParts] = (partsCleanliness + fill, partsMaxCleanliness);
-
-        if (partsCleanliness > partsMaxCleanliness)
+        if (partsCleanliness + fill > partsMaxCleanliness)
         {
             catCleanliness[currentParts] = (partsMaxCleanliness, partsMaxCleanliness);
+        }
+        else
+        {
+            catCleanliness[currentParts] = (partsCleanliness + fill, partsMaxCleanliness);
         }
 
         NotifyObservers(cleanlinessObservers);
