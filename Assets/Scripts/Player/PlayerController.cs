@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 previousDirection;
     public void ChaseMoveInput()
     {
-        Vector3 currentDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        Vector3 currentDirection = new Vector3(Input.GetAxisRaw("Vertical"), 0, -Input.GetAxisRaw("Horizontal"));
         transform.parent.LookAt(transform.parent.position + currentDirection);
 
         // 이전 프레임의 방향과 현재 프레임의 방향이 다르면 방향 전환으로 간주
