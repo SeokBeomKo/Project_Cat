@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 {
-    [Header("HP")]
-    public float HP = 5;
+    [Header("데이터")]
+    public VirusAttackData data;
+
+    public GameObject HPBar;
     public ObjectHPbar objectHPbar;
- 
-    [Header("플레이어 감지 범위")]
-    public float radius = 0.1f;
-    
+
+    private float originHP;
+    private float HP;
+    private float radius;
+    private float time;
+    private float damage;
+
+    private Vector3 playerPosition;
+
     [Header("유한 상태 기계")]
     [SerializeField] public VirusStateMachine virusMachine;
 
@@ -18,8 +25,22 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
     public GameObject model;
     public GameObject explosionVFX;
 
-    public Vector3 PlayerPosition;
     public GameObject ProjectilePrefab;
+
+    public delegate void VirusRespawnHandle();
+    public event VirusRespawnHandle OnRespawnTimerStart;
+
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        originHP = data.hp;
+        radius = data.range;
+        time = data.tiime;
+        damage = data.damage;
+
+    }
 
     void OnDrawGizmosSelected()
     {
@@ -38,6 +59,17 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     void Start()
     {
+        HP = originHP;
+        objectHPbar.SetHP(HP);
+        objectHPbar.CheckHP();
+    }
+
+    private void OnEnable()
+    {
+        HP = originHP;
+
+        model.SetActive(true);
+        HPBar.SetActive(true);
         objectHPbar.SetHP(HP);
         objectHPbar.CheckHP();
     }
@@ -59,8 +91,7 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            //Debug.Log("Player HP--");
-            GetDamage();
+            collision.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(GetDamage());
         }
     }
 
@@ -74,17 +105,21 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     private void Check()
     {
-        if (HP == 0)
+        if (HP <= 0)
         {
-            model.SetActive(false);
-            explosionVFX.SetActive(true);
+            SoundManager.Instance.PlaySFX("VirusDeath");
 
+            explosionVFX.SetActive(true);
             StartCoroutine(DestroyAfterParticles());
         }
     }
 
     private IEnumerator DestroyAfterParticles()
     {
+        model.SetActive(false);
+
+        HPBar.gameObject.SetActive(false);
+
         ParticleSystem ps = explosionVFX.GetComponent<ParticleSystem>();
 
         while (ps != null && ps.IsAlive())
@@ -92,7 +127,10 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
             yield return null;
         }
 
-        Destroy(transform.parent.gameObject);
+        explosionVFX.SetActive(false);
+        OnRespawnTimerStart?.Invoke();
+        transform.gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 
     public void BeAttacked(float damage)
@@ -102,7 +140,29 @@ public class VirusAttackOperation : MonoBehaviour, IAttackable, IDamageable
 
     public float GetDamage()
     {
-        return 5;
+        return damage;
     }
+
+    public float GetRespawnTime()
+    {
+        return time;
+    }
+
+    public float GetRange()
+    {
+        return radius;
+    }
+
+    public Vector3 GetPlayPosition()
+    {
+
+        return playerPosition;
+    }
+
+    public void SetPlayerPosition(Vector3 pos)
+    {
+        playerPosition = pos;
+    }
+
 
 }

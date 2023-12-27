@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
-    public int width = 5;
-    public int height = 5;
+    [Header("데이터")]
+    public MazeData data;
 
-    public float cellWidth = 1;
-    public float cellHeight = 0;
+    private int width;
+    private int height;
+
+    private float cellWidth = 0.83f;
+    private float cellHeight = 0.388f;
 
     public Cell cellPrefab;
 
     private Cell[,] cellMap;
     private List<Cell> cellHistoryList;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        width = data.width;
+        height = data.height;
+
+    }
+
     void Start()
     {
         BatchCells();

@@ -22,7 +22,6 @@ public class VirusIdleState : VirusShotState
 
     public void OnStateEnter()
     {
-        Debug.Log("Idle");
     }
 
     public void OnStateExit()
@@ -32,7 +31,7 @@ public class VirusIdleState : VirusShotState
     private bool CollisionCheck()
     {
         Collider[] colliders =
-                    Physics.OverlapSphere(virus.transform.position, virus.radius);
+                    Physics.OverlapSphere(virus.transform.position, virus.GetRange());
 
         foreach (Collider col in colliders)
         {

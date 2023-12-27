@@ -7,6 +7,7 @@ using System;
 
 public class InventoryManager : Singleton<InventoryManager>
 {
+
     // 인벤토리 아이템을 관리할 리스트
     [SerializeField]
     public List<Item> inventory = new List<Item>();
@@ -24,6 +25,11 @@ public class InventoryManager : Singleton<InventoryManager>
             this.name = name;
             quantity = 0;
         }
+    }
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -68,16 +74,12 @@ public class InventoryManager : Singleton<InventoryManager>
             {
                 existingItem.quantity++;
             }
-            else
-            {
-                Debug.Log( "[InventoryManager]" + itemName + " 해당 아이템 보유 개수 초과 ");
-            }
+           
 
         }
         else
-        {
-            // 새로운 아이템을 추가
-            inventory.Add(new Item(itemName));
+        {  
+             inventory.Add(new Item(itemName));
         }
     }
 
@@ -90,10 +92,7 @@ public class InventoryManager : Singleton<InventoryManager>
         {
             item.quantity--;
         }
-        else
-        {
-            Debug.Log("아이템을 사용할 수 없음: " + itemName);
-        }
+        
     }
 
     public int GetItemCount(string itemName)

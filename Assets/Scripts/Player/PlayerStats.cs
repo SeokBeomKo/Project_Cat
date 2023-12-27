@@ -12,7 +12,7 @@ public class PlayerStats : MonoBehaviour, ISubject
 
     [Header("체력")]
     [SerializeField]    
-    private int maxHealth;
+    public int maxHealth;
     private int _currentHealth;
 
     public int currentHealth 
@@ -53,24 +53,34 @@ public class PlayerStats : MonoBehaviour, ISubject
     public float rollSpeed;
     public float jumpForce;
 
+    [Header("이동속도 증가 VFX")]
+    public GameObject vfx;
+
+    [Header("체력 회복 VFX")]
+    public GameObject healvfx;
+
     void Awake()
     {
         data.LoadDataFromPrefs();
         
-        maxHealth = data.maxHealth;
         moveSpeed = data.moveSpeed;
         rollSpeed = data.rollSpeed;
         jumpForce = data.jumpForce;
     }
     private void Start() 
     {
-        currentHealth   = maxHealth;
         currentRoll     = maxRoll;
         currentDouble   = maxDouble;
     }
 
+    public void SetCurHp(int hp)
+    {
+        currentHealth = hp;
+    }
+
     public void AddMoveSpeed(float time)
     {
+        vfx.SetActive(true);
         moveSpeedOffset = 2f;
         StartCoroutine(RecoveryMoveSpeed(time));
     }
@@ -79,6 +89,7 @@ public class PlayerStats : MonoBehaviour, ISubject
     {
         yield return new WaitForSeconds(time);
         moveSpeedOffset = 1f;
+        vfx.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -141,8 +152,15 @@ public class PlayerStats : MonoBehaviour, ISubject
 
     public void FillHealth(int fill = 5)
     {
+        healvfx.SetActive(true);
         currentHealth += fill;
         if (currentHealth > maxHealth)  currentHealth = maxHealth;
+    }
+
+    IEnumerator EndHeal()
+    {
+        yield return new WaitForSeconds(1.5f);
+        healvfx.SetActive(true);
     }
 
     public void FillRollCount(int fill = 1)

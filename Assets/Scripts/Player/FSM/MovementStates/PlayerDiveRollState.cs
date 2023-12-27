@@ -78,6 +78,7 @@ public class PlayerDiveRollState : IPlayerState
 
         player.model.localRotation = origDir;
         player.rigid.velocity = Vector3.zero;
+        player.isRolled = false;
     }
 
     public void Rolling(bool set)

@@ -27,10 +27,13 @@ public class ChaseCat : MonoBehaviour
     private Transform[] waypoints;
     private Transform previousWaypoint;
 
-    private void Start()
+    private void Awake()
     {
         data.LoadDataFromPrefs();
+    }
 
+    private void Start()
+    {
         moveSpeed = data.moveSpeed;
         animator = GetComponentInParent<Animator>();
 
@@ -120,19 +123,20 @@ public class ChaseCat : MonoBehaviour
         }
     }
 
+    bool temp = true;
+
     void CheckCutScene()
     {
         if (CutSceneStartPoint != null)
         {
             if (currentWaypointIndex < waypoints.Length && CutSceneStartPoint == waypoints[currentWaypointIndex])
             {
-                Debug.Log("��ŸƮ �ƾ� �̺�Ʈ ȣ��");
                 OnCutSceneStart?.Invoke();
             }
-            else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle"))
+            else if (checkCutScene && !animator.GetCurrentAnimatorStateInfo(0).IsName("EndIdle") && temp)
             {
-                Debug.Log("���� �ƾ� �̺�Ʈ ȣ��");
                 OnCutSceneEnd?.Invoke();
+                temp = false;
             }
         }
     }

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class BallNavigateOperation : MonoBehaviour, IDamageable, IInteractable
 {
+    [Header("데이터")]
+    public HPData data;
+
     // TODO : 옵저버 패턴 .
-    public float HP = 30;
+    private float HP;
     public ObjectHPbar objectHPbar;
     public GameObject hpBar;
     public GameObject effect;
@@ -13,6 +16,13 @@ public class BallNavigateOperation : MonoBehaviour, IDamageable, IInteractable
 
     [SerializeField]
     public Rigidbody rigidBody;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        HP = data.hp;
+    }
 
     void Start()
     {

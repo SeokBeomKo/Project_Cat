@@ -8,6 +8,9 @@ public class UIInputHandler : MonoBehaviour
     public event UIInputHandle OnCleanlinessPopUpTrue;
     public event UIInputHandle OnCleanlinessPopUpFalse;
     public event UIInputHandle OnPausePopUp;
+    public event UIInputHandle OnSelectSoapRifle;
+    public event UIInputHandle OnSelectSplashBuster;
+    public event UIInputHandle OnselectBubbleGun;
 
     void Update()
     {
@@ -25,6 +28,21 @@ public class UIInputHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OnPausePopUp?.Invoke();
+        }
+        
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            OnSelectSoapRifle?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            OnSelectSplashBuster?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            OnselectBubbleGun?.Invoke();
         }
     }
 }

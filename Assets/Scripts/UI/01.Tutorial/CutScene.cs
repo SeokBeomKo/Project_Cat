@@ -5,16 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class CutScene : MonoBehaviour
 {
-    [Header("ÀÚ¸·")]
+    [Header("ìë§‰")]
     public QuestSubtitle questSubtitle;
     
-    [Header("ÀÌµ¿ÇÒ ¾À ÀÌ¸§")]
+    [Header("ì´ë™í•  ì”¬ ì´ë¦„")]
     public string SceneName;
 
-    [Header("½ºÅµ ¹öÆ°")]
+    [Header("ìŠ¤í‚µ ë²„íŠ¼")]
     public GameObject skipButton;
 
-    [Header("·Îµå ¾À")]
+    [Header("ë¡œë“œ ì”¬")]
     public LoadScene loadScene;
 
     private bool isStop = false;
@@ -30,26 +30,26 @@ public class CutScene : MonoBehaviour
         if (isStop) yield break;
 
         yield return new WaitForSeconds(11f);
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ¾î ¸®Ã³µå, º¸³»ÁØ °øÀÓºñ È®ÀÎÇß¾î~", speed: 0.06f);
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ì–´ ë¦¬ì²˜ë“œ, ë³´ë‚´ì¤€ ê³µì„ë¹„ í™•ì¸í–ˆì–´~", speed: 0.06f);
         if (isStop) yield break;
 
         yield return new WaitForSeconds(3.5f);
-        questSubtitle.ShowQuestSubtitle("¸®Ã³µå : ¿À´Ã Á¤¸» °í¸¶¿ü¾î Ä«³ª¸®, ³Ê ´öºĞ¿¡ »ì¾Ò¾î!", speed : 0.06f);
+        questSubtitle.ShowQuestSubtitle("ë¦¬ì²˜ë“œ : ì˜¤ëŠ˜ ì •ë§ ê³ ë§ˆì› ì–´ ì¹´ë‚˜ë¦¬, ë„ˆ ë•ë¶„ì— ì‚´ì•˜ì–´!", speed : 0.06f);
         if (isStop) yield break;
 
         yield return new WaitForSeconds(3.5f);       
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : Á¤¸»ÀÌÁö ³ª ¾ø¾úÀ¸¸é ¾îÂ¿ »·Çß¾î?  ±×·±µ¥ ±×°Å ´ëÃ¼ ¹¹¾ß?  ±×·¸°Ô ÀÛÀº Áã´Â Ã³À½ ºÃ´Âµ¥.", speed: 0.05f);
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ì •ë§ì´ì§€ ë‚˜ ì—†ì—ˆìœ¼ë©´ ì–´ì©” ë»”í–ˆì–´?  ê·¸ëŸ°ë° ê·¸ê±° ëŒ€ì²´ ë­ì•¼?  ê·¸ë ‡ê²Œ ì‘ì€ ì¥ëŠ” ì²˜ìŒ ë´¤ëŠ”ë°.", speed: 0.05f);
         if (isStop) yield break;
-        //questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ±×·¸°Ô ÀÛÀº Áã´Â Ã³À½ ºÃ´Âµ¥.");
+        //questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ê·¸ë ‡ê²Œ ì‘ì€ ì¥ëŠ” ì²˜ìŒ ë´¤ëŠ”ë°.");
 
         yield return new WaitForSeconds(5f); 
-        questSubtitle.ShowQuestSubtitle("¸®Ã³µå : ´ë¹ÚÀÌÁö? ³» ¿¬±¸ ¼º°ú¾ß!", speed: 0.06f);
+        questSubtitle.ShowQuestSubtitle("ë¦¬ì²˜ë“œ : ëŒ€ë°•ì´ì§€? ë‚´ ì—°êµ¬ ì„±ê³¼ì•¼!", speed: 0.06f);
         if (isStop) yield break;
 
         yield return new WaitForSeconds(2.5f);
-        questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ¶Ç ¹«½¼ »ç°í¸¦ Ä¥·Á´Â °Å¾ß.  ¹°·Ğ ³ª¾ß ÀÀ¿øÇÏÁö¸¸ ³Ê¹« ¹«¸ğÇÑ ÁşÀº  ±×¸¸ µÎ¾úÀ¸¸é ÁÁ°Ú¾î. ³»ÀÏ ºÁ.");
+        questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ë˜ ë¬´ìŠ¨ ì‚¬ê³ ë¥¼ ì¹ ë ¤ëŠ” ê±°ì•¼.  ë¬¼ë¡  ë‚˜ì•¼ ì‘ì›í•˜ì§€ë§Œ ë„ˆë¬´ ë¬´ëª¨í•œ ì§“ì€  ê·¸ë§Œ ë‘ì—ˆìœ¼ë©´ ì¢‹ê² ì–´. ë‚´ì¼ ë´.");
         if (isStop) yield break;
-        //questSubtitle.ShowQuestSubtitle("Ä«³¯¸®¾Æ : ±×¸¸ µÎ¾úÀ¸¸é ÁÁ°Ú¾î. ³»ÀÏ ºÁ.");
+        //questSubtitle.ShowQuestSubtitle("ì¹´ë‚ ë¦¬ì•„ : ê·¸ë§Œ ë‘ì—ˆìœ¼ë©´ ì¢‹ê² ì–´. ë‚´ì¼ ë´.");
     }
 
     public void OnClickSkip()

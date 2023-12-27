@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class VirusStaticOperation : MonoBehaviour, IDamageable
 {
+    [Header("데이터")]
+    public VirusStaticData data;
+
     // TODO : 옵저버 패턴 .
-    public float HP = 5;
+    private float HP;
+    private float damage;
+
     public ObjectHPbar objectHPbar;
 
     [Header("모델링 정보")]
@@ -14,6 +19,14 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
     public GameObject hpBar;
 
     public Collider sphereCollider;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        HP = data.hp;
+        damage = data.damage;
+    }
 
     void Start()
     {
@@ -41,7 +54,7 @@ public class VirusStaticOperation : MonoBehaviour, IDamageable
         {
             if (null != collision.transform.GetComponentInChildren<PlayerHitScan>())
             {
-                collision.transform.GetComponentInChildren<PlayerHitScan>().GetDamage();
+                collision.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(damage);
             }
         }
     }

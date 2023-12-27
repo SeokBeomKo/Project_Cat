@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FlyingObject : MonoBehaviour, IAttackable
 {
+
     private Vector3 startPos, endPos;
     //땅에 닫기까지 걸리는 시간
     protected float timer;
@@ -12,8 +13,12 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
     private bool isCollision = false;
 
-    public float height = 2;
+    [Header("데이터")]
+    public FlyObjectData data;
+
+    private float height = 2;
     private float moveSpeed = 1f; // 이동 속도
+
     public Vector3 rotationAxis = Vector3.left; // 회전 축
 
     Vector3 Direction;
@@ -21,6 +26,14 @@ public class FlyingObject : MonoBehaviour, IAttackable
 
     public delegate void FlyingObjectHandle();
     public FlyingObjectHandle onFly;
+
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        height = data.height;
+        moveSpeed = data.speed;
+    }
 
     private void Start()
     {

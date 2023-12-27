@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCenter : MonoBehaviour
 {
@@ -16,12 +17,34 @@ public class PlayerCenter : MonoBehaviour
     [SerializeField]
     WeaponStrategy weaponStrategy;
 
+    void Awake()
+    {
+        playerStats.SetCurHp(DataManager.Instance.GetPlayerHP());
+
+        LoadBullet();
+    }
+
     private void Start() 
     {
+        weaponStrategy.weaponList[0].OnWeaponBullet += UseBullet;
+        weaponStrategy.weaponList[1].OnWeaponBullet += UseBullet;
+        weaponStrategy.weaponList[2].OnWeaponBullet += UseBullet;
         playerHitScan.OnPlayerHitScan += HitPlayer;
 
         playerHitScan.OnPlayerSpeedUp += SpeedUp;
         playerHitScan.OnPlayerDamageUp += DamageUp;
+    }
+
+    public void LoadBullet()
+    {
+        weaponStrategy.SetCurrentBullet(DataManager.Instance.GetWeaponCurBullet(WEAPON_LIST.SOAP_RIFLE), 
+                                        DataManager.Instance.GetWeaponCurBullet(WEAPON_LIST.SPLASH_BUSTER), 
+                                        DataManager.Instance.GetWeaponCurBullet(WEAPON_LIST.BUBBLE_GUN));
+    }
+
+    public void UseBullet()
+    {
+        DataManager.Instance.SetWeaponCurBullet(weaponStrategy.weaponList[0].GetBullet(), weaponStrategy.weaponList[1].GetBullet(), weaponStrategy.weaponList[2].GetBullet());
     }
 
     public void DamageUp()
@@ -41,9 +64,11 @@ public class PlayerCenter : MonoBehaviour
         if (0 >= playerStats.currentHealth)
         {
             playerController.stateMachine.ChangeStateAny(PlayerMovementStateEnums.DEAD);
+            SceneManager.LoadScene("99.BadEnding");
         }
         else
         {
+            SoundManager.Instance.PlaySFX("PlayerHit");
             playerController.stateMachine.ChangeStateAny(PlayerMovementStateEnums.STIFFEN);
         }
     }

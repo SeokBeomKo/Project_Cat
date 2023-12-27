@@ -19,15 +19,28 @@ public class TutorialCenter : MonoBehaviour
     [Header("인풋 핸들")]
     [SerializeField] public InputHandler inputHandler;
 
+    [Header("UI 인풋 핸들")]
+    [SerializeField] public UIInputHandler uiInputHandler;
+
+
     [Header("고양이")]
     [SerializeField] public GameObject cat;
 
     [Header("고양이 충돌 감지")]
     [SerializeField] public ExitCatMove exitCatMove;
 
-    [Header("플레이어 충돌 감지")]
-    [SerializeField] public PlayerSubtitle ballPlayerSubtitle;
+    [Header("플레이어 자막 충돌 감지")]
     [SerializeField] public PlayerSubtitle clearPlayerSubtitle;
+
+    [Header("플레이어 가이드 충돌 감지")]
+    [SerializeField] public PlayerGuide keyGuide;
+    [SerializeField] public PlayerGuide itemGuide;
+    [SerializeField] public PlayerGuide gunGuide;
+    [SerializeField] public PlayerGuide virusGuide;
+
+    [Header("게임 가이드")]
+    [SerializeField] public GameGuide gameGuide;
+
 
     [Header("자막")]
     [SerializeField] public Subtitle subtitle;
@@ -36,14 +49,14 @@ public class TutorialCenter : MonoBehaviour
     [Header("바이러스 그룹")]
     [SerializeField] public GameObject VirusGroup;
 
-    [Header("캔버스 그룹")]
-    [SerializeField] public GameObject UIGroup;
+    [Header("UI 컨트롤러")]
+    [SerializeField] public UIController controllerUI;
 
     [Header("클리어 포인트")]
     [SerializeField] public GameObject endPoint;
 
     [Header("커서 이벤트")]
-    public GameObject cursor;
+    public CursorEvent cursor;
 
     [Header("스킵 버튼")]
     public GameObject skipButton;
@@ -54,27 +67,42 @@ public class TutorialCenter : MonoBehaviour
     [Header("퀘스트 UI")]
     public QuestPopUp questUI;
 
+    [Header("아이템 휠")]
+    public GameObject itemWheel;
+
     private bool isStop = false;
 
     private void Start() 
     {
-        stopWatch.OnSubtitle += OnCellPhone;
-        exitCatMove.OnExitCat += ExitCatMove;
+        PlayerPrefs.SetString("nextScene", "04.Tutorial");
 
-        ballPlayerSubtitle.OnPlayerSubtitle += OnBallGuide;
-        clearPlayerSubtitle.OnPlayerSubtitle += OnClearGuide;
+        stopWatch.OnSubtitle += OnCellPhone; // 전화 컷씬
+        exitCatMove.OnExitCat += ExitCatMove; // 고양이 컷씬
+
+        keyGuide.OnPlayerGuide += OnKeyGuide;
+        itemGuide.OnPlayerGuide += OnItemGuide;
+        gunGuide.OnPlayerGuide += OnGunGuide;
+        virusGuide.OnPlayerGuide += OnVirusGuide;
+
+        clearPlayerSubtitle.OnPlayerSubtitle += OnClearGuide; // 튜토리얼 클리어
+
+        gameGuide.OnCloseKey += CloseKey;
+        gameGuide.OnCloseItem += CloseItem;
+        gameGuide.OnCloseGun += CloseGun;
+        gameGuide.OnCloseVirus += CloseVirus;
 
         VirusGroup.SetActive(false);
-        UIGroup.SetActive(false);
+        controllerUI.RemoveUI();
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
-        cursor.SetActive(false);
+        cursor.CursorOff();
 
         questUI.DeactivatePopUp();
     }
 
     public void OnCellPhone()
     {
+        itemWheel.SetActive(false);
         inputHandler.gameObject.SetActive(false);
         skipButton.SetActive(true);
         StartCoroutine(PhoneSubtitle());
@@ -112,7 +140,7 @@ public class TutorialCenter : MonoBehaviour
         yield return new WaitForSeconds(7f);
         if (isStop) yield break;
 
-        UIGroup.SetActive(false);
+        controllerUI.RemoveUI();
         cameraRotate.SetActive(false);
         inputHandler.gameObject.SetActive(false);
         VirusGroup.SetActive(false);
@@ -129,38 +157,136 @@ public class TutorialCenter : MonoBehaviour
         subtitle.ShowSubtitle("카날리아 : 고양이 털이 매개라면, 로키를 찾아야.. 로키잖아?!", delayTime : 1.3f);
         cat.SetActive(true);
     }
+    public void OnClickSkip()
+    {
+        itemWheel.SetActive(true);
+        questSubtitle.StopSubtitle();
+        subtitle.StopSubtitle();
+
+        StopPhoneSubtitle();
+        voiceMessage.SetActive(false);
+        skipButton.SetActive(false);
+
+        Invoke("ExitCatMove", 0.2f);
+    }
+
     public void ExitCatMove()
     {
         cameraController.SetPlayCamera();
         cat.SetActive(false);
         inputHandler.gameObject.SetActive(true);
-        UIGroup.SetActive(true);
+        controllerUI.ShowUI();
         cameraRotate.SetActive(true);
         VirusGroup.SetActive(true);
+        skipButton.SetActive(false);
+        cursor.CursorOff();
         questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자", delayTime : 0.5f);
+        itemWheel.SetActive(true);
     }
 
-    public void OnBallGuide()
+    public void OnKeyGuide()
     {
-        StartCoroutine(BallGuideSubtitle());
+        gameGuide.ShowKeyPopUp();
+        cursor.CursorOn();
+        inputHandler.gameObject.SetActive(false);
+        uiInputHandler.gameObject.SetActive(false);
+        cameraRotate.SetActive(false);
+        controllerUI.RemoveUI();
+        itemWheel.SetActive(false);
     }
 
-    IEnumerator BallGuideSubtitle()
+
+    public void CloseKey()
     {
-        subtitle.ShowSubtitle("카날리아 : 탁자 위에 공을 활용할 수 있을거 같아");
+        cursor.CursorOff();
+        inputHandler.gameObject.SetActive(true);
+        uiInputHandler.gameObject.SetActive(true);
+        cameraRotate.SetActive(true);
+        controllerUI.ShowUI();
+        questUI.ActivatePopUP("조작키 학습", "앞으로 이동하세요.");
+        itemWheel.SetActive(true);
+    }
 
-        yield return new WaitForSeconds(4f);
+    public void OnItemGuide()
+    {
+        questUI.DeactivatePopUp();
+        gameGuide.ShowItemPopUp();
+        cursor.CursorOn();
+        inputHandler.gameObject.SetActive(false);
+        uiInputHandler.gameObject.SetActive(false);
+        cameraRotate.SetActive(false);
+        controllerUI.RemoveUI();
+        itemWheel.SetActive(false);
+    }
+    public void CloseItem()
+    {
+        cursor.CursorOff();
+        inputHandler.gameObject.SetActive(true);
+        uiInputHandler.gameObject.SetActive(true);
+        cameraRotate.SetActive(true);
+        controllerUI.ShowUI();
+        questUI.ActivatePopUP("아이템 획득", "아이템을 획득해보세요.");
+        itemWheel.SetActive(true);
+    }
 
-        questSubtitle.ShowQuestSubtitle("물총으로 공을 아래로 떨어뜨려보자");
+    public void OnGunGuide()
+    {
+        questUI.DeactivatePopUp();
+        gameGuide.ShowGunPopUp();
+        cursor.CursorOn();
+        inputHandler.gameObject.SetActive(false);
+        uiInputHandler.gameObject.SetActive(false);
+        cameraRotate.SetActive(false);
+        controllerUI.RemoveUI();
+        itemWheel.SetActive(false);
+    }
+
+    public void CloseGun()
+    {
+        cursor.CursorOff();
+        inputHandler.gameObject.SetActive(true);
+        uiInputHandler.gameObject.SetActive(true);
+        cameraRotate.SetActive(true);
+        controllerUI.ShowUI();
+        questSubtitle.ShowQuestSubtitle("캡슐 안에 뭐가 들어있는지 확인해보자!");
+        questUI.ActivatePopUP("캡슐을 뿌셔뿌셔", "총을 이용해 캡슐 안 아이템을  획득해 보세요.");
+        itemWheel.SetActive(true);
+    }
+
+    public void OnVirusGuide()
+    {
+        questUI.DeactivatePopUp();
+        gameGuide.ShowVirusPopUp();
+        cursor.CursorOn();
+        inputHandler.gameObject.SetActive(false);
+        uiInputHandler.gameObject.SetActive(false);
+        cameraRotate.SetActive(false);
+        controllerUI.RemoveUI();
+        itemWheel.SetActive(false);
+    }
+
+    public void CloseVirus()
+    {
+        cursor.CursorOff();
+        inputHandler.gameObject.SetActive(true);
+        uiInputHandler.gameObject.SetActive(true);
+        cameraRotate.SetActive(true);
+        controllerUI.ShowUI();
+        subtitle.ShowSubtitle("카날리아 : 탁자 위에 공을 활용할 수 있을거 같아"); 
+        questUI.ActivatePopUP("공굴리기 활용", "물총으로 물총으로 공을  아래로 떨어뜨려보자");
+        itemWheel.SetActive(true);
     }
 
 
     public void OnClearGuide()
     {
-        UIGroup.SetActive(false);
+        controllerUI.RemoveUI();
         cameraRotate.SetActive(false);
+        itemWheel.SetActive(false);
         inputHandler.gameObject.SetActive(false);
+        questUI.DeactivatePopUp();
         subtitle.ShowSubtitle("카날리아 : 바이러스가 퍼지는 것을 막기 위해,  나가서 컴퓨터로 모든 문을 잠그자!");
+        questUI.ActivatePopUP("이동하기", "다음 맵으로 이동하십시오");
         StartCoroutine(Clear());
     }
 
@@ -171,22 +297,9 @@ public class TutorialCenter : MonoBehaviour
         endPoint.SetActive(true);
     }
 
-    public void OnClickSkip()
-    {
-        questSubtitle.StopSubtitle();
-        subtitle.StopSubtitle();
-
-        StopPhoneSubtitle();
-        voiceMessage.SetActive(false);
-        cursor.SetActive(true);
-        skipButton.SetActive(false);
-
-        Invoke("ExitCatMove", 0.2f);
-    }
-
-/*
-이 효과적인 용액은 바이러스를 사라지게 만들지만, 인체에 들어와 변형된 바이러스는 없애지 못해.
-우리가 최대한 빨리 연구해서 돌아갈 방법을 찾아볼게
-*/
+    /*
+    이 효과적인 용액은 바이러스를 사라지게 만들지만, 인체에 들어와 변형된 바이러스는 없애지 못해.
+    우리가 최대한 빨리 연구해서 돌아갈 방법을 찾아볼게
+    */
 
 }

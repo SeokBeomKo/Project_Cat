@@ -42,6 +42,11 @@ public class WeaponSelection : MonoBehaviour
         SetCurWeapon();
     }
 
+    public void SetMaxBullet()
+    {
+        
+    }
+
     public void SetCurWeapon(int number = 0)
     {
         SelectWeapon(number);
@@ -94,19 +99,19 @@ public class WeaponSelection : MonoBehaviour
 
     public void SelectSoftRifle(int bullet)
     {
-        softRifleProgress.fillAmount = bullet / 10f;
+        softRifleProgress.fillAmount = bullet / 100f;
         softRifleText.text = bullet.ToString();
     }
     
     public void SelectSplashBuster(int bullet)
     {
-        splashBusterProgress.fillAmount = bullet / 30f;
+        splashBusterProgress.fillAmount = bullet / 200f;
         splashBusterText.text = bullet.ToString();
     }
 
     public void SelectBubbleGun(int bullet)
     {
-        bubbleGunProgress.fillAmount = bullet / 400f;
+        bubbleGunProgress.fillAmount = bullet / 600f;
         bubbleGunText.text = bullet.ToString();
     }
 

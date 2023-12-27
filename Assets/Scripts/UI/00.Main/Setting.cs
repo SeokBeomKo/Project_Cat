@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 
@@ -19,15 +20,13 @@ public class Setting : MonoBehaviour
     [Header("로비씬")]
     public string lobbyName; 
 
-    [Header("플레이 카메라")]
-    public CinemachineVirtualCamera playCamera;
-
     public UIController uiController;
     public CursorEvent cursor;
 
     public delegate void PausePopupHandle();
     public event PausePopupHandle OnPausePopupTrue;
     public event PausePopupHandle OnPausePopupFalse;
+
 
     public void UpdatePause()
     {
@@ -40,8 +39,11 @@ public class Setting : MonoBehaviour
             Time.timeScale = 1f;
             OnPausePopupFalse?.Invoke();
 
-            if (playCamera.gameObject.activeSelf)
+            if (PlayerPrefs.GetInt("Camera") != 20)
             {
+                int cameraValue = PlayerPrefs.GetInt("Camera");
+                Debug.Log("세팅 : " + cameraValue);
+
                 uiController.ShowUI();
                 itemWheel.SetActive(true);
             }
@@ -70,7 +72,7 @@ public class Setting : MonoBehaviour
             Time.timeScale = 1f;
             OnPausePopupFalse?.Invoke();
 
-            if (playCamera.gameObject.activeSelf)
+            if (PlayerPrefs.GetInt("Camera") != 20)
             {
                 itemWheel.SetActive(true);
                 uiController.ShowUI();
@@ -83,11 +85,12 @@ public class Setting : MonoBehaviour
         SoundManager.Instance.PlaySFX("Click");
         cursor.CursorOff();
         pausePopUp.SetActive(false);
-        if (playCamera.gameObject.activeSelf)
-        {
-            itemWheel.SetActive(true);
+
+        if (PlayerPrefs.GetInt("Camera") != 20)
             uiController.ShowUI();
-        }
+        if(PlayerPrefs.GetInt("Camera") == 10)
+            itemWheel.SetActive(true);
+
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
     }
@@ -114,11 +117,10 @@ public class Setting : MonoBehaviour
         Time.timeScale = 1f;
         OnPausePopupFalse?.Invoke();
 
-        if (playCamera.gameObject.activeSelf)
-        {
-            itemWheel.SetActive(true);
+        if (PlayerPrefs.GetInt("Camera") != 20)
             uiController.ShowUI();
-        }
+        if (PlayerPrefs.GetInt("Camera") == 10)
+            itemWheel.SetActive(true);
     }
-    
+   
 }

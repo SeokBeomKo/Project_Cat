@@ -18,6 +18,8 @@ public class PlayerHitScan : MonoBehaviour
 
     [SerializeField]
     private float invincibleTime = 0.5f; // 무적 시간 설정. 단위는 초입니다.
+
+    bool isCanHit = true;
     
     private float lastHitTime; // 마지막으로 공격을 당한 시간을 저장합니다.
 
@@ -33,20 +35,26 @@ public class PlayerHitScan : MonoBehaviour
 
     public void GetDamage(float damage = 5f)
     {
-        if (Time.time - lastHitTime > invincibleTime)
+        if (isCanHit)
         {
-            lastHitTime = Time.time; // 공격을 당한 시간을 갱신합니다.
+            isCanHit = false;
             OnPlayerHitScan?.Invoke((int)damage);
+            StartCoroutine(Hit());
         }
+    }
+
+    IEnumerator Hit()
+    {
+        yield return new WaitForSeconds(1f);
+        isCanHit = true;
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAttack") && Time.time - lastHitTime > invincibleTime)
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAttack"))
         {
-            lastHitTime = Time.time; // 공격을 당한 시간을 갱신합니다.
             if (null != other.GetComponent<IAttackable>())
-                OnPlayerHitScan?.Invoke((int)other.GetComponent<IAttackable>().GetDamage());
+                GetDamage((float)other.GetComponent<IAttackable>().GetDamage());
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("InstantItem"))
         {

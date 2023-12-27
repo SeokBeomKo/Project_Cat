@@ -11,6 +11,10 @@ public class QuestPopUp : MonoBehaviour
     public void ActivatePopUP(string title, string content)
     {
         questTitleText.text = title;
+        
+        if (content.Contains("  "))
+            content = content.Replace("  ", "\n");
+        
         questText.text = content;
         gameObject.SetActive(true);
     }

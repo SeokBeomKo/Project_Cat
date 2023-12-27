@@ -31,6 +31,11 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
     }
 
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+    }
+
     private void Start()
     {
         catCleanliness.Add(PartsEnums.BACK, (0, data.maxBodyCleanliness));
@@ -124,6 +129,8 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
             catCleanliness[currentParts] = (partsMaxCleanliness, partsMaxCleanliness);
         }
 
+        NotifyObservers(cleanlinessObservers);
+
         Debug.Log("파츠 : " + currentParts + ", 세척도 : " + catCleanliness[currentParts].Item1);
     }
 
@@ -138,8 +145,6 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
         }
 
         Debug.Log("호감도 증가 : " + currentLikeability);
-
-        NotifyObservers(likeabilityObservers);
     }
 
     public void DecreaseLikeability(float damage = 5)
@@ -148,7 +153,7 @@ public class CatStatsSubject : MonoBehaviour, IObserver, ISubject
 
         if (currentLikeability <= 0)
         {
-            SceneManager.LoadScene("BadEnding");
+            SceneManager.LoadScene("99.BadEnding");
         }
 
         Debug.Log("호감도 감소 : " + currentLikeability);

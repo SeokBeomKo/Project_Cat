@@ -4740,7 +4740,7 @@ GameObject:
   - component: {fileID: 5364740762844915326}
   m_Layer: 0
   m_Name: FootballNavigate
-  m_TagString: Ball
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4805,7 +4805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7455a7d3f2f403f8475f550b95d904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 30
+  data: {fileID: 11400000, guid: d2538b653c9714013b506342d52549fd, type: 2}
   objectHPbar: {fileID: 5364740762844915326}
   hpBar: {fileID: 116868272936167771}
   effect: {fileID: 3318058048702670530}
@@ -4865,6 +4865,10 @@ PrefabInstance:
     - target: {fileID: 4868200389711969887, guid: 972e3e173ce9a4787a232a2976725694, type: 3}
       propertyPath: m_Name
       value: ObjectHPbar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868200389711969887, guid: 972e3e173ce9a4787a232a2976725694, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8284770642324604672, guid: 972e3e173ce9a4787a232a2976725694, type: 3}
       propertyPath: m_Pivot.x

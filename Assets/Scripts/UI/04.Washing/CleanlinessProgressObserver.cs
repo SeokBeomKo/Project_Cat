@@ -26,9 +26,10 @@ public class CleanlinessProgressObserver : MonoBehaviour, IObserver
         cleanlinessProgressBar.value = Mathf.Clamp01(currentClean / totalClean);
         cleanlinessText.text = Mathf.RoundToInt(cleanlinessProgressBar.value * 100) + " %";
 
+        Debug.Log("¼¼Ã´µµ : " + cleanlinessText.text);
         if(cleanlinessProgressBar.value == 1)
         {
-            SceneManager.LoadScene("HappyEnding");
+            SceneManager.LoadScene("99.HappyEnding");
         }
     }
 }

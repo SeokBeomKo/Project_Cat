@@ -1,88 +1,240 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ItemCenter : MonoBehaviour
 {
-    [Header("ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®")]
+
+    [Header("í”Œë ˆì´ì–´")]
     public GameObject Player;
 
-    [Header("¾ÆÀÌÅÛ ÈÙ UI")]
+    [Header("ì•„ì´í…œ íœ  UI")]
     public ItemWheel itemWheel;
-    
-    [Header("º¸È£ ¿¡³ÊÁö")]
+
+    [Header("ë³´í˜¸ì—ë„ˆì§€")]
     public ProtectEnergyUse energyUse;
-    
-    [Header("Çì¾îº¼")]
+
+    [Header("í„¸ë­‰ì¹˜")]
     public HairBallUse hairBallUse;
 
-    [Header("·£´ı ¾ÆÀÌÅÛ")]
-    public RandomItem randomItem;
+    [Header("ëœë¤ ì•„ì´í…œ")]
+    private RandomItem[] randomItem;
+    public GameObject randomItemParent;
 
-    [Header("ÇÃ·¹ÀÌ¾î ½ºÅÈ")]
+    [Header("ì•„ì´í…œ")]
+    public Item[] itemArray;
+    public GameObject ItemParent;
+
+    [Header("í”Œë ˆì´ì–´ ìŠ¤íƒ¯")]
     public PlayerStats playerStats;
 
-    [Header("ÃÑ±â")]
+    [Header("ë¬´ê¸°")]
     public WeaponStrategy weaponStrategy;
 
-    [Header("ÀÌµ¿ ¼Óµµ Áõ°¡ Áö¼Ó ½Ã°£")]
+    [Header("ê³ ì–‘ì´")]
+    public CatStatsSubject catSubject;
+
+    [Header("ì´ë™ì†ë„ ì‹œê°„")]
     public float moveSpeedTime;
 
-    [Header("°ø°İ·Â Áõ°¡ Áö¼Ó ½Ã°£")]
+    [Header("ê³µê²©ë ¥ ì‹œê°„")]
     public float attackPowerTime;
 
+    [Header("ì•„ì´í…œ ì¶œë ¥ UI")]
+    public GetItem getItem;
+
+    public GameObject bigBottleObject;
+    private BigBottle[] bigBottle;
+
+    public GameObject bottleObject;
+    private NavigateVaseOperation[] bottle;
+
+    public GameObject CapsuleNavigateParent;
+    private CapsuleNavigateOperation[] CapsuleNavigates;
+
+    public GameObject CapsuleWashingParent;
+    private CapsuleWashingOperation[] CapsuleWashing;
+
+    public BattleCenter battleCenter;
 
     private void Start()
     {
         itemWheel.onItemClick += ClickTrue;
+
+        if (CapsuleNavigateParent != null)
+        {
+            CapsuleNavigates = CapsuleNavigateParent.GetComponentsInChildren<CapsuleNavigateOperation>();
+        }
+
+        if(CapsuleNavigates != null)
+        {
+            for (int i = 0; i < CapsuleNavigates.Length; i++)
+                CapsuleNavigates[i].onItemCreate += CreateItem;
+        }
+
+        if(CapsuleWashingParent != null)
+        {
+            CapsuleWashing = CapsuleWashingParent.GetComponentsInChildren<CapsuleWashingOperation>();
+        }
+
+        if (CapsuleWashing != null)
+        {
+            for (int i = 0; i < CapsuleWashing.Length; i++)
+                CapsuleWashing[i].onItemCreate += CreateItem;
+        }
+
+        if (battleCenter != null)
+        {
+            battleCenter.onItemCreate += CreateItem;
+        }
+
+        if(randomItemParent!= null)
+        {
+            randomItem = randomItemParent.GetComponentsInChildren<RandomItem>();
+        }
+
         if (randomItem != null)
-            randomItem.OnRandomItem += GetRandomItem;
-    }
+        {
+            for(int i = 0; i < randomItem.Length; i++)
+                randomItem[i].OnRandomItem += GetRandomItem;
+        }
+
+
+        if (ItemParent != null)
+        {
+            itemArray = ItemParent.GetComponentsInChildren<Item>();
+        }
+        else
+        {
+        itemArray = new Item[0];
+
+        }
+
+        if (itemArray != null)
+        {
+            for(int i = 0; i < itemArray.Length; i++)
+            {
+                itemArray[i].OnItem += GetItems;
+            }
+        }
+
+        if(bigBottleObject != null)
+        {
+            bigBottle = bigBottleObject.GetComponentsInChildren<BigBottle>();
+
+        }
+
+
+        if(bottleObject != null)
+        {
+            bottle = bottleObject.GetComponentsInChildren<NavigateVaseOperation>();
+
+        }
+
+        if (bigBottle != null)
+        {
+           for(int i=0; i<bigBottle.Length; i++)
+            {
+                int index = i;
+                bigBottle[index].OnChargeAll += GetRandomItem;
+            }
+        }
+
+        if (bottle != null)
+        {
+            for (int i = 0; i < bottle.Length; i++)
+            {
+                int index = i;
+                bottle[index].OnCharge += GetRandomItem;
+            }
+        }
+
+        getItem.gameObject.SetActive(false);
+    } 
 
     public void ClickTrue(string itemName)
     {
-        switch(itemName)
+        switch (itemName)
         {
-            case "º¸È£¸·":
+            case "ë³´í˜¸ë§‰":
                 energyUse.CreateProtectEnergy(Player.transform.position, Player.transform);
                 break;
 
-            case "ÀÌµ¿¼Óµµ":
+            case "ì´ë™ì†ë„":
                 playerStats.AddMoveSpeed(moveSpeedTime);
                 break;
 
-            case "°ø°İ·Â":
+            case "ê³µê²©ë ¥":
                 weaponStrategy.DamageUp(attackPowerTime);
                 break;
 
-            case "ÅĞ¹¶Ä¡":
+            case "í„¸ë­‰ì¹˜":
                 if (!hairBallUse.CheckObstacleInFront(Player.transform.position, Player.transform.forward))
                 {
                     hairBallUse.CreateHairBall(Player.transform.position, Player.transform.forward);
                 }
-                else
-                {
-                    Debug.Log("[ItemCenter] Àå¾Ö¹°ÀÌ ÀÖ¾î »ı¼ºÇÒ ¼ö ¾øÀ½");
-                }
-                break;
+                 break;
 
-            case "Ãò¸£":
-                Debug.Log("[ItemCenter] Ãò¸£ ¼±ÅÃ");
+            case "ì¸„ë¥´":
+                if(catSubject != null)
+                    catSubject.IncreaseLikeability(30);
                 break;
         }
     }
 
     public void GetRandomItem(string itemName)
     {
-        switch(itemName)
+        Debug.Log(itemName);
+        getItem.gameObject.SetActive(true);
+        GetDirectItem(itemName);
+        StartCoroutine(getItem.ShowGetItemText(itemName));
+    }
+    public void GetItems(string itemName)
+    {
+        Debug.Log("ë¨¹ì–´ì§222222 " + itemName);
+
+        getItem.gameObject.SetActive(true);
+
+        GetDirectItem(itemName);
+        StartCoroutine(getItem.ShowGetItemText(itemName));
+    }
+
+    public void CreateItem(Item item)
+    {
+        Debug.Log("[ì•„ì´í…œì„¼í„°] Create Item " + item.name);
+
+         if (item.name.EndsWith("(Clone)"))
+            {
+                item.name = item.name.Substring(0, item.name.Length - 7); // 7ì€ "(Clone)" ë¬¸ìì—´ì˜ ê¸¸ì´ì…ë‹ˆë‹¤.
+            }
+        Array.Resize(ref itemArray, itemArray.Length + 1);
+        itemArray[itemArray.Length - 1] = item;
+        itemArray[itemArray.Length - 1].OnItem += GetItems;
+    }
+
+    private void GetDirectItem(string itemName)
+    {
+        Debug.Log("ë¨¹ì–´ì§ " + itemName);
+        
+
+        switch (itemName)
         {
+            
             case "WaterBottle":
-                Debug.Log("[ItemCenter] Åº¾à ÃæÀü");
+                Debug.Log("ì‚¬ìš©ë¨ " + itemName);
+
+                weaponStrategy.ChargeCurrentBullet(bottle[0].GetChargeAmount());
                 break;
 
-            case "LifeEnergy":
-                playerStats.FillHealth(10); // ¼öÄ¡ ¼öÁ¤ÇØ¾ß µÊ
-                Debug.Log("[ItemCenter] ÇÃ·¹ÀÌ¾î HP ÃæÀü");
+            case "ìƒëª…ì—ë„ˆì§€":
+                Debug.Log("+10");
+                playerStats.FillHealth(10);
+                break;
+
+            case "BigBottle":
+                weaponStrategy.ChargeAllBullet();
+                break;
+            case "MoveSpeed":
+                playerStats.AddMoveSpeed(moveSpeedTime);
                 break;
         }
     }

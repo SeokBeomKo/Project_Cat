@@ -14,7 +14,7 @@ public class BadEnding : MonoBehaviour
     public Image bottomImage;
     
     [Header("재시작할 씬 이름")]
-    public string sceneName;
+    public string loadingScene;
 
     [Header("로비씬")]
     public string lobbySceneName;
@@ -55,7 +55,8 @@ public class BadEnding : MonoBehaviour
     public void OnClickRestart()
     {
         SoundManager.Instance.PlaySFX("Click");
-        SceneManager.LoadScene(sceneName);
+
+        SceneManager.LoadScene(loadingScene);
     }
 
     public void OnClickEnd()

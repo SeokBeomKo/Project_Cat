@@ -53,7 +53,7 @@ public class PlayerBackRollState :  IPlayerState
     public void OnStateExit()
     {
         Rolling(false);
-
+        player.isRolled = false;
         player.rigid.velocity = Vector3.zero;
     }
 

@@ -309,8 +309,8 @@ public class ItemWheel : MonoBehaviour
                 selectEnergyLeft.SetActive(false);
                 selectEnergyRight.SetActive(true);
                 moveSpeed.text = " ";
-                if (attackSpeed.text != "플레이어의 공격 속도를 상승시킨다.") SoundManager.Instance.PlaySFX("Hover");
-                attackSpeed.text = "플레이어의 공격 속도를 상승시킨다.";
+                if (attackSpeed.text != "플레이어의 공격력을 상승시킨다.") SoundManager.Instance.PlaySFX("Hover");
+                attackSpeed.text = "플레이어의 공격력을 상승시킨다.";
             }
 
             if (Input.GetMouseButtonDown(0) && !hasRightMouseClicked)

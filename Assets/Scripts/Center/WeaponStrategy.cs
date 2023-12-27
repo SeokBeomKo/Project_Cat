@@ -11,6 +11,8 @@ public class WeaponStrategy : MonoBehaviour
     public List<Weapon> weaponList;
     private Weapon curWeapon;
 
+    [Header("공격력 증가 VFX")]
+    public GameObject vfx;
     public int damageOffset = 1;
 
     private void Start()
@@ -27,18 +29,29 @@ public class WeaponStrategy : MonoBehaviour
         }
     }
 
-    public void ChargeCurrentBullet()
+    public void SetCurrentBullet(int soawpBullet, int splashBullet, int bubbleBullet)
     {
+        weaponList[0].curBullet = soawpBullet;
+        weaponList[1].curBullet = splashBullet;
+        weaponList[2].curBullet = bubbleBullet;
+    }
 
+    public void ChargeCurrentBullet(int charge)
+    {
+        curWeapon.ChargeBullet(charge);
     }
 
     public void ChargeAllBullet()
     {
-        
+        foreach(Weapon obj in weaponList)
+        {
+            obj.ChargeAllBullet();
+        }
     }
 
     public void DamageUp(float time)
     {
+        vfx.SetActive(true);
         damageOffset = 2;
         curWeapon.SetOffset(damageOffset);
         StartCoroutine(RecoveryDamage(time));
@@ -48,6 +61,7 @@ public class WeaponStrategy : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         damageOffset = 1;
+        vfx.SetActive(false);
     }
 
     public void SwapWeapon(int number)

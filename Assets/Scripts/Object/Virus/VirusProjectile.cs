@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class VirusProjectile : MonoBehaviour, IAttackable
 {
+    [Header("데이터")]
+    public VirusProjectileData data;
+    private float speed;
+    private float damage;
+
     [Header("프리팹")]
     public GameObject projectile;
     public GameObject explosion;
@@ -16,8 +21,14 @@ public class VirusProjectile : MonoBehaviour, IAttackable
     public Vector3 directionPosition;
     private Vector3 targetDirection;
 
-    [Header("수치 값")]
-    public float maxSpeed;
+    
+    private void Awake()
+    {
+        data.LoadDataFromPrefs();
+
+        speed = data.speed;
+        damage = data.damage;
+    }
 
     private void OnEnable()
     {
@@ -34,8 +45,7 @@ public class VirusProjectile : MonoBehaviour, IAttackable
     private void FixedUpdate()
     {
         // 실제 이동
-        Debug.Log("Attack : " + directionPosition);
-        rigidBody.velocity = directionPosition * maxSpeed;
+        rigidBody.velocity = directionPosition * speed;
     }
 
     // 터지는 함수
@@ -74,6 +84,6 @@ public class VirusProjectile : MonoBehaviour, IAttackable
 
     public float GetDamage()
     {
-        return 5;
+        return damage;
     }
 }

@@ -10,9 +10,6 @@ public class ChaseCenter : MonoBehaviour
     [Header("카메라 회전")]
     [SerializeField] public CameraRotate camRotate;
 
-    [Header("카메라 시점")]
-    [SerializeField] public ShooterCameraController camController;
-
     [Header("기본 입력 센터")]
     [SerializeField] public InputCenter inputCenter;
 
@@ -25,9 +22,35 @@ public class ChaseCenter : MonoBehaviour
     [Header("UI")]
     [SerializeField] public UIController controllerUI;
 
+    [Header("퀘스트 UI")]
+    public QuestPopUp questUI;
+
+    [Header("퀘스트 위치")]
+    public QuestSubtitle firstQuest; 
+
+    [Header("자막")]
+    public Subtitle subtitle;
+    public QuestSubtitle questSubtitle;
+
     [Header("Input Handler")]
     [SerializeField] public InputHandler inputHandler;
 
+    [Header("미로 입장 시 숨길 UI 그룹")]
+    public CanvasGroup canvas;
+
+    [Header("미로 입장 시 나타낼 UI 그룹")]
+    public CanvasGroup mazeCanvas;
+
+    [Header("추격씬 카메라 컨트롤러")]
+    [SerializeField] public ChaseCameraController cameraController;
+
+    [Header("아이템 휠")]
+    public GameObject itemWheel;
+
+    [Header("로봇 청소기 프로그레스바")]
+    public GameObject robotProgressbar;
+
+    [Header("오브젝트")]
     [SerializeField] public ChaseCat cat;
 
     [SerializeField] public RobotStart robotStart;
@@ -36,36 +59,53 @@ public class ChaseCenter : MonoBehaviour
 
     [SerializeField] public RobotAttack robotAttack;
 
-    [SerializeField] public ChaseCameraController cameraController;
-
     [SerializeField] public FlyingObject[] flyObject;
-    [SerializeField] public GameObject Object;
+    [SerializeField] public GameObject flyObjectParent;
+
+    [SerializeField] public CapsuleChaseOperation[] capsule;
+    [SerializeField] public GameObject capsuleObjectParent;
+
+
 
     public HairBallUse hairBallUse;
+    // : <<
+
 
     private void Start()
     {
-        flyObject = Object.GetComponentsInChildren<FlyingObject>();
-        mazeEnter.OnMazeEnter += OnMaze;
+        PlayerPrefs.SetString("nextScene", "06.Chase");
+        PlayerPrefs.SetInt("Camera", 10);
+        questUI.DeactivatePopUp();
 
-        cat.OnCutSceneStart += onCat;
-        cat.OnCutSceneEnd += onMazeCreate;
+        flyObject = flyObjectParent.GetComponentsInChildren<FlyingObject>();
+        capsule = capsuleObjectParent.GetComponentsInChildren<CapsuleChaseOperation>();
 
-        robotStart.onRobot += onRobotStart;
+
+        itemWheel.SetActive(true);
+        camRotate.gameObject.SetActive(true);
+        
+        firstQuest.OnQuest += MoveForward;
+
+        robotStart.onRobot += onRobotStart; // 플레이어가 특정 지점에 가면 로봇 컷신
         robotStart.onPlay += onPlay;
 
-        robot.onMove += onMove;
+        cat.OnCutSceneStart += onCat; // 고양이가 미로 옆에 가면 나오는 컷신
+        cat.OnCutSceneEnd += onMazeCreate; // 미로 확대 컷신
 
-        robotAttack.onRobotAttack += onRobotAttack;
-        robotAttack.onShoot += onShoot;
-        robotAttack.onPlay += onPlay;
+        mazeEnter.OnMazeEnter += OnMaze; 
+
+        robot.onMove += onMove; // 플레이어 위치 넘겨줌
+
+        robotAttack.onRobotAttack += onRobotAttack; // 로봇이 공격하는 컷신
+        robotAttack.onShoot += onShoot; // 플레이어 위치 전달
+        robotAttack.onPlay += onMazePlay; // 미로 화면으로 전환
 
         inputCenter.gameObject.SetActive(true);
         chaseInputCenter.gameObject.SetActive(false);
+        robotProgressbar.SetActive(false);
 
-        camController.SetPlayCamera();
-        camRotate.gameObject.SetActive(true);
-    
+
+
         if (flyObject != null)
         { 
             for (int i = 0; i < flyObject.Length; i++)
@@ -75,26 +115,62 @@ public class ChaseCenter : MonoBehaviour
             }
         }
 
+        if(capsule != null)
+        {
+            for(int i = 0; i<capsule.Length; i++)
+            {
+                int index = i;
+                capsule[index].onFly += () => onCapsuleFly(index);
+            }
+        }
+
     }
 
-    public void OnMaze()
+    public void MoveForward()
     {
-        inputCenter.gameObject.SetActive(false);
-        chaseInputCenter.gameObject.SetActive(true);
+        questUI.ActivatePopUP("로키 따라가기", "로키를 따라 앞으로 이동하십시오.");
+    }
 
-        camController.SetTopCamera();
-        camRotate.gameObject.SetActive(false);
+    public void onRobotStart()
+    {
+        cat.transform.parent.gameObject.SetActive(false);
+
         controllerUI.RemoveUI();
+        robotProgressbar.SetActive(true);
+        inputHandler.gameObject.SetActive(false);
+        cameraController.SetRobotStartCamera();
+        questUI.DeactivatePopUp();
+        itemWheel.SetActive(false);
+        subtitle.ShowSubtitle("카날리아 : 로봇 청소기에 빨려 들어가지 않도록 조심해야겠어!", delayTime : 0.2f);
+    }
+    public void onPlay()
+    {
+        cat.transform.parent.gameObject.SetActive(true);
 
-        SoundManager.Instance.StopBGM();
-        SoundManager.Instance.PlayBGM("Maze");
+        //controllerUI.canvasUI = mazeCanvas;
+        controllerUI.ShowUI();
+        itemWheel.SetActive(true);
+        inputHandler.gameObject.SetActive(true);
+        cameraController.SetPlayCamera();
+    }
+
+    public void onMazePlay()
+    {
+        //controllerUI.canvasUI = mazeCanvas;
+        controllerUI.ShowUI();
+        itemWheel.SetActive(true);
+        inputHandler.gameObject.SetActive(true);
+        cameraController.SetTopCamera();
     }
 
     public void onCat()
     {
+        robot.SetIsMoving(false);
+        itemWheel.SetActive(false);
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetCatCamera();
+        subtitle.ShowSubtitle("카날리아 : 로키야 조심해!");
     }
 
     public void onMazeCreate()
@@ -104,11 +180,37 @@ public class ChaseCenter : MonoBehaviour
         cat.transform.parent.gameObject.SetActive(false);
     }
 
-    public void onRobotStart()
+    protected IEnumerator MazeCameraMove()
     {
-        controllerUI.RemoveUI();
-        inputHandler.gameObject.SetActive(false);
-        cameraController.SetRobotStartCamera();
+        StartCoroutine(cameraController.MoveMazeCamera());
+        yield return new WaitForSeconds(3f);
+        robot.SetIsMoving(true);
+
+        onPlay();
+    }
+
+    public void OnMaze()
+    {
+        SoundManager.Instance.StopBGM();
+
+        inputCenter.gameObject.SetActive(false);
+        chaseInputCenter.gameObject.SetActive(true);
+
+        cameraController.SetTopCamera();
+        SoundManager.Instance.PlayBGM("Maze");
+
+        RemovePlayUI();
+        controllerUI.canvasUI = mazeCanvas;
+        controllerUI.ShowUI();
+        itemWheel.SetActive(false);
+
+        camRotate.gameObject.SetActive(false);
+        subtitle.ShowSubtitle("카날리아 : 로봇 청소기가 고쳐지기 전에 미로를 벗어나야해!");
+        questUI.ActivatePopUP("미로 돌파하기", "미로를 돌파하십시오.");
+    }
+    public void onMove()
+    {
+        robot.SetEndPos(PlayerPosition());
     }
 
     public void onRobotAttack()
@@ -116,24 +218,17 @@ public class ChaseCenter : MonoBehaviour
         controllerUI.RemoveUI();
         inputHandler.gameObject.SetActive(false);
         cameraController.SetRobotAttackCamera();
-    }
-
-
-    public void onPlay()
-    {
-        controllerUI.ShowUI();
-        inputHandler.gameObject.SetActive(true);
-        cameraController.SetPlayCamera();
+        subtitle.ShowSubtitle("카날리아 : 로봇 청소기가 멈췄어...  근데 블록을 발사하잖아?!");
     }
 
     public void onShoot()
     {
-        robotAttack.targetPos = PlayerPosition();
+        robotAttack.SetEndPos(PlayerPosition());
     }
 
-    public void onMove()
+    public void onCapsuleFly(int index)
     {
-        robot.PlayerPos = PlayerPosition();
+        capsule[index].SetEndPos(PlayerPosition());
     }
 
     public void onFly(int index)
@@ -146,15 +241,10 @@ public class ChaseCenter : MonoBehaviour
         return Player.transform.position;
     }
 
-    protected IEnumerator MazeCameraMove()
+    public void RemovePlayUI()
     {
-        StartCoroutine(cameraController.MoveMazeCamera());
-        yield return new WaitForSeconds(3);
-
-        onPlay();
-
+        canvas.alpha = 0;
+        canvas.interactable = false;
+        canvas.blocksRaycasts = false;
     }
-
-
-
 }
