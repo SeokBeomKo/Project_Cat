@@ -11,6 +11,8 @@ public class WeaponStrategy : MonoBehaviour
     public List<Weapon> weaponList;
     private Weapon curWeapon;
 
+    [Header("공격력 증가 VFX")]
+    public GameObject vfx;
     public int damageOffset = 1;
 
     private void Start()
@@ -49,6 +51,7 @@ public class WeaponStrategy : MonoBehaviour
 
     public void DamageUp(float time)
     {
+        vfx.SetActive(true);
         damageOffset = 2;
         curWeapon.SetOffset(damageOffset);
         StartCoroutine(RecoveryDamage(time));
@@ -58,6 +61,7 @@ public class WeaponStrategy : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         damageOffset = 1;
+        vfx.SetActive(false);
     }
 
     public void SwapWeapon(int number)
