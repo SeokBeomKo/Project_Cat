@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerChaseFallState : IPlayerState
@@ -9,7 +10,7 @@ public class PlayerChaseFallState : IPlayerState
     };
     public HashSet<PlayerMovementStateEnums> allowedLogicHash { get; } = new HashSet<PlayerMovementStateEnums>
     {
-        PlayerMovementStateEnums.CHASE_LAND,
+        PlayerMovementStateEnums.LAND,
     };
     
     public PlayerController player {get; set;}
@@ -28,7 +29,7 @@ public class PlayerChaseFallState : IPlayerState
             stateMachine.ChangeStateLogic(PlayerMovementStateEnums.LAND);
             return;
         }
-
+        player.rigid.MovePosition(player.rigid.position + Vector3.down * 0.001f);
         // player.rigid.MovePosition(player.rigid.position + Vector3.down * 0.001f);
         // player.JumpInput();
     }

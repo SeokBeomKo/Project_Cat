@@ -41,7 +41,6 @@ public class PlayerStateMachine : MonoBehaviour
             {PlayerMovementStateEnums.CHASE_IDLE,       new PlayerChaseIdleState(this)},
             {PlayerMovementStateEnums.CHASE_MOVE,       new PlayerChaseMoveState(this)},
             {PlayerMovementStateEnums.CHASE_FALL,       new PlayerChaseFallState(this)},
-            {PlayerMovementStateEnums.CHASE_LAND,       new PlayerDeadState(this)},
         };
 
         if (stateDictionary.TryGetValue(PlayerMovementStateEnums.IDLE, out IPlayerState newState))
