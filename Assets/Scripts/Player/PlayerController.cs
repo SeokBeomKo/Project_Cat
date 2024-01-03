@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
         {
             shotstateMachine.curState.Execute();
         }
+
+        Debug.Log(stateMachine.curState.ToString());
     }
 
     private void FixedUpdate() 
