@@ -7,12 +7,6 @@ public class GetItem : MonoBehaviour
 {
     public TextMeshProUGUI item;
 
-    public void ActivateText()
-    {
-        gameObject.SetActive(true);
-    }
-    
-
     public IEnumerator ShowGetItemText(string itemName)
     {
         item.text = itemName;

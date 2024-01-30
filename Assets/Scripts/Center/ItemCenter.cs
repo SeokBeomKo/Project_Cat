@@ -184,17 +184,18 @@ public class ItemCenter : MonoBehaviour
     public void GetRandomItem(string itemName)
     {
         Debug.Log(itemName);
-        getItem.gameObject.SetActive(true);
         GetDirectItem(itemName);
+
+        getItem.gameObject.SetActive(true);
         StartCoroutine(getItem.ShowGetItemText(itemName));
     }
     public void GetItems(string itemName)
     {
         Debug.Log("먹어짐222222 " + itemName);
 
-        getItem.gameObject.SetActive(true);
-
         GetDirectItem(itemName);
+
+        getItem.gameObject.SetActive(true);
         StartCoroutine(getItem.ShowGetItemText(itemName));
     }
 
@@ -218,10 +219,8 @@ public class ItemCenter : MonoBehaviour
 
         switch (itemName)
         {
-            
             case "WaterBottle":
                 Debug.Log("사용됨 " + itemName);
-
                 weaponStrategy.ChargeCurrentBullet(bottle[0].GetChargeAmount());
                 break;
 

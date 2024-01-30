@@ -30,17 +30,16 @@ public class UIInputHandler : MonoBehaviour
             OnPausePopUp?.Invoke();
         }
         
+
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             OnSelectSoapRifle?.Invoke();
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             OnSelectSplashBuster?.Invoke();
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             OnselectBubbleGun?.Invoke();
         }

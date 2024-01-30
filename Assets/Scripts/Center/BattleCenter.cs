@@ -45,6 +45,7 @@ public class BattleCenter : MonoBehaviour
         }
 
         PlayerPrefs.SetString("nextScene", "08.Battle");
+        PlayerPrefs.SetInt("Camera", 10);
 
         // Item Create
         StartCoroutine(SpawnItemsPeriodically());

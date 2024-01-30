@@ -19,6 +19,9 @@ public class RobotProjectile : MonoBehaviour
     Vector3 Direction;
     Quaternion targetRotation;
 
+    public GameObject explosion;
+    public GameObject modeling;
+
     private void Start()
     {
         isCollision = true;
@@ -44,8 +47,16 @@ public class RobotProjectile : MonoBehaviour
                 other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage();
             }
         }
+
+        Explosion();
     }
 
+    public void Explosion()
+    {
+        modeling.SetActive(false);
+        explosion.SetActive(true);
+        StartCoroutine(DestroyAfterParticles());
+    }
 
     protected static Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
     {
@@ -72,7 +83,21 @@ public class RobotProjectile : MonoBehaviour
             yield return new WaitForEndOfFrame();
 
         }
-        transform.gameObject.SetActive(false);
+
+        Explosion();
+
+    }
+
+    private IEnumerator DestroyAfterParticles()
+    {
+        ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
+
+        while (ps != null && ps.IsAlive())
+        {
+
+            yield return null;
+        }
+        Destroy(transform.gameObject);
 
     }
 

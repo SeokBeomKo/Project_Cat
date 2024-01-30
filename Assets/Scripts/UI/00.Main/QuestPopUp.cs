@@ -6,7 +6,7 @@ using TMPro;
 public class QuestPopUp : MonoBehaviour
 {
     public TextMeshProUGUI questTitleText;
-    public TextMeshProUGUI questText;
+    public TextMeshProUGUI questContentText;
 
     public void ActivatePopUP(string title, string content)
     {
@@ -14,8 +14,8 @@ public class QuestPopUp : MonoBehaviour
         
         if (content.Contains("  "))
             content = content.Replace("  ", "\n");
-        
-        questText.text = content;
+
+        questContentText.text = content;
         gameObject.SetActive(true);
     }
 

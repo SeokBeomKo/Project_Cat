@@ -41,7 +41,7 @@ public class Subtitle : MonoBehaviour
     public delegate void questHandle();
     public event questHandle OnQuest;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasShow)
         {
@@ -52,7 +52,27 @@ public class Subtitle : MonoBehaviour
                 StartCoroutine(Typing(subtitleContent, typingSpeed));
                 OnQuest?.Invoke();
             }
+            else
+            {
+                hasShow = true;
+                StartCoroutine(WaitForSubtitleDeactivation());
+            }
         }
+    }
+
+    private IEnumerator WaitForSubtitleDeactivation()
+    {
+        // 자막이 꺼질 때까지 대기
+        while (subtitleText.gameObject.activeSelf)
+        {
+            yield return null;
+        }
+
+        // 자막이 꺼지면 작업 수행
+        //hasShow = true;
+        subtitleText.gameObject.SetActive(true);
+        StartCoroutine(Typing(subtitleContent, typingSpeed));
+        OnQuest?.Invoke();
     }
 
     IEnumerator Typing(string txt, float speed = 0.07f, float delayTime = 0)

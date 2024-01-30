@@ -11,6 +11,9 @@ public class PlayerLandState : IPlayerState
     {
         PlayerMovementStateEnums.IDLE,
         PlayerMovementStateEnums.MOVE,
+
+        PlayerMovementStateEnums.CHASE_IDLE,
+        PlayerMovementStateEnums.CHASE_MOVE,
     };
     public PlayerController player {get; set;}
     public PlayerStateMachine stateMachine {get; set;}
@@ -23,18 +26,38 @@ public class PlayerLandState : IPlayerState
 
     public void Execute()
     {
-        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("jump down") &&
-            player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        if (PlayerPrefs.GetInt("Camera") == 30)
         {
-            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("jump down") &&
+                player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
             {
-                stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
-                return;
+                if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+                {
+                    stateMachine.ChangeStateLogic(PlayerMovementStateEnums.CHASE_IDLE);
+                    return;
+                }
+                else
+                {
+                    stateMachine.ChangeStateLogic(PlayerMovementStateEnums.CHASE_MOVE);
+                    return;
+                }
             }
-            else
+        }
+        else
+        {
+            if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("jump down") &&
+                player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
             {
-                stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
-                return;
+                if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+                {
+                    stateMachine.ChangeStateLogic(PlayerMovementStateEnums.IDLE);
+                    return;
+                }
+                else
+                {
+                    stateMachine.ChangeStateLogic(PlayerMovementStateEnums.MOVE);
+                    return;
+                }
             }
         }
     }

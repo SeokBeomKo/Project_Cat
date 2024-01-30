@@ -28,7 +28,7 @@ public class FadeInOut : MonoBehaviour
         {
             if (canvasGroup.alpha > 0)
             {
-                canvasGroup.alpha -= timeToFade * Time.deltaTime;  // 이미지 점점 사라짐 
+                canvasGroup.alpha -= timeToFade * Time.deltaTime;  // 이미지 점점 밝아짐 
                 if (canvasGroup.alpha == 0)
                 {
                     fadeOut = false;

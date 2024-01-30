@@ -62,9 +62,9 @@ public class HUDCenter : MonoBehaviour
 
     public void UpdateBullet()
     {
-        weaponSelection.SelectSoftRifle(soapRifle.GetBullet());
-        weaponSelection.SelectSplashBuster(splashBuster.GetBullet());
-        weaponSelection.SelectBubbleGun(bubbleGun.GetBullet());
+        weaponSelection.SelectSoftRifle(soapRifle.GetBullet(), soapRifle.maxBullet);
+        weaponSelection.SelectSplashBuster(splashBuster.GetBullet(), splashBuster.maxBullet);
+        weaponSelection.SelectBubbleGun(bubbleGun.GetBullet(), bubbleGun.maxBullet);
     }
 
     public void PauseTrue()

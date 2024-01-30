@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HPSubject
 {
-    [Header("������ ����Ʈ")]
     [SerializeField]
     private List<Observer> observerList = new List<Observer>();
    

@@ -14,13 +14,13 @@ public class CrossHair : MonoBehaviour
     [Header("조준 속도")]
     public float speed;
 
-
     private float currentSize;
 
     private void Start()
     {
         crossHair = GetComponent<RectTransform>();
     }
+
     private void OnDisable() 
     {
         crossHair.sizeDelta = new Vector2(aimSize, aimSize);

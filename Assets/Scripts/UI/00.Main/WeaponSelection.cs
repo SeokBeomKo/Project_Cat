@@ -86,6 +86,7 @@ public class WeaponSelection : MonoBehaviour
         transform.GetChild(weaponNum).GetComponent<RectTransform>().anchoredPosition = new Vector3(-55, -280, 0);
         // 선택한 무기 크기 커지게
         transform.GetChild(weaponNum).localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        
         int j = 1;
         // 모든 무기 위치 재정렬
         for (int i = 0; i < transform.childCount; i++)
@@ -97,22 +98,23 @@ public class WeaponSelection : MonoBehaviour
         }
     }
 
-    public void SelectSoftRifle(int bullet)
+    public void SelectSoftRifle(int bullet, float maxBullet)
     {
-        softRifleProgress.fillAmount = bullet / 100f;
+        softRifleProgress.fillAmount = bullet / maxBullet;
         softRifleText.text = bullet.ToString();
     }
     
-    public void SelectSplashBuster(int bullet)
+    public void SelectSplashBuster(int bullet, float maxBullet)
     {
-        splashBusterProgress.fillAmount = bullet / 200f;
+        splashBusterProgress.fillAmount = bullet / maxBullet;
         splashBusterText.text = bullet.ToString();
     }
 
-    public void SelectBubbleGun(int bullet)
+    public void SelectBubbleGun(int bullet, float maxBullet)
     {
-        bubbleGunProgress.fillAmount = bullet / 600f;
+        bubbleGunProgress.fillAmount = bullet / maxBullet;
         bubbleGunText.text = bullet.ToString();
+
     }
 
     public void SetMaxBullet(int softBullet, int splashBullet, int bubbleBullet)

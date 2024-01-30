@@ -28,10 +28,6 @@ public class SoundManager : Singleton<SoundManager>
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        /*PlayerPrefs.SetFloat("Master", GetMasterVolume());
-        PlayerPrefs.SetFloat("BGM", GetBGMVolume());
-        PlayerPrefs.SetFloat("SFX", GetSFXVolume());*/
-
         PlayerPrefs.SetFloat("Master", 1);
         PlayerPrefs.SetFloat("BGM", 1);
         PlayerPrefs.SetFloat("SFX", 1);
@@ -106,7 +102,6 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     // 0 : 재생 중지 1 : 재생 시작
-
     public void ToggleMaster()
     {
         if (PlayerPrefs.GetInt("isMasterOn") == 1)
@@ -117,7 +112,6 @@ public class SoundManager : Singleton<SoundManager>
             PlayerPrefs.SetInt("isMasterOn", 0);
             PlayerPrefs.SetInt("isBGMOn", 0);
             PlayerPrefs.SetInt("isSFXOn", 0);
-            // isMasterOn = false;
         }
         else
         {
@@ -127,7 +121,6 @@ public class SoundManager : Singleton<SoundManager>
             PlayerPrefs.SetInt("isMasterOn", 1);
             PlayerPrefs.SetInt("isBGMOn", 1);
             PlayerPrefs.SetInt("isSFXOn", 1);
-            // isMasterOn = true;
         }
     }
 

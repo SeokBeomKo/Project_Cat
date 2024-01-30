@@ -94,8 +94,7 @@ public class TutorialCenter : MonoBehaviour
         VirusGroup.SetActive(false);
         controllerUI.RemoveUI();
         cameraRotate.SetActive(false);
-        inputHandler.gameObject.SetActive(false);
-        cursor.CursorOff();
+        inputHandler.gameObject.SetActive(false);   
 
         questUI.DeactivatePopUp();
     }
@@ -162,9 +161,7 @@ public class TutorialCenter : MonoBehaviour
         itemWheel.SetActive(true);
         questSubtitle.StopSubtitle();
         subtitle.StopSubtitle();
-
         StopPhoneSubtitle();
-        voiceMessage.SetActive(false);
         skipButton.SetActive(false);
 
         Invoke("ExitCatMove", 0.2f);
@@ -173,14 +170,16 @@ public class TutorialCenter : MonoBehaviour
     public void ExitCatMove()
     {
         cameraController.SetPlayCamera();
+        controllerUI.ShowUI();
+        questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자", delayTime : 0.5f);      
+        cursor.CursorOff();        
+
+        voiceMessage.SetActive(false);
         cat.SetActive(false);
         inputHandler.gameObject.SetActive(true);
-        controllerUI.ShowUI();
         cameraRotate.SetActive(true);
         VirusGroup.SetActive(true);
         skipButton.SetActive(false);
-        cursor.CursorOff();
-        questSubtitle.ShowQuestSubtitle("애완 고양이 로키를 쫓아가자", delayTime : 0.5f);
         itemWheel.SetActive(true);
     }
 

@@ -32,7 +32,7 @@ public class VirusProjectile : MonoBehaviour, IAttackable
 
     private void OnEnable()
     {
-        Invoke("Explosion", 1f);
+        Invoke("Explosion", 5f);
         // 5초가 지나면 총아 ㄹ터짐
     }
 
@@ -62,10 +62,12 @@ public class VirusProjectile : MonoBehaviour, IAttackable
     // 터지는 이펙트 끝났을 때 삭
     private IEnumerator DestroyAfterParticles()
     {
-        ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
+
+        ParticleSystem ps = explosion.GetComponentInChildren<ParticleSystem>();
 
         while (ps != null && ps.IsAlive())
         {
+
             yield return null;
         }
 
@@ -74,11 +76,22 @@ public class VirusProjectile : MonoBehaviour, IAttackable
 
     private void OnTriggerEnter(Collider other)
     {
+
+        if (other.transform.GetComponentInChildren<PlayerHitScan>()!=null)
+        {
+            other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(GetDamage());
+        }
         Explosion();
     }
 
     private void OnCollisionEnter(Collision other)
     {
+
+        if (other.transform.GetComponentInChildren<PlayerHitScan>()!=null)
+        {
+
+            other.transform.GetComponentInChildren<PlayerHitScan>().GetDamage(GetDamage());
+        }
         Explosion();
     }
 
